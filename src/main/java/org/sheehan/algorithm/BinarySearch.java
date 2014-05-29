@@ -12,7 +12,7 @@ public class BinarySearch {
     static int binarySearch(Integer array[], int key) {
 
         int l = 0;
-        int u = array.length;
+        int u = array.length-1;
 
         while (l <= u) {
             int m = l + (u-l)/2;

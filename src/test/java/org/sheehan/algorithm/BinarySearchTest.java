@@ -33,7 +33,47 @@ public class BinarySearchTest {
         Collections.sort(dataList);
         Integer[] array = dataList.toArray(new Integer[0]);
 
-        BinarySearch bs = new BinarySearch();
+        for (int i = 0; i < limit; i++) {
+            System.out.print(dataList.get(i) + " ");
+        }
+        System.out.println();
+
+        for (int i = 0; i < limit; i++)
+            Assert.assertEquals(i,BinarySearch.binarySearch(array, array[i]));
+    }
+
+    @Test
+    public void testBinarySearchBubbleSort() throws Exception {
+        final int limit = 20;
+        Random random = new Random();
+        List<Integer> dataList = new ArrayList<Integer>();
+        for (int i = 0; i < limit; i++) {
+            dataList.add(random.nextInt());
+        }
+        Integer[] array = dataList.toArray(new Integer[0]);
+        //Collections.sort(dataList);
+        Sort.bubbleSort(array);
+
+        for (int i = 0; i < limit; i++) {
+            System.out.print(dataList.get(i) + " ");
+        }
+        System.out.println();
+
+        for (int i = 0; i < limit; i++)
+            Assert.assertEquals(i,BinarySearch.binarySearch(array, array[i]));
+    }
+
+    @Test
+    public void testBinarySearchInsertionSort() throws Exception {
+        final int limit = 20;
+        Random random = new Random();
+        List<Integer> dataList = new ArrayList<Integer>();
+        for (int i = 0; i < limit; i++) {
+            dataList.add(random.nextInt());
+        }
+        Integer[] array = dataList.toArray(new Integer[0]);
+        //Collections.sort(dataList);
+        Sort.insertionSort(array);
 
         for (int i = 0; i < limit; i++) {
             System.out.print(dataList.get(i) + " ");
