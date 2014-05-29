@@ -9,6 +9,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
+import static org.junit.Assert.assertEquals;
+
 /**
  * Created with IntelliJ IDEA.
  * User: bsheehan
@@ -81,6 +83,6 @@ public class BinarySearchTest {
         System.out.println();
 
         for (int i = 0; i < limit; i++)
-            Assert.assertEquals(i,BinarySearch.binarySearch(array, array[i]));
+            assertEquals(i,BinarySearch.binarySearch(array, array[i]));
     }
 }
