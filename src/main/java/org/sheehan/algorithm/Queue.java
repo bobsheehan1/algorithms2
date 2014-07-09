@@ -8,5 +8,7 @@ public interface Queue<T> {
     T remove();
     T peek();
     void print();
+    void printArray();
+
 
 }

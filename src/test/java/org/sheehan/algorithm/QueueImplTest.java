@@ -1,10 +1,41 @@
 package org.sheehan.algorithm;
 
+import junit.framework.Assert;
 import org.junit.Test;
+
+import java.util.NoSuchElementException;
 
 import static org.junit.Assert.*;
 
 public class QueueImplTest {
+
+    @Test
+    public void testAddOverflow() {
+        try {
+            int size = 10;
+            Queue q = new QueueImpl<Integer>(size);
+
+            for (int i = 0; i < 10; ++i) {
+                q.add(i);
+                q.print();
+                q.printArray();
+            }
+
+            for (int i = 0; i < 5; ++i) {
+                q.remove();
+                q.print();
+                q.printArray();
+            }
+
+            for (int i = 10; i < 15; ++i) {
+                q.add(i);
+                q.print();
+                q.printArray();
+            }
+        }catch (NoSuchElementException e) {
+            assertTrue(true);
+        }
+    }
 
     @Test
     public void testAddRemove() throws Exception {
@@ -51,4 +82,15 @@ public class QueueImplTest {
             q.print();
         }
     }
+
+    @Test
+    public void testAddRemove3() {
+        int size = 10;
+        Queue q = new QueueImpl<Integer>(size);
+        q.add(5);
+        Integer val = (Integer)q.remove();
+        assertEquals(new Integer(5), val);
+
+    }
 }
+
