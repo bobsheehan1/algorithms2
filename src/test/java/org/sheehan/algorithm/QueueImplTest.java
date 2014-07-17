@@ -6,6 +6,7 @@ import org.junit.Test;
 import java.util.NoSuchElementException;
 
 import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class QueueImplTest {
 
@@ -40,7 +41,7 @@ public class QueueImplTest {
     @Test
     public void testAddRemove() throws Exception {
         int size = 10;
-        Queue q = new QueueImpl<Integer>(size);
+        Queue<Integer> q = new QueueImpl<>(size);
 
         for (int i = 0; i < size; ++i){
             q.add(i);
@@ -48,9 +49,18 @@ public class QueueImplTest {
         }
 
         for (int i = 0; i < size; ++i){
-            q.remove();
+            Integer remove = q.remove();
+            assertEquals(i, remove.intValue());
             q.print();
         }
+
+        q.add(10);
+        q.add(20);
+        assertEquals(10, q.remove().intValue());
+        q.add(30);
+        q.add(40);
+        assertEquals(20, q.remove().intValue());
+
     }
 
     @Test

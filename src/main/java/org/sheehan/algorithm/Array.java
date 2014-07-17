@@ -13,6 +13,7 @@ public class Array {
        int start = -1;
        int maxStart = -1;
 
+       // limit is 1 less than length for next compare
        for (int i = 0; i < array.length-1; ++i) {
             if (array[i].equals(array[i+1])){
                 length++;
@@ -20,6 +21,7 @@ public class Array {
                     start = i;
             }
 
+            // change or end of array
             if (!array[i].equals(array[i+1]) || i == array.length-2){
                 if (length > maxLength) {
                     maxLength = length;

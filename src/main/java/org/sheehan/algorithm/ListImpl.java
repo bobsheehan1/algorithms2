@@ -67,6 +67,7 @@ public class ListImpl <T> implements List<T> {
         head = tail;
     }
 
+    // scaffold approach O(n)
     @Override
     public  void reverse2() {
         Node n = this.head;
@@ -74,17 +75,19 @@ public class ListImpl <T> implements List<T> {
         Node B = n;
         Node C = n.next;
         while (n.next != null) {
-            n = n.next;
-            B.next = A;
+            n = n.next; // iterate
+            B.next = A; //reversal step
+
+            // move the scaffold
             A = B;
             B = C;
             C = C.next;
         }
 
-        B.next = A;
-        A = B;
+        B.next = A; //reversal
+        A = B; // move the scaffold
 
-        this.head = A;
+        this.head = A; // don't forget to set the head !!!
     }
 
     @Override

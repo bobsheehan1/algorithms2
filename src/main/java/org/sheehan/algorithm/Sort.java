@@ -9,6 +9,9 @@ package org.sheehan.algorithm;
  */
 public class Sort {
 
+    // worst 0(n2)
+    // avg O(n2)
+    // best O(n)
     static void bubbleSort(Integer []array) {
         int n = array.length-1;
 
@@ -33,6 +36,9 @@ public class Sort {
         array[i] = tmp;
     }
 
+    // worst 0(n2)
+    // avg O(n2)
+    // best O(n)
     static void insertionSort(Integer []array){
         int n = array.length;
 
@@ -46,5 +52,20 @@ public class Sort {
                 j--;
             }
         }
+    }
+
+    // worst 0(nlogn)
+    // avg O(nlogn)
+    // best O(nlogn)
+    static void heapSort(Integer []array) {
+        BinaryHeap<Integer> heap = new BinaryHeap<>(array.length, BinaryHeap.HeapType.MIN_HEAP);
+        heap.buildHeap(array);
+        Integer sortedArray[] = new Integer[array.length];
+        Integer value;
+        int cnt = 0;
+        while ((value=heap.poll()) != null) {
+            sortedArray[cnt++] = value;
+        }
+        System.arraycopy(sortedArray, 0, array, 0, array.length);
     }
 }

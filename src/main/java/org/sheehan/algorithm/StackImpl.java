@@ -36,6 +36,8 @@ public class StackImpl<T> implements Stack<T> {
 
     @Override
     public T peek() {
+        if (top == -1)
+            return null;
         return array[top];
     }
 

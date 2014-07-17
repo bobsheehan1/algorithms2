@@ -18,6 +18,7 @@ public class QueueImpl<T> implements Queue<T> {
         array = (T[]) Array.newInstance(Object.class, size);
     }
 
+    // add to back
     @Override
     public void add(T value) {
         if (count == size)
@@ -26,13 +27,15 @@ public class QueueImpl<T> implements Queue<T> {
         count++;
     }
 
+    // remove from front
     @Override
     public T remove() {
         if (count == 0)
-            throw new RuntimeException("Empty Queue");
-        T value = array[(firstIndex + --count)%size];
+            return null;
+        T value = array[(firstIndex)%size];
 
         firstIndex++;
+        count--;
         firstIndex %=size;
         return value;
     }
@@ -40,7 +43,7 @@ public class QueueImpl<T> implements Queue<T> {
     @Override
     public T peek() {
         if (firstIndex == -1)
-            throw new NoSuchElementException();
+            return null;
         return array[firstIndex];
     }
 
