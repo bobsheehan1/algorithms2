@@ -1,8 +1,11 @@
 package org.sheehan.algorithm;
 
 import org.junit.Test;
+import org.sheehan.algorithm.data_structures.List;
+import org.sheehan.algorithm.data_structures.ListImpl;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 public class ListImplTest {
 

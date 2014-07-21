@@ -1,4 +1,4 @@
-package org.sheehan.algorithm;
+package org.sheehan.algorithm.thread;
 
 import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;

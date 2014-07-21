@@ -1,4 +1,4 @@
-package org.sheehan.algorithm;
+package org.sheehan.algorithm.thread;
 
 /**
  * Created by bob on 6/27/14.
@@ -7,7 +7,7 @@ public class ConsumerProducer1 {
 
     int counter = 0;
 
-    class Producer implements Runnable{
+    public class Producer implements Runnable{
 
         @Override
         public void run() {

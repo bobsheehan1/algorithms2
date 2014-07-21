@@ -1,13 +1,17 @@
-package org.sheehan.algorithm;
+package org.sheehan.algorithm.graph;
+
+import org.sheehan.algorithm.data_structures.GraphMatrix;
+import org.sheehan.algorithm.data_structures.Stack;
+import org.sheehan.algorithm.data_structures.StackImpl;
 
 /**
  * Created by bob on 7/8/14.
  */
 public class DFS {
     private boolean marked[];
-    private final GraphUndirected1 graph;
+    private final GraphMatrix graph;
 
-    public DFS(GraphUndirected1 graph){
+    public DFS(GraphMatrix graph){
         marked = new boolean[graph.getNumV()];
         this.graph = graph;
     }

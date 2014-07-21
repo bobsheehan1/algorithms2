@@ -9,6 +9,7 @@ package org.sheehan.algorithm;
  */
 public class BinarySearch {
 
+    //iterative
     static int binarySearch(Integer array[], int key) {
 
         int l = 0;

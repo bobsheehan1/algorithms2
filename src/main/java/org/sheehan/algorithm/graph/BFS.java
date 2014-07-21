@@ -1,4 +1,8 @@
-package org.sheehan.algorithm;
+package org.sheehan.algorithm.graph;
+
+import org.sheehan.algorithm.data_structures.GraphMatrix;
+import org.sheehan.algorithm.data_structures.Queue;
+import org.sheehan.algorithm.data_structures.QueueImpl;
 
 /**
  * Created by bob on 7/8/14.
@@ -6,9 +10,9 @@ package org.sheehan.algorithm;
 public class BFS {
     private boolean marked[];
     private boolean added[];
-    private final GraphUndirected1 graph;
+    private final GraphMatrix graph;
 
-    public BFS(GraphUndirected1 graph){
+    public BFS(GraphMatrix graph){
         marked = new boolean[graph.getNumV()];
         added = new boolean[graph.getNumV()];
         this.graph = graph;

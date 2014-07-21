@@ -1,6 +1,7 @@
 package org.sheehan.algorithm;
 
 import org.junit.Test;
+import org.sheehan.algorithm.thread.ConsumerProducer1;
 
 public class ConsumerProducer1Test {
 

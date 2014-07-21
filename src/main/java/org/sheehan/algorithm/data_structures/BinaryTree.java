@@ -1,4 +1,4 @@
-package org.sheehan.algorithm;
+package org.sheehan.algorithm.data_structures;
 
 /**
  * Created by bob on 7/9/14.

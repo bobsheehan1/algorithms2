@@ -1,8 +1,7 @@
 package org.sheehan.algorithm;
 
 import org.junit.Test;
-
-import static org.junit.Assert.*;
+import org.sheehan.algorithm.data_structures.BinaryCompleteTree;
 
 public class BinaryCompleteTreeTest {
 

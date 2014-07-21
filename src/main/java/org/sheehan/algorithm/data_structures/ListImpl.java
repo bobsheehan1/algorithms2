@@ -1,4 +1,4 @@
-package org.sheehan.algorithm;
+package org.sheehan.algorithm.data_structures;
 
 import java.util.*;
 
@@ -7,6 +7,32 @@ import java.util.*;
  */
 public class ListImpl <T> implements List<T> {
 
+
+    @Override
+    public Iterator<T> iterator() {
+        return new MyListIterator<T>(this);
+    }
+
+    public class MyListIterator<T> implements Iterator<T> {
+        Node<T> current;
+
+        public MyListIterator(ListImpl<T> nodes) {
+            current= nodes.head;
+
+        }
+
+        @Override
+        public boolean hasNext() {
+            return this.current != null;
+        }
+
+        @Override
+        public T next() {
+            T value = this.current.value;
+            this.current = this.current.next;
+            return value;
+        }
+    }
 
     public class Node <T> {
         T value;

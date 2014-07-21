@@ -1,7 +1,6 @@
-package org.sheehan.algorithm;
+package org.sheehan.algorithm.data_structures;
 
 import java.lang.reflect.Array;
-import java.util.NoSuchElementException;
 
 /**
  * Created by bob on 5/26/14.

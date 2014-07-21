@@ -3,6 +3,7 @@ package org.sheehan.algorithm;
 import junit.framework.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.sheehan.algorithm.sort.Sort;
 
 import java.util.ArrayList;
 import java.util.Collections;

@@ -1,12 +1,13 @@
 package org.sheehan.algorithm;
 
-import junit.framework.Assert;
 import org.junit.Test;
+import org.sheehan.algorithm.data_structures.Queue;
+import org.sheehan.algorithm.data_structures.QueueImpl;
 
 import java.util.NoSuchElementException;
 
-import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class QueueImplTest {
 

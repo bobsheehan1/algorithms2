@@ -2,12 +2,6 @@ package org.sheehan.algorithm;
 
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-
-import static org.junit.Assert.*;
-
 public class ArrayTest {
 
     @Test
@@ -25,6 +19,9 @@ public class ArrayTest {
 
         Array.findLongestRun(array3);
 
+        Double array4[] = {3.3, 1.1, 3.3, 4.4, 5.5, 7.7, 7.7, 7.7, 8.8};
+
+        Array.findLongestRun(array4);
 
 
     }

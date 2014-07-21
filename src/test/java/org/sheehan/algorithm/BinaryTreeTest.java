@@ -1,6 +1,7 @@
 package org.sheehan.algorithm;
 
 import org.junit.Test;
+import org.sheehan.algorithm.data_structures.BinaryTree;
 
 public class BinaryTreeTest {
 

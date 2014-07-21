@@ -1,6 +1,8 @@
 package org.sheehan.algorithm;
 
 import junit.framework.TestCase;
+import org.sheehan.algorithm.data_structures.Stack;
+import org.sheehan.algorithm.data_structures.StackImpl;
 
 public class StackImplTest extends TestCase {
 

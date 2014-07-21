@@ -1,7 +1,4 @@
-package org.sheehan.algorithm;
-
-import java.lang.reflect.*;
-import java.util.Arrays;
+package org.sheehan.algorithm.data_structures;
 
 /**
  * Created by bob on 7/13/14.
@@ -119,7 +116,7 @@ public class BinaryHeap <T extends Comparable<T>> extends BinaryCompleteTree <T>
     @Override
     public void add(T value) {
         super.add(value);
-        heapify(this.count-1);
+        heapify(this.count - 1);
     }
 
     public T poll() {

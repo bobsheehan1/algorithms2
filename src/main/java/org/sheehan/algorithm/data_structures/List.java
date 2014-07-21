@@ -1,9 +1,11 @@
-package org.sheehan.algorithm;
+package org.sheehan.algorithm.data_structures;
+
+import java.util.Iterator;
 
 /**
  * Created by bob on 7/6/14.
  */
-public interface List<T> {
+public interface List<T> extends Iterable<T> {
     void append (T value);
 
     //brute force

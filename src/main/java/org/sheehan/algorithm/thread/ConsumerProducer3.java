@@ -1,4 +1,4 @@
-package org.sheehan.algorithm;
+package org.sheehan.algorithm.thread;
 
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -10,7 +10,7 @@ public class ConsumerProducer3 {
 
     final int MAX_MESSAGES = 10;
 
-    class Mailbox {
+    public class Mailbox {
 
         BlockingQueue<String> messages = new LinkedBlockingQueue<>();
 
@@ -25,7 +25,7 @@ public class ConsumerProducer3 {
         }
     }
 
-    class Producer implements Runnable{
+    public class Producer implements Runnable{
 
         private final Mailbox mbox;
         private final String id;

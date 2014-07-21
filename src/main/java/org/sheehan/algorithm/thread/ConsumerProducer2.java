@@ -1,4 +1,7 @@
-package org.sheehan.algorithm;
+package org.sheehan.algorithm.thread;
+
+import org.sheehan.algorithm.data_structures.Queue;
+import org.sheehan.algorithm.data_structures.QueueImpl;
 
 /**
  * Created by bob on 6/27/14.
@@ -7,7 +10,7 @@ public class ConsumerProducer2 {
 
     final int MAX_MESSAGES = 10;
 
-    class Mailbox {
+    public class Mailbox {
 
         Queue<String> messages = new QueueImpl<>(MAX_MESSAGES);
 
@@ -29,7 +32,7 @@ public class ConsumerProducer2 {
         }
     }
 
-    class Producer implements Runnable{
+    public class Producer implements Runnable{
 
         private final Mailbox mbox;
         public Producer(Mailbox mailbox){
