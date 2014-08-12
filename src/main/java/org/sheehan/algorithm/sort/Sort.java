@@ -81,6 +81,51 @@ public class Sort {
         }
     }
 
+    public static <T extends Comparable<T>> T[] mergeSort(T array[])
+    {
+        if (array.length <= 1)
+            return array;
+
+        int size1 = array.length/2;
+        int size2 = array.length - size1;
+        T array1[] = (T[]) java.lang.reflect.Array.newInstance(Comparable.class, size1);
+        T array2[] = (T[]) java.lang.reflect.Array.newInstance(Comparable.class, size2);
+
+        System.arraycopy(array, 0, array1, 0, size1);
+        System.arraycopy(array, size1, array2, 0, size2);
+
+        mergeSort(array1);
+        mergeSort(array2);
+
+        //overwrite array with merge
+        merge(array1, array2, array);
+        return array;
+    }
+
+    private static <T extends Comparable<T>> void merge(T[] array1, T[]array2, T[]array){
+
+        int i, index1, index2;
+        i = 0;
+        index1 = 0;
+        index2 = 0;
+
+        // merge common length of 2 arrays
+        while(index1 < array1.length && index2 < array2.length){
+            if (array1[index1].compareTo(array2[index2]) < 0) {
+                array[i++] = array1[index1++];
+            } else {
+                array[i++] = array2[index2++];
+            }
+        }
+
+        // merge any left over where array lengths don't match
+        while(index1 < array1.length){
+            array[i++] = array1[index1++];
+        }
+        while(index2 < array2.length){
+            array[i++] = array2[index2++];
+        }
+    }
 
     private static void swap(Integer[] array, int i, int j) {
         int tmp = array[j];

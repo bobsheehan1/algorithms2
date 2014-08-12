@@ -19,13 +19,13 @@ public class DjikstraShortestPath {
 
     }
 
-    public void execute(int source) {
+    public void execute(int sourceIndex) {
         for (int i=0; i<distance.length; i++) {
             distance[i] = Integer.MAX_VALUE;
             visited[i] = false;
 
         }
-        distance[source] = 0;
+        distance[sourceIndex] = 0;
 
         // calculate shortest distance to each node from source
         for (int i = 0; i < distance.length; ++i) {
@@ -48,10 +48,10 @@ public class DjikstraShortestPath {
             }
         }
 
-        printPath(0, 5);
+
     }
 
-    private void printPath(int srcIndex, int destIndex) {
+    public void printPath(int srcIndex, int destIndex) {
         Stack<Integer> path = new StackImpl<>(predecessor.length);
         int i = destIndex;
         path.push(destIndex);

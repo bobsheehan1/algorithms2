@@ -21,6 +21,7 @@ public class DjikstraShortestPathTest {
         graph.addDirectedEdge(6, 5, 2);
         DjikstraShortestPath alg = new DjikstraShortestPath(graph);
         alg.execute(0);
+        alg.printPath(0, 5);
     }
 
 
