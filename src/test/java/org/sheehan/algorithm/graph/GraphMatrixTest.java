@@ -1,35 +1,36 @@
 package org.sheehan.algorithm.graph;
 
 import org.junit.Test;
-import org.sheehan.algorithm.data_structures.GraphMatrix;
 
 public class GraphMatrixTest {
 
     @Test
     public void testAddEdge() throws Exception {
-        GraphMatrix graph = new GraphMatrix(5);
-        graph.addUndirectedEdge(0, 1);
-        graph.addUndirectedEdge(0, 2);
-        graph.addUndirectedEdge(0, 3);
-        graph.addUndirectedEdge(0, 4);
-        graph.addUndirectedEdge(2, 1);
-        graph.addUndirectedEdge(2, 0);
-        graph.addUndirectedEdge(2, 3);
-        graph.addUndirectedEdge(2, 4);
+        Integer nodes[] = {0,1,2,3,4};
+        GraphMatrix<Integer> graph = new GraphMatrix<Integer>(nodes);
+        graph.addUndirectedEdge(nodes[0], nodes[1]);
+        graph.addUndirectedEdge(nodes[0], nodes[2]);
+        graph.addUndirectedEdge(nodes[0], nodes[3]);
+        graph.addUndirectedEdge(nodes[0], nodes[4]);
+        graph.addUndirectedEdge(nodes[2], nodes[1]);
+        graph.addUndirectedEdge(nodes[2], nodes[0]);
+        graph.addUndirectedEdge(nodes[2], nodes[3]);
+        graph.addUndirectedEdge(nodes[2], nodes[4]);
         graph.printGraph();
     }
 
     @Test
     public void testAddDirectedWeightedEdge() throws Exception {
-        GraphMatrix graph = new GraphMatrix(7);
-        graph.addDirectedEdge(0, 1, 5);
-        graph.addDirectedEdge(0, 2, 10);
-        graph.addDirectedEdge(1, 3, 6);
-        graph.addDirectedEdge(1, 4, 3);
-        graph.addDirectedEdge(3, 5, 6);
-        graph.addDirectedEdge(4, 3, 2);
-        graph.addDirectedEdge(4, 6, 2);
-        graph.addDirectedEdge(6, 5, 2);
+        Integer nodes[] = {0,1,2,3,4,5,6};
+        GraphMatrix<Integer> graph = new GraphMatrix<Integer>(nodes);
+        graph.addDirectedEdge(nodes[0], nodes[1], 5);
+        graph.addDirectedEdge(nodes[0], nodes[2], 10);
+        graph.addDirectedEdge(nodes[1], nodes[3], 6);
+        graph.addDirectedEdge(nodes[1], nodes[4], 3);
+        graph.addDirectedEdge(nodes[3], nodes[5], 6);
+        graph.addDirectedEdge(nodes[4], nodes[3], 2);
+        graph.addDirectedEdge(nodes[4], nodes[6], 2);
+        graph.addDirectedEdge(nodes[6], nodes[5], 2);
         graph.printGraph();
     }
 }

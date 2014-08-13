@@ -41,7 +41,7 @@ public class QueueImpl<T> implements Queue<T> {
 
     @Override
     public T peek() {
-        if (firstIndex == -1)
+        if (count == 0)
             return null;
         return array[firstIndex];
     }

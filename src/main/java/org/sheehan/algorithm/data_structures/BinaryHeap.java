@@ -8,9 +8,10 @@ package org.sheehan.algorithm.data_structures;
  *
  * This allows for specification of min or max. As a complete tree we use a fixed size array for heap implementation.
  *
- * implements a poll method which provides priority queue functionality
+ * implements a remove method which provides priority queue functionality
  */
 public class BinaryHeap <T extends Comparable<T>> extends BinaryCompleteTree <T> {
+
 
     public enum HeapType {MIN_HEAP, MAX_HEAP};
 
@@ -119,7 +120,7 @@ public class BinaryHeap <T extends Comparable<T>> extends BinaryCompleteTree <T>
         heapify(this.count - 1);
     }
 
-    public T poll() {
+    public T remove() {
         if (count == 0)
             return null;
         T value = this.array[0];

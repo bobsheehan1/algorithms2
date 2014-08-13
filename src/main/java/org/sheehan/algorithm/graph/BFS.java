@@ -1,6 +1,5 @@
 package org.sheehan.algorithm.graph;
 
-import org.sheehan.algorithm.data_structures.GraphMatrix;
 import org.sheehan.algorithm.data_structures.Queue;
 import org.sheehan.algorithm.data_structures.QueueImpl;
 
@@ -19,15 +18,16 @@ public class BFS {
     }
 
     // use a queue for BFS
-    public void visitIterative(int v){
-        Queue<Integer> queue = new QueueImpl<>(graph.getNumV());
-        queue.add(v);
+    public void visitIterative(Integer sourceNode){
+        Queue<Comparable> queue = new QueueImpl<>(graph.getNumV());
+        queue.add(sourceNode);
         while (queue.peek() != null) {
-            int v1 = queue.remove();
-            marked[v1] = true;
+            Comparable node = queue.remove();
+            marked[graph.getNodeIndex(node)] = true;
             for (int i = 0; i < graph.getNumV(); ++i) {
-                if (!added[i] && graph.isEdge(v1, i)) {
-                    queue.add(i);
+                Comparable neighborNode = graph.getNode(i);
+                if (!added[i] && graph.isEdge(node, neighborNode)) {
+                    queue.add(neighborNode);
                     added[i] = true;
                 }
             }

@@ -59,7 +59,7 @@ public class Sort {
         Integer sortedArray[] = new Integer[array.length];
         Integer value;
         int cnt = 0;
-        while ((value=heap.poll()) != null) {
+        while ((value=heap.remove()) != null) {
             sortedArray[cnt++] = value;
         }
         System.arraycopy(sortedArray, 0, array, 0, array.length);

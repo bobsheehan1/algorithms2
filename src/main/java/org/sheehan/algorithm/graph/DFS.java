@@ -1,6 +1,5 @@
 package org.sheehan.algorithm.graph;
 
-import org.sheehan.algorithm.data_structures.GraphMatrix;
 import org.sheehan.algorithm.data_structures.Stack;
 import org.sheehan.algorithm.data_structures.StackImpl;
 
@@ -50,7 +49,7 @@ public class DFS {
         System.out.print("uncovered ");
         for (int i = 0; i < graph.getNumV(); ++i) {
             if (!marked[i])
-                System.out.print(i + " ");
+                System.out.print(graph.getNode(i) + " ");
         }
         System.out.println();
     }

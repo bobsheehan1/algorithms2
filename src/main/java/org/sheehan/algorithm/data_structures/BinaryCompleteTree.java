@@ -29,6 +29,10 @@ public class BinaryCompleteTree<T extends Comparable<T>> {
         return Arrays.copyOf(array, array.length * 2);
     }
 
+    public boolean isEmpty(){
+        return (count == 0) ? true : false;
+    }
+
     public int parent(int i) {
         if (i == 0)
             return -1;

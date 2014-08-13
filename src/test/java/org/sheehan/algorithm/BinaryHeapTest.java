@@ -21,7 +21,7 @@ public class BinaryHeapTest {
 
 
         Integer value;
-        while ((value = tree.poll()) != null) {
+        while ((value = tree.remove()) != null) {
             System.out.println("top priority: " + value);
         }
 
@@ -43,7 +43,7 @@ public class BinaryHeapTest {
 
 
         Integer value;
-        while ((value = tree.poll()) != null) {
+        while ((value = tree.remove()) != null) {
             System.out.println("top priority: " + value);
         }
 
@@ -56,7 +56,7 @@ public class BinaryHeapTest {
         Integer array[] = {4,6,2,8,-5,-6,-66, 55};
         tree.buildHeap(array);
         Integer value;
-        while ((value = tree.poll()) != null) {
+        while ((value = tree.remove()) != null) {
             System.out.println("top priority: " + value);
         }
 

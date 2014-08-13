@@ -1,26 +1,77 @@
 package org.sheehan.algorithm.graph;
 
 import org.junit.Test;
-import org.sheehan.algorithm.data_structures.GraphMatrix;
-
-import static org.junit.Assert.*;
 
 
 public class DjikstraShortestPathTest {
 
     @Test
     public void testShortestPath() {
-        GraphMatrix graph = new GraphMatrix(7);
-        graph.addDirectedEdge(0, 1, 5);
-        graph.addDirectedEdge(0, 2, 10);
-        graph.addDirectedEdge(1, 3, 6);
-        graph.addDirectedEdge(1, 4, 3);
-        graph.addDirectedEdge(3, 5, 6);
-        graph.addDirectedEdge(4, 3, 2);
-        graph.addDirectedEdge(4, 6, 2);
-        graph.addDirectedEdge(6, 5, 2);
+        Integer nodes[] = {0,1,2,3,4,9};
+        GraphMatrix graph = new GraphMatrix(nodes);
+        graph.addUndirectedEdge(nodes[0], nodes[1]);
+        graph.addUndirectedEdge(nodes[0], nodes[2]);
+        graph.addUndirectedEdge(nodes[0], nodes[3]);
+        graph.addUndirectedEdge(nodes[0], nodes[4]);
+        graph.addUndirectedEdge(nodes[2], nodes[1]);
+        graph.addUndirectedEdge(nodes[2], nodes[3]);
+        graph.addUndirectedEdge(nodes[2], nodes[4]);
+        graph.addUndirectedEdge(nodes[1], nodes[5]);
         DjikstraShortestPath alg = new DjikstraShortestPath(graph);
         alg.execute(0);
+        alg.printPath(0, 5);
+    }
+
+    @Test
+    public void testShortestPathPQ() {
+        Integer nodes[] = {0,1,2,3,4,9};
+        GraphMatrix graph = new GraphMatrix(nodes);
+        graph.addUndirectedEdge(nodes[0], nodes[1]);
+        graph.addUndirectedEdge(nodes[0], nodes[2]);
+        graph.addUndirectedEdge(nodes[0], nodes[3]);
+        graph.addUndirectedEdge(nodes[0], nodes[4]);
+        graph.addUndirectedEdge(nodes[2], nodes[1]);
+        graph.addUndirectedEdge(nodes[2], nodes[3]);
+        graph.addUndirectedEdge(nodes[2], nodes[4]);
+        graph.addUndirectedEdge(nodes[1], nodes[5]);
+        DjikstraShortestPath alg = new DjikstraShortestPath(graph);
+        alg.execute2(0);
+        alg.printPath(0, 5);
+    }
+
+    @Test
+    public void testShortestPath2() {
+        Integer nodes[] = {0,1,2,3,4,9};
+        GraphMatrix graph = new GraphMatrix(nodes);
+        graph.addUndirectedEdge(nodes[0], nodes[1], 10);
+        graph.addUndirectedEdge(nodes[0], nodes[2], 1);
+        graph.addUndirectedEdge(nodes[0], nodes[3], 1);
+        graph.addUndirectedEdge(nodes[0], nodes[4], 10);
+        graph.addUndirectedEdge(nodes[2], nodes[1], 1);
+        graph.addUndirectedEdge(nodes[2], nodes[3], 1);
+        graph.addUndirectedEdge(nodes[2], nodes[4], 1);
+        graph.addUndirectedEdge(nodes[1], nodes[5], 10);
+        graph.addUndirectedEdge(nodes[4], nodes[5], 1);
+        DjikstraShortestPath alg = new DjikstraShortestPath(graph);
+        alg.execute(0);
+        alg.printPath(0, 5);
+    }
+
+    @Test
+    public void testShortestPathPQ2() {
+        Integer nodes[] = {0,1,2,3,4,9};
+        GraphMatrix graph = new GraphMatrix(nodes);
+        graph.addUndirectedEdge(nodes[0], nodes[1], 10);
+        graph.addUndirectedEdge(nodes[0], nodes[2], 1);
+        graph.addUndirectedEdge(nodes[0], nodes[3], 1);
+        graph.addUndirectedEdge(nodes[0], nodes[4], 10);
+        graph.addUndirectedEdge(nodes[2], nodes[1], 1);
+        graph.addUndirectedEdge(nodes[2], nodes[3], 1);
+        graph.addUndirectedEdge(nodes[2], nodes[4], 1);
+        graph.addUndirectedEdge(nodes[1], nodes[5], 10);
+        graph.addUndirectedEdge(nodes[4], nodes[5], 1);
+        DjikstraShortestPath alg = new DjikstraShortestPath(graph);
+        alg.execute2(0);
         alg.printPath(0, 5);
     }
 
