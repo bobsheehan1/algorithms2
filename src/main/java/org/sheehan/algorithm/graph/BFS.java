@@ -9,9 +9,9 @@ import org.sheehan.algorithm.data_structures.QueueImpl;
 public class BFS {
     private boolean marked[];
     private boolean added[];
-    private final GraphMatrix graph;
+    private final Graph graph;
 
-    public BFS(GraphMatrix graph){
+    public BFS(Graph graph){
         marked = new boolean[graph.getNumV()];
         added = new boolean[graph.getNumV()];
         this.graph = graph;

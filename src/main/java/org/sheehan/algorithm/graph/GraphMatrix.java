@@ -10,7 +10,7 @@ import java.util.Arrays;
  * Created by bob on 7/8/14.
  *
  */
-public class GraphMatrix <T extends Comparable<T>> {
+public class GraphMatrix <T extends Comparable<T>> implements Graph<T> {
     private int graph[][];
     private int numE = 0;
     private T [] nodes;
@@ -27,23 +27,8 @@ public class GraphMatrix <T extends Comparable<T>> {
         }
     }
 
-    // add directed edge no weight
-    public void addDirectedEdge(T node1, T node2) {
-        int i = Arrays.binarySearch(this.nodes, node1);
-        int j = Arrays.binarySearch(this.nodes, node2);
-        if (i < nodes.length && i >= 0 && j < nodes.length && j >= 0) {
-            if (!isEdge(nodes[i],nodes[j])) {
-                graph[i][j] = 1;
-                numE++;
-            }
-            else {
-                System.err.println("already an edge: " + i + "-" + j );
-            }
-        }else
-            throw new IndexOutOfBoundsException(i + "-" + j);
-    }
-
     // add directed edge weighted
+    @Override
     public void addDirectedEdge(T node1, T node2, int weight) {
         int i = Arrays.binarySearch(this.nodes, node1);
         int j = Arrays.binarySearch(this.nodes, node2);
@@ -59,22 +44,7 @@ public class GraphMatrix <T extends Comparable<T>> {
             throw new IndexOutOfBoundsException(i + "-" + j);
     }
 
-    public void addUndirectedEdge(T node1, T node2) {
-        int i = Arrays.binarySearch(this.nodes, node1);
-        int j = Arrays.binarySearch(this.nodes, node2);
-        if (i < nodes.length && i >= 0 && j < nodes.length && j >= 0) {
-            if (!isEdge(nodes[i],nodes[j])) {
-                graph[i][j] = 1;
-                graph[j][i] = 1;
-                numE++;
-            }
-            else {
-                System.err.println("already an edge: " + i + "-" + j );
-            }
-        }else
-            throw new IndexOutOfBoundsException(i + "-" + j);
-    }
-
+    @Override
     public void addUndirectedEdge(T node1, T node2, int weight) {
         int i = Arrays.binarySearch(this.nodes, node1);
         int j = Arrays.binarySearch(this.nodes, node2);
@@ -91,6 +61,7 @@ public class GraphMatrix <T extends Comparable<T>> {
             throw new IndexOutOfBoundsException(i + "-" + j);
     }
 
+    @Override
     public boolean isEdge(T node1, T node2) {
         int i = Arrays.binarySearch(this.nodes, node1);
         int j = Arrays.binarySearch(this.nodes, node2);
@@ -100,6 +71,7 @@ public class GraphMatrix <T extends Comparable<T>> {
 
     }
 
+    @Override
     public void printGraph() {
         System.out.println("vertices: " + nodes.length + " edges: " + numE);
         for (int i = 0; i < this.nodes.length; ++i){
@@ -113,10 +85,12 @@ public class GraphMatrix <T extends Comparable<T>> {
         }
     }
 
+    @Override
     public int getNumV() {
         return nodes.length;
     }
 
+    @Override
     public List<T> getNeighbors(int sourceIndex) {
         List<T> neighbors = new ListImpl<T>();
         for (int j = 0; j < this.nodes.length; ++j) {
@@ -127,6 +101,7 @@ public class GraphMatrix <T extends Comparable<T>> {
         return neighbors;
     }
 
+    @Override
     public Integer getEdgeWeight(T node1, T node2) {
         int i = Arrays.binarySearch(this.nodes, node1);
         int j = Arrays.binarySearch(this.nodes, node2);
@@ -136,10 +111,12 @@ public class GraphMatrix <T extends Comparable<T>> {
         return Integer.MAX_VALUE; // no edge
     }
 
+    @Override
     public T getNode(int i) {
         return this.nodes[i];
     }
 
+    @Override
     public int getNodeIndex(Comparable node) {
         return Arrays.binarySearch(this.nodes, node);
     }

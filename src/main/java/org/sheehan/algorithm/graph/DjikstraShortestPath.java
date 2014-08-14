@@ -6,12 +6,12 @@ import org.sheehan.algorithm.data_structures.*;
  * Created by bob on 7/8/14.
  */
 public class DjikstraShortestPath {
-    private final GraphMatrix graph;
+    private final Graph graph;
     private Boolean visited[];
     private Integer distance[];
     private Integer predecessor[];
 
-    public DjikstraShortestPath(GraphMatrix graph){
+    public DjikstraShortestPath(Graph graph){
         this.graph = graph;
         visited = new Boolean[graph.getNumV()];
         distance = new Integer[graph.getNumV()];
@@ -43,8 +43,8 @@ public class DjikstraShortestPath {
                 int neighborIndex = graph.getNodeIndex(neighborNode);
                 // update and compare distance from source
                 int newEdgeDistance = this.graph.getEdgeWeight(graph.getNode(minDistanceNodeIndex), graph.getNode(neighborIndex));
-                if (distance[neighborIndex]> distance[minDistanceNodeIndex]  + newEdgeDistance){
-                    distance[neighborIndex] = distance[minDistanceNodeIndex]  + newEdgeDistance;
+                if (distance[neighborIndex] > distance[minDistanceNodeIndex] + newEdgeDistance){
+                    distance[neighborIndex] = distance[minDistanceNodeIndex] + newEdgeDistance;
                     predecessor[neighborIndex] = minDistanceNodeIndex;
                 }
             }
@@ -108,9 +108,11 @@ public class DjikstraShortestPath {
         }
         path.push(srcIndex);
 
+        System.out.print("path: ");
         while(path.peek() != null){
-            System.out.println(graph.getNode(path.pop()));
+            System.out.print(graph.getNode(path.pop()) + " ");
         }
+        System.out.println();
     }
 
     // how about use PQ instead !

@@ -2,12 +2,12 @@ package org.sheehan.algorithm.graph;
 
 import org.junit.Test;
 
-public class GraphMatrixTest {
+public class GraphListTest {
 
     @Test
     public void testAddEdge() throws Exception {
         Integer nodes[] = {0,1,2,3,4};
-        Graph<Integer> graph = new GraphMatrix<Integer>(nodes);
+        Graph<Integer> graph = new GraphList<Integer>(nodes);
         graph.addUndirectedEdge(nodes[0], nodes[1], 1);
         graph.addUndirectedEdge(nodes[0], nodes[2], 1);
         graph.addUndirectedEdge(nodes[0], nodes[3], 1);
@@ -22,7 +22,7 @@ public class GraphMatrixTest {
     @Test
     public void testAddDirectedWeightedEdge() throws Exception {
         Integer nodes[] = {0,1,2,3,4,5,6};
-        Graph<Integer> graph = new GraphMatrix<Integer>(nodes);
+        Graph<Integer> graph = new GraphList<Integer>(nodes);
         graph.addDirectedEdge(nodes[0], nodes[1], 5);
         graph.addDirectedEdge(nodes[0], nodes[2], 10);
         graph.addDirectedEdge(nodes[1], nodes[3], 6);

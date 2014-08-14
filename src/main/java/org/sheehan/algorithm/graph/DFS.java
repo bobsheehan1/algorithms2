@@ -8,9 +8,9 @@ import org.sheehan.algorithm.data_structures.StackImpl;
  */
 public class DFS {
     private boolean marked[];
-    private final GraphMatrix graph;
+    private final Graph graph;
 
-    public DFS(GraphMatrix graph){
+    public DFS(Graph graph){
         marked = new boolean[graph.getNumV()];
         this.graph = graph;
     }
