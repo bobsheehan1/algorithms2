@@ -2,52 +2,31 @@ package org.sheehan.algorithm.graph;
 
 import org.sheehan.algorithm.data_structures.*;
 
+import java.util.LinkedHashSet;
+import java.util.Set;
+import java.util.TreeSet;
+
 /**
  * Created by bob on 7/8/14.
  */
-public class DjikstraShortestPath {
+public class PrimMinSpanningTree <T extends Comparable<T>> {
     private final Graph graph;
     private Boolean visited[];
     private Integer distance[];
     private Integer predecessor[];
 
-    public DjikstraShortestPath(Graph graph){
+    //for Prim
+    private Set<Comparable<T>> minSpanningNodes;
+
+    public PrimMinSpanningTree(Graph<T> graph){
         this.graph = graph;
         visited = new Boolean[graph.getNumV()];
         distance = new Integer[graph.getNumV()];
         predecessor = new Integer[graph.getNumV()];
 
-    }
-
-    // not optimized with PQ
-    public void execute(int sourceIndex) {
-        for (int i=0; i<distance.length; i++) {
-            distance[i] = Integer.MAX_VALUE;
+        minSpanningNodes = new LinkedHashSet<>();
+        for (int i=0; i < graph.getNumV(); ++i){
             visited[i] = false;
-
-        }
-        distance[sourceIndex] = 0;
-
-        // calculate shortest distance to each node from source
-        for (int i = 0; i < distance.length; ++i) {
-            // of all unvisited nodes which one has the minimal distance
-            int minDistanceNodeIndex = getMinDistanceNodeIndex(visited, distance);
-            // set this to visited
-            visited[minDistanceNodeIndex] = true;
-            // starting at this node look at all neighbors and update distance cost and predecessor
-            // if improved.
-            List<Integer> neighborNodes = this.graph.getNeighbors(minDistanceNodeIndex);
-            for (Integer neighborNode : neighborNodes) {
-                int neighborIndex = graph.getNodeIndex(neighborNode);
-                // if whatever the neighbor had as a distance is improved by connecting from this new node and edge
-                // then update the neighbor of this new node with better distance
-                int newEdgeDistance = this.graph.getEdgeWeight(graph.getNode(minDistanceNodeIndex), graph.getNode(neighborIndex));
-                int newTotalDistanceFromSource = distance[minDistanceNodeIndex] + newEdgeDistance;
-                if (distance[neighborIndex] > newTotalDistanceFromSource){
-                    distance[neighborIndex] = newTotalDistanceFromSource;
-                    predecessor[neighborIndex] = minDistanceNodeIndex;
-                }
-            }
         }
     }
 
@@ -76,42 +55,49 @@ public class DjikstraShortestPath {
         }
         distance[sourceIndex] = 0;
 
+        minSpanningNodes.add(graph.getNode(sourceIndex));
+        visited[sourceIndex] = true;
+
         // calculate shortest distance to each node from source
         while(!minHeap.isEmpty()) {
             // of all unvisited nodes which one has the minimal distance
             PQNode minDistanceNode = minHeap.remove();
+
+
             // starting at this node look at all neighbors and update distance cost and predecessor
             // if improved.
+            int overallMinimumEdgeWeight = Integer.MAX_VALUE;
+            int overallMinimumEdgeWeightIndex = 0;
+
             List<Integer> neighborNodes = this.graph.getNeighbors(minDistanceNode.index);
             for (Integer neighborNode : neighborNodes) {
                 int neighborIndex = graph.getNodeIndex(neighborNode);
                 // if whatever the neighbor had as a distance is improved by connecting from this new node and edge
                 // then update the neighbor of this new node with better distance
                 int newEdgeDistance = this.graph.getEdgeWeight(graph.getNode(minDistanceNode.index), graph.getNode(neighborIndex));
-                int newTotalDistanceFromSource = distance[minDistanceNode.index] + newEdgeDistance;
-                if (distance[neighborIndex] > newTotalDistanceFromSource){
-                    distance[neighborIndex] = newTotalDistanceFromSource;
-                    predecessor[neighborIndex] = minDistanceNode.index;
-                    minHeap.add(new PQNode(neighborIndex,newEdgeDistance));
+                if (!visited[neighborIndex] &&overallMinimumEdgeWeight > newEdgeDistance) {
+                    overallMinimumEdgeWeight = newEdgeDistance;
+                    overallMinimumEdgeWeightIndex = neighborIndex;
                 }
+
             }
+            if (!visited[overallMinimumEdgeWeightIndex]) {
+                minHeap.add(new PQNode(overallMinimumEdgeWeightIndex,overallMinimumEdgeWeight));
+                minSpanningNodes.add(graph.getNode(overallMinimumEdgeWeightIndex));
+                visited[overallMinimumEdgeWeightIndex] = true;
+            }
+
         }
     }
 
     public void printPath(int srcIndex, int destIndex) {
-        Stack<Integer> path = new StackImpl<>(predecessor.length);
-        int i = destIndex;
-        path.push(destIndex);
-        while(predecessor[i] != srcIndex){
-            path.push(predecessor[i]);
-            i = predecessor[i];
-        }
-        path.push(srcIndex);
 
-        System.out.print("path: ");
-        while(path.peek() != null){
-            System.out.print(graph.getNode(path.pop()) + " ");
+        System.out.print("MST: ");
+        for (Comparable c : minSpanningNodes){
+            T node = (T)c;
+            System.out.print(node.toString() + " ");
         }
+
         System.out.println();
     }
 

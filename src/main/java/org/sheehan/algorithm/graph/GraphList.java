@@ -14,9 +14,14 @@ import java.util.Map;
  */
 public class GraphList<T extends Comparable<T>> implements Graph<T> {
 
-    public class Edge <T> {
+    public class Edge<T> implements Comparable<Edge<T>> {
         public T node;
         public Integer weight = 1;
+
+        @Override
+        public int compareTo(Edge<T> edge) {
+            return this.weight.compareTo(edge.weight);
+        }
     }
 
     private Map<T,List<Edge<T>>> graphAdjacencyList;
