@@ -3,164 +3,194 @@ package org.sheehan.algorithm.graph;
 import org.sheehan.algorithm.data_structures.List;
 import org.sheehan.algorithm.data_structures.ListImpl;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by bob on 7/8/14.
  *
  */
 public class GraphList<T extends Comparable<T>> implements Graph<T> {
+    private Map<GraphNode<T>, List<GraphEdge<T>>> graphAdjacencyList;
+    private java.util.Set<GraphNode<T>> graphNodes = new HashSet<>();
 
-    public class Edge<T> implements Comparable<Edge<T>> {
-        public T node;
-        public Integer weight = 1;
 
-        @Override
-        public int compareTo(Edge<T> edge) {
-            return this.weight.compareTo(edge.weight);
+
+    /*public GraphList(T[] nodes) {
+        //TODO make method to init with array
+        for (int i = 0; i < nodes.length; ++i) {
+            graphNodes.add(nodes[i]);
         }
+        //sort so we can look up index with binary search
+        Collections.sort(graphNodes);
+        graphAdjacencyList = new HashMap<T, List<GraphEdge<T>>>();
+       
+        for (int i = 0; i < this.graphNodes.size(); ++i) {
+            graphAdjacencyList.put(this.graphNodes.get(i), new ListImpl<GraphEdge<T>>());
+        }
+    }*/
+
+    public GraphList() {
+        graphAdjacencyList = new HashMap<GraphNode<T>, List<GraphEdge<T>>>();
     }
 
-    private Map<T,List<Edge<T>>> graphAdjacencyList;
-    private T []graphNodes;
+    @Override
+    public GraphNode<T> addNode( GraphNode<T> node) {
+       // GraphNode<T> node = new GraphNode<T>(payload);
 
-    public GraphList(T[] nodes) {
-        this.graphNodes = nodes;
-        //sort so we can look up index with binary search
-        Arrays.sort(this.graphNodes);
-        graphAdjacencyList = new HashMap<T, List<Edge<T>>>();
-       
-        for (int i = 0; i < this.graphNodes.length; ++i) {
-            graphAdjacencyList.put(this.graphNodes[i], new ListImpl<Edge<T>>());
-        }
+        graphNodes.add(node);
+        //Collections.sort(graphNodes);
+        graphAdjacencyList.put(node, new ListImpl<GraphEdge<T>>());
+
+        return node;
+
+
     }
 
     // add directed edge weighted
     @Override
-    public void addDirectedEdge(T node1, T node2, int weight) {
-        Edge<T> edge = new Edge<>();
-        edge.node = node2;
+    public GraphEdge<T>  addDirectedEdge( GraphNode<T> node1,  GraphNode<T>node2, int weight) {
+        if (!graphNodes.contains(node1))
+            addNode(node1);
+        if (!graphNodes.contains(node2))
+            addNode(node2);
+        GraphEdge<T> edge = new GraphEdge<>(node1, node2, weight);
 
-        edge.weight = weight;
-
-        int i = Arrays.binarySearch(this.graphNodes, node1);
-        int j = Arrays.binarySearch(this.graphNodes, node2);
-        if (i < graphNodes.length && i >= 0 && j < graphNodes.length && j >= 0) {
-            if (!isEdge(node1,node2)) {
+        //int i = Collections.binarySearch(this.graphNodes, node1);
+        //int j = Collections.binarySearch(this.graphNodes, node2);
+        //if (i < this.graphNodes.size() && i >= 0 && j < this.graphNodes.size() && j >= 0) {
+            if (!isEdge(edge.srcNode,edge.dstNode)) {
                 graphAdjacencyList.get(node1).append(edge);
             }
             else {
-                System.err.println("already an edge: " + i + "-" + j );
+                System.err.println("already an edge: " + node1 + " " + node2 );
             }
-        }else
-            throw new IndexOutOfBoundsException(i + "-" + j);
+        //}else
+        //    throw new IndexOutOfBoundsException(i + "-" + j);
+
+        return edge;
     }
 
 
     @Override
-    public void addUndirectedEdge(T node1, T node2, int weight) {
-        Edge<T> edge1 = new Edge<>();
-        edge1.node = node2;
-        edge1.weight = weight;
-        Edge<T> edge2 = new Edge<>();
-        edge2.node = node1;
-        edge2.weight = weight;
-        int i = Arrays.binarySearch(this.graphNodes, node1);
-        int j = Arrays.binarySearch(this.graphNodes, node2);
-        if (i < graphNodes.length && i >= 0 && j < graphNodes.length && j >= 0) {
-            if (!isEdge(node1,node2)) {
-                graphAdjacencyList.get(node1).append(edge1);
+    public java.util.List<GraphEdge<T>> addUndirectedEdge(GraphNode<T> node1, GraphNode<T> node2, int weight) {
+        if (!graphNodes.contains(node1))
+            addNode(node1);
+        if (!graphNodes.contains(node2))
+            addNode(node2);
+        GraphEdge<T> edge1 = new GraphEdge<>(node1, node2, weight);
+        GraphEdge<T> edge2 = new GraphEdge<>(node2, node1, weight);
+        edge2.id = edge1.id; //undirected edge (2 parallel edges)
+        //int i = Collections.binarySearch(this.graphNodes, node1);
+        //int j = Collections.binarySearch(this.graphNodes, node2);
+        //if (i < this.graphNodes.size() && i >= 0 && j < this.graphNodes.size() && j >= 0) {
+        if (!isEdge(edge1.srcNode,edge1.dstNode)) {
+            graphAdjacencyList.get(node1).append(edge1);
             }
             else {
-                System.err.println("already an edge: " + i + "-" + j );
+                System.err.println("already an edge: " + node1 + " " + node2 );
             }
-            if (!isEdge(node2,node1)) {
+   //     if (!isEdge(edge2.dstNode,edge2.srcNode)) {
                 graphAdjacencyList.get(node2).append(edge2);
-            }
-            else {
-                System.err.println("already an edge: " + i + "-" + j );
-            }
-        }else
-            throw new IndexOutOfBoundsException(i + "-" + j);
+     //       }
+     //       else {
+     //           System.err.println("already an edge: " + node1 + " " + node2 );
+     //       }
+        //}else
+        //    throw new IndexOutOfBoundsException(i + "-" + j);
+
+        java.util.List<GraphEdge<T>> edges = new ArrayList<GraphEdge<T>>();
+        edges.add(edge1);
+        edges.add(edge2);
+
+        return edges;
     }
 
+    public Set<GraphNode<T>> getNodes(){
+        return graphNodes;
+    }
+
+
     @Override
-    public boolean isEdge(T node1, T node2) {
-        int i = Arrays.binarySearch(this.graphNodes, node1);
-        int j = Arrays.binarySearch(this.graphNodes, node2);
-        if (i < graphNodes.length && i >= 0 && j < graphNodes.length && j >= 0){
-            List<Edge<T>> edges = graphAdjacencyList.get(node1);
-            for (Edge edge : edges){
-                if (edge.node.equals(node2))
+    public boolean isEdge(GraphNode<T> node1, GraphNode<T> node2) {
+       // int i = Collections.binarySearch(this.graphNodes, node1);
+       // int j = Collections.binarySearch(this.graphNodes, node2);
+       // if (i < this.graphNodes.size() && i >= 0 && j < this.graphNodes.size() && j >= 0){
+            List<GraphEdge<T>> edges = graphAdjacencyList.get(node1);
+            for (GraphEdge edge : edges){
+                if (edge.dstNode.equals(node2))
                     return true;
             }
-        }
+        //}
         return false;
     }
 
 
-    private Edge<T> getEdge(T node1, T node2) {
-        int i = Arrays.binarySearch(this.graphNodes, node1);
-        int j = Arrays.binarySearch(this.graphNodes, node2);
-        if (i < graphNodes.length && i >= 0 && j < graphNodes.length && j >= 0){
-            List<Edge<T>> edges = graphAdjacencyList.get(node1);
-            for (Edge edge : edges){
-                if (edge.node.equals(node2))
+    public GraphEdge<T> getEdge(GraphNode<T> node1, GraphNode<T> node2) {
+       // int i = Collections.binarySearch(this.graphNodes, node1);
+        //int j = Collections.binarySearch(this.graphNodes, node2);
+        //if (i < this.graphNodes.size() && i >= 0 && j < this.graphNodes.size() && j >= 0){
+            List<GraphEdge<T>> edges = graphAdjacencyList.get(node1);
+            for (GraphEdge edge : edges){
+                if (edge.dstNode.equals(node2))
                     return edge;
             }
-        }
+       // }
         return null;
     }
 
     @Override
     public void printGraph() {
-        System.out.println("vertices: " + graphNodes.length );
-        for (int i = 0; i < this.graphNodes.length; ++i){
-            System.out.print(this.graphNodes[i].toString() + " :");
-            List<Edge<T>> edges = graphAdjacencyList.get(this.graphNodes[i]);
-            for (Edge edge : edges){
-                System.out.print(edge.node.toString() + "("+ edge.weight + ") ");
+        System.out.println("vertices: " + this.graphNodes.size() );
+        for (GraphNode<T> node : this.graphNodes){
+            List<GraphEdge<T>> graphEdges = graphAdjacencyList.get(node);
+            if (graphEdges.size() > 0 ) {
+                System.out.print(node.toString() + " -> ");
+                for (GraphEdge edge : graphEdges) {
+                    System.out.print(edge + " ");
+                }
+                System.out.println();
             }
-            System.out.println();
         }
     }
 
     @Override
     public int getNumV() {
-        return graphNodes.length;
+        return this.graphNodes.size();
     }
 
     @Override
-    public List<T> getNeighbors(int sourceIndex) {
-        List<T> neighbors = new ListImpl<T>();
-        for (int j = 0; j < this.graphNodes.length; ++j) {
-            if (isEdge(graphNodes[sourceIndex],graphNodes[j])) {
-                neighbors.append(graphNodes[j]);
-            }
+    public List<GraphNode<T>> getNeighbors(GraphNode<T> node) {
+        List<GraphNode<T>> neighbors = new ListImpl<>();
+        List<GraphEdge<T>> edges = graphAdjacencyList.get(node);
+        if (edges != null) {
+            for (GraphEdge<T> edge : edges)
+                neighbors.append(edge.dstNode);
         }
         return neighbors;
+
     }
 
     @Override
-    public Integer getEdgeWeight(T node1, T node2) {
-        int i = Arrays.binarySearch(this.graphNodes, node1);
-        int j = Arrays.binarySearch(this.graphNodes, node2);
-        if (isEdge(graphNodes[i], graphNodes[j])){
-            return getEdge(graphNodes[i], graphNodes[j]).weight;
+    public Integer getEdgeWeight(GraphNode<T> node1, GraphNode<T> node2) {
+        //int i = Collections.binarySearch(this.graphNodes, node1);
+        //int j = Collections.binarySearch(this.graphNodes, node2);
+        if (isEdge(node1, node2)){
+            return getEdge(node1, node2).weight;
         }
         return Integer.MAX_VALUE; // no edge
     }
 
-    @Override
-    public T getNode(int i) {
-        return this.graphNodes[i];
-    }
+    /*@Override
+    public GraphNode<T> getNode(int i) {
+        for (GraphNode<T> node : graphNodes){
+            if (node.equals())
+        }
 
-    @Override
-    public int getNodeIndex(Comparable node) {
-        return Arrays.binarySearch(this.graphNodes, node);
-    }
+        return this.graphNodes.
+    }*/
+
+   /* @Override
+    public int getNodeIndex(T node) {
+        return Collections.binarySearch(this.graphNodes, node);
+    }*/
 }

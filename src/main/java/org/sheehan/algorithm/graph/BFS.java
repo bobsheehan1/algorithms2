@@ -1,50 +1,48 @@
 package org.sheehan.algorithm.graph;
 
+import org.sheehan.algorithm.data_structures.List;
+import org.sheehan.algorithm.data_structures.ListImpl;
 import org.sheehan.algorithm.data_structures.Queue;
 import org.sheehan.algorithm.data_structures.QueueImpl;
 
 /**
  * Created by bob on 7/8/14.
  */
-public class BFS {
-    private boolean marked[];
-    private boolean added[];
-    private final Graph graph;
+public class BFS <T extends Comparable<T>>{
+    private final Graph<T> graph;
 
-    public BFS(Graph graph){
-        marked = new boolean[graph.getNumV()];
-        added = new boolean[graph.getNumV()];
+    public BFS(Graph<T> graph){
         this.graph = graph;
     }
 
     // use a queue for BFS
-    public void visitIterative(Integer sourceNode){
-        Queue<Comparable> queue = new QueueImpl<>(graph.getNumV());
+    public void visitIterative(GraphNode<T> sourceNode){
+        Queue<GraphNode<T>> queue = new QueueImpl<>(graph.getNumV());
         queue.add(sourceNode);
         while (queue.peek() != null) {
-            Comparable node = queue.remove();
-            marked[graph.getNodeIndex(node)] = true;
-            for (int i = 0; i < graph.getNumV(); ++i) {
-                Comparable neighborNode = graph.getNode(i);
-                if (!added[i] && graph.isEdge(node, neighborNode)) {
-                    queue.add(neighborNode);
-                    added[i] = true;
+            GraphNode<T> node = queue.remove();
+            node.visited = true;
+            List<GraphNode<T>> neighbors = graph.getNeighbors(node);
+            for (GraphNode<T> neighbor: neighbors){
+                if (!neighbor.visited) {
+                    queue.add(neighbor);
+                    neighbor.visited = true;
                 }
             }
         }
     }
 
-    public void printCoverage() {
-        System.out.print("covered ");
-        for (int i = 0; i < graph.getNumV(); ++i) {
-            if (marked[i])
-                System.out.print(i + " ");
+    public void printConnected() {
+        System.out.print("connected: ");
+        for (GraphNode<T> node: graph.getNodes()){
+           if (node.visited)
+                System.out.print(node + " ");
         }
         System.out.println();
-        System.out.print("uncovered ");
-        for (int i = 0; i < graph.getNumV(); ++i) {
-            if (!marked[i])
-                System.out.print(i + " ");
+        System.out.print("not connected: ");
+        for (GraphNode<T> node: graph.getNodes()){
+            if (!node.visited)
+                System.out.print(node + " ");
         }
         System.out.println();
     }

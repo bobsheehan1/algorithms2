@@ -2,43 +2,30 @@ package org.sheehan.algorithm.graph;
 
 import org.junit.Test;
 
+import java.util.ArrayList;
+
 public class DFSTest {
 
     @Test
     public void testVisit() throws Exception {
-        Integer nodes[] = {0,1,2,3,4,9};
-        Graph graph = new GraphMatrix(nodes);
-        graph.addUndirectedEdge(nodes[0], nodes[1], 1);
-        graph.addUndirectedEdge(nodes[0], nodes[2], 1);
-        graph.addUndirectedEdge(nodes[0], nodes[3], 1);
-        graph.addUndirectedEdge(nodes[0], nodes[4], 1);
-        graph.addUndirectedEdge(nodes[2], nodes[1], 1);
-        graph.addUndirectedEdge(nodes[2], nodes[3], 1);
-        graph.addUndirectedEdge(nodes[2], nodes[4], 1);
-        graph.addUndirectedEdge(nodes[1], nodes[5], 1);
-        //graph.printGraph();
+        java.util.List<GraphNode<Integer>> nodes = new ArrayList<>();
+        for (int i = 0; i < 7; i++){
+            nodes.add(new GraphNode<Integer>(i));
+        }
+
+        Graph<Integer> graph = new GraphList<Integer>();
+        graph.addUndirectedEdge(nodes.get(0), nodes.get(1), 5);
+        graph.addUndirectedEdge(nodes.get(0), nodes.get(2), 10);
+        graph.addUndirectedEdge(nodes.get(1), nodes.get(3), 6);
+        graph.addUndirectedEdge(nodes.get(1), nodes.get(4), 3);
+        graph.addUndirectedEdge(nodes.get(3), nodes.get(5), 6);
+        graph.addUndirectedEdge(nodes.get(4), nodes.get(3), 2);
+        graph.addUndirectedEdge(nodes.get(4), nodes.get(6), 2);
+        graph.addUndirectedEdge(nodes.get(6), nodes.get(5), 2);
 
         DFS dfs = new DFS(graph);
-        dfs.visitRecursion(1);
-        dfs.printCoverage();
+        dfs.visitRecursion(nodes.get(0));
+        dfs.printConnected();
     }
 
-    @Test
-    public void testVisit2() throws Exception {
-        Integer nodes[] = {0,1,2,3,4,9};
-        Graph graph = new GraphMatrix(nodes);
-        graph.addUndirectedEdge(nodes[0], nodes[1], 1);
-        graph.addUndirectedEdge(nodes[0], nodes[2], 1);
-        graph.addUndirectedEdge(nodes[0], nodes[3], 1);
-        graph.addUndirectedEdge(nodes[0], nodes[4], 1);
-        graph.addUndirectedEdge(nodes[2], nodes[1], 1);
-        graph.addUndirectedEdge(nodes[2], nodes[3], 1);
-        graph.addUndirectedEdge(nodes[2], nodes[4], 1);
-        graph.addUndirectedEdge(nodes[1], nodes[5], 1);
-       //graph.printGraph();
-
-        DFS dfs = new DFS(graph);
-        dfs.visitIterative(1);
-        dfs.printCoverage();
-    }
 }

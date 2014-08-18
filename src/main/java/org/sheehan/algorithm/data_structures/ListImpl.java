@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * Created by bob on 5/31/14.
  */
-public class ListImpl <T> implements List<T> {
+public class ListImpl <T extends Comparable<T>> implements List<T> {
 
 
     @Override
@@ -13,7 +13,8 @@ public class ListImpl <T> implements List<T> {
         return new MyListIterator<T>(this);
     }
 
-    public class MyListIterator<T> implements Iterator<T> {
+
+    public class MyListIterator<T extends Comparable<T>> implements Iterator<T> {
         Node<T> current;
 
         public MyListIterator(ListImpl<T> nodes) {

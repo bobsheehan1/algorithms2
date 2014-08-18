@@ -1,7 +1,7 @@
 package org.sheehan.algorithm.graph;
 
 import org.junit.Test;
-
+/*
 public class GraphMatrixTest {
 
     @Test
@@ -33,4 +33,4 @@ public class GraphMatrixTest {
         graph.addDirectedEdge(nodes[6], nodes[5], 2);
         graph.printGraph();
     }
-}
+}*/

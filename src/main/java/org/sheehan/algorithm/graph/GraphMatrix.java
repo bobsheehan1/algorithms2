@@ -5,11 +5,12 @@ import org.sheehan.algorithm.data_structures.ListImpl;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-
+/*
 /**
  * Created by bob on 7/8/14.
  *
  */
+/*
 public class GraphMatrix <T extends Comparable<T>> implements Graph<T> {
     private int graph[][];
     private int numE = 0;
@@ -112,8 +113,19 @@ public class GraphMatrix <T extends Comparable<T>> implements Graph<T> {
     }
 
     @Override
+    public GraphList.Edge<T> getEdge(T node1, T node2) {
+        //TODO implement this !
+        return null;
+    }
+
+    @Override
     public T getNode(int i) {
         return this.nodes[i];
+    }
+
+    @Override
+    public void addNode(T node) {
+        //TODO ?
     }
 
     @Override
@@ -121,3 +133,4 @@ public class GraphMatrix <T extends Comparable<T>> implements Graph<T> {
         return Arrays.binarySearch(this.nodes, node);
     }
 }
+*/

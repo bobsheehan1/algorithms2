@@ -2,35 +2,45 @@ package org.sheehan.algorithm.graph;
 
 import org.junit.Test;
 
+import java.util.ArrayList;
+
 public class GraphListTest {
 
     @Test
     public void testAddEdge() throws Exception {
-        Integer nodes[] = {0,1,2,3,4};
-        Graph<Integer> graph = new GraphList<Integer>(nodes);
-        graph.addUndirectedEdge(nodes[0], nodes[1], 1);
-        graph.addUndirectedEdge(nodes[0], nodes[2], 1);
-        graph.addUndirectedEdge(nodes[0], nodes[3], 1);
-        graph.addUndirectedEdge(nodes[0], nodes[4], 1);
-        graph.addUndirectedEdge(nodes[2], nodes[1], 1);
-        graph.addUndirectedEdge(nodes[2], nodes[0], 1);
-        graph.addUndirectedEdge(nodes[2], nodes[3], 1);
-        graph.addUndirectedEdge(nodes[2], nodes[4], 1);
+        java.util.List<GraphNode<Integer>> nodes = new ArrayList<>();
+        for (int i = 0; i < 7; i++){
+            nodes.add(new GraphNode<Integer>(i));
+        }
+
+        Graph<Integer> graph = new GraphList<Integer>();
+        graph.addUndirectedEdge(nodes.get(0), nodes.get(1), 5);
+        graph.addUndirectedEdge(nodes.get(0), nodes.get(2), 10);
+        graph.addUndirectedEdge(nodes.get(1), nodes.get(3), 6);
+        graph.addUndirectedEdge(nodes.get(1), nodes.get(4), 3);
+        graph.addUndirectedEdge(nodes.get(3), nodes.get(5), 6);
+        graph.addUndirectedEdge(nodes.get(4), nodes.get(3), 2);
+        graph.addUndirectedEdge(nodes.get(4), nodes.get(6), 2);
+        graph.addUndirectedEdge(nodes.get(6), nodes.get(5), 2);
         graph.printGraph();
     }
 
     @Test
     public void testAddDirectedWeightedEdge() throws Exception {
-        Integer nodes[] = {0,1,2,3,4,5,6};
-        Graph<Integer> graph = new GraphList<Integer>(nodes);
-        graph.addDirectedEdge(nodes[0], nodes[1], 5);
-        graph.addDirectedEdge(nodes[0], nodes[2], 10);
-        graph.addDirectedEdge(nodes[1], nodes[3], 6);
-        graph.addDirectedEdge(nodes[1], nodes[4], 3);
-        graph.addDirectedEdge(nodes[3], nodes[5], 6);
-        graph.addDirectedEdge(nodes[4], nodes[3], 2);
-        graph.addDirectedEdge(nodes[4], nodes[6], 2);
-        graph.addDirectedEdge(nodes[6], nodes[5], 2);
+        java.util.List<GraphNode<Integer>> nodes = new ArrayList<>();
+        for (int i = 0; i < 7; i++){
+            nodes.add(new GraphNode<Integer>(i));
+        }
+
+        Graph<Integer> graph = new GraphList<Integer>();
+        graph.addDirectedEdge(nodes.get(0), nodes.get(1), 5);
+        graph.addDirectedEdge(nodes.get(0), nodes.get(2), 10);
+        graph.addDirectedEdge(nodes.get(1), nodes.get(3), 6);
+        graph.addDirectedEdge(nodes.get(1), nodes.get(4), 3);
+        graph.addDirectedEdge(nodes.get(3), nodes.get(5), 6);
+        graph.addDirectedEdge(nodes.get(4), nodes.get(3), 2);
+        graph.addDirectedEdge(nodes.get(4), nodes.get(6), 2);
+        graph.addDirectedEdge(nodes.get(6), nodes.get(5), 2);
         graph.printGraph();
     }
 }

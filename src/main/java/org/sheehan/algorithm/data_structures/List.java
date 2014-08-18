@@ -5,7 +5,7 @@ import java.util.Iterator;
 /**
  * Created by bob on 7/6/14.
  */
-public interface List<T> extends Iterable<T> {
+public interface List<T extends Comparable<T>> extends Iterable<T>{
     void append (T value);
 
     //brute force

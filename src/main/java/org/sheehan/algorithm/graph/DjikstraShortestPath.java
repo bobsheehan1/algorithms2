@@ -2,130 +2,114 @@ package org.sheehan.algorithm.graph;
 
 import org.sheehan.algorithm.data_structures.*;
 
+import java.util.Comparator;
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 /**
  * Created by bob on 7/8/14.
  */
-public class DjikstraShortestPath {
-    private final Graph graph;
-    private Boolean visited[];
-    private Integer distance[];
-    private Integer predecessor[];
+public class DjikstraShortestPath <T extends Comparable<T>>{
+    private final Graph<T> graph;
+    private Map<GraphNode<T>, GraphNode<T>> predecessorMap;
 
-    public DjikstraShortestPath(Graph graph){
+    public DjikstraShortestPath(Graph<T> graph){
         this.graph = graph;
-        visited = new Boolean[graph.getNumV()];
-        distance = new Integer[graph.getNumV()];
-        predecessor = new Integer[graph.getNumV()];
-
+        predecessorMap = new LinkedHashMap<>();
     }
 
     // not optimized with PQ
-    public void execute(int sourceIndex) {
-        for (int i=0; i<distance.length; i++) {
-            distance[i] = Integer.MAX_VALUE;
-            visited[i] = false;
+    public void execute(GraphNode<T> sourceNode) {
+        for (GraphNode<T> node:graph.getNodes()){
+            node.distance = Integer.MAX_VALUE;
+            node.visited = false;
 
         }
-        distance[sourceIndex] = 0;
+        sourceNode.distance = 0;
 
         // calculate shortest distance to each node from source
-        for (int i = 0; i < distance.length; ++i) {
+        for (int i = 0; i < graph.getNumV(); ++i) {
             // of all unvisited nodes which one has the minimal distance
-            int minDistanceNodeIndex = getMinDistanceNodeIndex(visited, distance);
+            GraphNode<T> minDistanceNode = getMinDistanceNode();
             // set this to visited
-            visited[minDistanceNodeIndex] = true;
+            minDistanceNode.visited = true;
             // starting at this node look at all neighbors and update distance cost and predecessor
             // if improved.
-            List<Integer> neighborNodes = this.graph.getNeighbors(minDistanceNodeIndex);
-            for (Integer neighborNode : neighborNodes) {
-                int neighborIndex = graph.getNodeIndex(neighborNode);
+            List<GraphNode<T>> neighborNodes = this.graph.getNeighbors(minDistanceNode);
+            for (GraphNode<T> neighborNode : neighborNodes) {
                 // if whatever the neighbor had as a distance is improved by connecting from this new node and edge
                 // then update the neighbor of this new node with better distance
-                int newEdgeDistance = this.graph.getEdgeWeight(graph.getNode(minDistanceNodeIndex), graph.getNode(neighborIndex));
-                int newTotalDistanceFromSource = distance[minDistanceNodeIndex] + newEdgeDistance;
-                if (distance[neighborIndex] > newTotalDistanceFromSource){
-                    distance[neighborIndex] = newTotalDistanceFromSource;
-                    predecessor[neighborIndex] = minDistanceNodeIndex;
+                int newEdgeDistance = this.graph.getEdgeWeight(minDistanceNode, neighborNode);
+                int newTotalDistanceFromSource = minDistanceNode.distance + newEdgeDistance;
+                if (neighborNode.distance > newTotalDistanceFromSource){
+                    neighborNode.distance = newTotalDistanceFromSource;
+                    predecessorMap.put(neighborNode, minDistanceNode);
                 }
             }
-        }
-    }
-
-    class PQNode implements Comparable<PQNode>{
-        public Integer index;
-        public Integer distance = Integer.MAX_VALUE;
-
-        public PQNode(Integer index, Integer distance){
-            this.index = index;
-        }
-
-        @Override
-        public int compareTo(PQNode node) {
-            return this.distance.compareTo(node.distance);
         }
     }
 
     // optimized with PQ
-    public void execute2(int sourceIndex) {
-        BinaryHeap<PQNode> minHeap = new BinaryHeap<>(graph.getNumV(), BinaryHeap.HeapType.MIN_HEAP);
+    public void executePQ(GraphNode<T> sourceNode) {
+        BinaryHeap<GraphNode<T>> minHeap = new BinaryHeap<>(graph.getNumV(), BinaryHeap.HeapType.MIN_HEAP);
 
-        minHeap.add(new PQNode(sourceIndex, 0));
+        minHeap.add(sourceNode);
 
-        for (int i=0; i<distance.length; i++) {
-            distance[i] = Integer.MAX_VALUE;
+        for (GraphNode<T> node:graph.getNodes()){
+            node.distance = Integer.MAX_VALUE;
         }
-        distance[sourceIndex] = 0;
+        sourceNode.distance = 0;
 
         // calculate shortest distance to each node from source
         while(!minHeap.isEmpty()) {
             // of all unvisited nodes which one has the minimal distance
-            PQNode minDistanceNode = minHeap.remove();
+            GraphNode<T> minDistanceNode = minHeap.remove();
+            minDistanceNode.visited = true;
             // starting at this node look at all neighbors and update distance cost and predecessor
             // if improved.
-            List<Integer> neighborNodes = this.graph.getNeighbors(minDistanceNode.index);
-            for (Integer neighborNode : neighborNodes) {
-                int neighborIndex = graph.getNodeIndex(neighborNode);
+            List<GraphNode<T>> neighborNodes = this.graph.getNeighbors(minDistanceNode);
+            for (GraphNode<T> neighborNode : neighborNodes) {
                 // if whatever the neighbor had as a distance is improved by connecting from this new node and edge
                 // then update the neighbor of this new node with better distance
-                int newEdgeDistance = this.graph.getEdgeWeight(graph.getNode(minDistanceNode.index), graph.getNode(neighborIndex));
-                int newTotalDistanceFromSource = distance[minDistanceNode.index] + newEdgeDistance;
-                if (distance[neighborIndex] > newTotalDistanceFromSource){
-                    distance[neighborIndex] = newTotalDistanceFromSource;
-                    predecessor[neighborIndex] = minDistanceNode.index;
-                    minHeap.add(new PQNode(neighborIndex,newEdgeDistance));
+                int newEdgeDistance = this.graph.getEdgeWeight(minDistanceNode, neighborNode);
+                int newTotalDistanceFromSource = minDistanceNode.distance + newEdgeDistance;
+                if (neighborNode.distance > newTotalDistanceFromSource){
+                    neighborNode.distance = newTotalDistanceFromSource;
+                    predecessorMap.put(neighborNode,minDistanceNode);
+                    minHeap.add(neighborNode);
                 }
             }
         }
     }
 
-    public void printPath(int srcIndex, int destIndex) {
-        Stack<Integer> path = new StackImpl<>(predecessor.length);
-        int i = destIndex;
-        path.push(destIndex);
-        while(predecessor[i] != srcIndex){
-            path.push(predecessor[i]);
-            i = predecessor[i];
+    public void printPath(GraphNode<T> srcNode, GraphNode<T> dstNode) {
+        Stack<GraphNode<T>> path = new StackImpl<>(predecessorMap.size());
+        path.push(dstNode);
+
+        while (dstNode != null){
+            dstNode = predecessorMap.get(dstNode);
+            if (dstNode != null)
+                path.push(dstNode);
         }
-        path.push(srcIndex);
 
         System.out.print("path: ");
         while(path.peek() != null){
-            System.out.print(graph.getNode(path.pop()) + " ");
+            System.out.print(path.pop() + " ");
         }
         System.out.println();
     }
 
     // how about use PQ instead !
-    private int getMinDistanceNodeIndex(Boolean[] visited, Integer[] distance) {
+    private GraphNode<T> getMinDistanceNode() {
         int minDistance = Integer.MAX_VALUE;
-        int minDistanceIndex = -1; // -1 if not found.
-        for (int i = 0; i < distance.length; ++i) {
-            if (!visited[i] && distance[i] < minDistance){
-                minDistanceIndex = i;
-                minDistance = distance[i];
+        GraphNode<T> minDistanceNode = null; // -1 if not found.
+        for (GraphNode<T> node : graph.getNodes()) {
+            if (!node.visited && node.distance < minDistance){
+                minDistanceNode = node;
+                minDistance = minDistanceNode.distance;
             }
         }
 
-        return minDistanceIndex;
+        return minDistanceNode;
     }
 }
