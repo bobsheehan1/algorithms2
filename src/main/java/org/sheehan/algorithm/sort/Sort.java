@@ -1,6 +1,6 @@
 package org.sheehan.algorithm.sort;
 
-import org.sheehan.algorithm.data_structures.BinaryHeap;
+import org.sheehan.algorithm.data_structures.*;
 
 import java.lang.reflect.Array;
 import java.util.Arrays;
@@ -14,6 +14,9 @@ import java.util.Arrays;
  */
 public class Sort {
 
+    /////////////////////////////////////////////////////////////////////////////////
+    // BUBBLE SORT
+    /////////////////////////////////////////////////////////////////////////////////
     // worst 0(n2)
     // avg O(n2)
     // best O(n)
@@ -35,6 +38,9 @@ public class Sort {
         }
     }
 
+    /////////////////////////////////////////////////////////////////////////////////
+    // INSERTION SORT
+    /////////////////////////////////////////////////////////////////////////////////
     // worst 0(n2)
     // avg O(n2)
     // best O(n)
@@ -53,6 +59,9 @@ public class Sort {
         }
     }
 
+    /////////////////////////////////////////////////////////////////////////////////
+    // HEAP SORT
+    /////////////////////////////////////////////////////////////////////////////////
     // worst 0(nlogn)
     // avg O(nlogn)
     // best O(nlogn)
@@ -68,6 +77,9 @@ public class Sort {
         System.arraycopy(sortedArray, 0, array, 0, array.length);
     }
 
+    /////////////////////////////////////////////////////////////////////////////////
+    // SELECTION SORT
+    /////////////////////////////////////////////////////////////////////////////////
     // loop finding minimum element and move to next position at front
     public static void selectionSort(Integer array[]) {
 
@@ -84,6 +96,9 @@ public class Sort {
         }
     }
 
+    /////////////////////////////////////////////////////////////////////////////////
+    // MERGE SORT
+    /////////////////////////////////////////////////////////////////////////////////
     public static <T extends Comparable<T>> T[] mergeSort(T array[])
     {
         if (array.length <= 1)
@@ -230,6 +245,45 @@ public class Sort {
 
         // copy output back to array
         System.arraycopy( output, 0, array, 0, array.length );
+    }
 
+    /////////////////////////////////////////////////////////////////////////////////
+    // RADIX SORT
+    // LSD on integer keys
+    /////////////////////////////////////////////////////////////////////////////////
+    public static void radixSort(Integer array[]) {
+        List<Queue<Integer>> buckets = new ListImpl<Queue<Integer>>();
+        for (int i = 0; i < 10; i++){
+            buckets.append(new QueueImpl<Integer>(array.length));
+        }
+
+        Integer max = Integer.MIN_VALUE;
+        for (Integer value: array)
+            max = (max < value) ? value:max;
+
+        final int BASE = 10;
+
+        // while there is a max element larger positional value, iterate another bucket sorting pass
+        // moving the position from left to right by one
+        for (int positionMultiplier=1; max >= positionMultiplier; positionMultiplier *= BASE) {
+            // each pass checks a left to right position and buckets based on that digit
+            for (Integer value : array){
+                int valueDiv = value/positionMultiplier;
+                int valueMod = valueDiv%BASE;
+                buckets.get(valueMod).add(value);
+            }
+
+            // reset array to new order after sorting this pass
+            // the new order is obtained by removing elements from the bucket queues in FIFO order
+            // starting from least valued bucket
+            int index = 0;
+            for (int i = 0; i < BASE; ++i){
+                Queue<Integer> bucket = buckets.get(i);
+                Integer value;
+                while ((value = bucket.remove()) != null){
+                    array[index++] = value;
+                }
+            }
+        }
     }
 }

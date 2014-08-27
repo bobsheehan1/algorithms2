@@ -55,7 +55,7 @@ public class BinaryHeap <T extends Comparable<T>> extends BinaryCompleteTree <T>
 
     //iterative from node index i up to root.
     //bubble up
-    protected void heapify2(int i)
+    protected void heapifyIterative(int i)
     {
         int parentIndex = parent(i);
 
@@ -102,10 +102,7 @@ public class BinaryHeap <T extends Comparable<T>> extends BinaryCompleteTree <T>
                 swap(swap,i);
                 bubbleDown(swap);
             }
-
         }
-
-
     }
 
     private void swap(int index1, int index2) {

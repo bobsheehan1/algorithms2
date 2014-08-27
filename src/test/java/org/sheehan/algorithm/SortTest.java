@@ -106,4 +106,16 @@ public class SortTest {
         System.out.println(Arrays.toString(array));
         System.out.println();
     }
+
+    @Test
+    public void testRadixSortLsd() throws Exception {
+        Integer array[] = {5, 3, 20, 15, 135, 111};
+
+        System.out.println("radix lsd");
+        System.out.println(Arrays.toString(array));
+
+        Sort.radixSort(array);
+        System.out.println(Arrays.toString(array));
+        System.out.println();
+    }
 }

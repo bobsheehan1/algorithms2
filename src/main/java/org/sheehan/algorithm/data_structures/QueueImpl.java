@@ -5,7 +5,7 @@ import java.lang.reflect.Array;
 /**
  * Created by bob on 5/26/14.
  */
-public class QueueImpl<T> implements Queue<T> {
+public class QueueImpl<T extends Comparable<T>> implements Queue<T> {
 
     private int firstIndex = 0;
     private int count = 0;
@@ -14,7 +14,7 @@ public class QueueImpl<T> implements Queue<T> {
 
     public QueueImpl(int size) {
         this.size = size;
-        array = (T[]) Array.newInstance(Object.class, size);
+        array = (T[]) Array.newInstance(Comparable.class, size);
     }
 
     // add to back
@@ -61,5 +61,11 @@ public class QueueImpl<T> implements Queue<T> {
             System.out.print(array[i] + " ");
         }
         System.out.println();
+    }
+
+    @Override
+    public int compareTo(Queue<T> o) {
+        //TODO if needed
+        return 0;
     }
 }

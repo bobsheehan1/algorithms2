@@ -13,6 +13,8 @@ public interface List<T extends Comparable<T>> extends Iterable<T>{
 
     void reverse2();
 
+    T get(int index);
+
     void print();
 
     int size();

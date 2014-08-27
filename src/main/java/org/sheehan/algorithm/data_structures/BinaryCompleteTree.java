@@ -54,6 +54,4 @@ public class BinaryCompleteTree<T extends Comparable<T>> {
         print(leftChild(index));
         print(rightChild(index));
     }
-
-
 }
