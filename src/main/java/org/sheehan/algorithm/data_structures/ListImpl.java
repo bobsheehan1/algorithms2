@@ -123,6 +123,19 @@ public class ListImpl <T extends Comparable<T>> implements List<T> {
     }
 
     @Override
+    public T get(int index){
+        if (index > size())
+            return null;
+        Node n = this.head;
+        for (int i = 0; i < index; ++i)
+            n = n.next;
+
+        return (T)n.value;
+
+    }
+
+
+        @Override
     public void print(){
         Node n = this.head;
         while (n != null){

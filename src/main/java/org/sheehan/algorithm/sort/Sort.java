@@ -1,6 +1,9 @@
 package org.sheehan.algorithm.sort;
 
-import org.sheehan.algorithm.data_structures.BinaryHeap;
+import org.sheehan.algorithm.data_structures.*;
+
+import java.lang.reflect.Array;
+import java.util.Arrays;
 
 /**
  * Created with IntelliJ IDEA.
@@ -11,6 +14,9 @@ import org.sheehan.algorithm.data_structures.BinaryHeap;
  */
 public class Sort {
 
+    /////////////////////////////////////////////////////////////////////////////////
+    // BUBBLE SORT
+    /////////////////////////////////////////////////////////////////////////////////
     // worst 0(n2)
     // avg O(n2)
     // best O(n)
@@ -32,6 +38,9 @@ public class Sort {
         }
     }
 
+    /////////////////////////////////////////////////////////////////////////////////
+    // INSERTION SORT
+    /////////////////////////////////////////////////////////////////////////////////
     // worst 0(n2)
     // avg O(n2)
     // best O(n)
@@ -50,6 +59,9 @@ public class Sort {
         }
     }
 
+    /////////////////////////////////////////////////////////////////////////////////
+    // HEAP SORT
+    /////////////////////////////////////////////////////////////////////////////////
     // worst 0(nlogn)
     // avg O(nlogn)
     // best O(nlogn)
@@ -65,6 +77,9 @@ public class Sort {
         System.arraycopy(sortedArray, 0, array, 0, array.length);
     }
 
+    /////////////////////////////////////////////////////////////////////////////////
+    // SELECTION SORT
+    /////////////////////////////////////////////////////////////////////////////////
     // loop finding minimum element and move to next position at front
     public static void selectionSort(Integer array[]) {
 
@@ -81,6 +96,9 @@ public class Sort {
         }
     }
 
+    /////////////////////////////////////////////////////////////////////////////////
+    // MERGE SORT
+    /////////////////////////////////////////////////////////////////////////////////
     public static <T extends Comparable<T>> T[] mergeSort(T array[])
     {
         if (array.length <= 1)
@@ -127,9 +145,145 @@ public class Sort {
         }
     }
 
-    private static void swap(Integer[] array, int i, int j) {
-        int tmp = array[j];
+    private static <T> void swap(T[] array, int i, int j) {
+        T tmp = array[j];
         array[j] = array[i];
         array[i] = tmp;
+    }
+
+    /////////////////////////////////////////////////////////////////////////////////
+    // QUICKSORT
+    /////////////////////////////////////////////////////////////////////////////////
+    private static <T extends Comparable<T>> void quicksort(T[] array, int left, int right){
+        if (left < right) {
+            int partitionIndex = partition(array, left, right);
+            quicksort(array, left, partitionIndex - 1);
+            quicksort(array, partitionIndex + 1, right);
+        }
+    }
+
+    private static <T extends Comparable<T>> int partition(T[] array, int left, int right) {
+        // left is the index of the leftmost element of the subarray
+        // right is the index of the rightmost element of the subarray (inclusive)
+        // number of elements in subarray = right-left+1
+        int pivotIndex = choosePivot(array, left, right);
+        T pivotValue = array[pivotIndex];
+        swap(array, pivotIndex, right);
+
+        int storeIndex = left;
+        for( int i = left; i < right - 1; i++){
+            if (array[i].compareTo(pivotValue) < 0) {
+                swap(array, i, storeIndex);
+                storeIndex = storeIndex + 1;
+            }
+        }
+        swap(array, storeIndex, right);// Move pivot to its final place
+        return storeIndex;
+    }
+
+    private static <T> int choosePivot(T[] array, int left, int right) {
+        return left; //TODO optimize
+    }
+
+    /////////////////////////////////////////////////////////////////////////////////
+    // COUNTING SORT
+    /////////////////////////////////////////////////////////////////////////////////
+    private static final int MAX_RANGE = 1000000;
+    public static void countingSort(Integer array[]) {
+
+        if (array.length == 0)
+            return;
+
+        /** find max and min values **/
+        int max = array[0], min = array[0];
+
+        for (int i = 0; i < array.length; i++)
+        {
+            if (array[i] > max)
+                max = array[i];
+
+            if (array[i] < min)
+                min = array[i];
+        }
+
+        final int range = max - min + 1;
+
+        /** check if range is small enough for count array **/
+        /** else it might give out of memory exception while allocating memory for array **/
+        if (range > MAX_RANGE)
+        {
+            System.out.println("\nError : Range too large for sort");
+            return;
+
+        }
+        Integer b[] = (Integer[]) Array.newInstance(Integer.class, range);
+        Integer output[] = (Integer[]) Array.newInstance(Integer.class, array.length);
+
+        for (int i = 0; i < range; ++i) {
+            b[i] = 0;
+        }
+
+        // histogram
+        for (int i = 0; i < array.length; ++i) {
+            b[array[i]-min] += 1;
+        }
+
+        // b[i] contains # of values <= b[i]
+        for (int i = 1; i < range; ++i) {
+            b[i] += b[i - 1];
+        }
+
+        // create sorted output
+        for (int i = 0 ; i < array.length; i++) {
+            b[array[i] - min] -= 1;
+            int countOfElementI = b[array[i] - min];
+            System.out.println("# items <= " + array[i] + " is " + countOfElementI);
+            System.out.println("setting output index " + countOfElementI + " to " + array[i]);
+            output[countOfElementI] = array[i];
+
+        }
+
+        // copy output back to array
+        System.arraycopy( output, 0, array, 0, array.length );
+    }
+
+    /////////////////////////////////////////////////////////////////////////////////
+    // RADIX SORT
+    // LSD on integer keys
+    /////////////////////////////////////////////////////////////////////////////////
+    public static void radixSort(Integer array[]) {
+        List<Queue<Integer>> buckets = new ListImpl<Queue<Integer>>();
+        for (int i = 0; i < 10; i++){
+            buckets.append(new QueueImpl<Integer>(array.length));
+        }
+
+        Integer max = Integer.MIN_VALUE;
+        for (Integer value: array)
+            max = (max < value) ? value:max;
+
+        final int BASE = 10;
+
+        // while there is a max element larger positional value, iterate another bucket sorting pass
+        // moving the position from left to right by one
+        for (int positionMultiplier=1; max >= positionMultiplier; positionMultiplier *= BASE) {
+            // each pass checks a left to right position and buckets based on that digit
+            for (Integer value : array){
+                int valueDiv = value/positionMultiplier;
+                int valueMod = valueDiv%BASE;
+                buckets.get(valueMod).add(value);
+            }
+
+            // reset array to new order after sorting this pass
+            // the new order is obtained by removing elements from the bucket queues in FIFO order
+            // starting from least valued bucket
+            int index = 0;
+            for (int i = 0; i < BASE; ++i){
+                Queue<Integer> bucket = buckets.get(i);
+                Integer value;
+                while ((value = bucket.remove()) != null){
+                    array[index++] = value;
+                }
+            }
+        }
     }
 }

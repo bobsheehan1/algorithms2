@@ -2,28 +2,28 @@ package org.sheehan.algorithm.graph;
 
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import java.util.ArrayList;
 
 public class KruskalMinSpanningTreeTest {
-/*
     @Test
-    public void testExecute() throws Exception {
-        Integer nodes[] = {0,1,2,3,4,9};
-        Graph graph = new GraphList(nodes);
-        graph.addUndirectedEdge(nodes[0], nodes[1], 10);
-        graph.addUndirectedEdge(nodes[0], nodes[2], 1);
-        graph.addUndirectedEdge(nodes[0], nodes[3], 1);
-        graph.addUndirectedEdge(nodes[0], nodes[4], 10);
-        graph.addUndirectedEdge(nodes[2], nodes[1], 1);
-        graph.addUndirectedEdge(nodes[2], nodes[3], 1);
-        graph.addUndirectedEdge(nodes[2], nodes[4], 1);
-        graph.addUndirectedEdge(nodes[1], nodes[5], 10);
-        graph.addUndirectedEdge(nodes[4], nodes[5], 1);
+    public void testShortestPathDfs() {
+        java.util.List<GraphNode<Integer>> nodes = new ArrayList<>();
+        for (int i = 0; i < 6; i++){
+            nodes.add(new GraphNode<Integer>(i));
+        }
+
+        Graph<Integer> graph = new GraphList<Integer>();
+
+        graph.addUndirectedEdge(nodes.get(0),nodes.get(1), 10);
+        graph.addUndirectedEdge(nodes.get(0), nodes.get(2), 10);
+        graph.addUndirectedEdge(nodes.get(0), nodes.get(3), 1);
+        graph.addUndirectedEdge(nodes.get(0), nodes.get(4), 10);
+        graph.addUndirectedEdge(nodes.get(2), nodes.get(1), 1);
+        graph.addUndirectedEdge(nodes.get(2), nodes.get(3), 1);
+        graph.addUndirectedEdge(nodes.get(2), nodes.get(4), 1);
+        graph.addUndirectedEdge(nodes.get(1), nodes.get(5), 1);
         KruskalMinSpanningTree<Integer> alg = new KruskalMinSpanningTree(graph);
-        alg.execute();
-        alg.printMst();
-
-
+        alg.executeDfs();
+        alg.printPath();
     }
-    */
 }
