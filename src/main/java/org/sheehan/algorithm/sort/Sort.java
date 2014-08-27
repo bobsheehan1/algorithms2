@@ -2,6 +2,9 @@ package org.sheehan.algorithm.sort;
 
 import org.sheehan.algorithm.data_structures.BinaryHeap;
 
+import java.lang.reflect.Array;
+import java.util.Arrays;
+
 /**
  * Created with IntelliJ IDEA.
  * User: bsheehan
@@ -127,9 +130,106 @@ public class Sort {
         }
     }
 
-    private static void swap(Integer[] array, int i, int j) {
-        int tmp = array[j];
+    private static <T> void swap(T[] array, int i, int j) {
+        T tmp = array[j];
         array[j] = array[i];
         array[i] = tmp;
+    }
+
+    /////////////////////////////////////////////////////////////////////////////////
+    // QUICKSORT
+    /////////////////////////////////////////////////////////////////////////////////
+    private static <T extends Comparable<T>> void quicksort(T[] array, int left, int right){
+        if (left < right) {
+            int partitionIndex = partition(array, left, right);
+            quicksort(array, left, partitionIndex - 1);
+            quicksort(array, partitionIndex + 1, right);
+        }
+    }
+
+    private static <T extends Comparable<T>> int partition(T[] array, int left, int right) {
+        // left is the index of the leftmost element of the subarray
+        // right is the index of the rightmost element of the subarray (inclusive)
+        // number of elements in subarray = right-left+1
+        int pivotIndex = choosePivot(array, left, right);
+        T pivotValue = array[pivotIndex];
+        swap(array, pivotIndex, right);
+
+        int storeIndex = left;
+        for( int i = left; i < right - 1; i++){
+            if (array[i].compareTo(pivotValue) < 0) {
+                swap(array, i, storeIndex);
+                storeIndex = storeIndex + 1;
+            }
+        }
+        swap(array, storeIndex, right);// Move pivot to its final place
+        return storeIndex;
+    }
+
+    private static <T> int choosePivot(T[] array, int left, int right) {
+        return left; //TODO optimize
+    }
+
+    /////////////////////////////////////////////////////////////////////////////////
+    // COUNTING SORT
+    /////////////////////////////////////////////////////////////////////////////////
+    private static final int MAX_RANGE = 1000000;
+    public static void countingSort(Integer array[]) {
+
+        if (array.length == 0)
+            return;
+
+        /** find max and min values **/
+        int max = array[0], min = array[0];
+
+        for (int i = 0; i < array.length; i++)
+        {
+            if (array[i] > max)
+                max = array[i];
+
+            if (array[i] < min)
+                min = array[i];
+        }
+
+        final int range = max - min + 1;
+
+        /** check if range is small enough for count array **/
+        /** else it might give out of memory exception while allocating memory for array **/
+        if (range > MAX_RANGE)
+        {
+            System.out.println("\nError : Range too large for sort");
+            return;
+
+        }
+        Integer b[] = (Integer[]) Array.newInstance(Integer.class, range);
+        Integer output[] = (Integer[]) Array.newInstance(Integer.class, array.length);
+
+        for (int i = 0; i < range; ++i) {
+            b[i] = 0;
+        }
+
+        // histogram
+        for (int i = 0; i < array.length; ++i) {
+            b[array[i]-min] += 1;
+        }
+
+        // b[i] contains # of values <= b[i]
+        for (int i = 1; i < range; ++i) {
+            b[i] += b[i - 1];
+        }
+
+        // create sorted output
+        for (int i = 0 ; i < array.length; i++) {
+            b[array[i] - min] -= 1;
+            int countOfElementI = b[array[i] - min];
+            System.out.println("# items <= " + array[i] + " is " + countOfElementI);
+            System.out.println("setting output index " + countOfElementI + " to " + array[i]);
+            output[countOfElementI] = array[i];
+
+        }
+
+        // copy output back to array
+        System.arraycopy( output, 0, array, 0, array.length );
+
     }
 }

@@ -5,6 +5,9 @@ import org.sheehan.algorithm.data_structures.ListImpl;
 import org.sheehan.algorithm.data_structures.Queue;
 import org.sheehan.algorithm.data_structures.QueueImpl;
 
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * Created by bob on 7/8/14.
  */
@@ -16,8 +19,9 @@ public class BFS <T extends Comparable<T>>{
     }
 
     // use a queue for BFS
-    public void visitIterative(GraphNode<T> sourceNode){
-        Queue<GraphNode<T>> queue = new QueueImpl<>(graph.getNumV());
+    public void visitIterative(GraphNode<T> sourceNode){;
+        clearVisited();
+        Queue<GraphNode<T>> queue = new QueueImpl<>(100);
         queue.add(sourceNode);
         while (queue.peek() != null) {
             GraphNode<T> node = queue.remove();
@@ -29,6 +33,12 @@ public class BFS <T extends Comparable<T>>{
                     neighbor.visited = true;
                 }
             }
+        }
+    }
+
+    private void clearVisited() {
+        for (GraphNode<T> node : graph.getNodes()) {
+            node.visited = false;
         }
     }
 
@@ -46,5 +56,17 @@ public class BFS <T extends Comparable<T>>{
         }
         System.out.println();
     }
+
+    public Set<GraphNode> getConnected() {
+        Set<GraphNode> visitedNodes = new HashSet<>();
+        for (GraphNode<T> node: graph.getNodes()){
+            if (node.visited)
+                visitedNodes.add(node);
+        }
+        return visitedNodes;
+    }
+
+
+
 
 }
