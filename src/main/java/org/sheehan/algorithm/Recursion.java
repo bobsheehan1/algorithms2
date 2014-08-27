@@ -37,18 +37,23 @@ public class Recursion {
         hanoi(n-1, between, dest, source);
     }
 
+    // using stacks for towers
     static <T> void hanoi2(int n, Stack<T> source, Stack<T> dest, Stack<T> spare)
     {
         if (n == 0)
             return;
-
+        //recursive call 1
         hanoi2(n-1, source, spare, dest);
+
+        // move remaining source to dest
         T disk = source.pop();
         dest.push(disk);
         source.print();
         spare.print();
         dest.print();
         System.out.println();
+
+        //recursive call 2
         hanoi2(n-1, spare, dest, source);
     }
 }
