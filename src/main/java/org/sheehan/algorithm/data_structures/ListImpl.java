@@ -33,6 +33,11 @@ public class ListImpl <T extends Comparable<T>> implements List<T> {
             this.current = this.current.next;
             return value;
         }
+
+        @Override
+        public void remove() {
+            //TODO
+        }
     }
 
     public class Node <T> {
