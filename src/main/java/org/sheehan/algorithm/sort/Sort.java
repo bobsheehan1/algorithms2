@@ -3,6 +3,7 @@ package org.sheehan.algorithm.sort;
 import org.sheehan.algorithm.data_structures.*;
 
 import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
@@ -34,7 +35,7 @@ public class Sort {
                     swapped = true;
                 }
             }
-            n = n - 1;
+            n = n - 1; //optimization
         }
     }
 
@@ -43,18 +44,17 @@ public class Sort {
     /////////////////////////////////////////////////////////////////////////////////
     // worst 0(n2)
     // avg O(n2)
-    // best O(n)
+    // best O(n) - if already sorted !
+    // compares each new element against already sorted elements
     public static void insertionSort(Integer []array){
         int n = array.length;
 
+        // starting index to start from right and move left from
         for (int i = 1; i < n; ++i){
-            int j = i;
-            // check/swap iterating backwards from i
-            while (j > 0){
-                if (array[j] < array[j-1]) {
+            // move left from i swapping as you go
+            for (int j = i; j > 0; j--){
+               if (array[j] < array[j-1])
                     swap(array, j, j-1);
-                }
-                j--;
             }
         }
     }
@@ -78,11 +78,17 @@ public class Sort {
     }
 
     /////////////////////////////////////////////////////////////////////////////////
-    // SELECTION SORT
-    /////////////////////////////////////////////////////////////////////////////////
+    // SELECTION SORT - recursive
+    // worst 0(n^2)
+    // avg O(n^2)
+    // best O(n^2)
+    // in-place
+    // if compares are cheaper than swaps may be better !
+    // not stable
+    ///////////////////////////////////////////////////////////////////////////////
     // loop finding minimum element and move to next position at front
     public static void selectionSort(Integer array[]) {
-
+        //compare ith element to the min element in remainder and swap if necessary
         for (int i = 1; i < array.length; ++i) {
             int iMin = i;
             for (int j = i+1; j < array.length; ++j) {
@@ -93,6 +99,33 @@ public class Sort {
 
             if (i != iMin)
                 swap(array, i, iMin);
+        }
+    }
+
+    /////////////////////////////////////////////////////////////////////////////////
+    // SELECTION SORT - recursive
+    // worst 0(n^2)
+    // avg O(n^2)
+    // best O(n^2)
+    // in-place
+    // if compares are cheaper than swaps may be better !
+    // not stable
+    ///////////////////////////////////////////////////////////////////////////////
+    // loop finding minimum element and move to next position at front
+    public static void selectionSortRecursive(Integer array[], int start) {
+        if (start < array.length){
+            int iMin = start;
+            // (n-1) + (n-2) + (n-3) + .. +1 = n(n-1)/2 --> O(n^2)
+            for (int j = start+1; j < array.length; ++j) {
+                if (array[j] < array[iMin])
+                    iMin = j;
+
+            }
+
+            if (start != iMin)
+                swap(array, start, iMin);
+
+            selectionSortRecursive(array, start+1);
         }
     }
 
@@ -216,30 +249,29 @@ public class Sort {
             return;
 
         }
-        Integer b[] = (Integer[]) Array.newInstance(Integer.class, range);
+        Integer counts[] = (Integer[]) Array.newInstance(Integer.class, range);
         Integer output[] = (Integer[]) Array.newInstance(Integer.class, array.length);
 
         for (int i = 0; i < range; ++i) {
-            b[i] = 0;
+            counts[i] = 0;
         }
 
         // histogram
         for (int i = 0; i < array.length; ++i) {
-            b[array[i]-min] += 1;
+            counts[array[i]-min] += 1;
         }
 
-        // b[i] contains # of values <= b[i]
+        // accumulate -  b[i] contains # of values <= b[i]
         for (int i = 1; i < range; ++i) {
-            b[i] += b[i - 1];
+            counts[i] += counts[i - 1];
         }
 
         // create sorted output
         for (int i = 0 ; i < array.length; i++) {
-            b[array[i] - min] -= 1;
-            int countOfElementI = b[array[i] - min];
-            System.out.println("# items <= " + array[i] + " is " + countOfElementI);
-            System.out.println("setting output index " + countOfElementI + " to " + array[i]);
-            output[countOfElementI] = array[i];
+            counts[array[i] - min] -= 1; // decrement count
+            //System.out.println("# items <= " + array[i] + " is " + counts[array[i] - min]);
+            //System.out.println("setting output index " + counts[array[i] - min] + " to " + array[i]);
+            output[counts[array[i] - min]] = array[i];
 
         }
 
@@ -249,11 +281,14 @@ public class Sort {
 
     /////////////////////////////////////////////////////////////////////////////////
     // RADIX SORT
-    // LSD on integer keys
+    // LSD on integer keys (left to right)
+    // BASE = 10
     /////////////////////////////////////////////////////////////////////////////////
     public static void radixSort(Integer array[]) {
+        final int BASE = 10;
+
         List<Queue<Integer>> buckets = new ListImpl<Queue<Integer>>();
-        for (int i = 0; i < 10; i++){
+        for (int i = 0; i < BASE; i++){
             buckets.append(new QueueImpl<Integer>(array.length));
         }
 
@@ -261,12 +296,11 @@ public class Sort {
         for (Integer value: array)
             max = (max < value) ? value:max;
 
-        final int BASE = 10;
 
         // while there is a max element larger positional value, iterate another bucket sorting pass
         // moving the position from left to right by one
         for (int positionMultiplier=1; max >= positionMultiplier; positionMultiplier *= BASE) {
-            // each pass checks a left to right position and buckets based on that digit
+            // each pass checks a rt to left position and buckets based on that digit
             for (Integer value : array){
                 int valueDiv = value/positionMultiplier;
                 int valueMod = valueDiv%BASE;
@@ -283,6 +317,145 @@ public class Sort {
                 while ((value = bucket.remove()) != null){
                     array[index++] = value;
                 }
+            }
+        }
+    }
+
+    /////////////////////////////////////////////////////////////////////////////////
+    // RADIX SORT
+    // LSD on integer keys (left to right)
+    // BASE = 2
+    /////////////////////////////////////////////////////////////////////////////////
+    public static void radixSortBinaryLsd(Integer array[]) {
+        final int BASE = 2;
+
+        List<Queue<Integer>> buckets = new ListImpl<Queue<Integer>>();
+        for (int i = 0; i < BASE; i++){
+            buckets.append(new QueueImpl<Integer>(array.length));
+        }
+
+        int MASK = 0x00000001;
+
+        // while there is a max element larger positional value, iterate another bucket sorting pass
+        // moving the position from left to right by one
+        for (int position=0; position < Integer.SIZE; position++) {
+            // each pass checks a rt to left position and buckets based on that digit
+            for (Integer value : array){
+                int bitValue = value & MASK;
+                bitValue >>>= position;
+                buckets.get(bitValue).add(value);
+            }
+            MASK <<= 1;
+
+
+            // reset array to new order after sorting this pass
+            // the new order is obtained by removing elements from the bucket queues in FIFO order
+            // starting from least valued bucket
+            int index = 0;
+            for (int i = 0; i < BASE; ++i){
+                Queue<Integer> bucket = buckets.get(i);
+                Integer value;
+                while ((value = bucket.remove()) != null){
+                    array[index++] = value;
+                }
+            }
+        }
+    }
+
+    /////////////////////////////////////////////////////////////////////////////////
+    // RADIX SORT
+    // LSD on fixed length lexical keys
+    /////////////////////////////////////////////////////////////////////////////////
+    public static void radixSortLexicalFixedLsd(String array[]) {
+        // 256 character positions
+        List<Queue<String>> buckets = new ListImpl<Queue<String>>();
+        for (int i = 0; i < 256; i++){
+            buckets.append(new QueueImpl<String>(array.length));
+        }
+
+        Integer max = Integer.MIN_VALUE;
+        for (String value: array)
+            max = (max < value.length()) ? value.length():max;
+
+        // while there is a max element larger positional value, iterate another bucket sorting pass
+        // moving the position from left to right by one
+        for (int position=0; position<max; position--) {
+            // each pass checks a rt to left position and buckets based on that digit
+            for (String value : array){
+                char c = value.charAt(position);
+                buckets.get(Character.getNumericValue(c)).add(value);
+            }
+
+            // reset array to new order after sorting this pass
+            // the new order is obtained by removing elements from the bucket queues in FIFO order
+            // starting from least valued bucket
+            int index = 0;
+            for (int i = 0; i < 256; ++i){
+                Queue<String> bucket = buckets.get(i);
+                String value;
+                while ((value = bucket.remove()) != null){
+                    array[index++] = value;
+                }
+            }
+        }
+    }
+
+    // 1. bucket the strings by length (maxlen buckets)
+    // 2. reset the input array to be sorted by length using the buckets
+    // 3. left to right radix sort into 256 (ASCII) alpha buckets.
+    // 3a. start on left most position on longest strings,
+    // 3b. then as the position is moved to the right include additional bucket of that smaller
+    //     length.
+    // 3c. Each pass reset input array to new order determined by alpha buckets
+    // 3d. By the time you are down the last rightmost char input array will be reset to sorted ordered
+
+    public static void radixSortVarLengthMsd( String [ ] arr, int maxLen ) {
+        final int BUCKETS = 256;
+
+        java.util.List<java.util.List<String>> lengthBuckets = new ArrayList<java.util.List<String>>();
+        java.util.List<java.util.List<String>> alphaBuckets = new ArrayList<java.util.List<String>>();
+
+        for (int i = 0; i < arr.length; i++)
+            lengthBuckets.add(new ArrayList<String>());
+
+        for (int i = 0; i < BUCKETS; i++)
+            alphaBuckets.add(new ArrayList<String>());
+
+        // create buckets for each length and sort the strings by length into each bucket.
+        for (String s : arr)
+            lengthBuckets.get(s.length()).add(s);
+
+        // reinit array so all strings are sorted by length, not alpha yet !
+        int idx = 0;
+        for (java.util.List<String> lengthBucket : lengthBuckets)
+            for (String fixedLengthStr : lengthBucket)
+                arr[idx++] = fixedLengthStr;
+
+        // now starting with longest strings, go bucket by bucket to shortest strings
+        // subsequent passes as we move the position to the right will include the already
+        // sorted longer strings
+        int startingStrIndex = arr.length;
+        for (int charPos = maxLen - 1; charPos >= 0; charPos--) {
+            // index into arr for strings of the same length
+            startingStrIndex -= lengthBuckets.get(charPos + 1).size();
+
+            // index into arr for strings of the same length
+            // NOW WE ADD TO ALPHA BUCKET based on pos value from arr
+            // Do this for each string of this length
+            for (int i = startingStrIndex; i < arr.length; i++) {
+                alphaBuckets.get(arr[i].charAt(charPos)).add(arr[i]);
+            }
+
+            // NOW we iterate over ALPHA buckets one at a time and
+            // add in order to arr starting from startingIndex.
+            // This sorts all the strings of that length
+            idx = startingStrIndex;
+            for (java.util.List<String> thisAlphaBucket : alphaBuckets) {
+                for (String s : thisAlphaBucket) {
+                    arr[idx++] = s; // adds in sorted order !
+                }
+
+                thisAlphaBucket.clear();
             }
         }
     }

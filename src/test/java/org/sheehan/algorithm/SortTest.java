@@ -3,7 +3,9 @@ package org.sheehan.algorithm;
 import org.junit.Test;
 import org.sheehan.algorithm.sort.Sort;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Random;
 
 public class SortTest {
 
@@ -54,6 +56,18 @@ public class SortTest {
         System.out.println(Arrays.toString(array));
 
         Sort.selectionSort(array);
+        System.out.println(Arrays.toString(array));
+        System.out.println();
+    }
+
+    @Test
+    public void testSelectionSortRecursive() throws Exception {
+        Integer array[] = {1,6,3,8,7,2,5,11,55,33,88};
+
+        System.out.println("selection recurse");
+        System.out.println(Arrays.toString(array));
+
+        Sort.selectionSortRecursive(array, 1);
         System.out.println(Arrays.toString(array));
         System.out.println();
     }
@@ -116,6 +130,60 @@ public class SortTest {
 
         Sort.radixSort(array);
         System.out.println(Arrays.toString(array));
+        System.out.println();
+    }
+
+    @Test
+    public void testRadixSortBinaryLsd() throws Exception {
+        Integer array[] = {5, 3, 20, 15, 135, 111};
+
+        System.out.println("radix lsd");
+        System.out.println(Arrays.toString(array));
+
+        Sort.radixSortBinaryLsd(array);
+        System.out.println(Arrays.toString(array));
+        System.out.println();
+    }
+
+    @Test
+    public void testRadixSortLsdLexical() throws Exception {
+        String array[] = {"zxc", "ldf", "ior", "oiw", "pwo", "aaa"};
+
+        System.out.println("radix lsd lexical");
+        System.out.println(Arrays.toString(array));
+
+        Sort.radixSortLexicalFixedLsd(array);
+        System.out.println(Arrays.toString(array));
+        System.out.println();
+    }
+
+    @Test
+    public void testRadixSortMsdLexical() throws Exception {
+        java.util.List<String> lst = new ArrayList<>( );
+        Random r = new Random( );
+
+        //final int LEN = 7;
+
+        for( int i = 0; i < 20; i++ )
+        {
+            String str = "";
+            int len =  1 + r.nextInt( 5 ); // between 3 and 9 characters
+
+            for( int j = 0; j < len; j++ )
+                str += (char) ( 'a' + r.nextInt( 26 ) );
+
+            lst.add( str );
+        }
+
+        String []arr1 = new String[ lst.size( ) ];
+
+        lst.toArray( arr1 );
+
+        System.out.println("radix lsd lexical");
+        System.out.println(Arrays.toString(arr1));
+
+        Sort.radixSortVarLengthMsd(arr1, 9);
+        System.out.println(Arrays.toString(arr1));
         System.out.println();
     }
 }
