@@ -20,4 +20,11 @@ public class StringUtilsTest {
         Assert.assertEquals("olleh", reverseStr);
 
     }
+
+    @Test
+    public void testPermutations() throws Exception {
+        String testStr = "ABC";
+
+        StringUtils.permutation(testStr);
+    }
 }
