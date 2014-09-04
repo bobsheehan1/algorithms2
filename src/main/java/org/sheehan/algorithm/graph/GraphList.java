@@ -42,8 +42,23 @@ public class GraphList<T extends Comparable<T>> implements Graph<T> {
         graphAdjacencyList.put(node, new ListImpl<GraphEdge<T>>());
 
         return node;
+    }
 
-
+    @Override
+    // used for toposort
+    public boolean hasIncomingEdges(GraphNode<T> candidate) {
+        for (GraphNode<T> node : this.getNodes()) {
+            if (!node.equals(candidate)){
+                List<GraphNode<T>> neighbors = this.getNeighbors(node);
+                for (GraphNode<T> neighbor : neighbors) {
+                    // if unvisited incoming edge found from node to candidate
+                    GraphEdge<T> edge = getEdge(node, candidate);
+                    if (neighbor.equals(candidate) && (edge == null || !edge.visited))
+                        return true;
+                }
+            }
+        }
+        return false;
     }
 
     // add directed edge weighted

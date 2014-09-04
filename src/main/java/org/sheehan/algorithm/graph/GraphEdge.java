@@ -7,6 +7,7 @@ public class GraphEdge<T extends Comparable<T>> implements Comparable<GraphEdge<
     public GraphNode<T> dstNode;
     public GraphNode<T> srcNode; //optional - not needed for adjacency list impl below
     public Integer weight = 1;
+    public boolean visited; // used for topo sort
 
     public GraphEdge(GraphNode<T> node1, GraphNode<T> node2, Integer weight)
     {
@@ -34,6 +35,6 @@ public class GraphEdge<T extends Comparable<T>> implements Comparable<GraphEdge<
 
     @Override
     public String toString(){
-        return "[" + srcNode.toString()+"-"+dstNode.toString() + " edge:" + weight + "]";
+        return "[" + srcNode.toString()+"-"+dstNode.toString() + " edge:" + weight + " visited:" + visited + "]";
     }
 }

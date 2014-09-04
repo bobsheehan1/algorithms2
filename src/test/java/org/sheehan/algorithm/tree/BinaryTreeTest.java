@@ -1,7 +1,6 @@
-package org.sheehan.algorithm;
+package org.sheehan.algorithm.tree;
 
 import org.junit.Test;
-import org.sheehan.algorithm.data_structures.BinaryTree;
 
 public class BinaryTreeTest {
 
@@ -13,5 +12,6 @@ public class BinaryTreeTest {
         BinaryTree.TreeNode node3 = tree.createTreeNode(3, null, null);
         BinaryTree.TreeNode node4 = tree.createTreeNode(4, node3, node2);
         tree.print(node4);
+        tree.printInOrder();
     }
 }

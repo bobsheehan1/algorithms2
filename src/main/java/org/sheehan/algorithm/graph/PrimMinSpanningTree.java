@@ -1,7 +1,7 @@
 package org.sheehan.algorithm.graph;
 
-import org.sheehan.algorithm.data_structures.*;
 import org.sheehan.algorithm.data_structures.List;
+import org.sheehan.algorithm.tree.BinaryHeap;
 
 import java.util.*;
 

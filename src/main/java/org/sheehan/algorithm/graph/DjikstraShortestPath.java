@@ -1,8 +1,8 @@
 package org.sheehan.algorithm.graph;
 
 import org.sheehan.algorithm.data_structures.*;
+import org.sheehan.algorithm.tree.BinaryHeap;
 
-import java.util.Comparator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 

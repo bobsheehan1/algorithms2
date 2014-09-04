@@ -1,10 +1,10 @@
 package org.sheehan.algorithm.sort;
 
 import org.sheehan.algorithm.data_structures.*;
+import org.sheehan.algorithm.tree.BinaryHeap;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 /**
  * Created with IntelliJ IDEA.

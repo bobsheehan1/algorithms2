@@ -33,4 +33,6 @@ public interface Graph<T extends Comparable<T>> {
    // int getNodeIndex(T node);
 
     GraphNode<T> addNode(GraphNode<T> node);
+
+    boolean hasIncomingEdges(GraphNode<T> node);
 }
