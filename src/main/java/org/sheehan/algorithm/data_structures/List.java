@@ -32,4 +32,6 @@ public interface List<T extends Comparable<T>> extends Iterable<T>{
     ListImpl.Node hasCycle2();
 
     int countCycle(ListImpl.Node cycleStart);
+
+    T set(int j, T t);
 }

@@ -13,5 +13,6 @@ public class BinaryTreeTest {
         BinaryTree.TreeNode node4 = tree.createTreeNode(4, node3, node2);
         tree.print(node4);
         tree.printInOrder();
+
     }
 }

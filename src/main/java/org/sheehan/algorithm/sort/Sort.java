@@ -46,15 +46,35 @@ public class Sort {
     // avg O(n2)
     // best O(n) - if already sorted !
     // compares each new element against already sorted elements
-    public static void insertionSort(Integer []array){
+    public static <T extends Comparable<T>> void insertionSort(T array[]){
         int n = array.length;
 
         // starting index to start from right and move left from
         for (int i = 1; i < n; ++i){
             // move left from i swapping as you go
             for (int j = i; j > 0; j--){
-               if (array[j] < array[j-1])
-                    swap(array, j, j-1);
+                if (array[j].compareTo(array[j-1]) < 0)
+                    swap(array, j, j - 1);
+            }
+        }
+    }
+
+    /////////////////////////////////////////////////////////////////////////////////
+    // INSERTION SORT LIST
+    /////////////////////////////////////////////////////////////////////////////////
+    // worst 0(n2)
+    // avg O(n2)
+    // best O(n) - if already sorted !
+    // compares each new element against already sorted elements
+    public static <T extends Comparable<T>> void insertionSort(List<T> list){
+        int n = list.size();
+
+        // starting index to start from right and move left from
+        for (int i = 1; i < n; ++i){
+            // move left from i swapping as you go
+            for (int j = i; j > 0; j--){
+                if (list.get(j).compareTo(list.get(j-1)) < 0)
+                    swap(list, j, j - 1);
             }
         }
     }
@@ -183,6 +203,13 @@ public class Sort {
         array[j] = array[i];
         array[i] = tmp;
     }
+
+    private static <T extends Comparable<T>> void swap(List<T> list, int i, int j) {
+        T tmp = list.get(j);
+        list.set(j, list.get(i));
+        list.set(i, tmp);
+    }
+
 
     /////////////////////////////////////////////////////////////////////////////////
     // QUICKSORT

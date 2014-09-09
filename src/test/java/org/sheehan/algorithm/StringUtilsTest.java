@@ -3,6 +3,8 @@ package org.sheehan.algorithm;
 import junit.framework.Assert;
 import org.junit.Test;
 
+import static org.junit.Assert.assertEquals;
+
 /**
  * Created with IntelliJ IDEA.
  * User: bsheehan
@@ -26,5 +28,17 @@ public class StringUtilsTest {
         String testStr = "ABC";
 
         StringUtils.permutation(testStr);
+    }
+
+    @Test
+    public void testIsRotation() throws Exception {
+        String testStr1 = "ABC";
+        String testStr2 = "BCA";
+        assertEquals(true, StringUtils.isRotation(testStr1, testStr2));
+
+        testStr1 = "ABC";
+        testStr2 = "CBA";
+        assertEquals(false, StringUtils.isRotation(testStr1, testStr2));
+
     }
 }

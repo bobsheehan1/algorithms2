@@ -246,4 +246,19 @@ public class ListImpl <T extends Comparable<T>> implements List<T> {
         return 0;
     }
 
+    @Override
+    public T set(int index, T value) {
+        if (index > size())
+            return null;
+        Node n = this.head;
+        for (int i = 0; i < index; ++i)
+            n = n.next;
+
+        if (n != null)
+            n.value = value;
+
+        return value;
+
+    }
+
 }

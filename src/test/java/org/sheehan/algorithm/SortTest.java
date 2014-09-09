@@ -1,6 +1,8 @@
 package org.sheehan.algorithm;
 
 import org.junit.Test;
+import org.sheehan.algorithm.data_structures.List;
+import org.sheehan.algorithm.data_structures.ListImpl;
 import org.sheehan.algorithm.sort.Sort;
 
 import java.util.ArrayList;
@@ -23,7 +25,7 @@ public class SortTest {
     }
 
     @Test
-    public void testInsertionSort() throws Exception {
+    public void testInsertionSortArray() throws Exception {
         Integer array[] = {1,6,3,8,7,2,5,11,55,33,88};
 
         System.out.println("insertion");
@@ -31,6 +33,24 @@ public class SortTest {
 
         Sort.insertionSort(array);
         System.out.println(Arrays.toString(array));
+        System.out.println();
+
+    }
+
+    @Test
+    public void testInsertionSortList() throws Exception {
+        Integer array[] = {10,6,3,8,7,2,5,11,55,33,88};
+        List<Integer> list = new ListImpl<>();
+        for (Integer i : array){
+            list.append(i);
+        }
+
+        System.out.println("insertion");
+        list.print();
+
+        Sort.insertionSort(list);
+        list.print();
+
         System.out.println();
 
     }
