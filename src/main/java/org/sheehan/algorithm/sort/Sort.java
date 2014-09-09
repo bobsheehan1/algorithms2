@@ -394,7 +394,7 @@ public class Sort {
     // LSD on fixed length lexical keys
     /////////////////////////////////////////////////////////////////////////////////
     public static void radixSortLexicalFixedLsd(String array[]) {
-        // 256 character positions
+        // 256 ASCII character positions
         List<Queue<String>> buckets = new ListImpl<Queue<String>>();
         for (int i = 0; i < 256; i++){
             buckets.append(new QueueImpl<String>(array.length));
@@ -406,7 +406,7 @@ public class Sort {
 
         // while there is a max element larger positional value, iterate another bucket sorting pass
         // moving the position from left to right by one
-        for (int position=0; position<max; position--) {
+        for (int position=max-1; position>=0; position--) {
             // each pass checks a rt to left position and buckets based on that digit
             for (String value : array){
                 char c = value.charAt(position);

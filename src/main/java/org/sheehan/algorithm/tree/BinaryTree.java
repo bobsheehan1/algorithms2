@@ -31,6 +31,7 @@ public class BinaryTree<T> {
         public T value;
         TreeNode <T> left;
         TreeNode <T> right;
+        TreeNode<T> parent;
     }
 
     public BinaryTree() {
