@@ -24,6 +24,11 @@ public class BinaryTree<T> {
         node.left = left;
         node.right= right;
 
+        if (left != null)
+            left.parent = node;
+        if (right != null)
+            right.parent = node;
+
         return node;
     }
 
@@ -31,6 +36,7 @@ public class BinaryTree<T> {
         public T value;
         TreeNode <T> left;
         TreeNode <T> right;
+        TreeNode <T> parent; // for successor BST traversal
     }
 
     public BinaryTree() {
