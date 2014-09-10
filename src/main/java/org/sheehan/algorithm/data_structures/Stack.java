@@ -1,9 +1,11 @@
 package org.sheehan.algorithm.data_structures;
 
+import org.sheehan.algorithm.RangeMerge;
+
 /**
  * Created by bob on 5/26/14.
  */
-public interface Stack <T>{
+public interface Stack <T extends Comparable<T>>{
     T pop();
 
     T peek();
@@ -14,4 +16,5 @@ public interface Stack <T>{
 
     String getName();
 
+    T[] toArray();
 }

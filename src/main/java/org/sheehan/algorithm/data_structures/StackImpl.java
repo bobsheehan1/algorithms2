@@ -1,13 +1,15 @@
 package org.sheehan.algorithm.data_structures;
 
 import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.NoSuchElementException;
 
 
 /**
  * Created by bob on 5/25/14.
  */
-public class StackImpl<T> implements Stack<T> {
+public class StackImpl<T extends Comparable<T>> implements Stack<T> {
     private int top;
     private int size;
     private T array[];
@@ -16,7 +18,7 @@ public class StackImpl<T> implements Stack<T> {
     public StackImpl(int size) {
         this.top = -1;
         this.size = size;
-        array = (T[])Array.newInstance(Object.class, size);
+        array = (T[])Array.newInstance(Comparable.class, size);
     }
 
     public StackImpl(int size, String name) {
@@ -61,5 +63,11 @@ public class StackImpl<T> implements Stack<T> {
     @Override
     public String getName(){
         return name;
+    }
+
+    @Override
+    public T[] toArray() {
+        //TODO
+        return array;
     }
 }
