@@ -160,7 +160,9 @@ public class Sort {
         index1 = 0;
         index2 = 0;
 
-        // merge common length of 2 arrays
+        // merge COMMON LENGTH of 2 arrays
+        // this merge actually SORTS the arrays !
+        // this will exhaust one of the two arrays
         while(index1 < array1.length && index2 < array2.length){
             if (array1[index1].compareTo(array2[index2]) < 0) {
                 array[i++] = array1[index1++];
@@ -169,10 +171,11 @@ public class Sort {
             }
         }
 
-        // merge any left over where array lengths don't match
+        // merge the LEFT OVER array portion
         while(index1 < array1.length){
             array[i++] = array1[index1++];
         }
+        // if remaining array2 not merged
         while(index2 < array2.length){
             array[i++] = array2[index2++];
         }

@@ -17,8 +17,26 @@ public class StringUtilsTest {
         String testStr = "hello";
 
         String reverseStr = StringUtils.reverse(testStr);
+        System.out.println(reverseStr);
         Assert.assertEquals("olleh", reverseStr);
+    }
 
+    @Test
+    public void testReverse2() throws Exception {
+        String testStr = "hello there";
+
+        String reverseStr = StringUtils.reverse(testStr.toCharArray(), 6, testStr.length()-1);
+        System.out.println(reverseStr);
+        Assert.assertEquals("hello ereht", reverseStr);
+    }
+
+    @Test
+    public void testReverse3() throws Exception {
+        String testStr = "hello there";
+
+        String reverseStr = StringUtils.reverseWords(testStr);
+        System.out.println(reverseStr);
+        Assert.assertEquals("olleh ereht", reverseStr);
     }
 
     @Test
@@ -26,5 +44,11 @@ public class StringUtilsTest {
         String testStr = "ABC";
 
         StringUtils.permutation(testStr);
+    }
+
+    @Test
+    public void testStrToInt() throws Exception {
+        System.out.println(StringUtils.strToInt("1234"));
+        System.out.println(StringUtils.strToInt("-1234"));
     }
 }

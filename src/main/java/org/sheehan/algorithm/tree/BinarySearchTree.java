@@ -112,4 +112,18 @@ public class BinarySearchTree<T extends Comparable<T>> extends BinaryTree<T>{
         return maximum(node.right);
     }
 
+    void mirror(TreeNode<T> node){
+        if (node == null)
+            return;
+        else {
+            TreeNode<T> tmp = node.left;
+            node.left = node.right;
+            node.right = tmp;
+        }
+        if (node.left != null)
+            mirror(node.left);
+        if (node.right != null)
+            mirror(node.right);
+    }
+
 }

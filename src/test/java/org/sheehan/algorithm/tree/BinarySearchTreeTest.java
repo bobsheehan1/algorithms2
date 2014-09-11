@@ -65,6 +65,10 @@ public class BinarySearchTreeTest {
         System.out.println("predecessor " + node9.value + " is " + bst.predecessor(node9).value);
         System.out.println("predecessor " + node10.value + " is " + bst.predecessor(node10).value);
 
+        bst.mirror(bst.root);
+        bst.printInOrder();
+
+
 
     }
 }
