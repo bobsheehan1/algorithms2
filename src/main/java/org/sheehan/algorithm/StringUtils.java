@@ -11,34 +11,10 @@ public class StringUtils {
 
     static String reverse(String str) {
         char[] buffer = str.toCharArray();
-        return reverse(buffer, 0, str.length()-1);
-    }
-
-    static String reverse(char[] buffer, int start, int end) {
-        int length = end - start;
-        int pivot = start + length/2;
-        int cnt = 0;
-        for (int i = start; i < pivot; ++i){
+        for (int i = 0; i < buffer.length/2; ++i){
             char c = buffer[i];
-            buffer[i] = buffer[end-cnt];
-            buffer[end-cnt++] = c;
-        }
-        return new String(buffer);
-    }
-
-    static String reverseWords(String str){
-        int start = 0;
-        int end = 0;
-        char[] buffer = str.toCharArray();
-        for (int i = 0; i < str.length(); i++){
-            if (str.toCharArray()[i] == ' ') {
-                end = i-1;
-                reverse(buffer, start, end);
-                start = end+2;
-            } else if (i == str.length()-1) {
-                end = i;
-                reverse(buffer, start, end);
-            }
+            buffer[i] = buffer[buffer.length-1-i];
+            buffer[buffer.length-1-i] = c;
         }
         return new String(buffer);
     }
@@ -51,7 +27,7 @@ public class StringUtils {
         System.out.println("\tpermutation pre:" + prefix + " str:" + str + " level:" + level);
         int n = str.length();
         if (n == 0) {
-            System.out.println("\tEND permutation pre:" + prefix + " str:" + str + " level:" + level);
+             System.out.println("\tEND permutation pre:" + prefix + " str:" + str + " level:" + level);
             System.out.println();
             System.out.println(prefix);
         }
@@ -65,28 +41,5 @@ public class StringUtils {
                 permutation(prefix + str.charAt(i), str.substring(0, i) + str.substring(i + 1, n), level+1);
             }
         }
-    }
-
-    public static int strToInt(String str)
-    {
-        boolean negative = false;
-        if (str.charAt(0) == '-')
-            negative = true;
-
-        int accumulator = 0;
-        int multiplier = 1;
-        if (!negative) {
-            for (int pos = str.length() - 1; pos >= 0; pos--) {
-                accumulator += (str.charAt(pos) - '0') * multiplier;
-                multiplier *= 10;
-            }
-        } else{
-            for (int pos = str.length() - 1; pos > 0; pos--) {
-                accumulator += (str.charAt(pos) - '0') * multiplier;
-                multiplier *= 10;
-            }
-            accumulator*=-1;
-        }
-        return accumulator;
     }
 }

@@ -38,7 +38,7 @@ public class Recursion {
     }
 
     // using stacks for towers
-    static <T> void hanoi2(int n, Stack<T> source, Stack<T> dest, Stack<T> spare)
+    static <T extends Comparable<T>> void hanoi2(int n, Stack<T> source, Stack<T> dest, Stack<T> spare)
     {
         if (n == 0)
             return;

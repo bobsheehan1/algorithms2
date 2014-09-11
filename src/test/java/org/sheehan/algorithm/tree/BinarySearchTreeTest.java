@@ -32,6 +32,7 @@ public class BinarySearchTreeTest {
 
         System.out.println("tree height: " + bst.getHeight());
         bst.printInOrder();
+        //bst.printLevels(bst.root);
 
         System.out.println("min " + node2.value + " is " + bst.minimum(node2).value);
         System.out.println("min " + node4.value + " is " + bst.minimum(node4).value);

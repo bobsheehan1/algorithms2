@@ -46,15 +46,35 @@ public class Sort {
     // avg O(n2)
     // best O(n) - if already sorted !
     // compares each new element against already sorted elements
-    public static void insertionSort(Integer []array){
+    public static <T extends Comparable<T>> void insertionSort(T array[]){
         int n = array.length;
 
         // starting index to start from right and move left from
         for (int i = 1; i < n; ++i){
             // move left from i swapping as you go
             for (int j = i; j > 0; j--){
-               if (array[j] < array[j-1])
-                    swap(array, j, j-1);
+                if (array[j].compareTo(array[j-1]) < 0)
+                    swap(array, j, j - 1);
+            }
+        }
+    }
+
+    /////////////////////////////////////////////////////////////////////////////////
+    // INSERTION SORT LIST
+    /////////////////////////////////////////////////////////////////////////////////
+    // worst 0(n2)
+    // avg O(n2)
+    // best O(n) - if already sorted !
+    // compares each new element against already sorted elements
+    public static <T extends Comparable<T>> void insertionSort(List<T> list){
+        int n = list.size();
+
+        // starting index to start from right and move left from
+        for (int i = 1; i < n; ++i){
+            // move left from i swapping as you go
+            for (int j = i; j > 0; j--){
+                if (list.get(j).compareTo(list.get(j-1)) < 0)
+                    swap(list, j, j - 1);
             }
         }
     }
@@ -186,6 +206,13 @@ public class Sort {
         array[j] = array[i];
         array[i] = tmp;
     }
+
+    private static <T extends Comparable<T>> void swap(List<T> list, int i, int j) {
+        T tmp = list.get(j);
+        list.set(j, list.get(i));
+        list.set(i, tmp);
+    }
+
 
     /////////////////////////////////////////////////////////////////////////////////
     // QUICKSORT
@@ -370,7 +397,7 @@ public class Sort {
     // LSD on fixed length lexical keys
     /////////////////////////////////////////////////////////////////////////////////
     public static void radixSortLexicalFixedLsd(String array[]) {
-        // 256 character positions
+        // 256 ASCII character positions
         List<Queue<String>> buckets = new ListImpl<Queue<String>>();
         for (int i = 0; i < 256; i++){
             buckets.append(new QueueImpl<String>(array.length));
@@ -382,7 +409,7 @@ public class Sort {
 
         // while there is a max element larger positional value, iterate another bucket sorting pass
         // moving the position from left to right by one
-        for (int position=0; position<max; position--) {
+        for (int position=max-1; position>=0; position--) {
             // each pass checks a rt to left position and buckets based on that digit
             for (String value : array){
                 char c = value.charAt(position);
