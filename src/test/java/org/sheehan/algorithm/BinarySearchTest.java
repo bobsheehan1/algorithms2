@@ -5,10 +5,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.sheehan.algorithm.sort.Sort;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 import static org.junit.Assert.assertEquals;
 
@@ -85,5 +82,55 @@ public class BinarySearchTest {
 
         for (int i = 0; i < limit; i++)
             assertEquals(i,BinarySearch.binarySearch(array, array[i]));
+    }
+
+    @Test
+    public void testBinarySearchRecursiveInsertionSort() throws Exception {
+        final int limit = 20;
+        Random random = new Random();
+        Set<Integer> dataSet = new HashSet<Integer>();
+        for (int i = 0; i < limit; i++) {
+            dataSet.add(random.nextInt() % 100);
+        }
+        Integer[] array = dataSet.toArray(new Integer[0]);
+        Sort.insertionSort(array);
+
+        System.out.println(array.length);
+        for (int i = 0; i < array.length; i++) {
+            System.out.print(array[i] + " ");
+        }
+        System.out.println();
+
+        for (int i = 0; i < limit; i++)
+            assertEquals(i,BinarySearch.binarySearch(array, array[i], 0, array.length-1));
+    }
+
+    @Test
+    public void testRotatedBinarySearchRecursive() throws Exception {
+        Integer[] sortedArray = Array.createSortedArray(20, 100);
+        Array.print(sortedArray);
+        Array.rotateArray(sortedArray, 5);
+        Array.print(sortedArray);
+        //System.out.println(sortedArray.length);
+
+        for (int i = 0; i < 20; i++) {
+            //System.out.println(i +" " + sortedArray[i]);
+            assertEquals(i, BinarySearch.rotatedBinarySearch(sortedArray, sortedArray[i], 0, sortedArray.length - 1));
+        }
+    }
+
+
+    @Test
+    public void testRotatedBinarySearchRecursive2() throws Exception {
+        Integer[] sortedArray = Array.createSortedArray(20, 100);
+        Array.print(sortedArray);
+        Array.rotateArray(sortedArray, 10);
+        Array.print(sortedArray);
+        //System.out.println(sortedArray.length);
+
+        for (int i = 0; i < 20; i++) {
+            //System.out.println(i +" " + sortedArray[i]);
+            assertEquals(i, BinarySearch.rotatedBinarySearch(sortedArray, sortedArray[i], 0, sortedArray.length - 1));
+        }
     }
 }
