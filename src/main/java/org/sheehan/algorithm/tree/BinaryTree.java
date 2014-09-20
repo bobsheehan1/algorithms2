@@ -37,6 +37,11 @@ public class BinaryTree<T> {
         TreeNode <T> left;
         TreeNode <T> right;
         TreeNode <T> parent; // for successor BST traversal
+
+        @Override
+        public String toString(){
+            return value.toString();
+        }
     }
 
     public BinaryTree() {

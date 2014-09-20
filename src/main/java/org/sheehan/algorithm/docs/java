@@ -1,0 +1,102 @@
+The static keyword denotes that a member variable or method can be accessed,
+without requiring an instantiation of the class to which it belongs.
+A user cannot override static methods in Java, because method overriding is based upon
+dynamic binding at runtime and static methods are statically binded at compile time.
+
+A static variable is initialized when the class is loaded by the JVM.
+
+Autoboxing is the automatic conversion made by the Java compiler between the primitive types and their
+corresponding object wrapper classes.
+
+Method overloading in Java occurs when two or more methods in the same class have the exact same name, but different parameters.
+
+Method overriding is defined as the case when a child class redefines the same method as a parent class.
+
+Java does support copy constructors like C++, but the difference lies in the fact that
+Java doesn’t create a default copy constructor if you don’t write your own.
+
+When an object is passed by value, this means that a copy of the object is passed.
+
+A process is an execution of a program, while a Thread is a single execution sequence within a process.
+A process can contain multiple threads. A Thread is sometimes called a lightweight process.
+
+An application can use the Executor Framework, in order to create a thread pool.
+
+Explain the available thread states in a high-level. During its execution, a thread can reside in one of the following states:
+
+    Runnable: A thread becomes ready to run, but does not necessarily start running immediately.
+    Running: The processor is actively executing the thread code.
+    Waiting: A thread is in a blocked state waiting for some external processing to finish.
+    Sleeping: The thread is forced to sleep.
+    Blocked on I/O: Waiting for an I/O operation to complete.
+    Blocked on Synchronization: Waiting to acquire a lock.
+    Dead: The thread has finished its execution.
+
+In Java programming, each object has a lock. A thread can acquire the lock for an object by using the synchronized keyword.
+The synchronized keyword can be applied in a method level (coarse grained lock) or block level of code (fine grained lock).
+
+A monitor is basically a guardian that watches over a sequence of synchronized code and ensuring that only one thread
+at a time executes a synchronized piece of code. Each monitor is associated with an object reference.
+
+A very simple way to avoid deadlock while using N threads is to impose an ordering on the locks and force each thread
+to follow that ordering. Thus, if all threads lock and unlock the mutexes in the same order, no deadlocks can arise.
+
+The most basic interfaces that reside in the Java Collections Framework are:
+
+    Collection, which represents a group of objects known as its elements.
+    Set, which is a collection that cannot contain duplicate elements.
+    List, which is an ordered collection and can contain duplicate elements.
+    Map, which is an object that maps keys to values and cannot contain duplicate keys.
+
+The Iterator interface provides a number of methods that are able to iterate over any Collection.
+
+All java.util collections are fail-fast: As name suggest fail-fast Iterators fail as soon as they realize that
+structure of Collection has been changed since iteration has begun. Structural changes means adding,
+removing or updating any element from collection while one thread is Iterating over that collection.
+fail-fast behavior is implemented by keeping a modification count and if iteration thread realizes the change in
+modification count it throws ConcurrentModificationException.
+
+Contrary to fail-fast Iterator, fail-safe iterator doesn't throw any Exception if Collection is modified structurally
+while one thread is Iterating over it because they work on clone of Collection instead of original collection and
+that’s why they are called as fail-safe iterator. Iterator of CopyOnWriteArrayList is an example of
+fail-safe Iterator also iterator written by ConcurrentHashMap keySet is also fail-safe iterator and
+never throw ConcurrentModificationException in Java.
+
+Some important characteristics of a HashMap are its capacity, its load factor and the threshold resizing.
+
+    An instance of HashMap has two parameters that affect its performance: initial capacity and load factor.
+    The capacity is the number of buckets in the hash table, and the initial capacity is simply the capacity at the
+    time the hash table is created. The load factor is a measure of how full the hash table is allowed to get
+    before its capacity is automatically increased. When the number of entries in the hash table exceeds the
+    product of the load factor and the current capacity, the hash table is rehashed
+    (that is, internal data structures are rebuilt) so that the hash table has approximately twice the number of buckets.
+
+    As a general rule, the default load factor (.75) offers a good tradeoff between time and space costs.
+    Higher values decrease the space overhead but increase the lookup cost (reflected in most of the operations
+    of the HashMap class, including get and put). The expected number of entries in the map and its load factor
+    should be taken into account when setting its initial capacity, so as to minimize the number of rehash operations.
+    If the initial capacity is greater than the maximum number of entries divided by the load factor,
+    no rehash operations will ever occur.
+
+A HashMap allows the existence of null keys and values, while a Hashtable doesn’t allow neither null keys, nor null values.
+A Hashtable is synchronized, while a HashMap is not. Thus, HashMap is preferred in single-threaded environments,
+while a Hashtable is suitable for multi-threaded environments.
+
+What is difference between ArrayList and LinkedList ? Both the ArrayList and LinkedList classes implement the List interface,
+but they differ on the following features:
+
+    An ArrayList is an index based data structure backed by an Array. It provides random access to its elements with a
+    performance equal to O(1). On the other hand, a LinkedList stores its data as list of elements and every element
+    is linked to its previous and next element. In this case, the search operation for an element has execution time
+    equal to O(n).
+    The Insertion, addition and removal operations of an element are faster in a LinkedList compared to an ArrayList,
+    because there is no need of resizing an array or updating the index when an element is added in some arbitrary
+    position inside the collection.
+    A LinkedList consumes more memory than an ArrayList, because every node in a LinkedList stores two references,
+    one for its previous element and one for its next element.
+
+The PriorityQueue is an unbounded queue, based on a priority heap and its elements are ordered in their natural order.
+At the time of its creation, we can provide a Comparator that is responsible for ordering the elements of the PriorityQueue
+
+
+

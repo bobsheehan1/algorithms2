@@ -66,10 +66,16 @@ public class BinarySearchTreeTest {
         System.out.println("predecessor " + node9.value + " is " + bst.predecessor(node9).value);
         System.out.println("predecessor " + node10.value + " is " + bst.predecessor(node10).value);
 
+       // BinaryTree.TreeNode<Integer> lca = bst.leastCommonAncestor(bst.root, node2, node5);
+        //System.out.println("lca: " + lca);
+
+        //lca = bst.leastCommonAncestor(bst.root, node2, node10);
+        //System.out.println("lca: " + lca);
+
+        BinaryTree.TreeNode<Integer>  lca = bst.leastCommonAncestor(bst.root, node9, node10);
+        System.out.println("lca: " + lca);
+
         bst.mirror(bst.root);
         bst.printInOrder();
-
-
-
     }
 }

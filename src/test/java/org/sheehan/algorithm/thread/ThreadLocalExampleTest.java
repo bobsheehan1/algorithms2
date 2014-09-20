@@ -1,0 +1,13 @@
+package org.sheehan.algorithm.thread;
+
+import org.junit.Test;
+
+import static org.junit.Assert.*;
+
+public class ThreadLocalExampleTest {
+
+    @Test
+    public void testMain() throws Exception {
+        ThreadLocalExample.main(null);
+    }
+}

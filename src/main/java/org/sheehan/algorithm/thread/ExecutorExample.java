@@ -7,7 +7,7 @@ import java.util.concurrent.Executors;
 /**
  * Created by bob on 7/1/14.
  */
-public class ThreadExample1 {
+public class ExecutorExample {
     static class Worker implements Runnable {
 
         final private String command;

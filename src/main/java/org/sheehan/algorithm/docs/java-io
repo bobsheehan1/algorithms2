@@ -1,0 +1,66 @@
+An I/O Stream represents an input source or an output destination.
+
+Some streams simply pass on data; others manipulate and transform the data in useful ways.
+
+A stream is a sequence of data.
+A program uses an input stream to read data from a source, one item at a time.
+A program uses an output stream to write data to a destination, one item at time.
+
+All byte stream classes are descended from InputStream and OutputStream.
+
+Byte Streams
+Character Streams
+Buffered Streams
+Data Streams
+
+public class CopyBytes {
+    public static void main(String[] args) throws IOException {
+
+        FileInputStream in = null;
+        FileOutputStream out = null;
+
+        try {
+            in = new FileInputStream("xanadu.txt"); // actually use character streams for files with char data
+            out = new FileOutputStream("outagain.txt");
+            int c;
+
+            while ((c = in.read()) != -1) {
+                out.write(c);
+            }
+        } finally {
+            if (in != null) {
+                in.close();
+            }
+            if (out != null) {
+                out.close();
+            }
+        }
+    }
+}
+
+Unbuffered I/O --> This means each read or write request is handled directly by the underlying OS.
+This can make a program much less efficient, since each such request often triggers disk access, network activity,
+or some other operation that is relatively expensive.
+
+To reduce this kind of overhead, the Java platform implements buffered I/O streams.
+Buffered input streams read data from a memory area known as a buffer;
+the native input API is called only when the buffer is empty.
+Similarly, buffered output streams write data to a buffer,
+and the native output API is called only when the buffer is full.
+Or flush (write out) at critical points.
+
+inputStream = new BufferedReader(new FileReader("xanadu.txt"));
+outputStream = new BufferedWriter(new FileWriter("characteroutput.txt"));
+
+Breaking into tokens:Scanner s = new Scanner(new BufferedReader(new FileReader("xanadu.txt")));
+
+Formatting: print streams System.out System.err.
+
+Data streams support binary I/O of primitive data type values (boolean, char, byte, short, int, long, float, and double)
+as well as String values. All data streams implement either the DataInput interface or the DataOutput interface.
+This section focuses on the most widely-used implementations of these interfaces, DataInputStream and DataOutputStream.
+
+out = new DataOutputStream(new BufferedOutputStream(
+              new FileOutputStream(dataFile)));
+
+Notice that DataStreams detects an end-of-file condition by catching EOFException.

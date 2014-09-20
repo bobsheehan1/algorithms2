@@ -58,16 +58,18 @@ public class BinarySearchTree<T extends Comparable<T>> extends BinaryTree<T>{
 
     TreeNode<T> successor(TreeNode<T> node){
 
+        // if right child then get min of that right tree !
         if (node.right != null)
             return minimum(node.right);
 
         TreeNode<T> parent = node.parent;
         TreeNode<T> right = node;
-        // if there is a parent AND the node is the right ancestor,
+
+        // if there is a parent AND the node is the right child,
         // we look up getting smaller for parents to left so get them out of the way
         // then return the first parent to the RIGHT --> will be successor
         while(parent != null && right.equals(parent.right)){
-            right = parent;
+            right = parent; // may not be right
             parent = parent.parent;
         }
 
@@ -80,11 +82,13 @@ public class BinarySearchTree<T extends Comparable<T>> extends BinaryTree<T>{
 
     TreeNode<T> predecessor(TreeNode<T> node){
 
+        // if left child then get max of that left tree !
         if (node.left != null)
             return maximum(node.left);
 
         TreeNode<T> parent = node.parent;
         TreeNode<T> left = node;
+
         // if there is a parent AND the node is the right ancestor,
         // we look up getting smaller for parents to left so get them out of the way
         // then return the first parent to the LEFT --> will be successor
@@ -112,14 +116,30 @@ public class BinarySearchTree<T extends Comparable<T>> extends BinaryTree<T>{
         return maximum(node.right);
     }
 
+    TreeNode<T> leastCommonAncestor(TreeNode<T> root, TreeNode<T> node1, TreeNode<T> node2){
+        if (root == null)
+            return null;
+        if (node1.value.compareTo(root.value) < 0 && node2.value.compareTo(root.value) < 0){
+            return leastCommonAncestor(root.left, node1, node2);
+        }
+        else if (node1.value.compareTo(root.value) > 0 && node2.value.compareTo(root.value) > 0){
+            return leastCommonAncestor(root.right, node1, node2);
+        }
+
+        return root;
+
+    }
+
     void mirror(TreeNode<T> node){
         if (node == null)
             return;
-        else {
+        else { //swap
             TreeNode<T> tmp = node.left;
             node.left = node.right;
             node.right = tmp;
         }
+
+        //recurse
         if (node.left != null)
             mirror(node.left);
         if (node.right != null)
