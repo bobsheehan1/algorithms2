@@ -76,7 +76,7 @@ public class Array {
         }while( dataSet.size() != size);
         Integer[] array = dataSet.toArray(new Integer[0]);
 
-        Array.print(array);
+
         Sort.insertionSort(array);
         return array;
     }
@@ -89,5 +89,34 @@ public class Array {
         System.out.println();
     }
 
-    //TODO - median of 2 sorted arrays length n
+    public static <T extends Comparable<T>> T[] mergeSortedArrays(T[]array1, T[]array2){
+        int n = array1.length; //both same length assumed
+
+        T[] merged = (T[])new Comparable[2*n];
+
+        int i1 = 0;
+        int i2 = 0;
+        int i = 0;
+        while(i1 < n && i2 < n){
+            if (array1[i1].compareTo(array2[i2]) < 0)
+                merged[i++] = array1[i1++];
+            else
+                merged[i++] = array2[i2++];
+
+        }
+
+        // one array will have left overs
+
+        //this
+        while(i1 < n)
+            merged[i++] = array1[i1++];
+
+        //or this
+        while(i2 < n)
+            merged[i++] = array2[i2++];
+
+        return merged;
+
+
+    }
 }

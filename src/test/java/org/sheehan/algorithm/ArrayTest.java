@@ -38,4 +38,17 @@ public class ArrayTest {
 
         Array.print(array);
     }
+
+    @Test
+    public void testMergeSortedArrays()
+    {
+        Integer array1[] = Array.createSortedArray(20,100);
+        Integer array2[] = Array.createSortedArray(20,100);
+        Array.print(array1);
+        Array.print(array2);
+        Comparable merged [] = Array.mergeSortedArrays(array1, array2);
+
+        Array.print(merged);
+
+    }
 }

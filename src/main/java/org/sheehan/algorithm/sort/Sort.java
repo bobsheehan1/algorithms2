@@ -191,6 +191,8 @@ public class Sort {
             }
         }
 
+        // one will have left overs...
+
         // merge the LEFT OVER array portion
         while(index1 < array1.length){
             array[i++] = array1[index1++];
