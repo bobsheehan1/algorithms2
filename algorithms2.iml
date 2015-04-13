@@ -9,17 +9,8 @@
       <sourceFolder url="file://$MODULE_DIR$/src/test/java" isTestSource="true" />
       <excludeFolder url="file://$MODULE_DIR$/target" />
     </content>
-    <orderEntry type="jdk" jdkName="1.8" jdkType="JavaSDK" />
+    <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module-library" scope="TEST">
-      <library>
-        <CLASSES>
-          <root url="jar://$APPLICATION_HOME_DIR$/lib/junit-4.10.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
     <orderEntry type="module-library" scope="TEST">
       <library name="JUnit4">
         <CLASSES>
@@ -31,8 +22,6 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="library" scope="TEST" name="Maven: org.apache.maven.surefire:surefire-junit3:2.10" level="project" />
-    <orderEntry type="library" scope="TEST" name="Maven: org.apache.maven.surefire:surefire-api:2.10" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.apache.maven.surefire:surefire-junit3:2.10" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.apache.maven.surefire:surefire-api:2.10" level="project" />
   </component>
@@ -230,4 +219,3 @@
     </option>
   </component>
 </module>
-

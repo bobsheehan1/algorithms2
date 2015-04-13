@@ -48,8 +48,10 @@ public class SortTest {
         System.out.println("insertion");
         list.print();
 
+
         Sort.insertionSort(list);
         list.print();
+
 
         System.out.println();
 

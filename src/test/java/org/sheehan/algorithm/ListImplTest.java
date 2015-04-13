@@ -25,6 +25,28 @@ public class ListImplTest {
         list.reverse2();
 
         list.print();
+
+    }
+
+    @Test
+    public void testDelete() throws Exception {
+        List<Integer> list = new ListImpl<Integer>();
+
+        for (int i = 0; i < 10; i++)
+            list.append(i);
+
+        list.print();
+
+        list.delete(5);
+        list.print();
+        list.delete(9);
+        list.print();
+
+        list.delete(0);
+        list.print();
+
+
+
     }
 
 

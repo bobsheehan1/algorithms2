@@ -26,6 +26,8 @@ public interface List<T extends Comparable<T>> extends Iterable<T>{
 
     boolean hasCycle();
 
+    public boolean delete(T value);
+
     // This solution is "Floyd's Cycle-Finding Algorithm"
     // as published in "Non-deterministic Algorithms" by Robert W. Floyd in 1967.
     // It is also called "The Tortoise and the Hare Algorithm".

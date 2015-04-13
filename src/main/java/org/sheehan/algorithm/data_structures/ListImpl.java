@@ -63,29 +63,54 @@ public class ListImpl <T extends Comparable<T>> implements List<T> {
        if (this.head == null)
            this.head = newNode;
        else {
-           Node n = this.head;
-           while (n.next != null) {
-               n = n.next;
+           Node curr = this.head;
+           // move to last node
+           while (curr.next != null) {
+               curr = curr.next;
            }
-           n.next = newNode;
+           curr.next = newNode;
 
        }
    }
 
+    @Override
+    public boolean delete(T value) {
+        if (this.head.value.equals(value)) {
+            this.head = this.head.next;
+            return true;
+        }
+
+        Node curr = head;
+        Node prev = head;
+        while (curr != null) {
+            if (curr.value.equals(value)) {
+                prev.next = curr.next;
+                return true;
+
+            }
+            prev = curr;
+            curr = curr.next;
+        }
+
+        return false;
+    }
+
     //brute force
     @Override
     public void reverse1() {
-        Node n = this.head;
-        while (n.next != null) {
-            n = n.next;
+        Node curr = this.head;
+        // move to end to get tail
+        while (curr.next != null) {
+            curr = curr.next;
         }
 
-        Node tail = n;
+        // need the tail for late bro
+        Node tail = curr;
 
-        n = this.head;
+        curr = this.head;
         Node prev = null;
-        while (n.next != null) {
-            n = n.next;
+        while (curr.next != null) {
+            curr = curr.next;
             Node n2 = this.head;
             while (n2.next != null) {
                 prev = n2;
@@ -99,21 +124,24 @@ public class ListImpl <T extends Comparable<T>> implements List<T> {
         head = tail;
     }
 
-    // scaffold approach O(n)
+    // scaffold approach O(n)view
+    // 1. B -> A reverse
+    // 2. move everything along A-> B,  B-> C, C-> C(next)
+    // iterate
     @Override
     public  void reverse2() {
-        Node n = this.head;
+        Node curr = this.head;
         Node A = null;
-        Node B = n;
-        Node C = n.next;
-        while (n.next != null) {
-            n = n.next; // iterate
+        Node B = curr;
+        Node C = curr.next;
+        while (curr.next != null) {
             B.next = A; //reversal step
 
             // move the scaffold
             A = B;
             B = C;
             C = C.next;
+            curr = curr.next; // iterate
         }
 
         B.next = A; //reversal
@@ -126,21 +154,21 @@ public class ListImpl <T extends Comparable<T>> implements List<T> {
     public T get(int index){
         if (index > size())
             return null;
-        Node n = this.head;
+        Node curr = this.head;
         for (int i = 0; i < index; ++i)
-            n = n.next;
+            curr = curr.next;
 
-        return (T)n.value;
+        return (T)curr.value;
 
     }
 
 
         @Override
     public void print(){
-        Node n = this.head;
-        while (n != null){
-            System.out.print (n.value + " ");
-            n = n.next;
+        Node curr = this.head;
+        while (curr != null){
+            System.out.print (curr.value + " ");
+            curr = curr.next;
         }
 
         System.out.println();
