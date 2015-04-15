@@ -253,12 +253,17 @@ public class Sort {
         // number of elements in subarray = right-left+1
         int pivotIndex = choosePivot(array, left, right);
         T pivotValue = array[pivotIndex];
+        //TODO may not need this swap !
         swap(array, pivotIndex, right); // Move pivot off to rightmost place for safe keeping
 
+        // in-place swap ! could use 2 separate arrays then merge but not as efficient.
         int storeIndex = left;
         for( int i = left; i < right; i++){
             if (array[i].compareTo(pivotValue) < 0) {
                 swap(array, i, storeIndex);
+                // This gets set to next element but will remain here if compare fails while it keeps moving.
+                // Implies that storeIndex value is larger than pivot value. Only swap with value larger than pivot.
+                // If an element is lower than the pivot, you should swap it with a larger element on the left-side of i.
                 storeIndex = storeIndex + 1;
             }
         }

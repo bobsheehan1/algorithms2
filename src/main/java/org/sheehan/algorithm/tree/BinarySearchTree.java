@@ -13,7 +13,7 @@ public class BinarySearchTree<T extends Comparable<T>> extends BinaryTree<T>{
 
 
     public BinarySearchTree() {
-        super();
+        super(null);
     }
 
     public static <T extends Comparable<T>> boolean isBst(TreeNode<T> root){
@@ -130,20 +130,6 @@ public class BinarySearchTree<T extends Comparable<T>> extends BinaryTree<T>{
 
     }
 
-    void mirror(TreeNode<T> node){
-        if (node == null)
-            return;
-        else { //swap
-            TreeNode<T> tmp = node.left;
-            node.left = node.right;
-            node.right = tmp;
-        }
 
-        //recurse
-        if (node.left != null)
-            mirror(node.left);
-        if (node.right != null)
-            mirror(node.right);
-    }
 
 }

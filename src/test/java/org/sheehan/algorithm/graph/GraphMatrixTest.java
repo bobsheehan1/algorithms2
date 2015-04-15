@@ -1,10 +1,10 @@
 package org.sheehan.algorithm.graph;
 
-//import org.junit.Test;
+//import org.junit.TestGrow;
 /*
 public class GraphMatrixTest {
 
-    @Test
+    @TestGrow
     public void testAddEdge() throws Exception {
         Integer nodes[] = {0,1,2,3,4};
         Graph<Integer> graph = new GraphMatrix<Integer>(nodes);
@@ -19,7 +19,7 @@ public class GraphMatrixTest {
         graph.printGraph();
     }
 
-    @Test
+    @TestGrow
     public void testAddDirectedWeightedEdge() throws Exception {
         Integer nodes[] = {0,1,2,3,4,5,6};
         Graph<Integer> graph = new GraphMatrix<Integer>(nodes);

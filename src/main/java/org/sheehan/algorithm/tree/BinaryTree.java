@@ -1,5 +1,7 @@
 package org.sheehan.algorithm.tree;
 
+import java.util.List;
+
 /**
  * Created by bob on 7/9/14.
  *
@@ -7,7 +9,7 @@ package org.sheehan.algorithm.tree;
  */
 public class BinaryTree<T> {
 
-    TreeNode<T> root;
+    public TreeNode<T> root;
 
     public static <T> TreeNode<T> createTreeNode(T value){
         TreeNode<T> node = new TreeNode<>();
@@ -34,8 +36,8 @@ public class BinaryTree<T> {
 
     public static class TreeNode <T> {
         public T value;
-        TreeNode <T> left;
-        TreeNode <T> right;
+        public TreeNode <T> left;
+        public TreeNode <T> right;
         TreeNode <T> parent; // for successor BST traversal
 
         @Override
@@ -44,7 +46,8 @@ public class BinaryTree<T> {
         }
     }
 
-    public BinaryTree() {
+    public BinaryTree(TreeNode<T> node) {
+        this.root = node;
     }
 
     public void print(TreeNode<T> node) {
@@ -71,6 +74,38 @@ public class BinaryTree<T> {
             return 0;
         else
             return 1 + Math.max(getHeight(node.left ), getHeight(node.right ));
+    }
+
+    public void getLevelNodes(TreeNode<T> node, int cLevel, int rLevel, List<TreeNode<T>> nodes ){
+;
+        if (node == null)
+            return;
+        if (cLevel == rLevel)
+            nodes.add(node);
+        else {
+            getLevelNodes(node.left, cLevel+1, rLevel, nodes);
+            getLevelNodes(node.right, cLevel+1, rLevel, nodes);
+        }
+    }
+
+    public void mirror(TreeNode<T> node){
+        if (node == null)
+            return;
+        else { //swap
+            TreeNode<T> tmp = node.left;
+            node.left = node.right;
+            node.right = tmp;
+        }
+
+        //recurse
+        if (node.left != null)
+            mirror(node.left);
+        if (node.right != null)
+            mirror(node.right);
+    }
+
+    public void mirror(){
+        mirror(root);
     }
 
     public void printInOrder(){

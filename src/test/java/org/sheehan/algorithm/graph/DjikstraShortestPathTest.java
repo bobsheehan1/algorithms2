@@ -52,7 +52,7 @@ public class DjikstraShortestPathTest {
         alg.printPath(nodes.get(0), nodes.get(5));
     }
 /*
-    @Test
+    @TestGrow
     public void testShortestPathPQ2() {
         Integer nodes[] = {0,1,2,3,4,9};
         Graph graph = new GraphMatrix(nodes);
