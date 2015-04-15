@@ -218,8 +218,28 @@ public class Sort {
 
     /////////////////////////////////////////////////////////////////////////////////
     // QUICKSORT
+    //
+    // It can be about two or three times faster than its main competitors, merge sort and heapsort.
+    //
+    // Quicksort is a comparison sort, meaning that it can sort items of any type for which a "less-than" relation (formally, a total order) is defined.
+    // In efficient implementations it is not a stable sort, meaning that the relative order of equal sort items is not preserved.
+    // Quicksort can operate in-place on an array, requiring small additional amounts of memory to perform the sorting.
+    //
+    // Mathematical analysis of quicksort shows that, on average, the algorithm takes O(n log n) comparisons to sort n items.
+    // In the worst case, it makes O(n2) comparisons, though this behavior is rare.
+    //
+    // Quicksort is a divide and conquer algorithm. Quicksort first divides a large array into two smaller sub-arrays: the low elements and the high elements. Quicksort can then recursively sort the sub-arrays.
+
+    // The steps are:
+
+    //      1 Pick an element, called a pivot, from the array.
+    //      2 Reorder the array so that all elements with values less than the pivot come before the pivot,
+    //          while all elements with values greater than the pivot come after it (equal values can go either way).
+    //      3 After this partitioning, the pivot is in its final position. This is called the partition operation.
+    //
+    // Recursively apply the above steps to the sub-array of elements with smaller values and separately to the sub-array of elements with greater values.
     /////////////////////////////////////////////////////////////////////////////////
-    private static <T extends Comparable<T>> void quicksort(T[] array, int left, int right){
+    public static <T extends Comparable<T>> void quicksort(T[] array, int left, int right){
         if (left < right) {
             int partitionIndex = partition(array, left, right);
             quicksort(array, left, partitionIndex - 1);
@@ -233,10 +253,10 @@ public class Sort {
         // number of elements in subarray = right-left+1
         int pivotIndex = choosePivot(array, left, right);
         T pivotValue = array[pivotIndex];
-        swap(array, pivotIndex, right);
+        swap(array, pivotIndex, right); // Move pivot off to rightmost place for safe keeping
 
         int storeIndex = left;
-        for( int i = left; i < right - 1; i++){
+        for( int i = left; i < right; i++){
             if (array[i].compareTo(pivotValue) < 0) {
                 swap(array, i, storeIndex);
                 storeIndex = storeIndex + 1;

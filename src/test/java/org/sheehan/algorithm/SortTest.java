@@ -114,7 +114,7 @@ public class SortTest {
         System.out.println("quick");
         System.out.println(Arrays.toString(array));
 
-        Sort.mergeSort(array);
+        Sort.quicksort(array, 0, array.length-1);
         System.out.println(Arrays.toString(array));
         System.out.println();
     }
