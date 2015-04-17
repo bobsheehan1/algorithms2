@@ -1,7 +1,12 @@
 package org.sheehan.algorithm;
 
 
+import org.sheehan.algorithm.data_structures.*;
+import org.sheehan.algorithm.graph.GraphNode;
+import org.sheehan.algorithm.tree.BinaryHeap;
+
 import java.util.*;
+import java.util.List;
 
 public class TestKingdomGrowth {
     static private int idCnt = 0;
@@ -98,13 +103,14 @@ public class TestKingdomGrowth {
 
         GraphEdge<T> getEdge(GraphNode<T> node1,GraphNode<T> node2);
 
-
         GraphNode<T> addNode(GraphNode<T> node);
 
         boolean hasIncomingEdges(GraphNode<T> node);
     }
 
     public class GraphList<T extends Comparable<T>> implements Graph<T> {
+        private Map<GraphNode<T>, GraphNode<T>> predecessorMap;
+
         private Map<GraphNode<T>, List<GraphEdge<T>>> graphAdjacencyList;
         private java.util.Set<GraphNode<T>> graphNodes = new HashSet<>();
 
@@ -156,7 +162,6 @@ public class TestKingdomGrowth {
             return edge;
         }
 
-
         @Override
         public java.util.List<GraphEdge<T>> addUndirectedEdge(GraphNode<T> node1, GraphNode<T> node2, int weight) {
             if (!graphNodes.contains(node1))
@@ -185,7 +190,6 @@ public class TestKingdomGrowth {
             return graphNodes;
         }
 
-
         @Override
         public boolean isEdge(GraphNode<T> node1, GraphNode<T> node2) {
             List<GraphEdge<T>> edges = graphAdjacencyList.get(node1);
@@ -193,10 +197,8 @@ public class TestKingdomGrowth {
                 if (edge.dstNode.equals(node2))
                     return true;
             }
-
             return false;
         }
-
 
         public GraphEdge<T> getEdge(GraphNode<T> node1, GraphNode<T> node2) {
             List<GraphEdge<T>> edges = graphAdjacencyList.get(node1);
@@ -247,14 +249,58 @@ public class TestKingdomGrowth {
             }
             return Integer.MAX_VALUE; // no edge
         }
+
+        // djikstr's shortest path alg ptimized with PQ
+        public void executePQ(GraphNode<T> sourceNode) {
+            BinaryHeap<GraphNode<T>> minHeap = new BinaryHeap<>(getNumV(), BinaryHeap.HeapType.MIN_HEAP);
+
+            minHeap.add(sourceNode);
+
+            for (GraphNode<T> node:getNodes()){
+                node.distance = Integer.MAX_VALUE;
+            }
+            sourceNode.distance = 0;
+
+            // calculate shortest distance to each node from source
+            while(!minHeap.isEmpty()) {
+                // of all unvisited nodes which one has the minimal distance
+                GraphNode<T> minDistanceNode = minHeap.remove();
+                minDistanceNode.visited = true;
+                // starting at this node look at all neighbors and update distance cost and predecessor
+                // if improved.
+               List<GraphNode<T>> neighborNodes = this.getNeighbors(minDistanceNode);
+                for (GraphNode<T> neighborNode : neighborNodes) {
+                    // if whatever the neighbor had as a distance is improved by connecting from this new node and edge
+                    // then update the neighbor of this new node with better distance
+                    int newEdgeDistance = this.getEdgeWeight(minDistanceNode, neighborNode);
+                    int newTotalDistanceFromSource = minDistanceNode.distance + newEdgeDistance;
+                    if (neighborNode.distance > newTotalDistanceFromSource){
+                        neighborNode.distance = newTotalDistanceFromSource;
+                        predecessorMap.put(neighborNode,minDistanceNode);
+                        minHeap.add(neighborNode);
+                    }
+                }
+            }
+        }
+
+        // how about use PQ instead !
+        // call executePQ first
+        private GraphNode<T> getMinDistanceNode() {
+            int minDistance = Integer.MAX_VALUE;
+            GraphNode<T> minDistanceNode = null; // -1 if not found.
+            for (GraphNode<T> node : getNodes()) {
+                if (!node.visited && node.distance < minDistance){
+                    minDistanceNode = node;
+                    minDistance = minDistanceNode.distance;
+                }
+            }
+
+            return minDistanceNode;
+        }
     }
-
-
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
         int t = in.nextInt();
 
     }
-
-
 }
