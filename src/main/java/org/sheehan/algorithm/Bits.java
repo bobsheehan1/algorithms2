@@ -7,7 +7,8 @@ public class Bits {
 
     static void printInt(int number){
 
-        System.out.println(Integer.toBinaryString(number));
+        // if desired verify with this util
+        //System.out.println(Integer.toBinaryString(number));
 
         // Integer.SIZE = 32 bit -------- -------- -------- -------- 80 00 00 00
 
@@ -26,8 +27,11 @@ public class Bits {
 
     }
 
-    static void flipBits(int number){
-
+    static int flipBits(int number){
+        for (int MASK = 0x8000; MASK != 0; MASK >>>= 1) {
+            number = number ^ MASK;
+        }
+        return number;
     }
 
     static int countOnes(int number){

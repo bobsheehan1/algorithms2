@@ -7,7 +7,10 @@ public class BitsTest {
 
     @Test
     public void testPrintInt() throws Exception {
-        Bits.printInt(12);
-        System.out.println("cnt 1's: " + Bits.countOnes(12));
+        int number = 12;
+        Bits.printInt(number);
+        System.out.println("cnt 1's: " + Bits.countOnes(number));
+        int flipped = Bits.flipBits(number);
+        Bits.printInt(flipped);
     }
 }
