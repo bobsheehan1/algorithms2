@@ -11,10 +11,10 @@ public class Bits {
 
         // Integer.SIZE = 32 bit -------- -------- -------- -------- 80 00 00 00
 
-        int MASK2 = 0x80000000;
+        //int MASK2 = 0x8000;
         // == -1 no unsigned int type !!
         // so need != 0 and NOT < 0 !!
-        for (int MASK = 0x80000000; MASK != 0; MASK >>>= 1)
+        for (int MASK = 0x8000; MASK != 0; MASK >>>= 1)
         {
             int bit = (int)(number & MASK);
             if (bit == 0)
@@ -23,6 +23,10 @@ public class Bits {
                 System.out.print(1);
         }
         System.out.println();
+
+    }
+
+    static void flipBits(int number){
 
     }
 

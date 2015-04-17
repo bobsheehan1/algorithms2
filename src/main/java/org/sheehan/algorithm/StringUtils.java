@@ -19,7 +19,7 @@ public class StringUtils {
 
     public static String reverse(char[] buffer, int start, int end) {
 
-        final int length = end-start;
+        final int length = end-start+1;
         final int pivot = start + length/2;
 
         for (int i = start, cnt = 0; i < pivot; ++i, ++cnt){
