@@ -27,7 +27,9 @@ public class SortTest {
 
     @Test
     public void testInsertionSortArray() throws Exception {
-        Integer array[] = {1,6,3,8,7,2,5,11,55,33,88};
+        Integer[] array = Array.createSortedArray(10, 100);
+        Array.rotateArray(array, 5);
+        //Integer array[] = {1,6,3,8,7,2,5,11,55,33,88};
 
         System.out.println("insertion");
         System.out.println(Arrays.toString(array));

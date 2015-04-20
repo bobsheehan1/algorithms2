@@ -5,7 +5,7 @@ package org.sheehan.algorithm;
  */
 public class Bits {
 
-    static void printInt(int number){
+    static void printBinary(int number){
 
         System.out.println(Integer.toBinaryString(number));
 
