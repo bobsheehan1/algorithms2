@@ -1,8 +1,6 @@
 package org.sheehan.algorithm;
 
 import org.junit.Test;
-import org.sheehan.algorithm.data_structures.ListImpl;
-
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -15,7 +13,6 @@ public class KnapsackTest {
 
     @Test
     public void testKnapsack(){
-
 
         List<Knapsack.Item> items1 = new ArrayList<Knapsack.Item>();
         Knapsack.Item item = new Knapsack.Item(3,4);
@@ -30,19 +27,19 @@ public class KnapsackTest {
         Knapsack.Item[] items = (Knapsack.Item[])items1.toArray(new Knapsack.Item[0]);
 
         Knapsack knapsack = new Knapsack(items, 8);
-        System.out.println("Solution: " + knapsack.solve());
+        System.out.println("Solution optimal knapsack value: " + knapsack.solve());
+        System.out.println();
+        System.out.println("Sub Solutions Table");
         knapsack.printSolutions();
 
         Set<Knapsack.Item> addedItems = knapsack.getSolutionItems();
         Iterator<Knapsack.Item> iterator = addedItems.iterator();
-        System.out.println("Solution items: ");
+        System.out.println();
+        System.out.println("Solution optimal items in knapsack : ");
         while(iterator.hasNext() ){
             Knapsack.Item next = iterator.next();
-            System.out.print(next.getValue() + "," + next.getWeight() + " ");
+            System.out.println(next.toString());
         }
         System.out.println();
-
-
     }
-
 }

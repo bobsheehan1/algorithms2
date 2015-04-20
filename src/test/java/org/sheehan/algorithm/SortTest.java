@@ -13,7 +13,8 @@ public class SortTest {
 
     @Test
     public void testBubbleSort() throws Exception {
-        Integer array[] = {1,6,3,8,7,2,5,11,55,33,88};
+        Integer array[] = Array.createSortedArray(20, 10);
+        Array.rotateArray(array, 5);
 
         System.out.println("bubble");
         System.out.println(Arrays.toString(array));
