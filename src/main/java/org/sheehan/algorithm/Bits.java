@@ -4,32 +4,40 @@ package org.sheehan.algorithm;
  * Created by bob on 8/30/14.
  */
 public class Bits {
-    static final int MASK_32_BIT = 0x80000000;
-    //static final long MASK_64_BIT = 0x8000000000000000L;
 
+    static void printBinary(int number){
 
-    static void printBinary(long number){
-        int index = 0;
-        for (int MASK = MASK_32_BIT; MASK != 0; MASK >>>= 1)
+        System.out.println(Integer.toBinaryString(number));
+
+        // Integer.SIZE = 32 bit -------- -------- -------- -------- 80 00 00 00
+
+        int MASK2 = 0x80000000;
+        // == -1 no unsigned int type !!
+        // so need != 0 and NOT < 0 !!
+        // The unsigned right shift operator ">>>" shifts a zero into the leftmost position, while the leftmost position after ">>" depends on sign extension.
+        for (int MASK = 0x80000000; MASK != 0; MASK >>>= 1)
         {
-            int bit = ((int)number & MASK) >>> (31-index);
-            if (index++%8==0 && index!=0)
-                System.out.print(" ");
-            System.out.print(bit);
+            int bit = (int)(number & MASK);
+            if (bit == 0)
+                System.out.print(0);
+            else
+                System.out.print(1);
         }
         System.out.println();
+
     }
 
-    static int flipBits(long number){
-        for (int MASK = MASK_32_BIT; MASK != 0; MASK >>>= 1) {
-            number = number ^ MASK;
-        }
-        return (int)number;
-    }
+    static int countOnes(int number){
 
-    static long countOnes(int number){
+        //System.out.println(Integer.toBinaryString(number));
+
+        // Integer.SIZE = 32 bit -------- -------- -------- -------- 80 00 00 00
+
+        int MASK2 = 0x80000000;
+        // == -1 no unsigned int type !!
+        // so need != 0 and NOT < 0 !!
         int cnt = 0;
-        for (int MASK = MASK_32_BIT; MASK != 0; MASK >>>= 1)
+        for (int MASK = 0x80000000; MASK != 0; MASK >>>= 1)
         {
             int bit = (int)(number & MASK);
             if (bit != 0)

@@ -68,11 +68,11 @@ public class Array {
     public static Integer[] createSortedArray(int size, int limit){
 
         Random random = new Random();
-        Set<Integer> dataSet = new HashSet<Integer>();
+        List<Integer> list = new ArrayList<Integer>();
         do {
-            dataSet.add(random.nextInt() % (limit)/2 + limit/2);
-        }while( dataSet.size() != size);
-        Integer[] array = dataSet.toArray(new Integer[0]);
+            list.add(random.nextInt() % (limit)/2 + limit/2);
+        }while( list.size() != size);
+        Integer[] array = list.toArray(new Integer[0]);
 
 
         Sort.insertionSort(array);
@@ -87,7 +87,7 @@ public class Array {
         System.out.println();
     }
 
-    public static <T extends Comparable<T>> T[] mergeSortedArrays(T[]array1, T[]array2){
+    public static <T extends Comparable> T[] mergeSortedArrays(T[]array1, T[]array2){
         int n = array1.length; //both same length assumed
 
         T[] merged = (T[])new Comparable[2*n];

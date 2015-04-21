@@ -11,8 +11,6 @@ import java.util.Set;
  */
 public class Knapsack {
 
-
-
     public static class Item {
         private Integer value;
         private Integer weight;
@@ -29,6 +27,10 @@ public class Knapsack {
         public Integer getWeight(){
             return this.weight;
         }
+
+        public String toString() {
+            return "value:" + getValue() + ", weight:" + getWeight();
+        }
     }
 
     private Item items[];
@@ -40,16 +42,14 @@ public class Knapsack {
 
     public Knapsack(Item [] items, Integer weightCapacity) {
 
-
         this.items = items;
         this.weightCapacity = weightCapacity;
         this.knapsackSolutions = new Integer[weightCapacity+1][items.length+1];
 
-        System.out.println("Items:");
         for (int i = 0; i < items.length; ++i){
-            System.out.println((i + 1) + " " + items[i].getValue() + "," + items[i].getWeight());
+            System.out.println("Item " + (i + 1) + " - " + items[i].toString());
         }
-
+        System.out.println();
     }
 
     public void printSolutions() {
@@ -72,7 +72,6 @@ public class Knapsack {
 
         }
         System.out.println();
-
     }
 
     // todo - consider not caching sub solutions in array and reduce memory footprint
@@ -108,7 +107,6 @@ public class Knapsack {
         }
 
         return this.knapsackSolutions[weightCapacity][items.length];
-
     }
 
     public Set<Item> getSolutionItems()
@@ -126,7 +124,6 @@ public class Knapsack {
                 capacityIndex = capacityIndex - this.items[itemIndex-1].weight;
             }
         }
-
         return items;
     }
 }

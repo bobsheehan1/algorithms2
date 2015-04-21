@@ -13,6 +13,24 @@ import java.util.ArrayList;
  * Time: 7:43 AM
  * To change this template use File | Settings | File Templates.
  */
+
+interface SwapCallback {
+    <T extends Comparable<T>> boolean swap(T[] array, int i, int j);
+}
+
+class SwapCallbackValue implements SwapCallback{
+    public <T extends Comparable<T>> boolean swap(T[] array, int i, int j) {
+        if (array[i].compareTo(array[j]) < 0) {
+            T tmp = array[j];
+            array[j] = array[i];
+            array[i] = tmp;
+            return true;
+
+        }
+        return false;
+    }
+}
+
 public class Sort {
 
     /////////////////////////////////////////////////////////////////////////////////
@@ -22,7 +40,9 @@ public class Sort {
     // avg O(n2)
     // best O(n)
     public static void bubbleSort(Integer []array) {
+
         int n = array.length - 1;
+        SwapCallbackValue swabCallback = new SwapCallbackValue();
 
         boolean swapped = true;
         // repeat until no more swaps
@@ -30,10 +50,7 @@ public class Sort {
             swapped = false;
 
             for (int j = 0; j < n; ++j) {
-                if (array[j] > array[j + 1]) {
-                    swap(array, j, j + 1);
-                    swapped = true;
-                }
+                swapped = swabCallback.swap(array, j, j+1);
             }
             n = n - 1; //optimization
         }
@@ -47,6 +64,27 @@ public class Sort {
     // best O(n) - if already sorted !
     // compares each new element against already sorted elements
     public static <T extends Comparable<T>> void insertionSort(T array[]){
+        SwapCallbackValue swabCallback = new SwapCallbackValue();
+        int n = array.length;
+
+        // starting index to start from right and move left from
+        for (int i = 0; i < n; ++i){
+            // move left from i swapping as you go
+            for (int j = i; j > 0; j--){
+                swabCallback.swap(array, j, j-1);
+            }
+        }
+    }
+
+    /////////////////////////////////////////////////////////////////////////////////
+    // INSERTION SORT
+    /////////////////////////////////////////////////////////////////////////////////
+    // worst 0(n2)
+    // avg O(n2)
+    // best O(n) - if already sorted !
+    // compares each new element against already sorted elements
+    public static <T extends Comparable<T>> void insertionSortParity(T array[]){
+        SwapCallbackValue swabCallback = new SwapCallbackValue();
         int n = array.length;
 
         // starting index to start from right and move left from
@@ -54,7 +92,7 @@ public class Sort {
             // move left from i swapping as you go
             for (int j = i; j > 0; j--){
                 if (array[j].compareTo(array[j-1]) < 0)
-                    swap(array, j, j - 1);
+                    swabCallback.swap(array, j, j-1);
             }
         }
     }
