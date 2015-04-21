@@ -1,0 +1,22 @@
+Insertion Sort - like manually sorting a deck of cards.
+
+    Worst case performance 	О(n2) comparisons + swaps
+    Best case performance 	O(n) comparisons, O(1) swaps (pre sorted)
+    Efficient for (quite) small data sets, partially sorted data.
+    Stable; i.e., does not change the relative order of elements with equal keys
+    In-place; i.e., only requires a constant amount O(1) of additional memory space
+
+Mergesort - is a divide and conquer algorithm
+
+    Worst case performance 	O(n log n) typical,
+    Average O(n) natural variant
+    Merge sort is more efficient than quicksort for some types of lists if the data to be sorted can only be efficiently accessed sequentially.
+    Merge sort also has some demerits. One is its use of 2n locations.
+    Stable while quicksort is not.
+    Highly parallizable.
+
+Quicksort -
+
+Heapsort -
+
+Bucketsort -
