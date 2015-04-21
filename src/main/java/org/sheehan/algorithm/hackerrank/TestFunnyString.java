@@ -1,4 +1,6 @@
-package org.sheehan.algorithm;
+package org.sheehan.algorithm.hackerrank;
+
+import org.sheehan.algorithm.StringUtils;
 
 import java.util.Scanner;
 

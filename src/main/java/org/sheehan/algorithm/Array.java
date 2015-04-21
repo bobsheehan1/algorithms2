@@ -2,9 +2,7 @@ package org.sheehan.algorithm;
 
 import org.sheehan.algorithm.sort.Sort;
 
-import java.util.HashSet;
-import java.util.Random;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Created by bob on 6/5/14.
@@ -116,7 +114,33 @@ public class Array {
             merged[i++] = array2[i2++];
 
         return merged;
+    }
 
+    public static void getPermutations(List<Integer> prefix, List<Integer> array, Set<List<Integer>> cache) {
+        //System.out.println("\tpermutation pre:" + prefix + " str:" + str + " level:" + level);
+        int n = array.size();
+        if (n == 0) {
+            //System.out.println("\tEND permutation pre:" + prefix + " str:" + str + " level:" + level);
+            //System.out.println();
+            //System.out.println(prefix);
+            cache.add(prefix);
+        }
+        else {
+            for (int i = 0; i < n; i++) {
+                //System.out.println("\t\tloop in  i:" + i + " pre:" + prefix + " str:" + str + " level:" + level);
+               // List<Integer> prefix2 = new ArrayList<Integer>();
+               // prefix2.addAll(prefix);
+               // prefix2.add(array.get(i));
 
+                List<Integer> array2 = new ArrayList<Integer>();
+                array2.addAll(array.subList(0, i));
+                array2.addAll(array.subList(i + 1, n));
+                //System.out.println("\t\tloop out i:" + i + " pre:" + prefix2 + " str:" + str2 + " level:" + level);
+                List<Integer> prefix2 = new ArrayList<Integer>();
+                prefix2.addAll(prefix);
+                prefix2.add(array.get(i));
+                getPermutations(prefix2, array2, cache);
+            }
+        }
     }
 }

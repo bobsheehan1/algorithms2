@@ -1,34 +1,39 @@
-package org.sheehan.algorithm;
+package org.sheehan.algorithm.hackerrank;
 
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
 
-public class TestQuicksort {
+public class TestQuicksort2 {
 
     static int partition(int[] ar, int left, int right) {
         List<Integer> list1= new LinkedList<Integer>();
         List<Integer> list2= new LinkedList<Integer>();
 
-        int pivot = ar[left];
+        int pivotIndex = right;
+        int pivot = ar[pivotIndex];
 
-        for(int i=left; i<=right; i++)
-        {
-            if (ar[i]<pivot) {
-                list1.add(ar[i]);
-            } else if (ar[i]>pivot) {
-                list2.add(ar[i]);
+        swap(ar, pivotIndex, right); // Move pivot off to rightmost place for safe keeping
+
+        int storeIndex = left;
+        for( int i = left; i < right; i++){
+            if (ar[i] < pivot) {
+                swap(ar, i, storeIndex);
+                storeIndex = storeIndex + 1;
             }
         }
-        list1.add(pivot);
-         List<Integer> list3 = new LinkedList<Integer>();
-        list3.addAll(list1);
-        list3.addAll(list2);
-        for(int i=left; i<=right; i++)
-            ar[i] = list3.get(i-left);
+        swap(ar, storeIndex, right);// Move pivot to its final place
 
-        return left + list1.size() -1;
+        printArray(ar, 0, ar.length-1);
+        return storeIndex;
     }
+
+    private static void swap(int[] array, int i, int j) {
+        int tmp = array[j];
+        array[j] = array[i];
+        array[i] = tmp;
+    }
+
 
     static void quickSort(int[] ar, int left, int right) {
         if (right <= left)
@@ -37,7 +42,7 @@ public class TestQuicksort {
         quickSort(ar, left, index-1);
         quickSort(ar, index+1, right) ;
 
-        printArray(ar, left, right);
+
     }
 
     static void printArray(int[] ar, int left, int right) {

@@ -3,7 +3,9 @@ package org.sheehan.algorithm;
 import junit.framework.Assert;
 import org.junit.Test;
 
+import java.util.HashSet;
 import java.util.Random;
+import java.util.Set;
 import java.util.UUID;
 
 /**
@@ -46,7 +48,12 @@ public class StringUtilsTest {
     public void testPermutations() throws Exception {
         String testStr = "ABC";
 
-        StringUtils.permutation(testStr);
+        Set<String> cache = new HashSet<String>();
+
+        StringUtils.getPermutations("", "ABC", cache);
+
+        for (String s: cache)
+            System.out.println(s);
     }
 
     @Test

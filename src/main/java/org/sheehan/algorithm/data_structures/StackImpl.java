@@ -1,5 +1,7 @@
 package org.sheehan.algorithm.data_structures;
 
+import org.sheehan.algorithm.graph.GraphNode;
+
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -9,7 +11,7 @@ import java.util.NoSuchElementException;
 /**
  * Created by bob on 5/25/14.
  */
-public class StackImpl<T extends Comparable<T>> implements Stack<T> {
+public class StackImpl<T extends Comparable<T>>  implements Stack<T> {
     private int top;
     private int size;
     private T array[];

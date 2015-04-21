@@ -1,4 +1,4 @@
-package org.sheehan.algorithm;
+package org.sheehan.algorithm.hackerrank;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -99,6 +99,19 @@ public class DjikstraShortestPath <T extends Comparable<T>>{
         System.out.println();
     }
 
+    public Stack<GraphNode<T>> getPath(GraphNode<T> srcNode, GraphNode<T> dstNode) {
+        Stack<GraphNode<T>> path = new StackImpl<>(predecessorMap.size());
+        path.push(dstNode);
+
+        while (dstNode != null){
+            dstNode = predecessorMap.get(dstNode);
+            if (dstNode != null)
+                path.push(dstNode);
+        }
+
+        return path;
+    }
+
     // how about use PQ instead !
     private GraphNode<T> getMinDistanceNode() {
         int minDistance = Integer.MAX_VALUE;

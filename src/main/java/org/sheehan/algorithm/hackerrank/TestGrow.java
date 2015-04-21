@@ -1,4 +1,4 @@
-package org.sheehan.algorithm;
+package org.sheehan.algorithm.hackerrank;
 import java.io.*;
 import java.util.*;
 import java.text.*;

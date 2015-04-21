@@ -1,4 +1,4 @@
-package org.sheehan.algorithm;
+package org.sheehan.algorithm.hackerrank;
 
 
 import org.sheehan.algorithm.data_structures.*;
@@ -251,7 +251,7 @@ public class TestKingdomGrowth {
         }
 
         // djikstr's shortest path alg ptimized with PQ
-        public void executePQ(GraphNode<T> sourceNode) {
+        public void djikstraPriorityQueue(GraphNode<T> sourceNode) {
             BinaryHeap<GraphNode<T>> minHeap = new BinaryHeap<>(getNumV(), BinaryHeap.HeapType.MIN_HEAP);
 
             minHeap.add(sourceNode);
@@ -284,7 +284,7 @@ public class TestKingdomGrowth {
         }
 
         // how about use PQ instead !
-        // call executePQ first
+        // call djikstraPriorityQueue first
         private GraphNode<T> getMinDistanceNode() {
             int minDistance = Integer.MAX_VALUE;
             GraphNode<T> minDistanceNode = null; // -1 if not found.
@@ -298,6 +298,7 @@ public class TestKingdomGrowth {
             return minDistanceNode;
         }
     }
+
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
         int t = in.nextInt();
