@@ -1,9 +1,10 @@
-package org.sheehan.algorithm;
+package org.sheehan.algorithm.data_structures;
 
 import org.junit.Test;
-import org.sheehan.algorithm.sort.Sort;
+import org.sheehan.algorithm.data_structures.Array;
 
 import java.util.*;
+import java.util.List;
 
 public class ArrayTest {
 
@@ -50,14 +51,14 @@ public class ArrayTest {
 
     @Test
     public void testPermutationOfIntegers() {
-        List<Integer> prefix = new ArrayList<Integer>();
+        java.util.List<Integer> prefix = new ArrayList<Integer>();
 
-        List<Integer> array = new ArrayList<Integer>();
+        java.util.List<Integer> array = new ArrayList<Integer>();
         array.add(1);
         array.add(2);
         array.add(3);
 
-        Set<List<Integer>> cache = new HashSet<List<Integer>>();
+        Set<java.util.List<Integer>> cache = new HashSet<java.util.List<Integer>>();
         Array.getPermutations(prefix, array, cache);
 
         for (List<Integer> a: cache) {

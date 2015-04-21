@@ -1,7 +1,7 @@
 package org.sheehan.algorithm.sort;
 
 import org.sheehan.algorithm.data_structures.*;
-import org.sheehan.algorithm.tree.BinaryHeap;
+import org.sheehan.algorithm.data_structures.tree.BinaryHeap;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;

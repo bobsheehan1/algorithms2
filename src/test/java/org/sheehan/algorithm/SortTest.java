@@ -1,6 +1,7 @@
 package org.sheehan.algorithm;
 
 import org.junit.Test;
+import org.sheehan.algorithm.data_structures.Array;
 import org.sheehan.algorithm.data_structures.List;
 import org.sheehan.algorithm.data_structures.ListImpl;
 import org.sheehan.algorithm.sort.Sort;

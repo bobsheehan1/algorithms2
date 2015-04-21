@@ -2,9 +2,8 @@ package org.sheehan.algorithm.graph;
 
 import org.sheehan.algorithm.data_structures.Stack;
 import org.sheehan.algorithm.data_structures.StackImpl;
-
-import java.util.Comparator;
-import java.util.Set;
+import org.sheehan.algorithm.data_structures.graph.Graph;
+import org.sheehan.algorithm.data_structures.graph.GraphNode;
 
 /**
  * Created by bob on 7/8/14.

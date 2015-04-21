@@ -1,9 +1,7 @@
 package org.sheehan.algorithm.hackerrank;
 
 
-import org.sheehan.algorithm.data_structures.*;
-import org.sheehan.algorithm.graph.GraphNode;
-import org.sheehan.algorithm.tree.BinaryHeap;
+import org.sheehan.algorithm.data_structures.tree.BinaryHeap;
 
 import java.util.*;
 import java.util.List;

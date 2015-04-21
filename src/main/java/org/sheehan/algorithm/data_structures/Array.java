@@ -1,8 +1,9 @@
-package org.sheehan.algorithm;
+package org.sheehan.algorithm.data_structures;
 
 import org.sheehan.algorithm.sort.Sort;
 
 import java.util.*;
+import java.util.List;
 
 /**
  * Created by bob on 6/5/14.
@@ -68,7 +69,7 @@ public class Array {
     public static Integer[] createSortedArray(int size, int limit){
 
         Random random = new Random();
-        List<Integer> list = new ArrayList<Integer>();
+        java.util.List<Integer> list = new ArrayList<Integer>();
         do {
             list.add(random.nextInt() % (limit)/2 + limit/2);
         }while( list.size() != size);
@@ -116,7 +117,7 @@ public class Array {
         return merged;
     }
 
-    public static void getPermutations(List<Integer> prefix, List<Integer> array, Set<List<Integer>> cache) {
+    public static void getPermutations(java.util.List<Integer> prefix, java.util.List<Integer> array, Set<java.util.List<Integer>> cache) {
         //System.out.println("\tpermutation pre:" + prefix + " str:" + str + " level:" + level);
         int n = array.size();
         if (n == 0) {
@@ -132,7 +133,7 @@ public class Array {
                // prefix2.addAll(prefix);
                // prefix2.add(array.get(i));
 
-                List<Integer> array2 = new ArrayList<Integer>();
+                java.util.List<Integer> array2 = new ArrayList<Integer>();
                 array2.addAll(array.subList(0, i));
                 array2.addAll(array.subList(i + 1, n));
                 //System.out.println("\t\tloop out i:" + i + " pre:" + prefix2 + " str:" + str2 + " level:" + level);

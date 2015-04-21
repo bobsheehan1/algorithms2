@@ -1,7 +1,6 @@
-package org.sheehan.algorithm.tree;
+package org.sheehan.algorithm.data_structures.tree;
 
 import java.util.Arrays;
-import java.util.Comparator;
 
 /**
  * Created by bob on 7/9/14.

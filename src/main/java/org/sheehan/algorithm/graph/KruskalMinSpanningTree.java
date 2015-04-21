@@ -1,6 +1,10 @@
 package org.sheehan.algorithm.graph;
 
 import org.sheehan.algorithm.data_structures.List;
+import org.sheehan.algorithm.data_structures.graph.Graph;
+import org.sheehan.algorithm.data_structures.graph.GraphEdge;
+import org.sheehan.algorithm.data_structures.graph.GraphList;
+import org.sheehan.algorithm.data_structures.graph.GraphNode;
 
 import java.util.HashSet;
 import java.util.PriorityQueue;

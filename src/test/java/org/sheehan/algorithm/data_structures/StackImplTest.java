@@ -1,4 +1,4 @@
-package org.sheehan.algorithm;
+package org.sheehan.algorithm.data_structures;
 
 import junit.framework.TestCase;
 import org.sheehan.algorithm.data_structures.Stack;

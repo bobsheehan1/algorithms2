@@ -1,6 +1,4 @@
-package org.sheehan.algorithm.tree;
-
-import java.util.Arrays;
+package org.sheehan.algorithm.data_structures.tree;
 
 /**
  * Created by bob on 7/9/14.

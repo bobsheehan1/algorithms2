@@ -1,4 +1,4 @@
-package org.sheehan.algorithm.graph;
+package org.sheehan.algorithm.data_structures.graph;
 
 
 public class GraphNode<T extends Comparable<T>> implements Comparable<GraphNode<T>>  {

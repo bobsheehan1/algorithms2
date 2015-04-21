@@ -4,17 +4,16 @@ import org.sheehan.algorithm.data_structures.List;
 import org.sheehan.algorithm.data_structures.ListImpl;
 import org.sheehan.algorithm.data_structures.Queue;
 import org.sheehan.algorithm.data_structures.QueueImpl;
-
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Set;
+import org.sheehan.algorithm.data_structures.graph.Graph;
+import org.sheehan.algorithm.data_structures.graph.GraphEdge;
+import org.sheehan.algorithm.data_structures.graph.GraphNode;
 
 /**
  * Created by bob on 9/2/14.
  */
 public class TopologicalSortDag <T extends Comparable<T>> {
 
-     public List<GraphNode<T> > topologicalSort(Graph<T> inputDag){
+     public List<GraphNode<T>> topologicalSort(Graph<T> inputDag){
         List<GraphNode<T> > sortedList = new ListImpl<>();
 
         // could not use HashSet iterator here because alg removes and adds below

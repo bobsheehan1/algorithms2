@@ -1,4 +1,4 @@
-package org.sheehan.algorithm;
+package org.sheehan.algorithm.data_structures;
 
 import org.junit.Test;
 import org.sheehan.algorithm.data_structures.List;

@@ -1,4 +1,4 @@
-package org.sheehan.algorithm.graph;
+package org.sheehan.algorithm.data_structures.graph;
 
 import org.sheehan.algorithm.data_structures.List;
 import org.sheehan.algorithm.data_structures.ListImpl;
