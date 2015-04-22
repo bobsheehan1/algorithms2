@@ -36,4 +36,6 @@ public interface List<T extends Comparable<T>> extends Iterable<T>{
     int countCycle(ListImpl.Node cycleStart);
 
     T set(int j, T t);
+
+    void toArray(T[] array);
 }

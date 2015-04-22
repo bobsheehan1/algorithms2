@@ -1,8 +1,11 @@
 package org.sheehan.algorithm.data_structures;
 
+import org.junit.Assert;
 import org.junit.Test;
 import org.sheehan.algorithm.data_structures.List;
 import org.sheehan.algorithm.data_structures.ListImpl;
+
+import java.util.Arrays;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -15,17 +18,18 @@ public class ListImplTest {
 
         for (int i = 0; i < 10; i++)
             list.append(i);
+        Integer array1[] = new Integer[list.size()];
+        list.toArray(array1);
 
         list.print();
-
-        //list.reverse1();
-
-        //list.print();
 
         list.reverse2();
+        list.reverse2();
 
-        list.print();
+        Integer array2[] = new Integer[list.size()];
+        list.toArray(array2);
 
+        Assert.assertArrayEquals(array1,array2);
     }
 
     @Test
@@ -35,18 +39,17 @@ public class ListImplTest {
         for (int i = 0; i < 10; i++)
             list.append(i);
 
-        list.print();
+        for (int i = 0; i < 10; i++)
+            list.delete(i);
 
-        list.delete(5);
-        list.print();
-        list.delete(9);
-        list.print();
+        Assert.assertTrue(list.size() == 0);
+        for (int i = 0; i < 10; i++)
+            list.append(i);
 
-        list.delete(0);
-        list.print();
+        for (int i = 9; i >=0; i--)
+            list.delete(i);
 
-
-
+        Assert.assertTrue(list.size() == 0);
     }
 
 

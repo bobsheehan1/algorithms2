@@ -108,7 +108,7 @@ public class BinarySearchTest {
 
     @Test
     public void testRotatedBinarySearchRecursive() throws Exception {
-        Integer[] sortedArray = Array.createSortedArray(20, 100);
+        Integer[] sortedArray = Array.createArray(20, 100, true);
         Array.print(sortedArray);
         Array.rotateArray(sortedArray, 5);
         Array.print(sortedArray);
@@ -123,7 +123,7 @@ public class BinarySearchTest {
 
     @Test
     public void testRotatedBinarySearchRecursive2() throws Exception {
-        Integer[] sortedArray = Array.createSortedArray(20, 100);
+        Integer[] sortedArray = Array.createArray(20, 100, true);
         Array.print(sortedArray);
         Array.rotateArray(sortedArray, 10);
         Array.print(sortedArray);

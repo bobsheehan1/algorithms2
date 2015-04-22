@@ -66,7 +66,7 @@ public class Array {
         //Array.print(array);
     }
 
-    public static Integer[] createSortedArray(int size, int limit){
+    public static Integer[] createArray(int size, int limit, boolean sorted){
 
         Random random = new Random();
         java.util.List<Integer> list = new ArrayList<Integer>();
@@ -76,7 +76,8 @@ public class Array {
         Integer[] array = list.toArray(new Integer[0]);
 
 
-        Sort.insertionSort(array);
+        if (sorted)
+          Sort.insertionSort(array);
         return array;
     }
 

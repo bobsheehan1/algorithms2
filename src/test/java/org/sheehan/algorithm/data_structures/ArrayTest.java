@@ -30,7 +30,7 @@ public class ArrayTest {
 
     @Test
     public void testRotateArray() {
-        Integer array[] = Array.createSortedArray(20, 100);
+        Integer array[] = Array.createArray(20, 100, true);
 
         Array.print(array);
         Array.rotateArray(array, 5);
@@ -40,8 +40,8 @@ public class ArrayTest {
 
     @Test
     public void testMergeSortedArrays() {
-        Integer array1[] = Array.createSortedArray(20, 100);
-        Integer array2[] = Array.createSortedArray(20, 100);
+        Integer array1[] = Array.createArray(20, 100, true);
+        Integer array2[] = Array.createArray(20, 100, true);
         Array.print(array1);
         Array.print(array2);
         Comparable merged[] = Array.mergeSortedArrays(array1, array2);

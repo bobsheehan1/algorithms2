@@ -14,7 +14,7 @@ public class SortTest {
 
     @Test
     public void testBubbleSort() throws Exception {
-        Integer array[] = Array.createSortedArray(20, 10);
+        Integer array[] = Array.createArray(20, 100, true);
         Array.rotateArray(array, 5);
 
         System.out.println("bubble");
@@ -28,7 +28,7 @@ public class SortTest {
 
     @Test
     public void testInsertionSortArray() throws Exception {
-        Integer[] array = Array.createSortedArray(10, 100);
+        Integer[] array = Array.createArray(20, 100, true);
         Array.rotateArray(array, 5);
         //Integer array[] = {1,6,3,8,7,2,5,11,55,33,88};
 
@@ -118,7 +118,7 @@ public class SortTest {
         System.out.println("quick");
         System.out.println(Arrays.toString(array));
 
-        Sort.quicksort(array, 0, array.length-1);
+        Sort.quicksort(array, 0, array.length - 1);
         System.out.println(Arrays.toString(array));
         System.out.println();
     }

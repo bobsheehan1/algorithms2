@@ -75,16 +75,15 @@ public class ListImpl <T extends Comparable<T>> implements List<T> {
 
     @Override
     public boolean delete(T value) {
-        if (this.head.value.equals(value)) {
+        if (this.head.value.equals(value)) { // move head up one
             this.head = this.head.next;
             return true;
         }
 
-        Node curr = head;
-        Node prev = head;
+        Node curr = head, prev = head;
         while (curr != null) {
             if (curr.value.equals(value)) {
-                prev.next = curr.next;
+                prev.next = curr.next; // deletes current
                 return true;
 
             }
@@ -134,14 +133,16 @@ public class ListImpl <T extends Comparable<T>> implements List<T> {
         Node A = null;
         Node B = curr;
         Node C = curr.next;
-        while (curr.next != null) {
+        while (C != null) {
+            curr = curr.next; // iterate first !!!
+
             B.next = A; //reversal step
 
             // move the scaffold
             A = B;
             B = C;
             C = C.next;
-            curr = curr.next; // iterate
+
         }
 
         B.next = A; //reversal
@@ -286,6 +287,17 @@ public class ListImpl <T extends Comparable<T>> implements List<T> {
             n.value = value;
 
         return value;
+
+    }
+
+    @Override
+    public void toArray(T[] array) {
+        Node<T> curr = this.head;
+        int cnt = 0;
+        while (curr != null){
+            array[cnt++]=curr.value;
+            curr = curr.next;
+        }
 
     }
 
