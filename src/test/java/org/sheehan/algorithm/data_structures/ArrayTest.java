@@ -50,6 +50,19 @@ public class ArrayTest {
     }
 
     @Test
+    public void testPermutationOfIntegers2() {
+        java.util.List<Integer> prefix = new ArrayList<Integer>();
+
+        java.util.List<Integer> array = new ArrayList<Integer>();
+        array.add(1);
+        array.add(2);
+        array.add(3);
+
+        Set<java.util.List<Integer>> cache = new HashSet<java.util.List<Integer>>();
+        Array.getPermutations2(array, 0);
+    }
+
+    @Test
     public void testPermutationOfIntegers() {
         java.util.List<Integer> prefix = new ArrayList<Integer>();
 
@@ -61,11 +74,42 @@ public class ArrayTest {
         Set<java.util.List<Integer>> cache = new HashSet<java.util.List<Integer>>();
         Array.getPermutations(prefix, array, cache);
 
-        for (List<Integer> a: cache) {
+        for (List<Integer> a : cache) {
             for (int i : a) {
                 System.out.print(i + " ");
             }
             System.out.println();
         }
+    }
+
+    @Test
+    public void testSubArraysOfIntegers() {
+        Integer array[] = {1, 2, 3};
+        Set<java.util.List<Integer>> cache = new HashSet<java.util.List<Integer>>();
+
+        Array.getSubArrays(array, cache);
+
+        for (List<Integer> a : cache) {
+            for (int i : a) {
+                System.out.print(i + " ");
+            }
+            System.out.println();
+        }
+    }
+
+    @Test
+    public void testMaxSubArrayOfIntegers() {
+        int array[] = {1, -2, -6, 3, 5};
+
+        System.out.println(Array.getMaxSubArray(array));
+
+    }
+
+    @Test
+    public void testMaxSubArrayOfIntegers2() {
+        Integer array[] = {1, -2, -6, 3, 5};
+
+        System.out.println(Array.getMaxSubArray2(array));
+
     }
 }

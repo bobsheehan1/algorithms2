@@ -60,7 +60,7 @@ public class ListImplTest {
         for (int i = 0; i < 10; i++)
             list.append(i);
 
-        assertFalse(list.hasCycle() );
+        assertFalse(list.hasCycle());
         ListImpl.Node cycleStart = list.hasCycle2();
         assertFalse(cycleStart != null);
 
@@ -73,8 +73,5 @@ public class ListImplTest {
         assertTrue(cycleStart != null);
         int cycleSize = list.countCycle(cycleStart);
         System.out.println("Cycle Size: " + cycleSize);
-
-
-
     }
 }
