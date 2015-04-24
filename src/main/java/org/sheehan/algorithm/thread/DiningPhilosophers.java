@@ -8,6 +8,15 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * Created by bob on 9/15/14.
+ *
+ * This attempted solution fails because it allows the system to reach a deadlock state,
+ * in which no progress is possible. This is the state in which each philosopher has picked up
+ * the fork to the left, and is waiting for the fork to the right to become available.
+ * With the given instructions, this state can be reached, and when it is reached,
+ * the philosophers will eternally wait for each other to release a fork.[4]
+ *
+ * Philosophers attempting to eat is thread
+ * Chopstick is lockable resource
  */
 public class DiningPhilosophers {
     static int chopStickCnt = 0;
@@ -75,15 +84,16 @@ public class DiningPhilosophers {
             // deadlock condition: when 4 philosophers have a left fork and 1 fork remaining..... no one can get it !!
             // FIX - reordering resource acquisition - have one philospher pick up right fork first.
              if (i == 0)
-                philosophers.add(new Philosopher(chopsticks.get(i), chopsticks.get((i+1)%numDining)));
+                philosophers.add(new Philosopher(chopsticks.get(i), chopsticks.get((i+1)%numDining))); //FIX DEADLOCK
              else
                  philosophers.add(new Philosopher(chopsticks.get((i+1)%numDining),chopsticks.get(i)));
         }
     }
 
+    static final int NUM_PHILOSOPHERS = 5;
     public static void runSimulation() throws InterruptedException {
         DiningPhilosophers dp = new DiningPhilosophers();
-        dp.initialize(5);
+        dp.initialize(NUM_PHILOSOPHERS);
         dp.print();
         dp.eat();
     }
@@ -103,5 +113,9 @@ public class DiningPhilosophers {
         for (Philosopher p : philosophers) {
             System.out.println(p);
         }
+    }
+
+    static public void main(String args[]) throws Exception {
+        DiningPhilosophers.runSimulation();
     }
 }

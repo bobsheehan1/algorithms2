@@ -14,29 +14,31 @@ public class BinarySearchTree<T extends Comparable<T>> extends BinaryTree<T>{
         super(null);
     }
 
-    public static <T extends Comparable<T>> boolean isBst(TreeNode<T> root){
-        if (root == null)
+    //recursive pass in root node
+    public static <T extends Comparable<T>> boolean isBst(TreeNode<T> node){
+        if (node == null)
             return true;
-        if (root.left != null) {
-            if (root.value.compareTo(root.left.value) < 0)
+        if (node.left != null) {
+            if (node.value.compareTo(node.left.value) < 0)
                 return false;
-            return isBst(root.left);
-        } else if (root.right != null) {
-             if (root.value.compareTo(root.right.value) > 0)
+            return isBst(node.left);
+        } else if (node.right != null) {
+             if (node.value.compareTo(node.right.value) > 0)
                  return false;
-             return isBst(root.right);
+             return isBst(node.right);
          }
 
         return true;
-
     }
 
     public void insert(TreeNode<T> node) {
         if (root == null){
             root = node;
+            return;
         }
         insert(root, node);
     }
+
 
     // recursive
     private TreeNode<T> insert(TreeNode<T> parent, TreeNode<T> node) {
@@ -52,6 +54,34 @@ public class BinarySearchTree<T extends Comparable<T>> extends BinaryTree<T>{
         }
 
         return parent;
+    }
+
+
+    public void insert2(T value) {
+        if (root == null){
+            root = createTreeNode(value);
+            return;
+        }
+        insert2(root, value);
+    }
+
+    // recursive - simple without node parent node ref add.
+    private TreeNode<T> insert2(TreeNode<T> node, T value) {
+        if (node == null)
+            return createTreeNode(value);
+
+        if (node.value.compareTo(value) < 0)
+            if (node.right != null)
+                return insert2(node.right, value);
+            else
+                node.right = createTreeNode(value);
+        else if (node.value.compareTo(value) > 0)
+            if (node.left != null)
+                return insert2(node.left, value);
+            else
+                node.left = createTreeNode(value);
+
+        return null;
     }
 
     TreeNode<T> successor(TreeNode<T> node){
@@ -72,7 +102,7 @@ public class BinarySearchTree<T extends Comparable<T>> extends BinaryTree<T>{
         }
 
         // rightmost node special case
-        if (parent.value.compareTo(node.value) < 0 && node.value.equals(maximum(this.root).value))
+        if (parent != null && parent.value.compareTo(node.value) < 0 && node.value.equals(maximum(this.root).value))
             return node;
 
         return parent;
@@ -96,7 +126,7 @@ public class BinarySearchTree<T extends Comparable<T>> extends BinaryTree<T>{
         }
 
         // leftmost node special case
-        if (parent.value.compareTo(node.value) > 0 && node.value.equals(minimum(this.root).value))
+        if (parent != null && parent.value.compareTo(node.value) > 0 && node.value.equals(minimum(this.root).value))
             return node;
 
         return parent;

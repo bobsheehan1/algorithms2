@@ -42,7 +42,7 @@ public class PrimMinSpanningTree <T extends Comparable<T>> {
         //    node.distance = Integer.MAX_VALUE;
         //}
 
-        // create set of all unvisited nodes
+        // create add of all unvisited nodes
         Set<GraphNode<T>> unvisited = new HashSet<>();
         unvisited.addAll(graph.getNodes());
 

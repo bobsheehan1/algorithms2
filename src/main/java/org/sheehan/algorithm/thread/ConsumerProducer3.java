@@ -41,7 +41,7 @@ public class ConsumerProducer3 {
             for (int i = 0; i < MAX_MESSAGES; ++i){
                 try {
                     mbox.set(id + " : " + i);
-                    //System.out.println(id +" set: " +  i);
+                    //System.out.println(id +" add: " +  i);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -73,5 +73,24 @@ public class ConsumerProducer3 {
         }
     }
 
+
+    static public void main(String args[]) throws InterruptedException {
+        ConsumerProducer3 tu = new ConsumerProducer3();
+        ConsumerProducer3.Mailbox mailbox = tu.new Mailbox();
+
+        Thread p1 = new Thread(tu.new Producer(mailbox, "P1"), "Producer");
+        Thread c1 = new Thread(tu.new Consumer(mailbox, "C1"), "Consumer");
+        Thread p2 = new Thread(tu.new Producer(mailbox, "P2"), "Producer");
+        Thread c2 = new Thread(tu.new Consumer(mailbox, "C2"), "Consumer");
+
+        c1.start();
+        p1.start();
+        c2.start();
+        p2.start();
+        p1.join(5000);
+        p2.join(5000);
+
+
+    }
 
 }

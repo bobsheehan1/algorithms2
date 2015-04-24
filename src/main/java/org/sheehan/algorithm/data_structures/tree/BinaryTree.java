@@ -20,6 +20,7 @@ public class BinaryTree<T> {
         return node;
     }
 
+    // create node and add children
     public static <T> TreeNode<T> createTreeNode(T value, TreeNode<T> left, TreeNode<T> right){
         TreeNode<T> node = new TreeNode<>();
         node.value = value;
@@ -69,6 +70,7 @@ public class BinaryTree<T> {
         return getHeight(this.root);
      }
 
+    //recursive
     private int getHeight(TreeNode<T> node){
         if (node == null)
             return 0;

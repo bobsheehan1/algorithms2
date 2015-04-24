@@ -11,7 +11,7 @@ import java.util.Set;
  * Time: 11:06 AM
  * To change this template use File | Settings | File Templates.
  */
-public class StringUtils {
+public class Strings {
 
     public static String reverse(String str) {
         char[] buffer = str.toCharArray();

@@ -90,7 +90,6 @@ public class ListImpl <T extends Comparable<T>> implements List<T> {
             prev = curr;
             curr = curr.next;
         }
-
         return false;
     }
 
@@ -142,36 +141,21 @@ public class ListImpl <T extends Comparable<T>> implements List<T> {
             A = B;
             B = C;
             C = C.next;
-
         }
 
         B.next = A; //reversal
         A = B; // move the scaffold
 
-        this.head = A; // don't forget to set the head !!!
+        this.head = A; // don't forget to add the head !!!
     }
 
     @Override
-    public T get(int index){
-        if (index > size())
-            return null;
-        Node curr = this.head;
-        for (int i = 0; i < index; ++i)
-            curr = curr.next;
-
-        return (T)curr.value;
-
-    }
-
-
-        @Override
     public void print(){
         Node curr = this.head;
         while (curr != null){
             System.out.print (curr.value + " ");
             curr = curr.next;
         }
-
         System.out.println();
     }
 
@@ -188,10 +172,10 @@ public class ListImpl <T extends Comparable<T>> implements List<T> {
         return count;
     }
 
-
-
     @Override
     public void introduceCycleForTest() {
+
+        // get to tail so tail can point to some random node
         Node tail = this.head;
         while (tail.next != null) {
             tail = tail.next;
@@ -205,12 +189,11 @@ public class ListImpl <T extends Comparable<T>> implements List<T> {
             n = n.next;
         }
 
+        // make loop !
         tail.next = n;
 
         System.out.println("cycle start: " + n.value);
         System.out.println("cycle end: " + tail.value);
-
-
     }
 
     @Override
@@ -227,7 +210,6 @@ public class ListImpl <T extends Comparable<T>> implements List<T> {
         }
 
         return false;
-
     }
 
     // This solution is "Floyd's Cycle-Finding Algorithm"
@@ -244,9 +226,11 @@ public class ListImpl <T extends Comparable<T>> implements List<T> {
             fastNode = fastNode.next;
             if (fastNode == null)
                 return null;
-            fastNode = fastNode.next;
-            if (slowNode == fastNode)
+            fastNode = fastNode.next; // double it up
+
+            if (slowNode == fastNode) //test !
                 return slowNode;
+
             slowNode = slowNode.next;
         }
         return null;
@@ -258,7 +242,6 @@ public class ListImpl <T extends Comparable<T>> implements List<T> {
         Node fastNode = cycleStart;
         int cnt = 0;
         while (slowNode != null) {
-
             if (fastNode == null)
                 return 0;
             fastNode = fastNode.next;
@@ -270,7 +253,6 @@ public class ListImpl <T extends Comparable<T>> implements List<T> {
             if (slowNode == fastNode)
                 return cnt;
             slowNode = slowNode.next;
-
         }
         return 0;
     }
@@ -287,7 +269,20 @@ public class ListImpl <T extends Comparable<T>> implements List<T> {
             n.value = value;
 
         return value;
+    }
 
+    @Override
+    public T get(int index) {
+        if (index > size())
+            return null;
+        Node n = this.head;
+        for (int i = 0; i < index; ++i)
+            n = n.next;
+
+        if (n != null)
+            return (T)n.value;
+
+        return null;
     }
 
     @Override
@@ -298,7 +293,6 @@ public class ListImpl <T extends Comparable<T>> implements List<T> {
             array[cnt++]=curr.value;
             curr = curr.next;
         }
-
     }
 
 }

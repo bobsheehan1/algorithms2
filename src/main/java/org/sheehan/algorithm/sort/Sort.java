@@ -299,7 +299,7 @@ public class Sort {
         for( int i = left; i < right; i++){
             if (array[i].compareTo(pivotValue) < 0) {
                 swap(array, i, storeIndex);
-                // This gets set to next element but will remain here if compare fails while it keeps moving.
+                // This gets add to next element but will remain here if compare fails while it keeps moving.
                 // Implies that storeIndex value is larger than pivot value. Only swap with value larger than pivot.
                 // If an element is lower than the pivot, you should swap it with a larger element on the left-side of i.
                 storeIndex = storeIndex + 1;

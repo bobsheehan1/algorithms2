@@ -33,7 +33,7 @@ public class DjikstraShortestPath <T extends Comparable<T>>{
         for (int i = 0; i < graph.getNumV(); ++i) {
             // of all unvisited nodes which one has the minimal distance
             GraphNode<T> minDistanceNode = getMinDistanceNode();
-            // set this to visited
+            // add this to visited
             minDistanceNode.visited = true;
             // starting at this node look at all neighbors and update distance cost and predecessor
             // if improved.

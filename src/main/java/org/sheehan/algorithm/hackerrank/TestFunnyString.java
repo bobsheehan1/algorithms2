@@ -1,6 +1,6 @@
 package org.sheehan.algorithm.hackerrank;
 
-import org.sheehan.algorithm.StringUtils;
+import org.sheehan.algorithm.Strings;
 
 import java.util.Scanner;
 
@@ -12,7 +12,7 @@ public class TestFunnyString {
 
         for (int i = 0; i < t; i++){
             String s = in.next();
-            String r = StringUtils.reverse(s);
+            String r = Strings.reverse(s);
             boolean funny = true;
             for (int j =0; j<s.length()-1;++j){
                 int val1 = Math.abs((int)s.charAt(j) - (int)s.charAt(j+1));
