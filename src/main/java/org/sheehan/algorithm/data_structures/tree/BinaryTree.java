@@ -35,6 +35,7 @@ public class BinaryTree<T> {
         return node;
     }
 
+
     public static class TreeNode <T> {
         public T value;
         public TreeNode <T> left;
@@ -78,11 +79,42 @@ public class BinaryTree<T> {
             return 1 + Math.max(getHeight(node.left ), getHeight(node.right ));
     }
 
+    //recursive
+    public int getMaxSum(TreeNode<Integer> node){
+        if (node == null)
+            return 0;
+        else
+            return node.value + Math.max(getMaxSum(node.left), getMaxSum(node.right));
+    }
+
+    //recursive
+    public void printEndNodesAndPathSums(TreeNode<Integer> node){
+        if (node == null)
+            return;
+
+        //utilize parent nodes
+        if (node.left ==null && node.right==null){
+            System.out.println("end node: " + node.value);
+            int sum = node.value;
+            TreeNode<Integer> tmp = node.parent;
+            while (tmp != null){
+                sum += tmp.value;
+                tmp = tmp.parent;
+            }
+            System.out.println("sum path: " + sum);
+
+            return;
+        }
+        printEndNodesAndPathSums(node.left);
+        printEndNodesAndPathSums(node.right);
+     }
+
+
     public void getLevelNodes(TreeNode<T> node, int cLevel, int rLevel, List<TreeNode<T>> nodes ){
 ;
         if (node == null)
             return;
-        if (cLevel == rLevel)
+        if (cLevel == rLevel) // add to container if level is met
             nodes.add(node);
         else {
             getLevelNodes(node.left, cLevel+1, rLevel, nodes);
@@ -90,6 +122,7 @@ public class BinaryTree<T> {
         }
     }
 
+    // swap left and right at each level
     public void mirror(TreeNode<T> node){
         if (node == null)
             return;

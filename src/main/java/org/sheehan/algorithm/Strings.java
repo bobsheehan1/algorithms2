@@ -95,6 +95,7 @@ public class Strings {
             }
         } else{
             for (int pos = str.length() - 1; pos > 0; pos--) {
+                //char to digit
                 accumulator += (str.charAt(pos) - '0') * multiplier;
                 multiplier *= 10;
             }
@@ -109,6 +110,7 @@ public class Strings {
         if (number < 0)
             buffer.append("-");
 
+        // figure out the length of the number
         int length = 0;
         int temp = number;
         while (temp/10 != 0){
@@ -116,11 +118,21 @@ public class Strings {
             length++;
         }
         System.out.println(length);
+
+        // starting at LEFT MSB end (using calculated length)
+        // break off each digit and add to string buffer
         for (int i = length; i >= 0; --i){
-            int position = (int)Math.pow(10, i);
-            int value = number/position;
-            value = value%10;
-            buffer.append((char)(value +'0'));
+
+            // create sub integer up to ith position from left
+            // 1234 -> 1 (1000)
+            // 1234 -> 12 (100)
+            // 1234 -> 123 (10)
+            // 1234 -> 1234 (1)
+            int left_prefix = number/(int)Math.pow(10, i);
+
+            // shave off the 10's position off leftish sub int
+            int digit = left_prefix%10;
+            buffer.append((char)(digit +'0')); //digit to char
         }
 
         return buffer.toString();
