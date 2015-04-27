@@ -25,7 +25,6 @@ class SwapCallbackValue implements SwapCallback{
             array[j] = array[i];
             array[i] = tmp;
             return true;
-
         }
         return false;
     }
@@ -51,6 +50,38 @@ public class Sort {
 
             for (int i = 0; i < n; ++i) {
                 swapped |= swabCallback.swap(array, i, i+1);
+
+            }
+            n = n - 1; //optimization
+        }
+    }
+
+    /////////////////////////////////////////////////////////////////////////////////
+    // BUBBLE SORT Even and Odd
+    /////////////////////////////////////////////////////////////////////////////////
+    // worst 0(n2)
+    // avg O(n2)
+    // best O(n)
+    public static void bubbleSortPolarity(int []array) {
+
+        int n = array.length - 1;
+        SwapCallbackValue swabCallback = new SwapCallbackValue();
+
+        boolean swapped = true;
+        // repeat until no more swaps
+        while (swapped) {
+            swapped = false;
+
+            for (int i = 0; i < n; ++i) {
+                //swapped |= swabCallback.swap(array, i, i+1);
+
+                if ((array[i]&1)==1 && (array[i+1]&1)==0) {
+                    Integer tmp = array[i+1];
+                    array[i+1] = array[i];
+                    array[i] = tmp;
+                    swapped = true;
+
+                }
             }
             n = n - 1; //optimization
         }
