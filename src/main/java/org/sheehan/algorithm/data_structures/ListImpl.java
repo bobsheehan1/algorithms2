@@ -129,12 +129,8 @@ public class ListImpl <T extends Comparable<T>> implements List<T> {
     @Override
     public  void reverse2() {
         Node curr = this.head;
-        Node A = null;
-        Node B = curr;
-        Node C = curr.next;
+        Node A = null, B = curr, C= curr.next;
         while (C != null) {
-            curr = curr.next; // iterate first !!!
-
             B.next = A; //reversal step
 
             // move the scaffold
@@ -144,9 +140,7 @@ public class ListImpl <T extends Comparable<T>> implements List<T> {
         }
 
         B.next = A; //reversal
-        A = B; // move the scaffold
-
-        this.head = A; // don't forget to add the head !!!
+        this.head = B; // don't forget to add the head !!!
     }
 
     @Override
