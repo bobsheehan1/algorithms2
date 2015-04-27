@@ -1,5 +1,6 @@
 package org.sheehan.algorithm.data_structures;
 
+import org.junit.Assert;
 import org.junit.Test;
 import org.sheehan.algorithm.data_structures.Array;
 
@@ -13,19 +14,19 @@ public class ArrayTest {
 
         Integer array[] = {1, 2, 2, 3, 3, 3, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 6, 7, 8, 9, 10, 10};
 
-        Array.findLongestRun(array);
+        Assert.assertEquals(4, Array.findLongestRun(array).intValue());
 
         Integer array2[] = {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 3, 3, 3, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 6, 7, 8, 9, 10, 10};
 
-        Array.findLongestRun(array2);
+        Assert.assertEquals(1, Array.findLongestRun(array2).intValue());
 
         Integer array3[] = {1, 2, 2, 3, 3, 3, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 6, 7, 8, 9, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10};
 
-        Array.findLongestRun(array3);
+        Assert.assertEquals(10, Array.findLongestRun(array3).intValue());
 
         Double array4[] = {3.3, 1.1, 3.3, 4.4, 5.5, 7.7, 7.7, 7.7, 8.8};
 
-        Array.findLongestRun(array4);
+        Assert.assertEquals(7.7f, Array.findLongestRun(array4).floatValue(), 0.0);
     }
 
     @Test

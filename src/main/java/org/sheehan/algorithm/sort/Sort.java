@@ -20,7 +20,7 @@ interface SwapCallback {
 
 class SwapCallbackValue implements SwapCallback{
     public <T extends Comparable<T>> boolean swap(T[] array, int i, int j) {
-        if (array[i].compareTo(array[j]) < 0) {
+        if (array[i].compareTo(array[j]) > 0) {
             T tmp = array[j];
             array[j] = array[i];
             array[i] = tmp;
@@ -49,8 +49,8 @@ public class Sort {
         while (swapped) {
             swapped = false;
 
-            for (int j = 0; j < n; ++j) {
-                swapped = swabCallback.swap(array, j, j+1);
+            for (int i = 0; i < n; ++i) {
+                swapped |= swabCallback.swap(array, i, i+1);
             }
             n = n - 1; //optimization
         }
@@ -71,7 +71,7 @@ public class Sort {
         for (int i = 0; i < n; ++i){
             // move left from i swapping as you go
             for (int j = i; j > 0; j--){
-                swabCallback.swap(array, j, j-1);
+                swabCallback.swap(array, j-1, j);
             }
         }
     }

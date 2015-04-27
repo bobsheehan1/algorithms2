@@ -14,7 +14,7 @@ public class SortTest {
 
     @Test
     public void testBubbleSort() throws Exception {
-        Integer array[] = Array.createArray(20, 100, true);
+        Integer array[] = Array.createArray(20, 100, false);
         Array.rotateArray(array, 5);
 
         System.out.println("bubble");

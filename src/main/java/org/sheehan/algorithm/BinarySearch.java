@@ -29,8 +29,9 @@ public class BinarySearch {
 
     //recursive
     static int binarySearch(Integer array[], int key, int start, int end) {
+        // IMPORTANT
         if (start > end)
-            return -1;
+            return -1; // not found
 
         int middle = start+(end-start)/2;
 
