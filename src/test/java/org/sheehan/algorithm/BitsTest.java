@@ -10,8 +10,10 @@ public class BitsTest {
         long number = 0x84208420;
         System.out.println(number);
         Bits.printBinary(number);
-        long flipped = Bits.flipBits(number);
+        Bits.printBinary2(number);
+        long flipped = Bits.flipBits2(number);
         Bits.printBinary(flipped);
+        Bits.printBinary2(flipped);
         System.out.println(flipped);
         System.out.println();
 
