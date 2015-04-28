@@ -14,14 +14,36 @@ public class SortTest {
 
     @Test
     public void testBubbleSort() throws Exception {
-        Integer array[] = Array.createArray(20, 100, true);
-        Array.rotateArray(array, 5);
+        Integer array[] = Array.createArray(20, 100, false);
 
         System.out.println("bubble");
         System.out.println(Arrays.toString(array));
 
         Sort.bubbleSort(array);
         System.out.println(Arrays.toString(array));
+        System.out.println();
+
+    }
+
+    @Test
+    public void testBubbleSortPolarity() throws Exception {
+        Integer array[] = Array.createArray(30, 30, false);
+        int array2[] = new int[array.length];
+        for (Integer i : array){
+            array2[i] = i.intValue();
+        }
+
+        Sort.bubbleSortPolarity(array2);
+        System.out.println(Arrays.toString(array2));
+        System.out.println();
+
+        array = Array.createArray(30, 30, false);
+        for (Integer i : array){
+            array2[i] = i.intValue();
+        }
+
+        Sort.bubbleSortPolarity(array2);
+        System.out.println(Arrays.toString(array2));
         System.out.println();
 
     }

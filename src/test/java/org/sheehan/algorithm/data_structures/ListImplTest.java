@@ -24,7 +24,9 @@ public class ListImplTest {
         list.print();
 
         list.reverse2();
+        list.print();
         list.reverse2();
+        list.print();
 
         Integer array2[] = new Integer[list.size()];
         list.toArray(array2);

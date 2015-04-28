@@ -31,41 +31,14 @@ public class BinarySearchTree<T extends Comparable<T>> extends BinaryTree<T>{
         return true;
     }
 
-    public void insert(TreeNode<T> node) {
-        if (root == null){
-            root = node;
-            return;
-        }
-        insert(root, node);
-    }
-
-
-    // recursive
-    private TreeNode<T> insert(TreeNode<T> parent, TreeNode<T> node) {
-        if (parent == null)
-            return node;
-        else
-            node.parent = parent;
-
-        if (parent.value.compareTo(node.value) < 0) {
-            parent.right = insert(parent.right, node);
-        }else if (parent.value.compareTo(node.value) > 0) {
-            parent.left = insert(parent.left, node);
-        }
-
-        return parent;
-    }
-
-
-    public void insert2(T value) {
+    public TreeNode<T> insert2(T value) {
         if (root == null){
             root = createTreeNode(value);
-            return;
+            return root;
         }
-        insert2(root, value);
+        return insert2(root, value);
     }
 
-    // recursive - simple without node parent node ref add.
     private TreeNode<T> insert2(TreeNode<T> node, T value) {
         if (node == null)
             return createTreeNode(value);
@@ -73,15 +46,19 @@ public class BinarySearchTree<T extends Comparable<T>> extends BinaryTree<T>{
         if (node.value.compareTo(value) < 0)
             if (node.right != null)
                 return insert2(node.right, value);
-            else
+            else {
                 node.right = createTreeNode(value);
+                node.right.parent = node;
+            }
         else if (node.value.compareTo(value) > 0)
             if (node.left != null)
                 return insert2(node.left, value);
-            else
+            else {
                 node.left = createTreeNode(value);
+                node.left.parent = node;
+            }
 
-        return null;
+        return node;
     }
 
     TreeNode<T> successor(TreeNode<T> node){

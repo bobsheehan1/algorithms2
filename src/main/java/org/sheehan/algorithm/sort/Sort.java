@@ -20,12 +20,11 @@ interface SwapCallback {
 
 class SwapCallbackValue implements SwapCallback{
     public <T extends Comparable<T>> boolean swap(T[] array, int i, int j) {
-        if (array[i].compareTo(array[j]) < 0) {
+        if (array[i].compareTo(array[j]) > 0) {
             T tmp = array[j];
             array[j] = array[i];
             array[i] = tmp;
             return true;
-
         }
         return false;
     }
@@ -49,8 +48,40 @@ public class Sort {
         while (swapped) {
             swapped = false;
 
-            for (int j = 0; j < n; ++j) {
-                swapped = swabCallback.swap(array, j, j+1);
+            for (int i = 0; i < n; ++i) {
+                swapped |= swabCallback.swap(array, i, i+1);
+
+            }
+            n = n - 1; //optimization
+        }
+    }
+
+    /////////////////////////////////////////////////////////////////////////////////
+    // BUBBLE SORT Even and Odd
+    /////////////////////////////////////////////////////////////////////////////////
+    // worst 0(n2)
+    // avg O(n2)
+    // best O(n)
+    public static void bubbleSortPolarity(int []array) {
+
+        int n = array.length - 1;
+        SwapCallbackValue swabCallback = new SwapCallbackValue();
+
+        boolean swapped = true;
+        // repeat until no more swaps
+        while (swapped) {
+            swapped = false;
+
+            for (int i = 0; i < n; ++i) {
+                //swapped |= swabCallback.swap(array, i, i+1);
+
+                if ((array[i]&1)==1 && (array[i+1]&1)==0) {
+                    Integer tmp = array[i+1];
+                    array[i+1] = array[i];
+                    array[i] = tmp;
+                    swapped = true;
+
+                }
             }
             n = n - 1; //optimization
         }
@@ -71,7 +102,7 @@ public class Sort {
         for (int i = 0; i < n; ++i){
             // move left from i swapping as you go
             for (int j = i; j > 0; j--){
-                swabCallback.swap(array, j, j-1);
+                swabCallback.swap(array, j-1, j);
             }
         }
     }

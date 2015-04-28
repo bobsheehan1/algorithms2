@@ -11,7 +11,7 @@ import java.util.List;
 public class Array {
 
     // print start index, length, element value of longest run in array
-    public static <T> void findLongestRun(T array[]) {
+    public static <T> T findLongestRun(T array[]) {
         int length = 1;
         int maxLength = 0;
         T maxVal = null;
@@ -40,6 +40,8 @@ public class Array {
         }
 
         System.out.println("start: " + maxStart + " length: " + maxLength + " value: " + maxVal);
+
+        return maxVal;
     }
 
     private static <T> void reverse(T[] buffer, int start, int end) {
@@ -47,23 +49,22 @@ public class Array {
         final int length = end - start;
         final int pivot = start + length / 2;
 
-        for (int i = start, cnt = 0; i <= pivot; ++i, ++cnt) {
+        for (int i = start, j=end; i <= pivot; ++i, --j) {
             T c = buffer[i];
-            buffer[i] = buffer[end - cnt];
-            buffer[end - cnt] = c;
+            buffer[i] = buffer[j];
+            buffer[j] = c;
         }
     }
 
     public static <T> void rotateArray(T[] array, int shift) {
         shift %= array.length;
 
-        //Array.print(array);
+        //reverse entire array
         reverse(array, 0, array.length - 1);
-        //Array.print(array);
+        //reverse again first sub array
         reverse(array, 0, shift - 1);
-        //Array.print(array);
+        //reverse again second sub array
         reverse(array, shift, array.length - 1);
-        //Array.print(array);
     }
 
     public static Integer[] createArray(int size, int limit, boolean sorted) {
