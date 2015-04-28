@@ -47,10 +47,11 @@ public class ListImplTest {
         Assert.assertTrue(list.size() == 0);
         for (int i = 0; i < 10; i++)
             list.append(i);
+        list.print();
 
         for (int i = 9; i >=0; i--)
             list.delete(i);
-
+        list.print();
         Assert.assertTrue(list.size() == 0);
     }
 

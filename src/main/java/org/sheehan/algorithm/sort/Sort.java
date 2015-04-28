@@ -5,6 +5,8 @@ import org.sheehan.algorithm.data_structures.tree.BinaryHeap;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.function.Predicate;
 
 /**
  * Created with IntelliJ IDEA.
@@ -41,6 +43,7 @@ public class Sort {
     public static void bubbleSort(Integer []array) {
 
         int n = array.length - 1;
+
         SwapCallbackValue swabCallback = new SwapCallbackValue();
 
         boolean swapped = true;
@@ -142,7 +145,7 @@ public class Sort {
         for (int i = 1; i < n; ++i){
             // move left from i swapping as you go
             for (int j = i; j > 0; j--){
-                if (list.get(j).compareTo(list.get(j-1)) < 0)
+                if (list.get(j).compareTo(list.get(j - 1)) < 0)
                     swap(list, j, j - 1);
             }
         }
@@ -242,6 +245,7 @@ public class Sort {
         return array;
     }
 
+
     private static <T extends Comparable<T>> void merge(T[] array1, T[]array2, T[]array){
 
         int i, index1, index2;
@@ -277,6 +281,60 @@ public class Sort {
         array[j] = array[i];
         array[i] = tmp;
     }
+
+
+    // simplified for ints
+    public static int[] mergeSort2(int []array) {
+        if (array.length <= 1) {
+            return array;
+        }
+
+        // Split the array in half
+        int[] first = new int[array.length / 2];
+        int[] second = new int[array.length - first.length];
+
+        System.arraycopy(array, 0, first, 0, first.length);
+        System.arraycopy(array, first.length, second, 0, second.length);
+
+        // Sort each half
+        mergeSort2(first);
+        mergeSort2(second);
+
+        // Merge the halves together, overwriting the original array
+        merge2(first, second, array);
+        return array;
+    }
+
+    private static void merge2(int[] array1, int[]array2, int[]array){
+
+        int i, index1, index2;
+        i = 0;
+        index1 = 0;
+        index2 = 0;
+
+        // merge COMMON LENGTH of 2 arrays
+        // this merge actually SORTS the arrays !
+        // this will exhaust one of the two arrays
+        while(index1 < array1.length && index2 < array2.length){
+            if (array1[index1] < array2[index2]) {
+                array[i++] = array1[index1++];
+            } else {
+                array[i++] = array2[index2++];
+            }
+        }
+
+        // one will have left overs...
+
+        // merge the LEFT OVER array portion
+        while(index1 < array1.length){
+            array[i++] = array1[index1++];
+        }
+        // if remaining array2 not merged
+        while(index2 < array2.length){
+            array[i++] = array2[index2++];
+        }
+    }
+
 
     private static <T extends Comparable<T>> void swap(List<T> list, int i, int j) {
         T tmp = list.get(j);

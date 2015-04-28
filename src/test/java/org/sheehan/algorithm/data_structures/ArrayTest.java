@@ -29,6 +29,31 @@ public class ArrayTest {
         Assert.assertEquals(7.7f, Array.findLongestRun(array4).floatValue(), 0.0);
     }
 
+
+    @Test
+    public void testFindDuplicates() throws Exception {
+
+        List<Integer> integers = Arrays.asList(1, 2, 3, 4, 4, 5, 5, 5, 6, 6, 7, 8, 9);
+
+
+        Set<Integer> duplicates = Array.findDuplicates(integers.toArray(new Integer[0]));
+
+        duplicates.forEach((Integer i) -> System.out.print(i + " "));
+    }
+
+    @Test
+    public void testRemoveDuplicates() throws Exception {
+
+        List<Integer> integers = Arrays.asList(1, 2, 3, 4, 4, 4, 4, 4,4,4,4, 5, 5, 5, 6, 6, 7, 8, 9);
+
+        Integer[] integers1 = integers.toArray(new Integer[0]);
+
+        Array.removeDuplicates(integers1);
+
+        for (int i: integers1)
+            System.out.print(i+" ");
+    }
+
     @Test
     public void testRotateArray() {
         Integer array[] = Array.createArray(20, 100, true);

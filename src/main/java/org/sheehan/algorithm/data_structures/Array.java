@@ -1,5 +1,6 @@
 package org.sheehan.algorithm.data_structures;
 
+import org.sheehan.algorithm.Bits;
 import org.sheehan.algorithm.sort.Sort;
 
 import java.util.*;
@@ -43,6 +44,44 @@ public class Array {
 
         return maxVal;
     }
+
+    // for numbers up to 256 limit
+    public static Set<Integer> findDuplicates(Integer array[]) {
+
+        int checker = 0; //init
+
+        Set<Integer> duplicates = new HashSet<Integer>();
+
+        for (Integer i: array){
+            int mask = 1 << i;
+            if ((checker & mask) > 0) {
+                duplicates.add(i);
+             }else{
+                checker |= mask;
+            }
+        }
+        return duplicates;
+    }
+
+    // removes duplicates and fills left over array with -1's
+    public static void removeDuplicates(Integer[] array) {
+        int checker = 0; //init
+
+        int dst = 0;
+        for (int i = 0; i < array.length; ++i) {
+            int mask = 1 << array[i];
+            // not a duplicate
+            if ((checker & mask) == 0) {
+                array[dst++] = array[i];
+            }
+            checker |= mask;
+        }
+
+        for (int i = dst; i < array.length; ++i) {
+            array[i] = -1;
+        }
+    }
+
 
     private static <T> void reverse(T[] buffer, int start, int end) {
 
@@ -192,4 +231,6 @@ public class Array {
         }
         return max;
     }
+
+
 }

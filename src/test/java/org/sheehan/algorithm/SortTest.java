@@ -123,13 +123,29 @@ public class SortTest {
 
     @Test
     public void testMergeSort() throws Exception {
-        Integer array[] = {1,6,3,8,7,2,5,11,55,33,88};
+        Integer array[] = Array.createArray(10,10, false);
 
         System.out.println("merge");
         System.out.println(Arrays.toString(array));
 
         Sort.mergeSort(array);
         System.out.println(Arrays.toString(array));
+        System.out.println();
+    }
+
+    // simple merge of ints
+    @Test
+    public void testMergeSort2() throws Exception {
+        Integer array[] = Array.createArray(10,10, false);
+        int array2[] = new int[array.length];
+        for (int i = 0; i < array.length; i++)
+            array2[i]=array[i];
+
+        System.out.println("merge");
+        System.out.println(Arrays.toString(array2));
+
+        Sort.mergeSort2(array2);
+        System.out.println(Arrays.toString(array2));
         System.out.println();
     }
 

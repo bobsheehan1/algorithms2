@@ -12,7 +12,7 @@ public class Bits {
         printBinary(number2);
 
     }
-    static void printBinary(long number){
+    public static void printBinary(long number){
 
         // The unsigned right shift operator ">>>" shifts a zero into the leftmost position, while the leftmost position after ">>" depends on sign extension.
         long cnt = 0;
