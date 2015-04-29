@@ -40,15 +40,7 @@ public class ListImpl <T extends Comparable<T>> implements List<T> {
         }
     }
 
-    public class Node <T> {
-        T value;
-        Node next;
 
-        public Node(T value) {
-            this.value = value;
-            this.next = null;
-        }
-    }
 
     Node head;
 
@@ -58,20 +50,30 @@ public class ListImpl <T extends Comparable<T>> implements List<T> {
 
 
    @Override
-   public void append(T value) {
+   public void appendBack(T value) {
        Node<T> newNode = new Node<>(value);
        if (this.head == null)
            this.head = newNode;
        else {
            Node curr = this.head;
-           // move to last node
-           while (curr.next != null) {
+           Node prev = this.head;
+
+           // move to last node (before null)
+           while (curr != null) {
+               prev = curr;
                curr = curr.next;
            }
-           curr.next = newNode;
+           prev.next = newNode;
 
        }
    }
+
+    @Override
+    public Node<T> deleteFront() {
+        Node<T> front = head;
+        this.head = this.head.next;
+        return front;
+    }
 
     @Override
     public boolean delete(T value) {
@@ -98,7 +100,7 @@ public class ListImpl <T extends Comparable<T>> implements List<T> {
     public void reverse1() {
         Node curr = this.head;
         // move to end to get tail
-        while (curr.next != null) {
+        while (curr != null) {
             curr = curr.next;
         }
 
@@ -107,7 +109,7 @@ public class ListImpl <T extends Comparable<T>> implements List<T> {
 
         curr = this.head;
         Node prev = null;
-        while (curr.next != null) {
+        while (curr != null) {
             curr = curr.next;
             Node n2 = this.head;
             while (n2.next != null) {
@@ -128,8 +130,7 @@ public class ListImpl <T extends Comparable<T>> implements List<T> {
     // iterate
     @Override
     public  void reverse2() {
-        Node curr = this.head;
-        Node A = null, B = curr, C= curr.next;
+        Node A = null, B = head, C= head.next;
         while (C != null) {
             B.next = A; //reversal step
 

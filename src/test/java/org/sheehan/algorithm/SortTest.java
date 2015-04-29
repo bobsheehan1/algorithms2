@@ -68,7 +68,7 @@ public class SortTest {
         Integer array[] = {10,6,3,8,7,2,5,11,55,33,88};
         List<Integer> list = new ListImpl<>();
         for (Integer i : array){
-            list.append(i);
+            list.appendBack(i);
         }
 
         System.out.println("insertion");

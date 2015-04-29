@@ -96,7 +96,7 @@ public class GraphMatrix <T extends Comparable<T>> implements Graph<T> {
         List<T> neighbors = new ListImpl<T>();
         for (int j = 0; j < this.nodes.length; ++j) {
             if (isEdge(nodes[sourceIndex],nodes[j])) {
-                neighbors.append(nodes[j]);
+                neighbors.appendBack(nodes[j]);
             }
         }
         return neighbors;

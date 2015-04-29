@@ -6,8 +6,6 @@ import org.sheehan.algorithm.data_structures.tree.BinaryHeap;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Comparator;
-import java.util.function.Predicate;
 
 /**
  * Created with IntelliJ IDEA.
@@ -477,7 +475,7 @@ public class Sort {
 
         List<Queue<Integer>> buckets = new ListImpl<Queue<Integer>>();
         for (int i = 0; i < numBuckets; i++){
-            buckets.append(new QueueImpl<Integer>(array.length));
+            buckets.appendBack(new QueueImpl<Integer>(array.length));
         }
 
         Integer max = Integer.MIN_VALUE;
@@ -520,7 +518,7 @@ public class Sort {
 
         List<Queue<Integer>> buckets = new ListImpl<Queue<Integer>>();
         for (int i = 0; i < numBuckets; i++){
-            buckets.append(new QueueImpl<Integer>(array.length));
+            buckets.appendBack(new QueueImpl<Integer>(array.length));
         }
 
         int MASK = 0x00000001;
@@ -562,7 +560,7 @@ public class Sort {
         final int numBuckets = 256;
         List<Queue<String>> buckets = new ListImpl<Queue<String>>();
         for (int i = 0; i < numBuckets; i++){
-            buckets.append(new QueueImpl<String>(array.length));
+            buckets.appendBack(new QueueImpl<String>(array.length));
         }
 
         Integer max = Integer.MIN_VALUE;

@@ -20,6 +20,34 @@ public class QueueImplTest {
             for (int i = 0; i < 10; ++i) {
                 q.add(i);
                 q.print();
+                //q.printArray();
+            }
+
+            for (int i = 0; i < 5; ++i) {
+                q.remove();
+                q.print();
+                //q.printArray();
+            }
+
+            for (int i = 10; i < 15; ++i) {
+                q.add(i);
+                q.print();
+                //q.printArray();
+            }
+        }catch (NoSuchElementException e) {
+            assertTrue(true);
+        }
+    }
+
+    @Test
+    public void testAddOverflowList() {
+        try {
+            int size = 10;
+            Queue q = new QueueImpl2<Integer>();
+
+            for (int i = 0; i < 10; ++i) {
+                q.add(i);
+                q.print();
                 q.printArray();
             }
 

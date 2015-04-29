@@ -3,9 +3,8 @@ package org.sheehan.algorithm;
 import junit.framework.Assert;
 import org.junit.Test;
 
-import java.util.HashSet;
-import java.util.Set;
-import java.util.UUID;
+import java.lang.reflect.Array;
+import java.util.*;
 
 /**
  * Created with IntelliJ IDEA.
@@ -23,6 +22,12 @@ public class StringsTest {
         String reverseStr = Strings.reverse(testStr);
         System.out.println(reverseStr);
         Assert.assertEquals("olleh", reverseStr);
+
+
+        reverseStr = Strings.reverseRecursively(testStr);
+        System.out.println(reverseStr);
+        Assert.assertEquals("olleh", reverseStr);
+
     }
 
     @Test
@@ -50,6 +55,16 @@ public class StringsTest {
         Set<String> cache = new HashSet<String>();
 
         Strings.getPermutations("", "ABC", cache);
+
+        for (String s: cache)
+            System.out.println(s);
+
+        cache.clear();
+        char[] chars = "ABC".toCharArray();
+        List<Character> list = new ArrayList<>();
+        for (char c: chars)
+            list.add(c);
+        Strings.getPermutations2(list, 0, cache);
 
         for (String s: cache)
             System.out.println(s);
@@ -116,6 +131,15 @@ public class StringsTest {
         String test = "ABABCDEFGHGH";
         Set<Character> duplicates = Strings.findDuplicates(test);
         duplicates.forEach(s -> System.out.print(s + " "));
+        System.out.println();
+
+        duplicates = Strings.findDuplicatesBrute(test);
+        duplicates.forEach(s -> System.out.print(s + " "));
+        System.out.println();
+
+        duplicates = Strings.findDuplicatesSet(test);
+        duplicates.forEach(s -> System.out.print(s + " "));
+
     }
 
     @Test

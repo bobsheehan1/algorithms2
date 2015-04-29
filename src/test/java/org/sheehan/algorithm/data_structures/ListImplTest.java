@@ -2,10 +2,6 @@ package org.sheehan.algorithm.data_structures;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.sheehan.algorithm.data_structures.List;
-import org.sheehan.algorithm.data_structures.ListImpl;
-
-import java.util.Arrays;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -17,7 +13,7 @@ public class ListImplTest {
         List<Integer> list = new ListImpl<Integer>();
 
         for (int i = 0; i < 10; i++)
-            list.append(i);
+            list.appendBack(i);
         Integer array1[] = new Integer[list.size()];
         list.toArray(array1);
 
@@ -39,14 +35,14 @@ public class ListImplTest {
         List<Integer> list = new ListImpl<Integer>();
 
         for (int i = 0; i < 10; i++)
-            list.append(i);
+            list.appendBack(i);
 
         for (int i = 0; i < 10; i++)
             list.delete(i);
 
         Assert.assertTrue(list.size() == 0);
         for (int i = 0; i < 10; i++)
-            list.append(i);
+            list.appendBack(i);
         list.print();
 
         for (int i = 9; i >=0; i--)
@@ -55,13 +51,25 @@ public class ListImplTest {
         Assert.assertTrue(list.size() == 0);
     }
 
+    @Test
+    public void testDeleteFront() throws Exception {
+        List<Integer> list = new ListImpl<Integer>();
+
+        for (int i = 0; i < 10; i++)
+            list.appendBack(i);
+
+        list.print();;
+        List.Node<Integer> deleted = list.deleteFront();
+        list.print();;
+    }
+
 
     @Test
     public void testCycle() {
         List<Integer> list = new ListImpl<Integer>();
 
         for (int i = 0; i < 10; i++)
-            list.append(i);
+            list.appendBack(i);
 
         assertFalse(list.hasCycle());
         ListImpl.Node cycleStart = list.hasCycle2();

@@ -54,7 +54,7 @@ public class GraphList<T extends Comparable<T>> implements Graph<T> {
         GraphEdge<T> edge = new GraphEdge<>(node1, node2, weight);
 
         if (!isEdge(edge.srcNode,edge.dstNode)) {
-            graphAdjacencyList.get(node1).append(edge);
+            graphAdjacencyList.get(node1).appendBack(edge);
         }
         else {
             System.err.println("already an edge: " + node1 + " " + node2 );
@@ -74,12 +74,12 @@ public class GraphList<T extends Comparable<T>> implements Graph<T> {
         GraphEdge<T> edge2 = new GraphEdge<>(node2, node1, weight);
         edge2.id = edge1.id; //undirected edge (2 parallel edges)
         if (!isEdge(edge1.srcNode,edge1.dstNode)) {
-            graphAdjacencyList.get(node1).append(edge1);
+            graphAdjacencyList.get(node1).appendBack(edge1);
             }
             else {
                 System.err.println("already an edge: " + node1 + " " + node2 );
             }
-        graphAdjacencyList.get(node2).append(edge2);
+        graphAdjacencyList.get(node2).appendBack(edge2);
 
         java.util.List<GraphEdge<T>> edges = new ArrayList<GraphEdge<T>>();
         edges.add(edge1);
@@ -141,7 +141,7 @@ public class GraphList<T extends Comparable<T>> implements Graph<T> {
         List<GraphEdge<T>> edges = graphAdjacencyList.get(node);
         if (edges != null) {
             for (GraphEdge<T> edge : edges)
-                neighbors.append(edge.dstNode);
+                neighbors.appendBack(edge.dstNode);
         }
         return neighbors;
 

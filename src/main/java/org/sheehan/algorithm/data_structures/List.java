@@ -9,7 +9,18 @@ import java.util.Iterator;
  *
  */
 public interface List<T extends Comparable<T>> extends Iterable<T>{
-    void append (T value);
+
+
+    class Node <T> {
+        T value;
+        Node next;
+
+        public Node(T value) {
+            this.value = value;
+            this.next = null;
+        }
+    }
+    void appendBack(T value);
 
     //brute force
     void reverse1();
@@ -38,4 +49,6 @@ public interface List<T extends Comparable<T>> extends Iterable<T>{
     T set(int j, T t);
 
     void toArray(T[] array);
+
+    Node<T> deleteFront();
 }

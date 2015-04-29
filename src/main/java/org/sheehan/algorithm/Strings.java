@@ -1,9 +1,6 @@
 package org.sheehan.algorithm;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Created with IntelliJ IDEA.
@@ -50,6 +47,18 @@ public class Strings {
     }
 
 
+    public static String reverseRecursively(String str) {
+
+        //base case to handle one char string and empty string
+        if (str.length() <= 1) {
+            return str;
+        }
+
+        return reverseRecursively(str.substring(1)) + str.charAt(0);
+    }
+
+
+
     public static void getPermutations(String prefix, String str, Set<String> cache) {
         //System.out.println("\tpermutation pre:" + prefix + " str:" + str + " level:" + level);
         int n = str.length();
@@ -68,6 +77,32 @@ public class Strings {
 
                 getPermutations(prefix + str.charAt(i), str.substring(0, i) + str.substring(i + 1, n), cache);
             }
+        }
+    }
+
+
+    // start with k = 0
+    //  swap i and k
+    // inorder recursion k+1
+    // swap k with i
+    public static void getPermutations2(java.util.List<Character> arr, int k, Set<String> cache) {
+
+        //loop of recursions !
+        for (int i = k; i < arr.size(); i++) {
+            java.util.Collections.swap(arr, i, k);
+            getPermutations2(arr, k + 1, cache);
+            java.util.Collections.swap(arr, k, i);
+        }
+
+        // when we iterate to the end for a given recursion we have a permutation !
+        if (k == arr.size() - 1) {
+            Character[] cArr = (Character[])arr.toArray(new Character[0]);
+            char str[] = new char[cArr.length];
+            int i = 0;
+            for (Character c : cArr)
+                str[i++] = c;
+            cache.add(new String(str));
+            //System.out.println(java.util.Arrays.toString(arr.toArray()));
         }
     }
 
@@ -159,16 +194,34 @@ public class Strings {
         return null;
     }
 
-    // for numbers up to 256 limit
+    // brute force
+    public static Set<Character> findDuplicatesBrute(String str) {
+
+        char[] chars = str.toCharArray();
+
+        Set<Character> duplicates = new HashSet<Character>();
+
+        for (int i=0; i < str.length(); ++i) {
+            for (int j=0; j < str.length(); ++j) {
+                if (i != j && chars[i] == chars[j]) {
+                    duplicates.add(chars[i]);
+                }
+            }
+        }
+
+        return duplicates;
+    }
+
+    //ASCII
     public static Set<Character> findDuplicates(String str) {
 
         char[] chars = str.toCharArray();
 
-        int checker = 0; //init
+        int checker = 0; //init or use array of 256 for ASCII
 
         Set<Character> duplicates = new HashSet<Character>();
 
-        for (char s: chars){
+        for (char s:chars){
             int mask = 1 << (s-'a');
             if ((checker & mask) > 0) {
                 duplicates.add(s);
@@ -177,6 +230,26 @@ public class Strings {
             }
         }
         return duplicates;
+    }
+
+    //ASCII
+    public static Set<Character> findDuplicatesSet(String str) {
+        char[] chars = str.toCharArray();
+
+        //List inputList = Arrays.asList(str);
+        //Set inputSet = new HashSet(inputList);
+
+        Set<Character> duplicates = new HashSet<Character>();
+        Set<Character> set1 = new HashSet<>();
+        for (char c : chars){
+            if (!set1.add(c))
+                duplicates.add(c);
+        }
+
+
+        return duplicates;
+
+
     }
 
     // removes duplicates

@@ -27,7 +27,7 @@ public class TopologicalSortDag <T extends Comparable<T>> {
 
           while(noIncomingEdgeNodes.peek() != null){
              GraphNode<T> noIncomingEdgesNode = noIncomingEdgeNodes.remove();
-             sortedList.append(noIncomingEdgesNode);
+             sortedList.appendBack(noIncomingEdgesNode);
              for (GraphNode<T> neighbor:inputDag.getNeighbors(noIncomingEdgesNode)){
                  GraphEdge<T> edge = inputDag.getEdge(noIncomingEdgesNode, neighbor);
                  edge.visited = true;
