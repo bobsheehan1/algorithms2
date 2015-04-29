@@ -96,4 +96,23 @@ public class Bits {
 
         return number & 0x00000000FFFFFFFFL;
     }
+
+    public static void replaceSubstr(int num1, int num2, int i, int j){
+
+        // create a custom mask for i to j and 0 out that range in num1
+        int mask = ~0;
+        for (int index = i; index <=j; ++index){
+            mask ^= (1<<index);
+        }
+        num1 &= mask;
+
+        // shift the substr to correct position
+        num2 <<=i;
+
+        // simply or them together now !
+        printBinary(num1|num2);
+
+
+
+    }
 }

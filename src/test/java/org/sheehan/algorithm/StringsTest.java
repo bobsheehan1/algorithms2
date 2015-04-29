@@ -100,7 +100,6 @@ public class StringsTest {
             char c = Strings.getFirstNonRepeatingChar(str);
             System.out.println(c);
         }
-
     }
 
     @Test
@@ -111,5 +110,20 @@ public class StringsTest {
         System.out.println(str);
 
     }
+
+    @Test
+    public void testFindDuplicates(){
+        String test = "ABABCDEFGHGH";
+        Set<Character> duplicates = Strings.findDuplicates(test);
+        duplicates.forEach(s -> System.out.print(s + " "));
+    }
+
+    @Test
+    public void testRemoveDuplicates(){
+        String test = "ABABCDEFGHGH";
+        String s = Strings.removeDuplicates(test);
+        System.out.println(s);
+    }
+
 
 }

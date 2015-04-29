@@ -151,7 +151,7 @@ public class SortTest {
 
     @Test
     public void testQuickSort() throws Exception {
-        Integer array[] = {1,6,3,8,7,2,5,11,55,33,88};
+        Integer array[] = Array.createArray(10,20,false);
 
         System.out.println("quick");
         System.out.println(Arrays.toString(array));
@@ -163,7 +163,7 @@ public class SortTest {
 
     @Test
     public void testCountingSort() throws Exception {
-        Integer array[] = {7,2,9,0,1,2,0,9,7,4,4,6,9,1,0,9,3,2,5,9};
+        Integer array[] = Array.createArray(10,20,false);
 
         System.out.println("counting");
         System.out.println(Arrays.toString(array));
@@ -175,7 +175,7 @@ public class SortTest {
 
     @Test
     public void testCountingSort2() throws Exception {
-        Integer array[] = {1,6,3,8,1,7,2,5,1,11,55,33,88};
+        Integer array[] = Array.createArray(10,20,false);
 
         System.out.println("counting");
         System.out.println(Arrays.toString(array));
@@ -187,7 +187,7 @@ public class SortTest {
 
     @Test
     public void testRadixSortLsd() throws Exception {
-        Integer array[] = {5, 3, 20, 15, 135, 111};
+        Integer array[] = Array.createArray(10,20,false);
 
         System.out.println("radix lsd");
         System.out.println(Arrays.toString(array));
@@ -199,7 +199,7 @@ public class SortTest {
 
     @Test
     public void testRadixSortBinaryLsd() throws Exception {
-        Integer array[] = {5, 3, 20, 15, 135, 111};
+        Integer array[] = Array.createArray(10,20,false);
 
         System.out.println("radix lsd");
         System.out.println(Arrays.toString(array));

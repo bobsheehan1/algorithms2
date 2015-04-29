@@ -1,6 +1,7 @@
 package org.sheehan.algorithm;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -156,6 +157,47 @@ public class Strings {
         }
 
         return null;
+    }
+
+    // for numbers up to 256 limit
+    public static Set<Character> findDuplicates(String str) {
+
+        char[] chars = str.toCharArray();
+
+        int checker = 0; //init
+
+        Set<Character> duplicates = new HashSet<Character>();
+
+        for (char s: chars){
+            int mask = 1 << (s-'a');
+            if ((checker & mask) > 0) {
+                duplicates.add(s);
+            }else{
+                checker |= mask;
+            }
+        }
+        return duplicates;
+    }
+
+    // removes duplicates
+    // reset array skipping dupes
+    public static String removeDuplicates(String str) {
+        char[] chars = str.toCharArray();
+
+        int checker = 0; //init
+
+        int dst = 0;
+        for (int i = 0; i < chars.length; ++i) {
+            int mask = 1 << (chars[i]-'a');
+            // not a duplicate so remove from array and increment
+            if ((checker & mask) == 0) {
+                chars[dst++] = chars[i];
+            }
+            checker |= mask;
+        }
+        chars[dst] = 0;
+
+        return new String(chars, 0, dst);
 
     }
     

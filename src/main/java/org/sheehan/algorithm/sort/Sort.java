@@ -5,6 +5,7 @@ import org.sheehan.algorithm.data_structures.tree.BinaryHeap;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.function.Predicate;
 
@@ -436,16 +437,18 @@ public class Sort {
         Integer counts[] = (Integer[]) Array.newInstance(Integer.class, range);
         Integer output[] = (Integer[]) Array.newInstance(Integer.class, array.length);
 
-        for (int i = 0; i < range; ++i) {
-            counts[i] = 0;
-        }
+        Arrays.fill(counts, 0);
 
         // histogram
+        // how many of each element is there ?
         for (int i = 0; i < array.length; ++i) {
             counts[array[i]-min] += 1;
         }
 
-        // accumulate -  b[i] contains # of values <= b[i]
+        // accumulate - "prefix sum" counts[i] contains # of values <=
+        // counts[i]
+        // it instead stores the number of items with key less than i,
+        // which is the same as the first index at which an item with key i should be stored in the output array.
         for (int i = 1; i < range; ++i) {
             counts[i] += counts[i - 1];
         }
@@ -465,24 +468,25 @@ public class Sort {
 
     /////////////////////////////////////////////////////////////////////////////////
     // RADIX SORT
-    // LSD on integer keys (left to right)
+    // LSD on integer keys
     // BASE = 10
     /////////////////////////////////////////////////////////////////////////////////
     public static void radixSort(Integer array[]) {
         final int BASE = 10;
+        int numBuckets = BASE;
 
         List<Queue<Integer>> buckets = new ListImpl<Queue<Integer>>();
-        for (int i = 0; i < BASE; i++){
+        for (int i = 0; i < numBuckets; i++){
             buckets.append(new QueueImpl<Integer>(array.length));
         }
 
         Integer max = Integer.MIN_VALUE;
         for (Integer value: array)
-            max = (max < value) ? value:max;
+            max = Math.max(value,max);
 
 
         // while there is a max element larger positional value, iterate another bucket sorting pass
-        // moving the position from left to right by one
+        // moving the position from right to left by one
         for (int positionMultiplier=1; max >= positionMultiplier; positionMultiplier *= BASE) {
             // each pass checks a rt to left position and buckets based on that digit
             for (Integer value : array){
@@ -494,12 +498,12 @@ public class Sort {
             // reset array to new order after sorting this pass
             // the new order is obtained by removing elements from the bucket queues in FIFO order
             // starting from least valued bucket
-            int index = 0;
-            for (int i = 0; i < BASE; ++i){
-                Queue<Integer> bucket = buckets.get(i);
+
+            for (int bucketIndex = 0, i = 0; bucketIndex < numBuckets; ++bucketIndex){
+                Queue<Integer> bucket = buckets.get(bucketIndex);
                 Integer value;
                 while ((value = bucket.remove()) != null){
-                    array[index++] = value;
+                    array[i++] = value;
                 }
             }
         }
@@ -512,16 +516,17 @@ public class Sort {
     /////////////////////////////////////////////////////////////////////////////////
     public static void radixSortBinaryLsd(Integer array[]) {
         final int BASE = 2;
+        final int numBuckets = 2;
 
         List<Queue<Integer>> buckets = new ListImpl<Queue<Integer>>();
-        for (int i = 0; i < BASE; i++){
+        for (int i = 0; i < numBuckets; i++){
             buckets.append(new QueueImpl<Integer>(array.length));
         }
 
         int MASK = 0x00000001;
 
         // while there is a max element larger positional value, iterate another bucket sorting pass
-        // moving the position from left to right by one
+        // moving the position from right to left by one
         for (int position=0; position < Integer.SIZE; position++) {
             // each pass checks a rt to left position and buckets based on that digit
             for (Integer value : array){
@@ -535,12 +540,12 @@ public class Sort {
             // reset array to new order after sorting this pass
             // the new order is obtained by removing elements from the bucket queues in FIFO order
             // starting from least valued bucket
-            int index = 0;
-            for (int i = 0; i < BASE; ++i){
-                Queue<Integer> bucket = buckets.get(i);
+            int i = 0;
+            for (int bucketIndex = 0; bucketIndex < numBuckets; ++bucketIndex){
+                Queue<Integer> bucket = buckets.get(bucketIndex);
                 Integer value;
                 while ((value = bucket.remove()) != null){
-                    array[index++] = value;
+                    array[i++] = value;
                 }
             }
         }
@@ -549,11 +554,14 @@ public class Sort {
     /////////////////////////////////////////////////////////////////////////////////
     // RADIX SORT
     // LSD on fixed length lexical keys
+    // bucket for each ascii char
+    // sort iteratively by single character moving left
     /////////////////////////////////////////////////////////////////////////////////
     public static void radixSortLexicalFixedLsd(String array[]) {
         // 256 ASCII character positions
+        final int numBuckets = 256;
         List<Queue<String>> buckets = new ListImpl<Queue<String>>();
-        for (int i = 0; i < 256; i++){
+        for (int i = 0; i < numBuckets; i++){
             buckets.append(new QueueImpl<String>(array.length));
         }
 
@@ -573,12 +581,12 @@ public class Sort {
             // reset array to new order after sorting this pass
             // the new order is obtained by removing elements from the bucket queues in FIFO order
             // starting from least valued bucket
-            int index = 0;
-            for (int i = 0; i < 256; ++i){
-                Queue<String> bucket = buckets.get(i);
+            int i = 0;
+            for (int bucketIndex = 0; bucketIndex < numBuckets; ++bucketIndex){
+                Queue<String> bucket = buckets.get(bucketIndex);
                 String value;
                 while ((value = bucket.remove()) != null){
-                    array[index++] = value;
+                    array[i++] = value;
                 }
             }
         }

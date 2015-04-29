@@ -6,6 +6,14 @@ import org.junit.Test;
 public class BitsTest {
 
     @Test
+    public void testReplaceStr() throws Exception {
+        int num1 = 0x222222;
+        int num2 = 0x7;
+
+        Bits.replaceSubstr(num1, num2, 2, 4 );
+    }
+
+        @Test
     public void testPrintInt() throws Exception {
         long number = 0x84208420;
         System.out.println(number);
