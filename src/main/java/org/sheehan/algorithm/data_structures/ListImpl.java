@@ -76,6 +76,25 @@ public class ListImpl <T extends Comparable<T>> implements List<T> {
     }
 
     @Override
+    public Node<T> deleteBack() {
+
+        Node<T> curr=head;
+        Node<T> prev=head;
+
+        if (curr.next==null){
+            head = null;
+            return curr;
+        }
+        while (curr.next != null){
+            prev = curr;
+            curr = curr.next;
+        }
+
+        prev.next = null;
+        return curr;
+    }
+
+    @Override
     public boolean delete(T value) {
         if (this.head.value.equals(value)) { // move head up one
             this.head = this.head.next;

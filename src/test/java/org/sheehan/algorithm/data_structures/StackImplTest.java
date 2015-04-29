@@ -20,6 +20,22 @@ public class StackImplTest extends TestCase {
         }
     }
 
+    public void testPushPopList() throws Exception {
+
+        Stack<Integer> stack = new StackImpl2<>();
+        for (int i = 0; i <10; ++i){
+            stack.push(i);
+            System.out.println("pushed: " + i);
+            stack.print();
+        }
+
+        for (int i = 0; i  < 10; ++i){
+            Integer pop = stack.pop();
+            System.out.println("popped: "+ pop);
+            stack.print();
+        }
+    }
+
     public void testPop() throws Exception {
 
     }

@@ -51,4 +51,6 @@ public interface List<T extends Comparable<T>> extends Iterable<T>{
     void toArray(T[] array);
 
     Node<T> deleteFront();
+
+    Node<T> deleteBack();
 }

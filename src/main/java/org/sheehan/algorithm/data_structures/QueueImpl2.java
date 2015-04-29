@@ -16,8 +16,10 @@ public class QueueImpl2<T extends Comparable<T>> implements Queue<T> {
 
     @Override
     public T remove() {
-        return list.deleteFront().value;
-    }
+        List.Node<T> node = list.deleteFront();
+        if (node != null)
+            return node.value;
+        return null;    }
 
     @Override
     public T peek() {
