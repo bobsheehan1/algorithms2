@@ -9,7 +9,7 @@ import static org.junit.Assert.assertTrue;
 public class ListImplTest {
 
     @Test
-    public void testAppend() throws Exception {
+    public void testAppendBack() throws Exception {
         List<Integer> list = new ListImpl<Integer>();
 
         for (int i = 0; i < 10; i++)
@@ -19,9 +19,9 @@ public class ListImplTest {
 
         list.print();
 
-        list.reverse2();
+        list.reverse();
         list.print();
-        list.reverse2();
+        list.reverse();
         list.print();
 
         Integer array2[] = new Integer[list.size()];
@@ -29,6 +29,29 @@ public class ListImplTest {
 
         Assert.assertArrayEquals(array1,array2);
     }
+
+    @Test
+    public void testAppendFront() throws Exception {
+        List<Integer> list = new ListImpl<Integer>();
+
+        for (int i = 0; i < 10; i++)
+            list.appendFront(i);
+        Integer array1[] = new Integer[list.size()];
+        list.toArray(array1);
+
+        list.print();
+
+        list.reverse();
+        list.print();
+        list.reverse();
+        list.print();
+
+        Integer array2[] = new Integer[list.size()];
+        list.toArray(array2);
+
+        Assert.assertArrayEquals(array1,array2);
+    }
+
 
     @Test
     public void testDelete() throws Exception {

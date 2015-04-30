@@ -89,9 +89,9 @@ public class Strings {
 
         //loop of recursions !
         for (int i = k; i < arr.size(); i++) {
-            java.util.Collections.swap(arr, i, k);
+            Collections.swap(arr, i, k);
             getPermutations2(arr, k + 1, cache);
-            java.util.Collections.swap(arr, k, i);
+            Collections.swap(arr, k, i);
         }
 
         // when we iterate to the end for a given recursion we have a permutation !
@@ -106,6 +106,23 @@ public class Strings {
         }
     }
 
+    // number of unique substrings is n(n+1)/2
+    public static void getSubstrings(String s, Set<String> cache) {
+        for (int i = 0; i < s.length(); ++i)
+            for (int j = i; j < s.length(); ++j)
+                cache.add(substring(s, i, j));
+
+    }
+
+    private static String substring(String s, int i, int j) {
+        StringBuffer buffer = new StringBuffer();
+
+        for (int k = i; k <=j; k++)
+            buffer.append(s.charAt(k));
+
+        return buffer.toString();
+    }
+
     public static boolean isRotation(String str1, String str2){
         if (str1.length() != str2.length())
             return false;
@@ -116,59 +133,80 @@ public class Strings {
         return false;
     }
 
+    public static boolean isPalindrome(String str1){
+
+        if (reverse(str1).equals(str1))
+            return true;
+
+        return false;
+    }
+
+    public static boolean isPalindrome2(String str){
+
+        if (str.length() == 1)
+            return true;
+
+        for (int i = 0; i < str.length()/2; ++i) {
+            int j = str.length()-1-i;
+            if (str.charAt(i)!= str.charAt(j))
+                return false;
+        }
+
+        return true;
+    }
+
+    // work right to left
+    // grab each char, convert to int val, then mult by decimal multiplier
     public static int strToInt(String str)
     {
+        int limit = 0;
         boolean negative = false;
-        if (str.charAt(0) == '-')
+        if (str.charAt(0) == '-') {
             negative = true;
-
-        int accumulator = 0;
-        int multiplier = 1;
-        if (!negative) {
-            for (int pos = str.length() - 1; pos >= 0; pos--) {
-                accumulator += (str.charAt(pos) - '0') * multiplier;
-                multiplier *= 10;
-            }
-        } else{
-            for (int pos = str.length() - 1; pos > 0; pos--) {
-                //char to digit
-                accumulator += (str.charAt(pos) - '0') * multiplier;
-                multiplier *= 10;
-            }
-            accumulator*=-1;
+            limit=1;
         }
-        return accumulator;
+
+        int sum = 0;
+        int mult = 1;
+
+        for (int i = str.length() - 1; i >= limit; i--) {
+            sum += (str.charAt(i) - '0') * mult;
+            mult *= 10;
+        }
+
+        if (negative)
+            sum *= -1;
+        return sum;
     }
+
 
     public static String intToStr(int number)
     {
         StringBuffer buffer = new StringBuffer();
-        if (number < 0)
+        if (number < 0) {
             buffer.append("-");
+            number *= -1;
+        }
 
         // figure out the length of the number
         int length = 0;
-        int temp = number;
-        while (temp/10 != 0){
-            temp = temp/10;
-            length++;
+
+        int mult = 1;
+        while (number/mult != 0){
+            mult *= 10;
+            length ++;
         }
-        System.out.println(length);
 
-        // starting at LEFT MSB end (using calculated length)
-        // break off each digit and add to string buffer
-        for (int i = length; i >= 0; --i){
+        mult = (int) Math.pow(10, length-1);
 
-            // create sub integer up to ith position from left
-            // 1234 -> 1 (1000)
-            // 1234 -> 12 (100)
-            // 1234 -> 123 (10)
-            // 1234 -> 1234 (1)
-            int left_prefix = number/(int)Math.pow(10, i);
+        for (int i = length-1; i >= 0; --i){
 
-            // shave off the 10's position off leftish sub int
-            int digit = left_prefix%10;
-            buffer.append((char)(digit +'0')); //digit to char
+            int val = number/mult;
+            val %= 10;
+            char c = (char)(val + '0');
+            buffer.append(c);
+
+            mult/=10;
         }
 
         return buffer.toString();
@@ -253,7 +291,7 @@ public class Strings {
     }
 
     // removes duplicates
-    // reset array skipping dupes
+    // reset array *skipping* dupes
     public static String removeDuplicates(String str) {
         char[] chars = str.toCharArray();
 
@@ -272,6 +310,23 @@ public class Strings {
 
         return new String(chars, 0, dst);
 
+    }
+
+    public static int findSubstring( String s1, String s2) {
+
+        for (int i = 0; i < s1.length(); ++i) {
+            boolean found = true;
+            for (int j = 0; j < s2.length(); ++j) {
+                if (s1.charAt(i + j) != s2.charAt(j)) {
+                    found = false;
+                    break;
+                }
+            }
+            if (found)
+                return i;
+
+        }
+        return -1;
     }
     
 }

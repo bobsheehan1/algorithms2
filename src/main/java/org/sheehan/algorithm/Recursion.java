@@ -24,7 +24,26 @@ public class Recursion {
             return 0;
         if (index == 1)
             return 1;
-        return fibonocci(index-1) + fibonocci(index-2);
+        return fibonocci(index-1) + fibonocci(index - 2);
+    }
+
+    static int fibonocciIter(int index) {
+        if (index < 0)
+            throw new RuntimeException("no negative indexes allowed");
+
+        int prev = 0;
+        int curr = 1;
+        if (index == 0)
+            return 0;
+        if (index == 1)
+            return 1;
+        for (int i = 2; i <= index; ++i) {
+            int tmp = curr;
+            curr = prev + curr;
+            prev = tmp;
+        }
+
+        return curr;
     }
 
     // basic

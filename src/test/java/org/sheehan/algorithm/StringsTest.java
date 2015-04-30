@@ -71,6 +71,17 @@ public class StringsTest {
     }
 
     @Test
+    public void testAllSubstrings() throws Exception {
+        String testStr = "ABCD";
+
+        Set<String> cache = new HashSet<String>();
+        Strings.getSubstrings(testStr, cache);
+
+        for (String s: cache)
+            System.out.println(s);
+    }
+
+    @Test
     public void testStrToInt() throws Exception {
         System.out.println(Strings.strToInt("1234"));
         System.out.println(Strings.strToInt("-1234"));
@@ -85,6 +96,26 @@ public class StringsTest {
         testStr = "ABC";
         testStr2 = "CBA";
         Assert.assertFalse(Strings.isRotation(testStr, testStr2));
+    }
+
+    @Test
+    public void testPalindrome() throws Exception {
+        String testStr = "ABCCBA";
+        Assert.assertTrue(Strings.isPalindrome(testStr));
+        testStr = "A";
+        Assert.assertTrue(Strings.isPalindrome(testStr));
+        testStr = "AB";
+        Assert.assertFalse(Strings.isPalindrome(testStr));
+    }
+
+    @Test
+    public void testPalindrome2() throws Exception {
+        String testStr = "ABCCBA";
+        Assert.assertTrue(Strings.isPalindrome2(testStr));
+        testStr = "A";
+        Assert.assertTrue(Strings.isPalindrome2(testStr));
+        testStr = "AB";
+        Assert.assertFalse(Strings.isPalindrome2(testStr));
     }
 
     private String generate(int length){
@@ -123,6 +154,9 @@ public class StringsTest {
         int num = 1234;
         String str = Strings.intToStr(num);
         System.out.println(str);
+        num = -1234;
+        str = Strings.intToStr(num);
+        System.out.println(str);
 
     }
 
@@ -149,5 +183,16 @@ public class StringsTest {
         System.out.println(s);
     }
 
+    @Test
+    public void testFindSubstring(){
+        String s1 = "I am a lovely bunch of coconuts";
+        String s2 = "am";
+        int i = Strings.findSubstring(s1, s2);
+        Assert.assertEquals(2, i);;
+
+        s2 = "coconuts";
+        i = Strings.findSubstring(s1, s2);
+        Assert.assertEquals(23, i);;
+    }
 
 }

@@ -200,6 +200,8 @@ public class Array {
     // dynamic programming
     public static int getMaxSubArray(int[] array) {
         int max = array[0];
+
+        // possible solutions
         int[] sum = new int[array.length];
         sum[0] = array[0];
 

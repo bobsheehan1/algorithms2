@@ -23,9 +23,9 @@ public interface List<T extends Comparable<T>> extends Iterable<T>{
     void appendBack(T value);
 
     //brute force
-    void reverse1();
+    void reverseBrute();
 
-    void reverse2();
+    void reverse();
 
     T get(int index);
 
@@ -53,4 +53,6 @@ public interface List<T extends Comparable<T>> extends Iterable<T>{
     Node<T> deleteFront();
 
     Node<T> deleteBack();
+
+    void appendFront(T t);
 }
