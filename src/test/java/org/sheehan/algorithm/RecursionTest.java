@@ -21,6 +21,11 @@ public class RecursionTest {
     @Test
     public void testFibonocci() throws Exception {
         Assert.assertEquals(5, Recursion.fibonocci(5));
+        Assert.assertEquals(5, Recursion.fibonocciIter(5));
+        Assert.assertEquals(8, Recursion.fibonocci(6));
+        Assert.assertEquals(8, Recursion.fibonocciIter(6));
+
+
     }
 
     @Test

@@ -116,37 +116,31 @@ public class Strings {
         return false;
     }
 
-    public static int decStr2Int(String str){
-        return -1;
-    }
-
-
-
-    public static int binStr2Int(String str)
+    public static int strToInt(String str)
     {
         boolean negative = false;
         if (str.charAt(0) == '-')
             negative = true;
 
-        int sum = 0;
+        int accumulator = 0;
         int multiplier = 1;
         if (!negative) {
             for (int pos = str.length() - 1; pos >= 0; pos--) {
-                sum += (str.charAt(pos) - '0') * multiplier;
+                accumulator += (str.charAt(pos) - '0') * multiplier;
                 multiplier *= 10;
             }
         } else{
             for (int pos = str.length() - 1; pos > 0; pos--) {
                 //char to digit
-                sum += (str.charAt(pos) - '0') * multiplier;
+                accumulator += (str.charAt(pos) - '0') * multiplier;
                 multiplier *= 10;
             }
-            sum*=-1;
+            accumulator*=-1;
         }
-        return sum;
+        return accumulator;
     }
 
-    public static String decInt2Str(int number)
+    public static String intToStr(int number)
     {
         StringBuffer buffer = new StringBuffer();
         if (number < 0)

@@ -69,6 +69,17 @@ public class ListImpl <T extends Comparable<T>> implements List<T> {
    }
 
     @Override
+    public void appendFront(T value) {
+        Node<T> node = new Node<>(value);
+        if (this.head == null)
+            this.head = node;
+        else {
+            node.next = head;
+            head = node;
+        }
+    }
+
+    @Override
     public Node<T> deleteFront() {
         Node<T> front = head;
         this.head = this.head.next;
@@ -116,7 +127,7 @@ public class ListImpl <T extends Comparable<T>> implements List<T> {
 
     //brute force
     @Override
-    public void reverse1() {
+    public void reverseBrute() {
         Node curr = this.head;
         // move to end to get tail
         while (curr != null) {
@@ -148,7 +159,7 @@ public class ListImpl <T extends Comparable<T>> implements List<T> {
     // 2. move everything along A-> B,  B-> C, C-> C(next)
     // iterate
     @Override
-    public  void reverse2() {
+    public  void reverse() {
         Node A = null, B = head, C= head.next;
         while (C != null) {
             B.next = A; //reversal step
@@ -275,12 +286,12 @@ public class ListImpl <T extends Comparable<T>> implements List<T> {
     public T set(int index, T value) {
         if (index > size())
             return null;
-        Node n = this.head;
+        Node curr = this.head;
         for (int i = 0; i < index; ++i)
-            n = n.next;
+            curr = curr.next;
 
-        if (n != null)
-            n.value = value;
+        if (curr != null)
+            curr.value = value;
 
         return value;
     }
@@ -289,12 +300,12 @@ public class ListImpl <T extends Comparable<T>> implements List<T> {
     public T get(int index) {
         if (index > size())
             return null;
-        Node n = this.head;
+        Node curr = this.head;
         for (int i = 0; i < index; ++i)
-            n = n.next;
+            curr = curr.next;
 
-        if (n != null)
-            return (T)n.value;
+        if (curr != null)
+            return (T)curr.value;
 
         return null;
     }
