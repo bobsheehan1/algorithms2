@@ -6,7 +6,7 @@ public class GraphNode<T extends Comparable<T>> implements Comparable<GraphNode<
     public int id;
     public T payload;
     public boolean visited;
-    public int distance; // djikstra requires this
+    public int distance = 0; // bfs shortest path, and djikstra requires this
 
     public GraphNode(T payload)
     {
@@ -33,6 +33,6 @@ public class GraphNode<T extends Comparable<T>> implements Comparable<GraphNode<
 
     @Override
     public String toString(){
-        return "(Node:" + payload + " " + visited +")";
+        return "(Node:" + payload + " " + distance + " " + visited +")";
     }
 }

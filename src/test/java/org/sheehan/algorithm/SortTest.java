@@ -50,9 +50,7 @@ public class SortTest {
 
     @Test
     public void testInsertionSortArray() throws Exception {
-        Integer[] array = Array.createArray(20, 100, true);
-        Array.rotateArray(array, 5);
-        //Integer array[] = {1,6,3,8,7,2,5,11,55,33,88};
+        Integer array[] = Array.createArray(10,10, false);
 
         System.out.println("insertion");
         System.out.println(Arrays.toString(array));
@@ -65,7 +63,7 @@ public class SortTest {
 
     @Test
     public void testInsertionSortList() throws Exception {
-        Integer array[] = {10,6,3,8,7,2,5,11,55,33,88};
+        Integer array[] = Array.createArray(10,10, false);
         List<Integer> list = new ListImpl<>();
         for (Integer i : array){
             list.appendBack(i);
@@ -85,7 +83,7 @@ public class SortTest {
 
     @Test
     public void testHeapSort() throws Exception {
-        Integer array[] = {1,6,3,8,7,2,5,11,55,33,88};
+        Integer array[] = Array.createArray(10,10, false);
 
         System.out.println("heap");
         System.out.println(Arrays.toString(array));
@@ -98,7 +96,7 @@ public class SortTest {
 
     @Test
     public void testSelectionSort() throws Exception {
-        Integer array[] = {1,6,3,8,7,2,5,11,55,33,88};
+        Integer array[] = Array.createArray(10,10, false);
 
         System.out.println("selection");
         System.out.println(Arrays.toString(array));
@@ -110,7 +108,7 @@ public class SortTest {
 
     @Test
     public void testSelectionSortRecursive() throws Exception {
-        Integer array[] = {1,6,3,8,7,2,5,11,55,33,88};
+        Integer array[] = Array.createArray(10,10, false);
 
         System.out.println("selection recurse");
         System.out.println(Arrays.toString(array));

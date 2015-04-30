@@ -38,8 +38,7 @@ public class BinarySearch {
         // IMPORTANT
         if (array[middle] == key)
             return middle;
-
-        if (key < array[middle])
+        else if (key < array[middle])
             return binarySearch(array, key, start, middle-1);
         else
             return binarySearch(array, key, middle+1, end);

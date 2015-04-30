@@ -7,6 +7,10 @@ import org.sheehan.algorithm.data_structures.graph.GraphNode;
 
 /**
  * Created by bob on 7/8/14.
+ *
+ * DFS - stack - mark after pop
+ *
+ * no shortest paths
  */
 public class DFS <T extends Comparable<T>>{
     private boolean marked[];
@@ -20,7 +24,6 @@ public class DFS <T extends Comparable<T>>{
     public void visitRecursion(GraphNode<T> v){
         v.visited = true;
         for(GraphNode<T> node: graph.getNeighbors(v)){
-        //for (int i = 0; i < graph.getNumV(); ++i){
             if (!node.visited && graph.isEdge(v, node))
                 visitRecursion(node);
         }
@@ -29,13 +32,13 @@ public class DFS <T extends Comparable<T>>{
     // use a stack for DFS
     public void visitIterative(GraphNode<T> v){
         Stack<GraphNode<T>> stack = new StackImpl<>(graph.getNumV());
+
         stack.push(v);
         while (stack.peek() != null) {
             GraphNode<T> v1 = stack.pop();
             if (!v1.visited) {
-                v1.visited = true;
-                for(GraphNode<T> node: graph.getNeighbors(v)){
-                //for (int i = 0; i < graph.getNumV(); ++i) {
+                v1.visited = true; // mark after pop
+                for(GraphNode<T> node : graph.getNeighbors(v1)){
                     if (!node.visited && graph.isEdge(v1, node))
                         stack.push(node);
                 }

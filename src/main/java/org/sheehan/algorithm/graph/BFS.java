@@ -11,6 +11,7 @@ import java.util.Set;
 
 /**
  * Created by bob on 7/8/14.
+ * BFS - uses queue - mark after add
  */
 public class BFS <T extends Comparable<T>>{
     private final Graph<T> graph;
@@ -24,14 +25,15 @@ public class BFS <T extends Comparable<T>>{
         clearVisited();
         Queue<GraphNode<T>> queue = new QueueImpl<>(100);
         queue.add(sourceNode);
+        sourceNode.visited = true; // mark after adding to queue
         while (queue.peek() != null) {
             GraphNode<T> node = queue.remove();
-            node.visited = true;
             List<GraphNode<T>> neighbors = graph.getNeighbors(node);
             for (GraphNode<T> neighbor: neighbors){
                 if (!neighbor.visited) {
                     queue.add(neighbor);
-                    neighbor.visited = true;
+                    neighbor.visited = true; // mark after adding to queue
+                    neighbor.distance = node.distance+1;
                 }
             }
         }
@@ -40,6 +42,7 @@ public class BFS <T extends Comparable<T>>{
     private void clearVisited() {
         for (GraphNode<T> node : graph.getNodes()) {
             node.visited = false;
+            node.distance = 0;
         }
     }
 
