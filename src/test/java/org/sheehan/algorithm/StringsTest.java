@@ -3,7 +3,6 @@ package org.sheehan.algorithm;
 import junit.framework.Assert;
 import org.junit.Test;
 
-import java.lang.reflect.Array;
 import java.util.*;
 
 /**
@@ -72,8 +71,8 @@ public class StringsTest {
 
     @Test
     public void testStrToInt() throws Exception {
-        System.out.println(Strings.strToInt("1234"));
-        System.out.println(Strings.strToInt("-1234"));
+        System.out.println(Strings.decStr2Int("1234"));
+        System.out.println(Strings.decStr2Int("-1234"));
     }
 
 
@@ -121,7 +120,7 @@ public class StringsTest {
     public void testIntToString(){
 
         int num = 1234;
-        String str = Strings.intToStr(num);
+        String str = Strings.decInt2Str(num);
         System.out.println(str);
 
     }
