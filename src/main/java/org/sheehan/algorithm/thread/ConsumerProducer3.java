@@ -17,7 +17,6 @@ public class ConsumerProducer3 {
         public String get() throws InterruptedException {
             String message = messages.take();
             return message;
-
         }
 
         public void set(String message) throws InterruptedException {

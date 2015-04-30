@@ -21,7 +21,12 @@ public class ConsumerProducer2 {
             System.out.println("get acquire lock");
             while(messages.peek() == null) {
                 System.out.println("get release lock - wait");
-                wait();
+                try {
+                    wait();
+                }catch(InterruptedException e){
+                    System.out.println("mbox get wait interrupted");
+                    throw e;
+                }
                 System.out.println("get acquire lock - wait end");
             }
             System.out.println("remove message");
@@ -36,7 +41,12 @@ public class ConsumerProducer2 {
             //thread wait until messages have been read
             while(messages.size() >= MAX_MESSAGES) {
                 System.out.println("add release lock - wait");
-                wait();
+                try {
+                    wait();
+                }catch(InterruptedException e){
+                    System.out.println("mbox add wait interrupted");
+                    throw e;
+                }
                 System.out.println("add acquire lock - wait end");
             }
 
@@ -54,12 +64,14 @@ public class ConsumerProducer2 {
             mbox = mailbox;
         }
 
+        int message = 0;
+
         @Override
         public void run() {
-            for (int i = 0; i < MAX_MESSAGES; ++i){
+            while(true){
                 try {
-                    mbox.add("message " + i);
-                    System.out.println("PRODUCE: " + "message " + i);
+                    mbox.add("message " + message);
+                    System.out.println("PRODUCE: " + "message " + message++);
                     System.out.println();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
@@ -67,7 +79,13 @@ public class ConsumerProducer2 {
                 try {
                     Thread.sleep(500); // control rate of production
                 } catch (InterruptedException e) {
-                    e.printStackTrace();
+                    System.out.println("producer interrupt  exception");
+                    return;
+                }
+
+                if (Thread.interrupted()) {
+                    System.out.println("producer interrupted during run");
+                    return; // thread was running but interrupt flag add so return
                 }
             }
         }
@@ -80,12 +98,19 @@ public class ConsumerProducer2 {
         }
         @Override
         public void run() {
-            for (int i = 0; i < MAX_MESSAGES; ++i) {
+            while(true) {
                 try {
                     System.out.println("CONSUME: " + mbox.get());
                     System.out.println();
                 } catch (InterruptedException e) {
-                    e.printStackTrace();
+                    System.out.println("consumer interrupted exception");
+                    return;
+
+                }
+
+                if (Thread.interrupted()) {
+                    System.out.println("consumer interrupted during run");
+                    return; // thread was running but interrupt flag add so return
                 }
             }
         }
@@ -95,15 +120,19 @@ public class ConsumerProducer2 {
 
     public static void main(String []args) throws InterruptedException {
 
-        ConsumerProducer2 tu = new ConsumerProducer2();
-        ConsumerProducer2.Mailbox mailbox = tu.new Mailbox();
+        ConsumerProducer2 consumerProducer2 = new ConsumerProducer2();
+        ConsumerProducer2.Mailbox mailbox = consumerProducer2.new Mailbox();
 
-        Thread produce = new Thread(tu.new Producer(mailbox), "Producer");
-        Thread consume = new Thread(tu.new Consumer(mailbox), "Consumer");
-
-        consume.start();
+        Thread produce = new Thread(consumerProducer2.new Producer(mailbox), "Producer");
+        Thread consume = new Thread(consumerProducer2.new Consumer(mailbox), "Consumer");
         produce.start();
-        produce.join(5000);
+        consume.start();
+
+        Thread.sleep(5000);
+
+        consume.interrupt();
+        produce.interrupt();
+
 
 
     }
