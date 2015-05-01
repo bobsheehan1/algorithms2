@@ -1,0 +1,13 @@
+Structures  Access  Search  Insert  Delete          Access  Search  Insert  Delete
+
+array       O(1)    O(n)    O(n)    O(n)            SAME......
+
+list        O(n)    O(n)    O(1)    O(1)            SAME......
+
+hashmap     -       O(1)    O(1)    O(1)            -       O(n)    O(n)    O(n)
+
+bst         O(logn) O(logn) O(logn) O(logn)         O(n)    O(n)    O(n)    O(n)
+
+graph
+
+

@@ -7,6 +7,29 @@ import static org.junit.Assert.*;
 public class BinarySearchTreeTest {
 
     @Test
+    public void testPrintLevel() throws Exception {
+
+        BinarySearchTree<Integer> bst = new BinarySearchTree<>();
+
+        BinaryTree.TreeNode node6 = bst.insert2(6);
+        BinaryTree.TreeNode node4 = bst.insert2(4);
+        BinaryTree.TreeNode node8 = bst.insert2(8);
+        BinaryTree.TreeNode node2 = bst.insert2(2);
+        BinaryTree.TreeNode node10 = bst.insert2(10);
+        BinaryTree.TreeNode node5 = bst.insert2(5);
+        BinaryTree.TreeNode node9 = bst.insert2(9);
+
+        int height = bst.getHeight();
+        boolean dir = true;
+        for (int i = 0; i < height; ++i){
+            bst.printLevel(bst.root, 0, i, dir);
+            System.out.println();
+            dir = !dir;
+        }
+    }
+
+
+        @Test
     public void testIsBst() throws Exception {
 
         BinarySearchTree<Integer> bst = new BinarySearchTree<>();

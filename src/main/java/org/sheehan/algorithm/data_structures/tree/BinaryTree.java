@@ -67,6 +67,22 @@ public class BinaryTree<T> {
         System.out.print(")");
     }
 
+    // print level with either right to left or left to right direction
+    public void printLevel(TreeNode<T> node, int level, int rLevel, Boolean dir) {
+        if (node == null)
+            return;
+        if (level == rLevel)
+            System.out.print(node.value + " ");
+
+        if (dir) {
+            printLevel(node.left, level + 1, rLevel, dir);
+            printLevel(node.right, level + 1, rLevel, dir);
+        } else if (!dir) {
+            printLevel(node.right, level + 1, rLevel, dir);
+            printLevel(node.left, level + 1, rLevel, dir);
+        }
+    }
+
     public int getHeight(){
         return getHeight(this.root);
      }
@@ -93,7 +109,7 @@ public class BinaryTree<T> {
             return;
 
         //utilize parent nodes
-        if (node.left ==null && node.right==null){
+        if (node.left == null && node.right== null){
             System.out.println("end node: " + node.value);
             int sum = node.value;
             TreeNode<Integer> tmp = node.parent;
@@ -105,6 +121,7 @@ public class BinaryTree<T> {
 
             return;
         }
+
         printEndNodesAndPathSums(node.left);
         printEndNodesAndPathSums(node.right);
      }
@@ -167,6 +184,7 @@ public class BinaryTree<T> {
 
         if (node1 != null && node2 == null)
             return false;
+
         if (node1 == null && node2 != null)
             return false;
 

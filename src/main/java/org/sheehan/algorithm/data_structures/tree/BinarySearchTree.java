@@ -70,6 +70,7 @@ public class BinarySearchTree<T extends Comparable<T>> extends BinaryTree<T>{
         TreeNode<T> parent = node.parent;
         TreeNode<T> right = node;
 
+
         // if there is a parent AND the node is the right child,
         // we look up getting smaller for parents to left so get them out of the way
         // then return the first parent to the RIGHT --> will be successor
