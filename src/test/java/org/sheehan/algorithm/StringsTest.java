@@ -81,11 +81,16 @@ public class StringsTest {
     }
 
     @Test
-    public void testStrToInt() throws Exception {
+    public void testDecStrToInt() throws Exception {
         System.out.println(Strings.decStr2Int("1234"));
         System.out.println(Strings.decStr2Int("-1234"));
     }
 
+    @Test
+    public void testDecInt2Str() throws Exception {
+        System.out.println(Strings.decInt2Str(1234));
+        System.out.println(Strings.decInt2Str(-1234));
+    }
 
     @Test
     public void testRotations() throws Exception {
@@ -145,18 +150,6 @@ public class StringsTest {
             char c = Strings.getFirstNonRepeatingChar(str);
             System.out.println(c);
         }
-    }
-
-    @Test
-    public void testIntToString(){
-
-        int num = 1234;
-        String str = Strings.decInt2Str(num);
-        System.out.println(str);
-        num = -1234;
-        str = Strings.intToStr(num);
-        System.out.println(str);
-
     }
 
     @Test
