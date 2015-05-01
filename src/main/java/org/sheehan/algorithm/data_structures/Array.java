@@ -45,7 +45,39 @@ public class Array {
         return maxVal;
     }
 
-    // for numbers up to 256 limit
+    // print start index, length, element value of longest run in array
+    public static <T extends Comparable<T>> void findLongestIncreasingRun(T array[]) {
+        int length = 1;
+        int maxLength = 0;
+
+        int start = -1; //optional locate run
+        int maxStart = -1;//optional locate run
+
+        // limit is 1 less than length for next compare
+        for (int i = 0; i < array.length - 1; ++i) {
+            if (array[i].compareTo(array[i + 1])< 0) {
+                length++;
+                if (start == -1) //optional locate run
+                    start = i;  //optional locate run
+            }
+
+            // change or end of array
+            if (array[i].compareTo(array[i + 1])>=0 || i == array.length - 2) {
+                if (length > maxLength) {
+                    maxLength = length;
+
+                    maxStart = start; //optional locate run
+                }
+                length = 1;
+                start = -1; //optional locate run
+            }
+        }
+
+        System.out.println("start: " + maxStart + " length: " + maxLength);
+
+    }
+
+        // for numbers up to 256 limit
     public static Set<Integer> findDuplicates(Integer array[]) {
 
         int checker = 0; //init
@@ -233,6 +265,28 @@ public class Array {
         }
         return max;
     }
+
+
+    // find sum of two elements adds to sum in unsorted array.
+    public static boolean isTwoSum(Integer[] array, int sum){
+        Map<Integer, Integer> map = new HashMap<Integer, Integer>();
+
+        for (int i=0; i < array.length; ++i){
+            map.put(array[i], sum-array[i]);
+        }
+
+        for (int i=0; i < array.length; ++i){
+            int j = map.get(array[i]);
+            if (map.get(j)!=null) {
+                System.out.println(array[i] + " " + j);
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+
 
 
 }

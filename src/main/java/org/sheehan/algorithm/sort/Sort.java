@@ -401,6 +401,21 @@ public class Sort {
         return left; //TODO optimize
     }
 
+
+    public static <T extends Comparable<T>> int quicksortSelectKSmallest(T[] array, int left, int right, int k){
+        if (left < right) {
+            int partitionIndex = partition(array, left, right);
+            if (partitionIndex == k)
+                return partitionIndex;
+            else if (k < partitionIndex)
+                return quicksortSelectKSmallest(array, left, partitionIndex - 1, k);
+            else
+                return quicksortSelectKSmallest(array, partitionIndex + 1, right, k);
+        }
+
+        return -1;
+    }
+
     /////////////////////////////////////////////////////////////////////////////////
     // COUNTING SORT
     /////////////////////////////////////////////////////////////////////////////////

@@ -148,8 +148,20 @@ public class SortTest {
     }
 
     @Test
-    public void testQuickSort() throws Exception {
+    public void testQuickSortSelect() throws Exception {
         Integer array[] = Array.createArray(10,20,false);
+
+        System.out.println("quick-select");
+
+        int index = Sort.quicksortSelectKSmallest(array, 0, array.length - 1, 4);
+        System.out.println(Arrays.toString(array));
+        System.out.println(array[index]);
+        System.out.println();
+    }
+
+    @Test
+    public void testQuickSort() throws Exception {
+        Integer array[] = Array.createArray(10,100,false);
 
         System.out.println("quick");
         System.out.println(Arrays.toString(array));
@@ -157,6 +169,7 @@ public class SortTest {
         Sort.quicksort(array, 0, array.length - 1);
         System.out.println(Arrays.toString(array));
         System.out.println();
+
     }
 
     @Test
