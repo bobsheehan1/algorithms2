@@ -15,16 +15,24 @@ public class BinaryTreeTest {
         BinaryTree.TreeNode node3 = BinaryTree.createTreeNode(6, null, null);
         BinaryTree.TreeNode node4 = BinaryTree.createTreeNode(9, node3, node2);
         BinaryTree<Integer> tree = new BinaryTree<>(node4);
-        //tree.printInOrder();
+
+        BinaryTree.TreeNode node11 = BinaryTree.createTreeNode(1, null, null);
+        BinaryTree.TreeNode node22 = BinaryTree.createTreeNode(3, node11, null);
+        BinaryTree.TreeNode node33 = BinaryTree.createTreeNode(6, null, null);
+        BinaryTree.TreeNode node44 = BinaryTree.createTreeNode(9, node33, node22);
+        BinaryTree<Integer> tree2 = new BinaryTree<>(node44);
 
         List<BinaryTree.TreeNode<Integer>> nodes = new ArrayList<>();
         tree.getLevelNodes(node4, 0, 0, nodes);
 
-        //for (BinaryTree.TreeNode<Integer> node: nodes){
-        //    System.out.println(node.toString());
-        //}
+        for (BinaryTree.TreeNode<Integer> node: nodes){
+            System.out.println(node.toString());
+        }
         System.out.println("max path: " + tree.getMaxSum(node4));
         tree.printEndNodesAndPathSums(node4);
+
+
+        System.out.println(tree.compare(tree2.root));
 
 
     }

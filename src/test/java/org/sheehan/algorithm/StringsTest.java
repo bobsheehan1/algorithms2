@@ -81,6 +81,15 @@ public class StringsTest {
     }
 
     @Test
+    public void testBinStrToInt() throws Exception {
+        System.out.println(Strings.binStr2Int("1111"));
+        System.out.println(Strings.binStr2Int("0101"));
+
+        System.out.println(Strings.binStr2Int2("1111"));
+        System.out.println(Strings.binStr2Int2("0101"));
+    }
+
+    @Test
     public void testDecStrToInt() throws Exception {
         System.out.println(Strings.decStr2Int("1234"));
         System.out.println(Strings.decStr2Int("-1234"));

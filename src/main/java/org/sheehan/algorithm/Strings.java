@@ -137,17 +137,45 @@ public class Strings {
         return -1;
     }
 
-    public static boolean isRotation(String str1, String str2) {
-        if (str1.length() != str2.length())
-            return false;
+    public static int binStr2Int(String s) {
 
-        if ((str1 + str1).contains(str2))
-            return true;
+        int length = s.length();
 
-        return false;
+        int value = 0;
+        for (int i=length-1, cnt = 0; i>=0; --i, ++cnt){
+
+            // get char
+            char c = s.charAt(i);
+
+            //convert to int (0 or 1)
+            int bit = (int)(c-'0');
+
+            // multiply by power of 2
+            int mult = 1 << cnt;
+            value += bit * mult;
+        }
+
+        return value;
+    }
+
+    public static int binStr2Int2(String str) {
+        final int BASE = 2;
+
+        int sum = 0;
+        int mult = 1;
+
+        for (int pos = str.length() - 1; pos >= 0; pos--) {
+            sum += (str.charAt(pos) - '0') * mult;
+            mult *= BASE;
+        }
+
+
+        return sum;
     }
 
     public static int decStr2Int(String str) {
+        final int BASE = 10;
+
         int limit = 0;
         boolean negative = false;
         if (str.charAt(0) == '-') {
@@ -160,7 +188,7 @@ public class Strings {
 
         for (int pos = str.length() - 1; pos >= limit; pos--) {
             sum += (str.charAt(pos) - '0') * mult;
-            mult *= 10;
+            mult *= BASE;
         }
 
         if (negative)
@@ -313,5 +341,15 @@ public class Strings {
         }
 
         return true;
+    }
+
+    public static boolean isRotation(String str1, String str2) {
+        if (str1.length() != str2.length())
+            return false;
+
+        if ((str1 + str1).contains(str2))
+            return true;
+
+        return false;
     }
 }

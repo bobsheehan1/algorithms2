@@ -155,4 +155,29 @@ public class BinaryTree<T> {
         System.out.print(root.value + " ");
         printInOrder(root.right);
     }
+
+    public boolean compare(TreeNode<T> node){
+        return compare(this.root, node);
+    }
+
+    private boolean compare(TreeNode<T> node1, TreeNode<T> node2){
+
+        if (node1 == null && node2 == null)
+            return true;
+
+        if (node1 != null && node2 == null)
+            return false;
+        if (node1 == null && node2 != null)
+            return false;
+
+        if (node1 != null & node2 != null)
+            if (!node1.value.equals(node2.value))
+                return false;
+
+        boolean value = true;
+        value &= compare(node1.left, node2.left);
+        value &= compare(node1.right, node2.right);
+
+        return value;
+    }
 }
