@@ -161,17 +161,35 @@ public class ListImpl <T extends Comparable<T>> implements List<T> {
     @Override
     public  void reverse() {
         Node A = null, B = head, C= head.next;
-        while (C != null) {
+
+        while (B != null) {
             B.next = A; //reversal step
 
             // move the scaffold
             A = B;
             B = C;
-            C = C.next;
+
+            if (C!=null)
+                C = C.next;
         }
 
-        B.next = A; //reversal
-        this.head = B; // don't forget to add the head !!!
+        this.head = A; // don't forget to set the head !!!
+    }
+
+    public void reverseRecurse () {
+        reverseRecurse(this.head);
+    }
+
+    //TODO NEEDS MORE INVESTIGATION !!!!!!!!!!!!!!!!!!!!!
+    public Node reverseRecurse (Node node){
+        if (node == null) return null;
+        if (node.next == null) return node;
+
+        Node secondElem = node.next;
+        node.next = null;
+        Node reverseRest = reverseRecurse(secondElem);
+        secondElem.next = node;
+        return reverseRest;
     }
 
     @Override

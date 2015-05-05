@@ -127,6 +127,31 @@ public class Array {
         }
     }
 
+    public static int reverseDecInt(int n){
+
+        int length = 0;
+
+        int mult = 1;
+        while (n/mult != 0)
+        {
+            length++;
+            mult *= 10;
+        }
+
+        mult = 1;
+        int reverse = 0;
+        for (int i = length-1; i >= 0; --i){
+            mult = (int)(Math.pow(10, i));
+            int val = n/mult;
+            val %= 10;
+
+            mult = (int)(Math.pow(10, length-1-i));
+            reverse += val*mult;
+        }
+
+        return reverse;
+    }
+
     public static <T> void rotateArray(T[] array, int shift) {
         shift %= array.length;
 

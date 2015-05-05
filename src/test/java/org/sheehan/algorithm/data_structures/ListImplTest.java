@@ -31,6 +31,21 @@ public class ListImplTest {
     }
 
     @Test
+    public void testReverse() throws Exception {
+
+        List<Integer> list = new ListImpl<Integer>();
+
+        for (int i = 0; i < 10; i++)
+            list.appendBack(i);
+        list.print();
+
+        list.reverse();
+        list.print();
+
+
+    }
+
+    @Test
     public void testAppendFront() throws Exception {
         List<Integer> list = new ListImpl<Integer>();
 

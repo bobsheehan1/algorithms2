@@ -26,6 +26,7 @@ public interface List<T extends Comparable<T>> extends Iterable<T>{
     void reverseBrute();
 
     void reverse();
+    void reverseRecurse();
 
     T get(int index);
 

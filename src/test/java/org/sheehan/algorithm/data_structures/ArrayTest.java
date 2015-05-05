@@ -158,7 +158,6 @@ public class ArrayTest {
         int array[] = {1, -2, -6, 3, 5};
 
         System.out.println(Array.getMaxSubArray(array));
-
     }
 
     @Test
@@ -166,6 +165,13 @@ public class ArrayTest {
         Integer array[] = {1, -2, -6, 3, 5};
 
         System.out.println(Array.getMaxSubArray2(array));
-
     }
+
+    @Test
+    public void testReverseInteger() {
+
+        System.out.println(Array.reverseDecInt(1234));
+        System.out.println(Array.reverseDecInt(-1234));
+    }
+
 }
