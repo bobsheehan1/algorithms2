@@ -403,7 +403,7 @@ public class Sort {
 
 
     public static <T extends Comparable<T>> int quicksortSelectKSmallest(T[] array, int left, int right, int k){
-        if (left < right) {
+        if (left <= right) {
             int partitionIndex = partition(array, left, right);
             if (partitionIndex == k)
                 return partitionIndex;

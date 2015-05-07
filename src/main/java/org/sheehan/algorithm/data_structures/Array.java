@@ -255,7 +255,7 @@ public class Array {
     }
 
     // dynamic programming
-    public static int getMaxSubArray(int[] array) {
+    public static int getMaxSubArray(Integer[] array) {
         int max = array[0];
 
         // possible solutions
@@ -287,6 +287,20 @@ public class Array {
                 sum += i;
             }
             max = Math.max(max, sum);
+        }
+        return max;
+    }
+
+    // iterative
+    public static int getMaxSubArray3(Integer[] array) {
+
+        int sum = 0, max = 0;
+        for (int i : array) {
+            sum +=i;
+            max = Math.max(max, sum);
+
+            if (sum < 0) //resest if negative cause it ain't helpin going forward now is it ?
+                sum = 0;
         }
         return max;
     }

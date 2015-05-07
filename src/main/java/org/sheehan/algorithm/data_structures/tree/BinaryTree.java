@@ -7,13 +7,14 @@ import java.util.List;
  *
  * BinaryTree created using linked nodes
  */
-public class BinaryTree<T> {
+public class BinaryTree<K extends Comparable<? super K>, V> {
 
-    public TreeNode<T> root;
+    public TreeNode<K, V> root;
 
-    public static <T> TreeNode<T> createTreeNode(T value){
-        TreeNode<T> node = new TreeNode<>();
+    public static <K extends Comparable<? super K>, V> TreeNode<K,V> createTreeNode(K key, V value){
+        TreeNode<K,V> node = new TreeNode<>();
         node.value = value;
+        node.key = key;
         node.left = null;
         node.right= null;
 
@@ -21,9 +22,10 @@ public class BinaryTree<T> {
     }
 
     // create node and add children
-    public static <T> TreeNode<T> createTreeNode(T value, TreeNode<T> left, TreeNode<T> right){
-        TreeNode<T> node = new TreeNode<>();
+    public static <K extends Comparable<? super K>, V> TreeNode<K,V> createTreeNode(K key, V value, TreeNode<K,V> left, TreeNode<K,V> right){
+        TreeNode<K,V> node = new TreeNode<>();
         node.value = value;
+        node.key = key;
         node.left = left;
         node.right= right;
 
@@ -35,44 +37,49 @@ public class BinaryTree<T> {
         return node;
     }
 
+    public static class TreeNode <K extends Comparable<? super K>, V> {
+        public K key;
+        public V value;
+        public TreeNode <K,V> left;
+        public TreeNode <K,V> right;
 
-    public static class TreeNode <T> {
-        public T value;
-        public TreeNode <T> left;
-        public TreeNode <T> right;
-        TreeNode <T> parent; // for successor BST traversal
+        TreeNode <K,V> parent; // for successor BST traversal
 
         @Override
         public String toString(){
-            return value.toString();
+            return "key:" + key.toString() + " value:" + value.toString();
         }
     }
 
-    public BinaryTree(TreeNode<T> node) {
+    public BinaryTree(TreeNode<K,V> node) {
         this.root = node;
     }
 
-    public void print(TreeNode<T> node) {
+    public void print() {
+        print(this.root);
+    }
+
+    public void print(TreeNode<K,V> node) {
         print(node, 0, "root");
         System.out.println();
     }
 
-    private void print(TreeNode<T> node, int level, String side) {
+    private void print(TreeNode<K,V> node, int level, String side) {
         if (node == null)
             return;
         System.out.print("(");
         print(node.left, level + 1, "left");
-        System.out.print(node.value);
+        System.out.print(node.toString());
         print(node.right, level + 1, "right");
         System.out.print(")");
     }
 
     // print level with either right to left or left to right direction
-    public void printLevel(TreeNode<T> node, int level, int rLevel, Boolean dir) {
+    public void printLevel(TreeNode<K,V> node, int level, int rLevel, Boolean dir) {
         if (node == null)
             return;
         if (level == rLevel)
-            System.out.print(node.value + " ");
+            System.out.print(node.toString() + " ");
 
         if (dir) {
             printLevel(node.left, level + 1, rLevel, dir);
@@ -84,19 +91,35 @@ public class BinaryTree<T> {
     }
 
     public int getHeight(){
-        return getHeight(this.root);
+        return getMaxHeight(this.root);
      }
 
     //recursive
-    private int getHeight(TreeNode<T> node){
+    private int getMaxHeight(TreeNode<K,V> node){
         if (node == null)
             return 0;
         else
-            return 1 + Math.max(getHeight(node.left ), getHeight(node.right ));
+            return 1 + Math.max(getMaxHeight(node.left), getMaxHeight(node.right ));
     }
 
     //recursive
-    public int getMaxSum(TreeNode<Integer> node){
+    private int getMinHeight(TreeNode<K,V> node){
+        if (node == null)
+            return 0;
+        else
+            return 1 + Math.min(getMaxHeight(node.left), getMaxHeight(node.right));
+    }
+
+    public boolean isBalanced()
+    {
+        int min = getMinHeight(this.root);
+        int max = getMaxHeight(this.root);
+
+        return max-min<= 1;
+    }
+
+    //recursive
+    public int getMaxSum(TreeNode<Integer, Integer> node){
         if (node == null)
             return 0;
         else
@@ -104,7 +127,7 @@ public class BinaryTree<T> {
     }
 
     //recursive
-    public void printEndNodesAndPathSums(TreeNode<Integer> node){
+    public void printEndNodesAndPathSums(TreeNode<Integer, Integer> node){
         if (node == null)
             return;
 
@@ -112,7 +135,7 @@ public class BinaryTree<T> {
         if (node.left == null && node.right== null){
             System.out.println("end node: " + node.value);
             int sum = node.value;
-            TreeNode<Integer> tmp = node.parent;
+            TreeNode<Integer, Integer> tmp = node.parent;
             while (tmp != null){
                 sum += tmp.value;
                 tmp = tmp.parent;
@@ -124,11 +147,9 @@ public class BinaryTree<T> {
 
         printEndNodesAndPathSums(node.left);
         printEndNodesAndPathSums(node.right);
-     }
+    }
 
-
-    public void getLevelNodes(TreeNode<T> node, int cLevel, int rLevel, List<TreeNode<T>> nodes ){
-;
+    public void getLevelNodes(TreeNode<K,V> node, int cLevel, int rLevel, List<TreeNode<K,V>> nodes ){
         if (node == null)
             return;
         if (cLevel == rLevel) // add to container if level is met
@@ -140,11 +161,11 @@ public class BinaryTree<T> {
     }
 
     // swap left and right at each level
-    public void mirror(TreeNode<T> node){
+    public void mirror(TreeNode<K,V> node){
         if (node == null)
             return;
         else { //swap
-            TreeNode<T> tmp = node.left;
+            TreeNode<K,V> tmp = node.left;
             node.left = node.right;
             node.right = tmp;
         }
@@ -165,7 +186,7 @@ public class BinaryTree<T> {
         System.out.println();
     }
 
-    private void printInOrder(TreeNode<T> root) {
+    private void printInOrder(TreeNode<K,V> root) {
         if (root == null)
             return;
         printInOrder(root.left);
@@ -173,11 +194,11 @@ public class BinaryTree<T> {
         printInOrder(root.right);
     }
 
-    public boolean compare(TreeNode<T> node){
+    public boolean compare(TreeNode<K,V> node){
         return compare(this.root, node);
     }
 
-    private boolean compare(TreeNode<T> node1, TreeNode<T> node2){
+    private boolean compare(TreeNode<K,V> node1, TreeNode<K,V> node2){
 
         if (node1 == null && node2 == null)
             return true;

@@ -155,9 +155,11 @@ public class ArrayTest {
 
     @Test
     public void testMaxSubArrayOfIntegers() {
-        int array[] = {1, -2, -6, 3, 5};
+        Integer array[] = {1, -2, -6, 3, 5};
 
         System.out.println(Array.getMaxSubArray(array));
+        System.out.println(Array.getMaxSubArray2(array));
+        System.out.println(Array.getMaxSubArray3(array));
     }
 
     @Test

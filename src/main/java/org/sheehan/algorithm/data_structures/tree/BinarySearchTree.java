@@ -7,7 +7,7 @@ package org.sheehan.algorithm.data_structures.tree;
  *
  *
  */
-public class BinarySearchTree<T extends Comparable<T>> extends BinaryTree<T>{
+public class BinarySearchTree<K extends Comparable<?super K>, V> extends BinaryTree<K,V>{
 
 
     public BinarySearchTree() {
@@ -15,15 +15,15 @@ public class BinarySearchTree<T extends Comparable<T>> extends BinaryTree<T>{
     }
 
     //recursive pass in root node
-    public static <T extends Comparable<T>> boolean isBst(TreeNode<T> node){
+    public static <K extends Comparable<K>, V> boolean isBst(TreeNode<K,V> node){
         if (node == null)
             return true;
         if (node.left != null) {
-            if (node.value.compareTo(node.left.value) < 0)
+            if (node.key.compareTo(node.left.key) < 0)
                 return false;
             return isBst(node.left);
         } else if (node.right != null) {
-             if (node.value.compareTo(node.right.value) > 0)
+             if (node.key.compareTo(node.right.key) > 0)
                  return false;
              return isBst(node.right);
          }
@@ -31,44 +31,44 @@ public class BinarySearchTree<T extends Comparable<T>> extends BinaryTree<T>{
         return true;
     }
 
-    public TreeNode<T> insert2(T value) {
+    public TreeNode<K,V> insert2(K key,V value) {
         if (root == null){
-            root = createTreeNode(value);
+            root = createTreeNode(key, value);
             return root;
         }
-        return insert2(root, value);
+        return insert2(root, key, value);
     }
 
-    private TreeNode<T> insert2(TreeNode<T> node, T value) {
+    private TreeNode<K,V> insert2(TreeNode<K,V> node, K key,V value) {
         if (node == null)
-            return createTreeNode(value);
+            return createTreeNode(key, value);
 
-        if (node.value.compareTo(value) < 0)
+        if (node.key.compareTo(key) < 0)
             if (node.right != null)
-                return insert2(node.right, value);
+                return insert2(node.right, key, value);
             else {
-                node.right = createTreeNode(value);
+                node.right = createTreeNode(key, value);
                 node.right.parent = node;
             }
-        else if (node.value.compareTo(value) > 0)
+        else if (node.key.compareTo(key) > 0)
             if (node.left != null)
-                return insert2(node.left, value);
+                return insert2(node.left, key, value);
             else {
-                node.left = createTreeNode(value);
+                node.left = createTreeNode(key, value);
                 node.left.parent = node;
             }
 
         return node;
     }
 
-    TreeNode<T> successor(TreeNode<T> node){
+    TreeNode<K,V> successor(TreeNode<K,V> node){
 
         // if right child then get min of that right tree !
         if (node.right != null)
             return minimum(node.right);
 
-        TreeNode<T> parent = node.parent;
-        TreeNode<T> right = node;
+        TreeNode<K,V> parent = node.parent;
+        TreeNode<K,V> right = node;
 
 
         // if there is a parent AND the node is the right child,
@@ -80,20 +80,20 @@ public class BinarySearchTree<T extends Comparable<T>> extends BinaryTree<T>{
         }
 
         // rightmost node special case
-        if (parent != null && parent.value.compareTo(node.value) < 0 && node.value.equals(maximum(this.root).value))
+        if (parent != null && parent.key.compareTo(node.key) < 0 && node.key.equals(maximum(this.root).key))
             return node;
 
         return parent;
     }
 
-    TreeNode<T> predecessor(TreeNode<T> node){
+    TreeNode<K,V> predecessor(TreeNode<K,V> node){
 
         // if left child then get max of that left tree !
         if (node.left != null)
             return maximum(node.left);
 
-        TreeNode<T> parent = node.parent;
-        TreeNode<T> left = node;
+        TreeNode<K,V> parent = node.parent;
+        TreeNode<K,V> left = node;
 
         // if there is a parent AND the node is the right ancestor,
         // we look up getting smaller for parents to left so get them out of the way
@@ -104,38 +104,34 @@ public class BinarySearchTree<T extends Comparable<T>> extends BinaryTree<T>{
         }
 
         // leftmost node special case
-        if (parent != null && parent.value.compareTo(node.value) > 0 && node.value.equals(minimum(this.root).value))
+        if (parent != null && parent.key.compareTo(node.key) > 0 && node.value.equals(minimum(this.root).key))
             return node;
 
         return parent;
     }
 
-    TreeNode<T> minimum(TreeNode<T> node) {
+    TreeNode<K,V> minimum(TreeNode<K,V> node) {
         if (node.left == null)
             return node;
         return minimum(node.left);
     }
 
-    TreeNode<T> maximum(TreeNode<T> node) {
+    TreeNode<K,V> maximum(TreeNode<K,V> node) {
         if (node.right == null)
             return node;
         return maximum(node.right);
     }
 
-    TreeNode<T> leastCommonAncestor(TreeNode<T> root, TreeNode<T> node1, TreeNode<T> node2){
+    TreeNode<K,V> leastCommonAncestor(TreeNode<K,V> root, TreeNode<K,V> node1, TreeNode<K,V> node2){
         if (root == null)
             return null;
-        if (node1.value.compareTo(root.value) < 0 && node2.value.compareTo(root.value) < 0){
+        if (node1.key.compareTo(root.key) < 0 && node2.key.compareTo(root.key) < 0){
             return leastCommonAncestor(root.left, node1, node2);
         }
-        else if (node1.value.compareTo(root.value) > 0 && node2.value.compareTo(root.value) > 0){
+        else if (node1.key.compareTo(root.key) > 0 && node2.key.compareTo(root.key) > 0){
             return leastCommonAncestor(root.right, node1, node2);
         }
 
         return root;
-
     }
-
-
-
 }
