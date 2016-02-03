@@ -56,4 +56,6 @@ public interface List<T extends Comparable<T>> extends Iterable<T>{
     Node<T> deleteBack();
 
     void appendFront(T t);
+
+    boolean orderedElementsFound(List<T> subList);
 }

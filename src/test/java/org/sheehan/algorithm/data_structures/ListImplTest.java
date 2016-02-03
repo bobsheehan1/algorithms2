@@ -27,7 +27,7 @@ public class ListImplTest {
         Integer array2[] = new Integer[list.size()];
         list.toArray(array2);
 
-        Assert.assertArrayEquals(array1,array2);
+        Assert.assertArrayEquals(array1, array2);
     }
 
     @Test
@@ -64,7 +64,7 @@ public class ListImplTest {
         Integer array2[] = new Integer[list.size()];
         list.toArray(array2);
 
-        Assert.assertArrayEquals(array1,array2);
+        Assert.assertArrayEquals(array1, array2);
     }
 
 
@@ -83,7 +83,7 @@ public class ListImplTest {
             list.appendBack(i);
         list.print();
 
-        for (int i = 9; i >=0; i--)
+        for (int i = 9; i >= 0; i--)
             list.delete(i);
         list.print();
         Assert.assertTrue(list.size() == 0);
@@ -107,7 +107,6 @@ public class ListImplTest {
     }
 
 
-
     @Test
     public void testCycle() {
         List<Integer> list = new ListImpl<Integer>();
@@ -129,4 +128,33 @@ public class ListImplTest {
         int cycleSize = list.countCycle(cycleStart);
         System.out.println("Cycle Size: " + cycleSize);
     }
+
+    @Test
+    public void testOrderedSubList() {
+        List<Integer> list1 = new ListImpl<Integer>();
+
+        for (int i = 0; i < 10; i++)
+            list1.appendBack(i);
+
+        List<Integer> list2 = new ListImpl<Integer>();
+        for (int i = 0; i < 2; i++)
+            list2.appendBack(i);
+
+        assertTrue(list1.orderedElementsFound(list2));
+
+        List<Integer> list3 = new ListImpl<Integer>();
+        for (int i = 0; i < 10; i++)
+            list3.appendBack(i);
+
+        assertTrue(list1.orderedElementsFound(list3));
+
+        List<Integer> list4 = new ListImpl<Integer>();
+
+        list4.appendBack(10);
+
+        assertFalse(list1.orderedElementsFound(list4));
+
+
+    }
+
 }

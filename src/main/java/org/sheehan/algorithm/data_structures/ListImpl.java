@@ -338,4 +338,32 @@ public class ListImpl <T extends Comparable<T>> implements List<T> {
         }
     }
 
+
+    // locate if elements of sublist are in larger list
+    // assumptions - sublist smaller than large list
+    public boolean orderedElementsFound(List<T> subList) {
+        Node<T> curr = this.head; //trick persist outer list iterator and not reset on inner loop
+        //iterate over inner list
+
+        Iterator<T> iterator = subList.iterator();
+
+        while  (iterator.hasNext()) {
+            T subListElem = iterator.next();
+            boolean elemFound = false;
+
+            //move along outer list (do not rest to beginning for O(n)
+            for (; curr != null; curr = curr.next) {
+                if (subListElem.equals(curr.value)) {
+                    elemFound = true;
+                    curr = curr.next;
+                    break;
+                }
+            }
+            if (!elemFound)
+                return false;
+        }
+
+        return true;
+    }
+
 }
