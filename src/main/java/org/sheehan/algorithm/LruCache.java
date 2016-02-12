@@ -19,12 +19,12 @@ public class LruCache {
     private Map<String, String> cache = new HashMap<>(MAX, 1.0f); // use full cache
     private int size = 0;
 
-    class Node implements Comparable<Node> {
+    class LruNode implements Comparable<LruNode> {
 
         Timestamp ts;
         String key;
 
-        public int compareTo(Node other) {
+        public int compareTo(LruNode other) {
             //return other.ts.compareTo(this.ts);
             return this.ts.compareTo(other.ts);
 
@@ -35,16 +35,18 @@ public class LruCache {
         }
     }
 
-    private SortedSet<Node> lruSet = new TreeSet<Node>();
+    private SortedSet<LruNode> lruSet = new TreeSet<>();
 
     Logger log = Logger.getLogger(this.getClass().getName());
 
     public String read(String key) {
 
+        // we always update the timestamp sortedset
         java.util.Date date= new java.util.Date();
-        Node newNode = new Node();
+        LruNode newNode = new LruNode();
         newNode.ts = new Timestamp(date.getTime());
         newNode.key = key;
+
         // if not in cache then put it on in.
         String val = cache.get(key);
         if (val == null)
@@ -64,34 +66,38 @@ public class LruCache {
                 size++;
                 newNode.key = key; // last updated index
             } else {
-                // get lru index for replacement
-                Node lruNode = lruSet.first();
+                // get lru index for replacement then remove
+                LruNode lruNode = lruSet.first();
                 log.info("lruSet removed: " + lruNode.key);
                 lruSet.remove(lruNode);
 
                 log.info("removing cache at index: " + lruNode.key);
                 cache.remove(lruNode.key);
 
-                log.info("added cache at index: " + key + " " + cache.get(key));
+                log.info("added cache at index: " + key + " " + val);
                 cache.put(key, val); //update at lru index
 
             }
+        } else {
+            // simply update the cache hit timestamp in lru set
         }
 
 
         //remove previous ts node entry for current key
-        Set<Node> removeSet = new HashSet<>();
-        for (Node node: lruSet)
+
+        Iterator<LruNode> iterator = lruSet.iterator();
+        while (iterator.hasNext()) {
+            LruNode node = iterator.next();
             if (node.key.equals(newNode.key)) {
-                removeSet.add(node);
+                iterator.remove();
                 log.info("lruSet removed: " + newNode.key);
             }
-        lruSet.removeAll(removeSet);
+        }
 
         log.info("lruSet added: " + newNode.key);
         lruSet.add(newNode); //update PQ
 
-        log.info("LRU SET: " + lruSet.toString());
+        log.info("LRU UPDATED: " + lruSet.toString());
 
         return val;
 

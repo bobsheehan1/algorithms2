@@ -14,8 +14,8 @@
 //
 //        final int[] heights = new int[num];
 //
-//        int min = Integer.MAX_VALUE;
-//        int max = Integer.MIN_VALUE;
+//        int min = IntegerAlgs.MAX_VALUE;
+//        int max = IntegerAlgs.MIN_VALUE;
 //        for(int i = 0; i < num; ++i){
 //            heights[i] = in.nextInt();
 //            if (heights[i] > max)

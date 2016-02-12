@@ -56,7 +56,7 @@ public class DjikstraShortestPathTest {
 /*
     @TestGrow
     public void testShortestPathPQ2() {
-        Integer nodes[] = {0,1,2,3,4,9};
+        IntegerAlgs nodes[] = {0,1,2,3,4,9};
         Graph graph = new GraphMatrix(nodes);
         graph.addUndirectedEdge(nodes[0], nodes[1], 10);
         graph.addUndirectedEdge(nodes[0], nodes[2], 1);

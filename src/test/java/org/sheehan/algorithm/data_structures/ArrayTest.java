@@ -2,7 +2,6 @@ package org.sheehan.algorithm.data_structures;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.sheehan.algorithm.data_structures.Array;
 
 import java.util.*;
 import java.util.List;
@@ -18,10 +17,12 @@ public class ArrayTest {
 
 
         Integer array2[] = {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 3, 3, 3, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 6, 7, 8, 9, 10, 10};
+        Array.findLongestRun2(array2);
 
         Assert.assertEquals(1, Array.findLongestRun(array2).intValue());
 
         Integer array3[] = {1, 2, 2, 3, 3, 3, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 6, 7, 8, 9, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10};
+        Array.findLongestRun2(array3);
 
         Assert.assertEquals(10, Array.findLongestRun(array3).intValue());
 
@@ -52,12 +53,18 @@ public class ArrayTest {
         Set<Integer> duplicates = Array.findDuplicates(integers.toArray(new Integer[0]));
 
         duplicates.forEach((Integer i) -> System.out.print(i + " "));
+
+        Set<Integer> duplicates2 = Array.findDuplicates2(integers.toArray(new Integer[0]));
+
+        duplicates2.forEach((Integer i) -> System.out.print(i + " "));
+
+
     }
 
     @Test
     public void testRemoveDuplicates() throws Exception {
 
-        List<Integer> integers = Arrays.asList(1, 2, 3, 4, 4, 4, 4, 4,4,4,4, 5, 5, 5, 6, 6, 7, 8, 9);
+        List<Integer> integers = Arrays.asList(1, 2, 3, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 6, 6, 7, 8, 9);
 
         Integer[] integers1 = integers.toArray(new Integer[0]);
 
@@ -65,6 +72,15 @@ public class ArrayTest {
 
         for (int i: integers1)
             System.out.print(i + " ");
+
+        integers1 = integers.toArray(new Integer[0]);
+
+        Array.removeDuplicates2(integers1);
+
+        System.out.println();
+        for (int i: integers1)
+            System.out.print(i + " ");
+
     }
 
     @Test
@@ -83,7 +99,10 @@ public class ArrayTest {
         Integer array2[] = Array.createArray(20, 100, true);
         Array.print(array1);
         Array.print(array2);
-        Comparable merged[] = Array.mergeSortedArrays(array1, array2);
+
+        Integer[] merged = (Integer[]) new Integer[array1.length+array2.length];
+
+        Array.mergeSortedArrays(array1, array2, merged);
 
         Array.print(merged);
     }
@@ -155,25 +174,20 @@ public class ArrayTest {
 
     @Test
     public void testMaxSubArrayOfIntegers() {
-        Integer array[] = {1, -2, -6, 3, 5};
+        Integer array[] = {1, -2, -6, 3, 5, -2, 3, 10, -3};
 
-        System.out.println(Array.getMaxSubArray(array));
-        System.out.println(Array.getMaxSubArray2(array));
-        System.out.println(Array.getMaxSubArray3(array));
+        System.out.println(Array.getMaxAndMinSubArray(array));
+        System.out.println(Array.getMaxSubArraySum2(array));
+        System.out.println(Array.getMaxSubArraySum3(array));
     }
 
     @Test
     public void testMaxSubArrayOfIntegers2() {
-        Integer array[] = {1, -2, -6, 3, 5};
+        Integer array[] = {1, -2, -6, 3, 5, -2, 3, 10, -3};
 
-        System.out.println(Array.getMaxSubArray2(array));
+        System.out.println(Array.getMaxSubArraySum2(array));
     }
 
-    @Test
-    public void testReverseInteger() {
 
-        System.out.println(Array.reverseDecInt(1234));
-        System.out.println(Array.reverseDecInt(-1234));
-    }
 
 }

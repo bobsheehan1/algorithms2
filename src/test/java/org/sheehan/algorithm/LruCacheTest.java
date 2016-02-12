@@ -23,18 +23,18 @@ public class LruCacheTest extends TestCase {
             Thread.sleep(100);
         }
 
-        log.info("1 ---------------");
+        log.info("TEST 1 --------------- READ key = test0, --> test1 should be oldest");
 
         // read entry to update ts for this key
         String key = "test0";
         String val = cache.read(key);
         log.info("TEST CACHE READ " + key + " " + val);
 
-        log.info("2 ---------------");
+        log.info("TEST 2 --------------- READ key = test-new --> should evict test1");
         // read uncached entry to see if LRU uses test1 lru index
         key = "test-new";
         val = cache.read(key);
-        log.info("TEST ADD LRU INDEX (expected removed key test1) " + key + " " + val);
+        log.info("TEST 3 --------------- ADD LRU INDEX (test-new is newest in lruset) " + key + " " + val);
 
     }
 }

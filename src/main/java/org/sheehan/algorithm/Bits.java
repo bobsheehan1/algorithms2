@@ -54,9 +54,9 @@ public class Bits {
 
     static int countOnes(int number){
 
-        //System.out.println(Integer.toBinaryString(number));
+        //System.out.println(IntegerAlgs.toBinaryString(number));
 
-        // Integer.SIZE = 32 bit -------- -------- -------- -------- 80 00 00 00
+        // IntegerAlgs.SIZE = 32 bit -------- -------- -------- -------- 80 00 00 00
 
 
         // == -1 no unsigned int type !!

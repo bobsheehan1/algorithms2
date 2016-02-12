@@ -197,38 +197,39 @@ public class Strings {
         return sum;
     }
 
-    public static String decInt2Str(int number) {
-        final int BASE = 10;
+    public static String decInt2Str(int n) {
 
         StringBuffer buffer = new StringBuffer();
+
+        int number = n;
         if (number < 0) {
             buffer.append("-");
             number *= -1;
         }
 
         // figure out the length of the number
-        int length = 0;
-        int temp = number;
-        while (temp != 0) {
-            temp = temp / BASE;
+        int length = 1;
+        int mult = 1;
+        while (number/mult != 0) {
+            mult *= 10;
             length++;
         }
 
         // starting at LEFT MSB end (using calculated length)
         // break off each digit and add to string buffer
-        int mult = 1;
-        for (int i = length - 1; i >= 0; --i) {
+        mult = 1;
+        for (int i = 0; i < length; ++i) {
 
-            int val = number / (int) Math.pow(BASE, i);
+            int val = number / (int) Math.pow(10, length -1 - i);
 
             // shave off the 10's position off leftish sub int
-            val = val % BASE;
+            val = val % 10;
 
             //convert digit to char
             buffer.append((char) (val + '0')); //digit to char
         }
 
-        return buffer.toString();
+       return buffer.toString();
     }
 
     public static Character getFirstNonRepeatingChar(String str) {

@@ -1,12 +1,8 @@
 package org.sheehan.algorithm;
 
-import junit.framework.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.sheehan.algorithm.data_structures.Array;
-import org.sheehan.algorithm.sort.Sort;
-
-import java.util.*;
 
 import static org.junit.Assert.assertEquals;
 

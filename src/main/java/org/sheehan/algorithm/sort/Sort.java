@@ -240,40 +240,10 @@ public class Sort {
         mergeSort(array2);
 
         //overwrite array with merge
-        merge(array1, array2, array);
+        org.sheehan.algorithm.data_structures.Array.mergeSortedArrays(array1, array2, array);
         return array;
     }
 
-
-    private static <T extends Comparable<T>> void merge(T[] array1, T[]array2, T[]array){
-
-        int i, index1, index2;
-        i = 0;
-        index1 = 0;
-        index2 = 0;
-
-        // merge COMMON LENGTH of 2 arrays
-        // this merge actually SORTS the arrays !
-        // this will exhaust one of the two arrays
-        while(index1 < array1.length && index2 < array2.length){
-            if (array1[index1].compareTo(array2[index2]) < 0) {
-                array[i++] = array1[index1++];
-            } else {
-                array[i++] = array2[index2++];
-            }
-        }
-
-        // one will have left overs...
-
-        // merge the LEFT OVER array portion
-        while(index1 < array1.length){
-            array[i++] = array1[index1++];
-        }
-        // if remaining array2 not merged
-        while(index2 < array2.length){
-            array[i++] = array2[index2++];
-        }
-    }
 
     private static <T> void swap(T[] array, int i, int j) {
         T tmp = array[j];

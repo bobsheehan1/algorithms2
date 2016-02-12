@@ -11,7 +11,7 @@ import java.util.List;
  */
 public class Array {
 
-    // print start index, length, element value of longest run in array
+    // FULL - print start index, length, element value of longest run in array
     public static <T> T findLongestRun(T array[]) {
         int length = 1;
         int maxLength = 0;
@@ -45,7 +45,29 @@ public class Array {
         return maxVal;
     }
 
-    // print start index, length, element value of longest run in array
+    //SIMPLE integer
+    public static  void findLongestRun2(Integer array[]) {
+
+        int currLength = 1; // minimal length for a run !
+        int maxLength = 0;
+
+        for (int i = 0; i < array.length-1; ++i){
+            if (array[i] == array[i+1]){
+                currLength++;
+            }
+
+            if ((array[i] != array[i+1]) || i == array.length-2){ //not 'else if'  because of end condition !
+                if (currLength > maxLength)
+                    maxLength = currLength;
+                currLength = 1; // minimal length for a run !
+            }
+        }
+
+        System.out.println("max run " + maxLength);
+    }
+
+
+        // print start index, length, element value of longest run in array
     public static <T extends Comparable<T>> void findLongestIncreasingRun(T array[]) {
         int length = 1;
         int maxLength = 0;
@@ -77,7 +99,7 @@ public class Array {
 
     }
 
-        // for numbers up to 256 limit
+    // bitmask - for numbers up to 256 limit - int mask
     public static Set<Integer> findDuplicates(Integer array[]) {
 
         int checker = 0; //init
@@ -95,18 +117,59 @@ public class Array {
         return duplicates;
     }
 
-    // removes duplicates and fills left over array with -1's
+    //HashMap
+    public static Set<Integer> findDuplicates2(Integer array[]) {
+
+        int checker = 0; //init
+
+        Set<Integer> duplicates = new HashSet<Integer>();
+        Map<Integer,Integer> map = new HashMap<Integer,Integer>();
+
+        for (Integer i: array){
+            if (map.get(i) == null) {
+                map.put(i, 1);
+            }else
+                duplicates.add(i);
+
+            map.put(i, map.get(i)+1);
+        }
+
+        //duplicates.forEach((IntegerAlgs i) -> System.out.println(i));
+        return duplicates;
+    }
+
+    // bitmask - removes duplicates and fills left over array with -1's
     public static void removeDuplicates(Integer[] array) {
         int checker = 0; //init
 
         int dst = 0;
-        for (int i = 0; i < array.length; ++i) {
-            int mask = 1 << array[i];
+        for (int arr_i : array) {
+            int mask = 1 << arr_i;
             // not a duplicate
             if ((checker & mask) == 0) {
-                array[dst++] = array[i];
+                array[dst++] = arr_i;
             }
             checker |= mask;
+        }
+
+        for (int i = dst; i < array.length; ++i) {
+            array[i] = -1;
+        }
+    }
+
+    //HASHMAP - removes duplicates and fills left over array with -1's
+    public static void removeDuplicates2(Integer[] array) {
+
+        Map<Integer,Integer> map = new HashMap<>();
+
+        int dst = 0;
+        for (int arr_i : array) {
+            Integer curr = map.get(arr_i);
+            if (curr == null){
+                map.put(arr_i, 1);
+                array[dst++] = arr_i;
+            } else
+                map.put(arr_i, curr++);
         }
 
         for (int i = dst; i < array.length; ++i) {
@@ -127,30 +190,6 @@ public class Array {
         }
     }
 
-    public static int reverseDecInt(int n){
-
-        int length = 0;
-
-        int mult = 1;
-        while (n/mult != 0)
-        {
-            length++;
-            mult *= 10;
-        }
-
-        mult = 1;
-        int reverse = 0;
-        for (int i = length-1; i >= 0; --i){
-            mult = (int)(Math.pow(10, i));
-            int val = n/mult;
-            val %= 10;
-
-            mult = (int)(Math.pow(10, length-1-i));
-            reverse += val*mult;
-        }
-
-        return reverse;
-    }
 
     public static <T> void rotateArray(T[] array, int shift) {
         shift %= array.length;
@@ -163,55 +202,24 @@ public class Array {
         reverse(array, shift, array.length - 1);
     }
 
-    public static Integer[] createArray(int size, int limit, boolean sorted) {
-
-        Random random = new Random();
-        java.util.List<Integer> list = new ArrayList<Integer>();
-        do {
-            list.add(random.nextInt() % (limit) / 2 + limit / 2);
-        } while (list.size() != size);
-        Integer[] array = list.toArray(new Integer[0]);
 
 
-        if (sorted)
-            Sort.insertionSort(array);
-        return array;
-    }
-
-    public static <T> void print(T[] array) {
-        System.out.println();
-        for (int i = 0; i < array.length; i++) {
-            System.out.print(array[i] + " ");
-        }
-        System.out.println();
-    }
-
-    public static <T extends Comparable> T[] mergeSortedArrays(T[] array1, T[] array2) {
-        int n = array1.length; //both same length assumed
-
-        T[] merged = (T[]) new Comparable[2 * n];
-
+    public static <T extends Comparable> void mergeSortedArrays(T[] array1, T[] array2, T[] merged) {
         int i1 = 0;
         int i2 = 0;
         int i = 0;
-        while (i1 < n && i2 < n) {
+        while (i1 < array1.length && i2 < array2.length) {
             if (array1[i1].compareTo(array2[i2]) < 0)
                 merged[i++] = array1[i1++];
             else
                 merged[i++] = array2[i2++];
         }
 
-        // one array will have left overs
-
-        //this
-        while (i1 < n)
+        //one array will have left overs
+        while (i1 < array1.length)
             merged[i++] = array1[i1++];
-
-        //or this
-        while (i2 < n)
+        while (i2 < array2.length)
             merged[i++] = array2[i2++];
-
-        return merged;
     }
 
     static void getPermutations2(java.util.List<Integer> arr, int k) {
@@ -255,32 +263,40 @@ public class Array {
     }
 
     // dynamic programming
-    public static int getMaxSubArray(Integer[] array) {
-        int max = array[0];
+    public static int getMaxAndMinSubArray(Integer[] array) {
+        int max = array[0]; //init
+        int min = array[0];
 
-        // possible solutions
-        int[] sum = new int[array.length];
-        sum[0] = array[0];
+        // possible sub solution arrays
+        int[] solnMax = new int[array.length];
+        int[] solnMin = new int[array.length];
+
+        solnMax[0] = array[0]; // initial sub solution
 
         for (int i = 1; i < array.length; i++) {
-            //new max is current or sum or previous and current
-            // A[i] or sum + A[i]
-            sum[i] = Math.max(array[i], sum[i - 1] + array[i]);
+            // ith sub soln is max of  either:
+            // 1. new element
+            // 2. new element + last sub soln (i-1)
+            solnMax[i] = Math.max(array[i], solnMax[i - 1] + array[i]);
+            solnMin[i] = Math.min(array[i], solnMin[i - 1] + array[i]);
 
             // is new sum the new max ?
-            max = Math.max(max, sum[i]);
+            max = Math.max(max, solnMax[i]);
+            min = Math.min(min, solnMin[i]);
         }
 
+        System.out.println(min);
         return max;
     }
 
-    // iterative
-    public static int getMaxSubArray2(Integer[] array) {
+    // iterative - get all subarrays and sum them up
+    // can track the actual sub array here
+    public static int getMaxSubArraySum2(Integer[] array) {
         Set<java.util.List<Integer>> cache = new HashSet<java.util.List<Integer>>();
 
         getSubArrays(array, cache);
 
-        int sum = 0, max = 0;
+        int sum = 0, max = Integer.MIN_VALUE;
         for (List<Integer> a : cache) {
             sum = 0;
             for (int i : a) {
@@ -291,16 +307,16 @@ public class Array {
         return max;
     }
 
-    // iterative
-    public static int getMaxSubArray3(Integer[] array) {
+    // iterative - just a running sum
+    public static int getMaxSubArraySum3(Integer[] array) {
 
         int sum = 0, max = 0;
-        for (int i : array) {
-            sum +=i;
+        for (int arr_i : array) {
+            sum += arr_i;
             max = Math.max(max, sum);
 
             if (sum < 0) //resest if negative cause it ain't helpin going forward now is it ?
-                sum = 0;
+               sum = 0;
         }
         return max;
     }
@@ -326,6 +342,29 @@ public class Array {
     }
 
 
+    // UTILS ----------------------------------------------------------------
+    public static Integer[] createArray(int size, int limit, boolean sorted) {
+
+        Random random = new Random();
+        java.util.List<Integer> list = new ArrayList<Integer>();
+        do {
+            list.add(random.nextInt() % (limit) / 2 + limit / 2);
+        } while (list.size() != size);
+        Integer[] array = list.toArray(new Integer[0]);
+
+
+        if (sorted)
+            Sort.insertionSort(array);
+        return array;
+    }
+
+    public static <T> void print(T[] array) {
+        System.out.println();
+        for (int i = 0; i < array.length; i++) {
+            System.out.print(array[i] + " ");
+        }
+        System.out.println();
+    }
 
 
 }

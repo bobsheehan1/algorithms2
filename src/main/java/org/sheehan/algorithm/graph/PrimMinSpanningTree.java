@@ -39,7 +39,7 @@ public class PrimMinSpanningTree <T extends Comparable<T>> {
         //minHeap.add(currentNode);
 
         //for (GraphNode<T> node:graph.getNodes()){
-        //    node.distance = Integer.MAX_VALUE;
+        //    node.distance = IntegerAlgs.MAX_VALUE;
         //}
 
         // create add of all unvisited nodes

@@ -103,13 +103,13 @@ public class GraphMatrix <T extends Comparable<T>> implements Graph<T> {
     }
 
     @Override
-    public Integer getEdgeWeight(T node1, T node2) {
+    public IntegerAlgs getEdgeWeight(T node1, T node2) {
         int i = Arrays.binarySearch(this.nodes, node1);
         int j = Arrays.binarySearch(this.nodes, node2);
         if (isEdge(nodes[i], nodes[j])){
             return graph[i][j];
         }
-        return Integer.MAX_VALUE; // no edge
+        return IntegerAlgs.MAX_VALUE; // no edge
     }
 
     @Override
