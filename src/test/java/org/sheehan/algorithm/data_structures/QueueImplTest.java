@@ -1,8 +1,6 @@
 package org.sheehan.algorithm.data_structures;
 
 import org.junit.Test;
-import org.sheehan.algorithm.data_structures.Queue;
-import org.sheehan.algorithm.data_structures.QueueImpl;
 
 import java.util.NoSuchElementException;
 
@@ -15,22 +13,22 @@ public class QueueImplTest {
     public void testAddOverflow() {
         try {
             int size = 10;
-            Queue q = new QueueImpl<Integer>(size);
+            Queue q = new QueueArrayImpl<Integer>(size);
 
             for (int i = 0; i < 10; ++i) {
-                q.add(i);
+                q.enqueue(i);
                 q.print();
                 //q.printArray();
             }
 
             for (int i = 0; i < 5; ++i) {
-                q.remove();
+                q.dequeue();
                 q.print();
                 //q.printArray();
             }
 
             for (int i = 10; i < 15; ++i) {
-                q.add(i);
+                q.enqueue(i);
                 q.print();
                 //q.printArray();
             }
@@ -43,22 +41,22 @@ public class QueueImplTest {
     public void testAddOverflowList() {
         try {
             int size = 10;
-            Queue q = new QueueImpl2<Integer>();
+            Queue q = new QueueListImpl<Integer>();
 
             for (int i = 0; i < 10; ++i) {
-                q.add(i);
+                q.enqueue(i);
                 q.print();
                 q.printArray();
             }
 
             for (int i = 0; i < 5; ++i) {
-                q.remove();
+                q.dequeue();
                 q.print();
                 q.printArray();
             }
 
             for (int i = 10; i < 15; ++i) {
-                q.add(i);
+                q.enqueue(i);
                 q.print();
                 q.printArray();
             }
@@ -70,54 +68,54 @@ public class QueueImplTest {
     @Test
     public void testAddRemove() throws Exception {
         int size = 10;
-        Queue<Integer> q = new QueueImpl<>(size);
+        Queue<Integer> q = new QueueArrayImpl<>(size);
 
         for (int i = 0; i < size; ++i){
-            q.add(i);
+            q.enqueue(i);
             q.print();
         }
 
         for (int i = 0; i < size; ++i){
-            Integer remove = q.remove();
+            Integer remove = q.dequeue();
             assertEquals(i, remove.intValue());
             q.print();
         }
 
-        q.add(10);
-        q.add(20);
-        assertEquals(10, q.remove().intValue());
-        q.add(30);
-        q.add(40);
-        assertEquals(20, q.remove().intValue());
+        q.enqueue(10);
+        q.enqueue(20);
+        assertEquals(10, q.dequeue().intValue());
+        q.enqueue(30);
+        q.enqueue(40);
+        assertEquals(20, q.dequeue().intValue());
 
     }
 
     @Test
     public void testAddRemove2() throws Exception {
         int size = 10;
-        Queue q = new QueueImpl<Integer>(size);
+        Queue q = new QueueArrayImpl<Integer>(size);
 
         // fill queue
         for (int i = 0; i < size; ++i){
-            q.add(i);
+            q.enqueue(i);
             q.print();
         }
 
-        //remove half
+        //dequeue half
         for (int i = 0; i < size/2; ++i){
-            q.remove();
+            q.dequeue();
             q.print();
         }
 
-        // add 5 more queue
+        // enqueue 5 more queue
         for (int i =  size/2; i < size; ++i){
-            q.add(i*10);
+            q.enqueue(i * 10);
             q.print();
         }
 
-        //remove half
+        //dequeue half
         for (int i = 0; i < size/2; ++i){
-            q.remove();
+            q.dequeue();
             q.print();
         }
     }
@@ -125,9 +123,9 @@ public class QueueImplTest {
     @Test
     public void testAddRemove3() {
         int size = 10;
-        Queue q = new QueueImpl<Integer>(size);
-        q.add(5);
-        Integer val = (Integer)q.remove();
+        Queue q = new QueueArrayImpl<Integer>(size);
+        q.enqueue(5);
+        Integer val = (Integer)q.dequeue();
         assertEquals(new Integer(5), val);
 
     }

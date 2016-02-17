@@ -5,30 +5,30 @@ import java.lang.reflect.Array;
 /**
  * Created by bob on 5/26/14.
  */
-public class QueueImpl<T extends Comparable<T>> implements Queue<T> {
+public class QueueArrayImpl<T extends Comparable<T>> implements Queue<T> {
 
     private int firstIndex = 0;
     private int count = 0;
     private int size;
     private T array[];
 
-    public QueueImpl(int size) {
+    public QueueArrayImpl(int size) {
         this.size = size;
         array = (T[]) Array.newInstance(Comparable.class, size);
     }
 
-    // add to back
+    // enqueue to back
     @Override
-    public void add(T value) {
+    public void enqueue(T value) {
         if (count == size)
             throw new RuntimeException("Full Queue");
         array[(firstIndex + count)%size] = value;
         count++;
     }
 
-    // remove from front
+    // dequeue from front
     @Override
-    public T remove() {
+    public T dequeue() {
         if (count == 0)
             return null;
         T value = array[(firstIndex)%size];

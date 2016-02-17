@@ -20,7 +20,7 @@ public class BinaryHeapTest {
 
 
         Integer value;
-        while ((value = tree.remove()) != null) {
+        while ((value = tree.pop()) != null) {
             System.out.println("top priority: " + value);
         }
 
@@ -42,7 +42,7 @@ public class BinaryHeapTest {
 
 
         Integer value;
-        while ((value = tree.remove()) != null) {
+        while ((value = tree.pop()) != null) {
             System.out.println("top priority: " + value);
         }
 
@@ -53,9 +53,9 @@ public class BinaryHeapTest {
 
         BinaryHeap<Integer> tree = new BinaryHeap<>(10, BinaryHeap.HeapType.MIN_HEAP);
         Integer array[] = {4,6,2,8,-5,-6,-66, 55};
-        tree.buildHeap(array);
+        tree.heapify(array);
         Integer value;
-        while ((value = tree.remove()) != null) {
+        while ((value = tree.pop()) != null) {
             System.out.println("top priority: " + value);
         }
 

@@ -5,17 +5,17 @@ package org.sheehan.algorithm.data_structures;
  *
  * Uses List
  */
-public class QueueImpl2<T extends Comparable<T>> implements Queue<T> {
+public class QueueListImpl<T extends Comparable<T>> implements Queue<T> {
 
     List<T> list = new ListImpl<>();
 
     @Override
-    public void add(T value) {
+    public void enqueue(T value) {
         list.appendBack(value);
     }
 
     @Override
-    public T remove() {
+    public T dequeue() {
         List.Node<T> node = list.deleteFront();
         if (node != null)
             return node.value;

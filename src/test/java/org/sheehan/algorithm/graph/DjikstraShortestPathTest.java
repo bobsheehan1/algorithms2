@@ -28,7 +28,7 @@ public class DjikstraShortestPathTest {
         graph.addUndirectedEdge(nodes.get(2), nodes.get(4), 1);
         graph.addUndirectedEdge(nodes.get(1), nodes.get(5), 1);
         DjikstraShortestPath alg = new DjikstraShortestPath(graph);
-        alg.executePQ(nodes.get(0));
+        alg.executePQIterative(nodes.get(0));
         alg.printPath(nodes.get(0), nodes.get(5));
     }
 

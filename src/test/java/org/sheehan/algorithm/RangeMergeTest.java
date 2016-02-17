@@ -2,6 +2,7 @@ package org.sheehan.algorithm;
 
 import junit.framework.TestCase;
 import org.junit.Test;
+import org.sheehan.algorithm.data_structures.List;
 import org.sheehan.algorithm.data_structures.Stack;
 
 import java.util.HashSet;
@@ -20,6 +21,16 @@ public class RangeMergeTest extends TestCase {
         Stack<RangeMerge.Range> sorted = new RangeMerge().sort(ranges.toArray(new RangeMerge.Range[0]));
 
         sorted.print();
+
+        ranges = new HashSet<RangeMerge.Range>();
+        ranges.add(new RangeMerge.Range(5, 15));
+        ranges.add(new RangeMerge.Range(4, 10));
+        ranges.add(new RangeMerge.Range(3, 6));
+        ranges.add(new RangeMerge.Range(1, 2));
+        ranges.add(new RangeMerge.Range(25, 35));
+        java.util.List<RangeMerge.Range> sorted2 = new RangeMerge().sort2(ranges);
+        for (RangeMerge.Range r:sorted2)
+            System.out.println(r);
 
     }
 }

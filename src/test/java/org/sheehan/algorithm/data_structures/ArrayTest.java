@@ -34,7 +34,7 @@ public class ArrayTest {
     @Test
     public void testFindLongestRisingRun() throws Exception {
 
-        Integer array[] = {1, 2, 3, 4, 5, 4, 3, 2, 1};
+        Integer array[] = {1, 2, 3, 22, 4, 5, 4, 3, 2, 1};
 
         Array.print(array);
         Array.findLongestIncreasingRun(array);
@@ -43,6 +43,22 @@ public class ArrayTest {
         Array.print(array);
         Array.findLongestIncreasingRun(array);
     }
+
+    @Test
+    public void testFindFirstNonRepeater() throws Exception {
+
+        Integer array[] = {1, 2, 3, 22, 4, 5, 4, 3, 2, 1};
+
+        Array.print(array);
+        Integer firstNonrepeater = Array.findFirstNonrepeater(array);
+        System.out.println(firstNonrepeater);
+
+        Array.rotateArray(array, 5);
+        Array.print(array);
+        firstNonrepeater = Array.findFirstNonrepeater(array);
+        System.out.println(firstNonrepeater);
+    }
+
 
 
     @Test
@@ -59,12 +75,13 @@ public class ArrayTest {
         duplicates2.forEach((Integer i) -> System.out.print(i + " "));
 
 
+
     }
 
     @Test
     public void testRemoveDuplicates() throws Exception {
 
-        List<Integer> integers = Arrays.asList(1, 2, 3, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 6, 6, 7, 8, 9);
+        List<Integer> integers = Arrays.asList(1, 2, 3, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 6, 6, 7, 8, 9, 1, 2, 3);
 
         Integer[] integers1 = integers.toArray(new Integer[0]);
 
@@ -76,6 +93,14 @@ public class ArrayTest {
         integers1 = integers.toArray(new Integer[0]);
 
         Array.removeDuplicates2(integers1);
+
+        System.out.println();
+        for (int i: integers1)
+            System.out.print(i + " ");
+
+        integers1 = integers.toArray(new Integer[0]);
+
+        Array.removeDuplicates3(integers1);
 
         System.out.println();
         for (int i: integers1)
@@ -129,12 +154,14 @@ public class ArrayTest {
         java.util.List<Integer> prefix = new ArrayList<Integer>();
 
         java.util.List<Integer> array = new ArrayList<Integer>();
-        array.add(1);
-        array.add(2);
         array.add(3);
-
+        array.add(5);
+        array.add(7);
+        array.add(9);
         Set<java.util.List<Integer>> cache = new HashSet<java.util.List<Integer>>();
         Array.getPermutations2(array, 0);
+
+        Array.getPermutationsArr(array.toArray(new Integer[0]), 0);
     }
 
     @Test
