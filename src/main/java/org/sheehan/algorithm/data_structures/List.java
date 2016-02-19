@@ -1,31 +1,31 @@
 package org.sheehan.algorithm.data_structures;
 
-import java.util.Iterator;
-
 /**
  * Created by bob on 7/6/14.
  *
  * REVIEW: ArrayList or LinkedList: http://stackoverflow.com/questions/322715/when-to-use-linkedlist-over-arraylist
  *
  */
-public interface List<T extends Comparable<T>> extends Iterable<T>{
+public interface List<T extends Comparable<T>> extends Iterable<T> {
 
 
-    class Node <T> {
-        T value;
+    class Node<T> {
+        T data;
         Node next;
 
         public Node(T value) {
-            this.value = value;
+            this.data = value;
             this.next = null;
         }
     }
+
     void appendBack(T value);
 
     //brute force
     void reverseBrute();
 
     void reverse();
+
     void reverseRecurse();
 
     T get(int index);
@@ -58,4 +58,6 @@ public interface List<T extends Comparable<T>> extends Iterable<T>{
     void appendFront(T t);
 
     boolean orderedElementsFound(List<T> subList);
+
+    void insertInOrder(T data);
 }

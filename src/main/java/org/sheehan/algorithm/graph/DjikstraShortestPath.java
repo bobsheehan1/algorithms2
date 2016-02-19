@@ -33,7 +33,7 @@ public class DjikstraShortestPath <T extends Comparable<T>>{
         for (int i = 0; i < graph.getNumV(); ++i) {
             // of all unvisited nodes which one has the minimal distance
             GraphNode<T> minDistanceNode = getMinDistanceNode();
-            // add this to visited
+            // enqueue this to visited
             minDistanceNode.visited = true;
             // starting at this node look at all neighbors and update distance cost and predecessor
             // if improved.
@@ -52,11 +52,13 @@ public class DjikstraShortestPath <T extends Comparable<T>>{
     }
 
     // optimized with PQ
-    public void executePQ(GraphNode<T> sourceNode) {
+    public void executePQIterative(GraphNode<T> sourceNode) {
         BinaryHeap<GraphNode<T>> minHeap = new BinaryHeap<>(graph.getNumV(), BinaryHeap.HeapType.MIN_HEAP);
 
+        // ADD SOURCE TO MIN HEAP
         minHeap.add(sourceNode);
 
+        // INIT ALL NODES TO MAX DISTANCE
         for (GraphNode<T> node:graph.getNodes()){
             node.distance = Integer.MAX_VALUE;
         }
@@ -65,19 +67,18 @@ public class DjikstraShortestPath <T extends Comparable<T>>{
         // calculate shortest distance to each node from source
         while(!minHeap.isEmpty()) {
             // of all unvisited nodes which one has the minimal distance
-            GraphNode<T> minDistanceNode = minHeap.remove();
-            minDistanceNode.visited = true;
+            GraphNode<T> currMinNode = minHeap.pop();
+            currMinNode.visited = true;
             // starting at this node look at all neighbors and update distance cost and predecessor
             // if improved.
-            List<GraphNode<T>> neighborNodes = this.graph.getNeighbors(minDistanceNode);
+            List<GraphNode<T>> neighborNodes = this.graph.getNeighbors(currMinNode);
             for (GraphNode<T> neighborNode : neighborNodes) {
                 // if whatever the neighbor had as a distance is improved by connecting from this new node and edge
                 // then update the neighbor of this new node with better distance
-                int newEdgeDistance = this.graph.getEdgeWeight(minDistanceNode, neighborNode);
-                int newTotalDistanceFromSource = minDistanceNode.distance + newEdgeDistance;
+                int newTotalDistanceFromSource = currMinNode.distance + this.graph.getEdgeWeight(currMinNode, neighborNode);
                 if (neighborNode.distance > newTotalDistanceFromSource){
                     neighborNode.distance = newTotalDistanceFromSource;
-                    predecessorMap.put(neighborNode,minDistanceNode);
+                    predecessorMap.put(neighborNode,currMinNode);
                     minHeap.add(neighborNode);
                 }
             }

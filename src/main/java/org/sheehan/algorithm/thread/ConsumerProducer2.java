@@ -12,7 +12,7 @@ public class ConsumerProducer2 {
 
     final int MAX_MESSAGES = 10;
 
-    // object that threads will synchronize on (see the get/add methods)
+    // object that threads will synchronize on (see the get/enqueue methods)
     public class Mailbox {
 
         Queue<String> messages = new LinkedList<String>();
@@ -29,7 +29,7 @@ public class ConsumerProducer2 {
                 }
                 System.out.println("get acquire lock - wait end");
             }
-            System.out.println("remove message");
+            System.out.println("dequeue message");
             String message = messages.remove();
             notifyAll();
             System.out.println("get release lock");
@@ -37,23 +37,23 @@ public class ConsumerProducer2 {
         }
 
         synchronized public void add(String message) throws InterruptedException {
-            System.out.println("add acquire lock");
+            System.out.println("enqueue acquire lock");
             //thread wait until messages have been read
             while(messages.size() >= MAX_MESSAGES) {
-                System.out.println("add release lock - wait");
+                System.out.println("enqueue release lock - wait");
                 try {
                     wait();
                 }catch(InterruptedException e){
-                    System.out.println("mbox add wait interrupted");
+                    System.out.println("mbox enqueue wait interrupted");
                     throw e;
                 }
-                System.out.println("add acquire lock - wait end");
+                System.out.println("enqueue acquire lock - wait end");
             }
 
             System.out.println("ADD message");
             messages.add(message);
             notifyAll();
-            System.out.println("add release lock");
+            System.out.println("enqueue release lock");
         }
     }
 
@@ -85,7 +85,7 @@ public class ConsumerProducer2 {
 
                 if (Thread.interrupted()) {
                     System.out.println("producer interrupted during run");
-                    return; // thread was running but interrupt flag add so return
+                    return; // thread was running but interrupt flag enqueue so return
                 }
             }
         }
@@ -110,7 +110,7 @@ public class ConsumerProducer2 {
 
                 if (Thread.interrupted()) {
                     System.out.println("consumer interrupted during run");
-                    return; // thread was running but interrupt flag add so return
+                    return; // thread was running but interrupt flag enqueue so return
                 }
             }
         }

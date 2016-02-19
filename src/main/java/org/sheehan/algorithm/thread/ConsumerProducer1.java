@@ -31,7 +31,7 @@ public class ConsumerProducer1 {
                 }
                 if (Thread.interrupted()) {
                     System.out.println("producer interrupted during run");
-                    return; // thread was running but interrupt flag add so return
+                    return; // thread was running but interrupt flag enqueue so return
                 }
             }
         }
@@ -60,7 +60,7 @@ public class ConsumerProducer1 {
                 } //release the intrinsic lock for other notified threads to acquire
                 if (Thread.interrupted()) {
                     System.out.println("consumer interrupted during run");
-                    return; // thread was running but interrupt flag add so return
+                    return; // thread was running but interrupt flag enqueue so return
                 }
             }
         }

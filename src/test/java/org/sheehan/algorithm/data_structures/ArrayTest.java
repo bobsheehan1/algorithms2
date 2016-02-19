@@ -8,13 +8,30 @@ import java.util.List;
 
 public class ArrayTest {
 
+
+    @Test
+    public void testMaxDiff() {
+        Integer array1[] = Array.createArray(5, 20, true);
+        Array.print(array1);
+        System.out.print(Array.maxDiff(array1));
+        array1 = Array.createArray(5, 1000, true);
+        Array.print(array1);
+        System.out.print(Array.maxDiff(array1));
+    }
+
+    @Test
+    public void testKnuthShuffle() {
+        Integer array1[] = Array.createArray(20, 100, true);
+         Array.print(array1);
+        Array.shuffle(array1);
+    }
+
     @Test
     public void testFindLongestRun() throws Exception {
 
         Integer array[] = {1, 2, 2, 3, 3, 3, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 6, 7, 8, 9, 10, 10};
 
         Assert.assertEquals(4, Array.findLongestRun(array).intValue());
-
 
         Integer array2[] = {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 3, 3, 3, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 6, 7, 8, 9, 10, 10};
         Array.findLongestRun2(array2);

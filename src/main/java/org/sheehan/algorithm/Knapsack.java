@@ -7,7 +7,7 @@ import java.util.Set;
  * Created by bob on 8/2/14.
  *
  * Given items each of value and weight, and a container with capacity W
- * Find optimal add of items to maximize total value for W
+ * Find optimal enqueue of items to maximize total value for W
  */
 public class Knapsack {
 

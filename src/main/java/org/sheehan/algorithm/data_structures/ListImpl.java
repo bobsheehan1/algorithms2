@@ -29,7 +29,7 @@ public class ListImpl <T extends Comparable<T>> implements List<T> {
 
         @Override
         public T next() {
-            T value = this.current.value;
+            T value = this.current.data;
             this.current = this.current.next;
             return value;
         }
@@ -42,37 +42,23 @@ public class ListImpl <T extends Comparable<T>> implements List<T> {
 
 
 
-    Node head;
+    Node head, tail;
 
     public ListImpl() {
         this.head = null;
+        this.tail = null;
     }
 
 
-   @Override
-   public void appendBack(T value) {
-       Node<T> newNode = new Node<>(value);
-       if (this.head == null)
-           this.head = newNode;
-       else {
-           Node curr = this.head;
-           Node prev = this.head;
 
-           // move to last node (before null)
-           while (curr != null) {
-               prev = curr;
-               curr = curr.next;
-           }
-           prev.next = newNode;
-
-       }
-   }
 
     @Override
     public void appendFront(T value) {
         Node<T> node = new Node<>(value);
-        if (this.head == null)
+        if (this.head == null) {
             this.head = node;
+            this.tail = node;
+        }
         else {
             node.next = head;
             head = node;
@@ -84,6 +70,35 @@ public class ListImpl <T extends Comparable<T>> implements List<T> {
         Node<T> front = head;
         this.head = this.head.next;
         return front;
+    }
+
+    @Override
+    public void appendBack(T value) {
+//       Node<T> newNode = new Node<>(data);
+//       if (this.head == null)
+//           this.head = newNode;
+//       else {
+//           Node curr = this.head;
+//           Node prev = this.head;
+//
+//           // move to last node (before null)
+//           while (curr != null) {
+//               prev = curr;
+//               curr = curr.next;
+//           }
+//           prev.next = newNode;
+//           this.tail = newNode;
+//       }
+
+        Node<T> node = new Node<>(value);
+        if (this.tail == null) {
+            this.head = node;
+            this.tail = node;
+        }
+        else {
+            tail.next = node;
+            tail = node;
+        }
     }
 
     @Override
@@ -102,19 +117,23 @@ public class ListImpl <T extends Comparable<T>> implements List<T> {
         }
 
         prev.next = null;
+        this.tail = prev;
         return curr;
     }
 
     @Override
     public boolean delete(T value) {
-        if (this.head.value.equals(value)) { // move head up one
+        if (head == null)
+            return false;
+
+        if (this.head.data.equals(value)) { // move head up one
             this.head = this.head.next;
             return true;
         }
 
         Node curr = head, prev = head;
         while (curr != null) {
-            if (curr.value.equals(value)) {
+            if (curr.data.equals(value)) {
                 prev.next = curr.next; // deletes current
                 return true;
 
@@ -122,6 +141,10 @@ public class ListImpl <T extends Comparable<T>> implements List<T> {
             prev = curr;
             curr = curr.next;
         }
+
+        if (curr == null)
+                this.tail = prev;
+
         return false;
     }
 
@@ -138,19 +161,24 @@ public class ListImpl <T extends Comparable<T>> implements List<T> {
         Node tail = curr;
 
         curr = this.head;
-        Node prev = null;
+        Node prevNode = null;
         while (curr != null) {
             curr = curr.next;
-            Node n2 = this.head;
-            while (n2.next != null) {
-                prev = n2;
-                n2 = n2.next;
+
+            // go to one before end
+            Node endNode = this.head;
+            while (endNode.next != null) {
+                prevNode = endNode;
+                endNode = endNode.next;
             }
 
-            n2.next = prev;
-            prev.next = null;
+            //reverse end most link
+            endNode.next = prevNode;
+            // shorten original list
+            prevNode.next = null;
         }
 
+        this.tail = head;
         head = tail;
     }
 
@@ -173,6 +201,7 @@ public class ListImpl <T extends Comparable<T>> implements List<T> {
                 C = C.next;
         }
 
+        this.tail = head;
         this.head = A; // don't forget to set the head !!!
     }
 
@@ -196,7 +225,7 @@ public class ListImpl <T extends Comparable<T>> implements List<T> {
     public void print(){
         Node curr = this.head;
         while (curr != null){
-            System.out.print (curr.value + " ");
+            System.out.print (curr.data + " ");
             curr = curr.next;
         }
         System.out.println();
@@ -235,8 +264,8 @@ public class ListImpl <T extends Comparable<T>> implements List<T> {
         // make loop !
         tail.next = n;
 
-        System.out.println("cycle start: " + n.value);
-        System.out.println("cycle end: " + tail.value);
+        System.out.println("cycle start: " + n.data);
+        System.out.println("cycle end: " + tail.data);
     }
 
     @Override
@@ -291,7 +320,7 @@ public class ListImpl <T extends Comparable<T>> implements List<T> {
             if (fastNode == null)
                 return 0;
             cnt++;
-            System.out.println("\tcycle node: " + slowNode.value);
+            System.out.println("\tcycle node: " + slowNode.data);
             fastNode = fastNode.next;
             if (slowNode == fastNode)
                 return cnt;
@@ -309,7 +338,7 @@ public class ListImpl <T extends Comparable<T>> implements List<T> {
             curr = curr.next;
 
         if (curr != null)
-            curr.value = value;
+            curr.data = value;
 
         return value;
     }
@@ -323,7 +352,7 @@ public class ListImpl <T extends Comparable<T>> implements List<T> {
             curr = curr.next;
 
         if (curr != null)
-            return (T)curr.value;
+            return (T)curr.data;
 
         return null;
     }
@@ -333,7 +362,7 @@ public class ListImpl <T extends Comparable<T>> implements List<T> {
         Node<T> curr = this.head;
         int cnt = 0;
         while (curr != null){
-            array[cnt++]=curr.value;
+            array[cnt++]=curr.data;
             curr = curr.next;
         }
     }
@@ -353,7 +382,7 @@ public class ListImpl <T extends Comparable<T>> implements List<T> {
 
             //move along outer list (do not rest to beginning for O(n)
             for (; curr != null; curr = curr.next) {
-                if (subListElem.equals(curr.value)) {
+                if (subListElem.equals(curr.data)) {
                     elemFound = true;
                     curr = curr.next;
                     break;
@@ -366,4 +395,36 @@ public class ListImpl <T extends Comparable<T>> implements List<T> {
         return true;
     }
 
+
+    public void insertInOrder(T data){
+
+        Node<T> node = new Node<>(data);
+        if (head == null){
+            head = node;
+            return;
+        }
+
+        Node<T> curr = head;
+        Node<T> prev = null;
+
+        while(curr != null){
+            if (node.data.compareTo(curr.data) < 0){
+                break;
+            }
+            prev = curr;
+            curr = curr.next;
+        }
+
+        if (prev == null){
+            node.next = head;
+            head = node;
+            return;
+        }
+
+        prev.next = node;
+        node.next = curr;
+
+        System.out.println("Adding to list: " + data);
+
+    }
 }

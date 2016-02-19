@@ -8,7 +8,7 @@ package org.sheehan.algorithm.data_structures.tree;
  *
  * This allows for specification of min or max. As a complete tree we use a fixed size array for heap implementation.
  *
- * implements a remove method which provides priority queue functionality
+ * implements a dequeue method which provides priority queue functionality
  */
 public class BinaryHeap <T extends Comparable<T>> extends BinaryCompleteTree <T> {
 
@@ -22,18 +22,18 @@ public class BinaryHeap <T extends Comparable<T>> extends BinaryCompleteTree <T>
         this.heapType = heapType;
     }
 
-    // start with last node and (heapify) swap up recursively. Then iterate reverse back upt he tree.
-    public void buildHeap(T array[])
+    // start with last node and (bubbleUp) swap up recursively. Then iterate reverse back upt he tree.
+    public void heapify(T array[])
     {
         this.array = array;
         count = array.length;
         for( int i = this.count-1 ; i >= 0; i-- )
-            heapify(i);
+            bubbleUp(i);
     }
 
     //recursive from node index i up to root.
     //bubble up
-    protected void heapify(int i)
+    protected void bubbleUp(int i)
     {
         int parent = parent(i);
 
@@ -49,13 +49,13 @@ public class BinaryHeap <T extends Comparable<T>> extends BinaryCompleteTree <T>
         if( swap)
         {
             swap(parent, i);
-            heapify(parent); //recurse upward toward root
+            bubbleUp(parent); //recurse upward toward root
         }
     }
 
     //iterative from node index i up to root.
     //bubble up
-    protected void heapifyIterative(int i)
+    protected void bubbleUpIterative(int i)
     {
         int parentIndex = parent(i);
 
@@ -112,12 +112,14 @@ public class BinaryHeap <T extends Comparable<T>> extends BinaryCompleteTree <T>
     }
 
     @Override
+    // add to end then bubble up to where it should live to satisfy heap property
     public void add(T value) {
         super.add(value);
-        heapify(this.count - 1);
+        bubbleUp(this.count - 1);
     }
 
-    public T remove() {
+    // pop then swap with last and bubble down from top to satisfy heap property
+    public T pop() {
         if (count == 0)
             return null;
         T value = this.array[0];

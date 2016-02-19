@@ -11,7 +11,50 @@ import java.util.List;
  */
 public class Array {
 
-    // FULL - print start index, length, element value of longest run in array
+
+    // brute force is compute every pair look at +- profit and take max (O(n^2))
+    /*int profit = Integer.MIN_VALUE;
+    for(int i=0; i<prices.length-1; i++){
+        for(int j=0; j< prices.length; j++){
+            if(profit < prices[j] - prices[i]){
+                profit = prices[j] - prices[i];
+            }
+        }
+    }*/
+    // nlogn is a mergesort divide and conquer
+    // OR better is O(n) - track min element AND max difference
+    // get deltas as array then maximal sub array of deltas !
+    public static int maxDiff(Integer arr[])
+    {
+        int max_diff = arr[1] - arr[0];
+        int min_element = arr[0];
+        int i;
+        for(i = 1; i < arr.length; i++)
+        {
+            if (arr[i] - min_element > max_diff)
+                max_diff = arr[i] - min_element;
+            if (arr[i] < min_element)
+                min_element = arr[i];
+        }
+        return max_diff;
+    }
+
+    //knuth shuffle O(n)
+    public static <T> void shuffle(T array[]){
+
+        Random r = new Random();
+
+        for (int i=0; i < array.length; ++i ){
+             int shuffle_i = r.nextInt(array.length-i)+i;
+             T tmp = array[i];
+             array[i] = array[shuffle_i];
+             array[shuffle_i]=tmp;
+        }
+
+        print(array);
+    }
+
+    // FULL - print start index, length, element data of longest run in array
     public static <T> T findLongestRun(T array[]) {
         int length = 1;
         int maxLength = 0;
@@ -40,7 +83,7 @@ public class Array {
             }
         }
 
-        System.out.println("start: " + maxStart + " length: " + maxLength + " value: " + maxVal);
+        System.out.println("start: " + maxStart + " length: " + maxLength + " data: " + maxVal);
 
         return maxVal;
     }
@@ -66,8 +109,28 @@ public class Array {
         System.out.println("max run " + maxLength);
     }
 
+    public static Integer findFirstNonrepeater(Integer array[]) {
 
-        // print start index, length, element value of longest run in array
+        Map<Integer, Integer> map = new HashMap<Integer,Integer>();
+
+        for (Integer i=0; i < array.length; ++i){
+            if (map.containsKey(array[i]))
+                map.put(array[i], map.get(array[i])+1);
+            else
+                map.put(array[i], 1);
+        }
+
+        for (Integer i=0; i < array.length; ++i){
+            if (map.get(array[i])==1)
+                return array[i];
+
+        }
+
+        return null;
+    }
+
+
+        // print start index, length, element data of longest run in array
     public static <T extends Comparable<T>> void findLongestIncreasingRun(T array[]) {
         int length = 1;
         int maxLength = 0;
@@ -140,11 +203,11 @@ public class Array {
 
     // bitmask - removes duplicates and fills left over array with -1's
     public static void removeDuplicates(Integer[] array) {
-        int checker = 0; //init
+        int checker = 0; //init OR use boolean array 256 for ascii
 
         int dst = 0;
         for (int arr_i : array) {
-            int mask = 1 << arr_i;
+            int mask = 1 << arr_i; // if this was char ' - 'a' '
             // not a duplicate
             if ((checker & mask) == 0) {
                 array[dst++] = arr_i;
@@ -177,6 +240,31 @@ public class Array {
         }
     }
 
+    // bitmask - removes duplicates and fills left over array with -1's
+    public static void removeDuplicates3(Integer[] array) {
+
+        int dst = 1;
+        for (int i = 1; i < array.length; ++i) {
+
+            // compare new char against already pegged chars Bro
+            boolean unique = true;
+            for (int j = 0; j < dst; ++j) {
+                if (array[i] == array[j]) {
+                    unique = false;
+                    break; // this thing already been done friend.
+                }
+            }
+
+            if (unique)
+                array[dst++] = array[i];
+
+        }
+
+        for (int i = dst; i < array.length; ++i) {
+            array[i] = -1;
+        }
+    }
+
 
     private static <T> void reverse(T[] buffer, int start, int end) {
 
@@ -202,6 +290,14 @@ public class Array {
         reverse(array, shift, array.length - 1);
     }
 
+    public static boolean isAnagram(Integer []arr1, Integer []arr2){
+
+        if (arr1.length != arr2.length)
+            return false;
+
+
+        return false;
+    }
 
 
     public static <T extends Comparable> void mergeSortedArrays(T[] array1, T[] array2, T[] merged) {
@@ -222,7 +318,10 @@ public class Array {
             merged[i++] = array2[i2++];
     }
 
+    // start with k = 0
     static void getPermutations2(java.util.List<Integer> arr, int k) {
+
+        // increasing starting point swapping
         for (int i = k; i < arr.size(); i++) {
             java.util.Collections.swap(arr, i, k);
             getPermutations2(arr, k + 1);
@@ -232,6 +331,34 @@ public class Array {
         // when we iterate to the end for a given recursion we have a permutation !
         if (k == arr.size() - 1) {
             System.out.println(java.util.Arrays.toString(arr.toArray()));
+        }
+    }
+
+    // start with k = 0
+    static void getPermutationsArr(Integer [] arr, int swapIndex) {
+
+        // for each i we fire off a recursive call
+        for (int i = swapIndex; i < arr.length; i++) {
+
+            //swap then recurse
+            int tmp = arr[i];
+            arr[i] = arr[swapIndex];
+            arr[swapIndex] = tmp;
+
+            // each call increments the swap index
+            getPermutationsArr(arr, swapIndex + 1);
+
+            //then swap back
+            tmp = arr[i];
+            arr[i] = arr[swapIndex];
+            arr[swapIndex] = tmp;
+        }
+
+        // when we iterate to the end for a given recursion we have a permutation !
+        if (swapIndex == arr.length - 1) {
+            for (int i: arr)
+                System.out.print(i + " ");
+            System.out.println();
         }
     }
 

@@ -18,7 +18,7 @@ public class QueueListImpl<T extends Comparable<T>> implements Queue<T> {
     public T dequeue() {
         List.Node<T> node = list.deleteFront();
         if (node != null)
-            return node.value;
+            return node.data;
         return null;    }
 
     @Override

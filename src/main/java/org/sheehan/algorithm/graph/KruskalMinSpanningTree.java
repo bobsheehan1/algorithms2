@@ -44,7 +44,7 @@ public class KruskalMinSpanningTree <T extends Comparable<T>> {
             //check for cycles of dst node
             if (!checkCyclesDfs(edge, mstGraph)) {
                 mstGraph.addUndirectedEdge(edge.srcNode, edge.dstNode, edge.weight);
-                //mstEdges.add(edge);
+                //mstEdges.enqueue(edge);
             }
 
 

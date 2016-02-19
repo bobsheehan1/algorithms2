@@ -36,18 +36,18 @@ public class PrimMinSpanningTree <T extends Comparable<T>> {
     public void executePQ(GraphNode<T> currentNode) {
         //BinaryHeap<GraphNode<T>> minHeap = new BinaryHeap<>(graph.getNumV(), BinaryHeap.HeapType.MIN_HEAP);
 
-        //minHeap.add(currentNode);
+        //minHeap.enqueue(currentNode);
 
         //for (GraphNode<T> node:graph.getNodes()){
         //    node.distance = IntegerAlgs.MAX_VALUE;
         //}
 
-        // create add of all unvisited nodes
+        // create enqueue of all unvisited nodes
         Set<GraphNode<T>> unvisited = new HashSet<>();
         unvisited.addAll(graph.getNodes());
 
         //currentNode.distance = 0;
-        //minSpanningNodes.add(currentNode);
+        //minSpanningNodes.enqueue(currentNode);
         //currentNode.visited = true;
 
         // take out the current node
@@ -56,7 +56,7 @@ public class PrimMinSpanningTree <T extends Comparable<T>> {
 
         // calculate shortest distance to each node from source
         while(unvisited.size() > 0) {
-            // for each currenty visited node find cheapest edge using PQ and add to span
+            // for each currenty visited node find cheapest edge using PQ and enqueue to span
             BinaryHeap<GraphEdge<T>> minEdgeHeap = new BinaryHeap<>(graph.getNumV(), BinaryHeap.HeapType.MIN_HEAP);
             List<GraphNode<T>> neighborNodes = this.graph.getNeighbors(currentNode);
             for (GraphNode<T> neighborNode : neighborNodes) {
@@ -64,9 +64,9 @@ public class PrimMinSpanningTree <T extends Comparable<T>> {
             }
 
             // find min unvisited edge
-            GraphEdge<T> minEdge = minEdgeHeap.remove();
+            GraphEdge<T> minEdge = minEdgeHeap.pop();
             while (minEdge != null && !unvisited.contains(minEdge.dstNode))
-                minEdge = minEdgeHeap.remove();
+                minEdge = minEdgeHeap.pop();
 
             if (minEdge != null) {
                 // Adding unvisited min edge to MST

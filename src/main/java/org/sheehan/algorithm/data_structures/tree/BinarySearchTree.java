@@ -31,7 +31,7 @@ public class BinarySearchTree<K extends Comparable<?super K>, V> extends BinaryT
         return true;
     }
 
-    public TreeNode<K,V> insert2(K key,V value) {
+    protected TreeNode<K,V> insert2(K key,V value) {
         if (root == null){
             root = createTreeNode(key, value);
             return root;
@@ -40,6 +40,7 @@ public class BinarySearchTree<K extends Comparable<?super K>, V> extends BinaryT
     }
 
     private TreeNode<K,V> insert2(TreeNode<K,V> node, K key,V value) {
+
         if (node == null)
             return createTreeNode(key, value);
 
@@ -61,6 +62,7 @@ public class BinarySearchTree<K extends Comparable<?super K>, V> extends BinaryT
         return node;
     }
 
+    // find node with next highest value
     TreeNode<K,V> successor(TreeNode<K,V> node){
 
         // if right child then get min of that right tree !
@@ -68,14 +70,14 @@ public class BinarySearchTree<K extends Comparable<?super K>, V> extends BinaryT
             return minimum(node.right);
 
         TreeNode<K,V> parent = node.parent;
-        TreeNode<K,V> right = node;
+        TreeNode<K,V> curr = node;
 
 
         // if there is a parent AND the node is the right child,
         // we look up getting smaller for parents to left so get them out of the way
         // then return the first parent to the RIGHT --> will be successor
-        while(parent != null && right.equals(parent.right)){
-            right = parent; // may not be right
+        while(parent != null && curr.equals(parent.right)){
+            curr = parent; // may not be right
             parent = parent.parent;
         }
 
@@ -86,6 +88,7 @@ public class BinarySearchTree<K extends Comparable<?super K>, V> extends BinaryT
         return parent;
     }
 
+    // find node with next smallest value
     TreeNode<K,V> predecessor(TreeNode<K,V> node){
 
         // if left child then get max of that left tree !
@@ -93,13 +96,13 @@ public class BinarySearchTree<K extends Comparable<?super K>, V> extends BinaryT
             return maximum(node.left);
 
         TreeNode<K,V> parent = node.parent;
-        TreeNode<K,V> left = node;
+        TreeNode<K,V> curr = node;
 
         // if there is a parent AND the node is the right ancestor,
         // we look up getting smaller for parents to left so get them out of the way
         // then return the first parent to the LEFT --> will be successor
-        while(parent != null && left.equals(parent.left)){
-            left = parent;
+        while(parent != null && curr.equals(parent.left)){
+            curr = parent;
             parent = parent.parent;
         }
 
@@ -122,6 +125,7 @@ public class BinarySearchTree<K extends Comparable<?super K>, V> extends BinaryT
         return maximum(node.right);
     }
 
+    // start at top root node and drill down comparing tree parent nodes to node1 and node2
     TreeNode<K,V> leastCommonAncestor(TreeNode<K,V> root, TreeNode<K,V> node1, TreeNode<K,V> node2){
         if (root == null)
             return null;

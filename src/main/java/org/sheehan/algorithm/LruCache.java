@@ -66,7 +66,7 @@ public class LruCache {
                 size++;
                 newNode.key = key; // last updated index
             } else {
-                // get lru index for replacement then remove
+                // get lru index for replacement then dequeue
                 LruNode lruNode = lruSet.first();
                 log.info("lruSet removed: " + lruNode.key);
                 lruSet.remove(lruNode);
@@ -83,8 +83,7 @@ public class LruCache {
         }
 
 
-        //remove previous ts node entry for current key
-
+        //if already in lru set need to update that by removing and adding new timestamp for that key
         Iterator<LruNode> iterator = lruSet.iterator();
         while (iterator.hasNext()) {
             LruNode node = iterator.next();

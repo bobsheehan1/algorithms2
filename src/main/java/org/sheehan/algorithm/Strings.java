@@ -216,7 +216,7 @@ public class Strings {
         }
 
         // starting at LEFT MSB end (using calculated length)
-        // break off each digit and add to string buffer
+        // break off each digit and enqueue to string buffer
         mult = 1;
         for (int i = 0; i < length; ++i) {
 
@@ -317,7 +317,7 @@ public class Strings {
         int dst = 0;
         for (int i = 0; i < chars.length; ++i) {
             int mask = 1 << (chars[i] - 'a');
-            // not a duplicate so remove from array and increment
+            // not a duplicate so dequeue from array and increment
             if ((checker & mask) == 0) {
                 chars[dst++] = chars[i];
             }

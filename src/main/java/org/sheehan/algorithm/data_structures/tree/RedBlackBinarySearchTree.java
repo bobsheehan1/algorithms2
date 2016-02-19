@@ -86,8 +86,8 @@ public class RedBlackBinarySearchTree<K extends Comparable<?super K>, V> extends
         if (node.parent.color == BLACK) {
             return;
         }
-        else
-            postInsertCase4(node);
+       // else
+       //     postInsertCase4(node);
     }
 
     @Override

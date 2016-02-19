@@ -44,7 +44,7 @@ public class GraphList<T extends Comparable<T>> implements Graph<T> {
         return false;
     }
 
-    // add directed edge weighted
+    // enqueue directed edge weighted
     @Override
     public GraphEdge<T>  addDirectedEdge( GraphNode<T> node1,  GraphNode<T>node2, int weight) {
         if (!graphNodes.contains(node1))

@@ -28,7 +28,7 @@ public class GraphMatrix <T extends Comparable<T>> implements Graph<T> {
         }
     }
 
-    // add directed edge weighted
+    // enqueue directed edge weighted
     @Override
     public void addDirectedEdge(T node1, T node2, int weight) {
         int i = Arrays.binarySearch(this.nodes, node1);

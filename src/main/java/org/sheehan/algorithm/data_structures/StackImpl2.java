@@ -1,8 +1,5 @@
 package org.sheehan.algorithm.data_structures;
 
-import java.lang.reflect.Array;
-import java.util.NoSuchElementException;
-
 
 /**
  * Created by bob on 5/25/14.
@@ -15,7 +12,7 @@ public class StackImpl2<T extends Comparable<T>>  implements Stack<T> {
     public T pop() {
         List.Node<T> node = list.deleteBack();
         if (node != null)
-            return node.value;
+            return node.data;
         return null;
     }
 

@@ -60,7 +60,7 @@ public class TestSnakesAndLadders {
      *
      * This allows for specification of min or max. As a complete tree we use a fixed size array for heap implementation.
      *
-     * implements a remove method which provides priority queue functionality
+     * implements a dequeue method which provides priority queue functionality
      */
     public enum HeapType {MIN_HEAP, MAX_HEAP};
     public class BinaryHeap <T extends Comparable<T>> extends BinaryCompleteTree<T> {
@@ -72,7 +72,7 @@ public class TestSnakesAndLadders {
             this.heapType = heapType;
         }
 
-        // start with last node and (heapify) swap up recursively. Then iterate reverse back upt he tree.
+        // start with last node and (bubbleUp) swap up recursively. Then iterate reverse back upt he tree.
         public void buildHeap(T array[])
         {
             this.array = array;
@@ -254,7 +254,7 @@ public class TestSnakesAndLadders {
 
     public interface Graph<T extends Comparable<T>> {
 
-        // add directed edge weighted
+        // enqueue directed edge weighted
         GraphEdge<T> addDirectedEdge(GraphNode<T> node1, GraphNode<T> node2, int weight);
 
         java.util.List<GraphEdge<T>> addUndirectedEdge(GraphNode<T> node1, GraphNode<T> node2, int weight);
@@ -322,7 +322,7 @@ public class TestSnakesAndLadders {
             return false;
         }
 
-        // add directed edge weighted
+        // enqueue directed edge weighted
         @Override
         public GraphEdge<T> addDirectedEdge( GraphNode<T> node1,  GraphNode<T> node2, int weight) {
             if (!graphNodes.contains(node1))
@@ -544,7 +544,7 @@ public class TestSnakesAndLadders {
                 int src = in.nextInt()-1;
                 int dst = in.nextInt()-1;
 
-                // remove existing edge
+                // dequeue existing edge
                 graph.clearEdges(nodes.get(src));
                 graph.addDirectedEdge(nodes.get(src), nodes.get(dst), 0);
             }
@@ -552,7 +552,7 @@ public class TestSnakesAndLadders {
             for (int j = 0; j < numSnakes; ++j) {
                 int src = in.nextInt()-1;
                 int dst = in.nextInt()-1;
-                // remove existing edge
+                // dequeue existing edge
                 graph.clearEdges(nodes.get(src));
                 graph.addDirectedEdge(nodes.get(src),nodes.get(dst), 0);
             }

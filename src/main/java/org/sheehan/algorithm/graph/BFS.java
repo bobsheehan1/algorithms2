@@ -2,7 +2,7 @@ package org.sheehan.algorithm.graph;
 
 import org.sheehan.algorithm.data_structures.List;
 import org.sheehan.algorithm.data_structures.Queue;
-import org.sheehan.algorithm.data_structures.QueueImpl;
+import org.sheehan.algorithm.data_structures.QueueArrayImpl;
 import org.sheehan.algorithm.data_structures.graph.Graph;
 import org.sheehan.algorithm.data_structures.graph.GraphNode;
 
@@ -11,7 +11,7 @@ import java.util.Set;
 
 /**
  * Created by bob on 7/8/14.
- * BFS - uses queue - mark after add
+ * BFS - uses queue - mark after enqueue
  */
 public class BFS <T extends Comparable<T>>{
     private final Graph<T> graph;
@@ -20,18 +20,18 @@ public class BFS <T extends Comparable<T>>{
         this.graph = graph;
     }
 
-    // use a queue for BFS
+    // use a queue for BFS - NO RECURSIVE FOR BSF
     public void visitIterative(GraphNode<T> sourceNode){;
         clearVisited();
-        Queue<GraphNode<T>> queue = new QueueImpl<>(100);
-        queue.add(sourceNode);
+        Queue<GraphNode<T>> queue = new QueueArrayImpl<>(100);
+        queue.enqueue(sourceNode);
         sourceNode.visited = true; // mark after adding to queue
         while (queue.peek() != null) {
-            GraphNode<T> node = queue.remove();
+            GraphNode<T> node = queue.dequeue();
             List<GraphNode<T>> neighbors = graph.getNeighbors(node);
             for (GraphNode<T> neighbor: neighbors){
                 if (!neighbor.visited) {
-                    queue.add(neighbor);
+                    queue.enqueue(neighbor);
                     neighbor.visited = true; // mark after adding to queue
                     neighbor.distance = node.distance+1;
                 }

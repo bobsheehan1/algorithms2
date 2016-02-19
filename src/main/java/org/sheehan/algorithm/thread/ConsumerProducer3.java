@@ -40,7 +40,7 @@ public class ConsumerProducer3 {
             for (int i = 0; i < MAX_MESSAGES; ++i){
                 try {
                     mbox.set(id + " : " + i);
-                    //System.out.println(id +" add: " +  i);
+                    //System.out.println(id +" enqueue: " +  i);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }

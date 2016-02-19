@@ -41,7 +41,20 @@ public class ListImplTest {
 
         list.reverse();
         list.print();
+    }
 
+    @Test
+    public void testinsertInOrder() throws Exception {
+
+        Integer array1[] = Array.createArray(20, 100, false);
+
+        List<Integer> list = new ListImpl<Integer>();
+
+        for (int arr_i: array1)
+            list.insertInOrder(arr_i);
+
+
+        list.print();
 
     }
 
@@ -99,10 +112,10 @@ public class ListImplTest {
         list.print();
         ;
         List.Node<Integer> deleted = list.deleteFront();
-        System.out.println(deleted.value);
+        System.out.println(deleted.data);
         list.print();
         deleted = list.deleteBack();
-        System.out.println(deleted.value);
+        System.out.println(deleted.data);
         list.print();
     }
 

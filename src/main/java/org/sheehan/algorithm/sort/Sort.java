@@ -124,8 +124,8 @@ public class Sort {
         for (int i = 1; i < n; ++i){
             // move left from i swapping as you go
             for (int j = i; j > 0; j--){
-                if (array[j].compareTo(array[j-1]) < 0)
-                    swabCallback.swap(array, j, j-1);
+                if (array[j].compareTo(array[j - 1]) < 0)
+                    swabCallback.swap(array, j, j - 1);
             }
         }
     }
@@ -158,11 +158,11 @@ public class Sort {
     // best O(nlogn)
     public static void heapSort(Integer []array) {
         BinaryHeap<Integer> heap = new BinaryHeap<>(array.length, BinaryHeap.HeapType.MIN_HEAP);
-        heap.buildHeap(array);
+        heap.heapify(array);
         Integer sortedArray[] = new Integer[array.length];
         Integer value;
         int cnt = 0;
-        while ((value=heap.remove()) != null) {
+        while ((value=heap.pop()) != null) {
             sortedArray[cnt++] = value;
         }
         System.arraycopy(sortedArray, 0, array, 0, array.length);
@@ -357,7 +357,7 @@ public class Sort {
         for( int i = left; i < right; i++){
             if (array[i].compareTo(pivotValue) < 0) {
                 swap(array, i, storeIndex);
-                // This gets add to next element but will remain here if compare fails while it keeps moving.
+                // This gets enqueue to next element but will remain here if compare fails while it keeps moving.
                 // Implies that storeIndex value is larger than pivot value. Only swap with value larger than pivot.
                 // If an element is lower than the pivot, you should swap it with a larger element on the left-side of i.
                 storeIndex = storeIndex + 1;
@@ -460,7 +460,7 @@ public class Sort {
 
         List<Queue<Integer>> buckets = new ListImpl<Queue<Integer>>();
         for (int i = 0; i < numBuckets; i++){
-            buckets.appendBack(new QueueImpl<Integer>(array.length));
+            buckets.appendBack(new QueueArrayImpl<Integer>(array.length));
         }
 
         Integer max = Integer.MIN_VALUE;
@@ -475,7 +475,7 @@ public class Sort {
             for (Integer value : array){
                 int valueDiv = value/positionMultiplier;
                 int valueMod = valueDiv%BASE;
-                buckets.get(valueMod).add(value);
+                buckets.get(valueMod).enqueue(value);
             }
 
             // reset array to new order after sorting this pass
@@ -485,7 +485,7 @@ public class Sort {
             for (int bucketIndex = 0, i = 0; bucketIndex < numBuckets; ++bucketIndex){
                 Queue<Integer> bucket = buckets.get(bucketIndex);
                 Integer value;
-                while ((value = bucket.remove()) != null){
+                while ((value = bucket.dequeue()) != null){
                     array[i++] = value;
                 }
             }
@@ -503,7 +503,7 @@ public class Sort {
 
         List<Queue<Integer>> buckets = new ListImpl<Queue<Integer>>();
         for (int i = 0; i < numBuckets; i++){
-            buckets.appendBack(new QueueImpl<Integer>(array.length));
+            buckets.appendBack(new QueueArrayImpl<Integer>(array.length));
         }
 
         int MASK = 0x00000001;
@@ -515,7 +515,7 @@ public class Sort {
             for (Integer value : array){
                 int bitValue = value & MASK;
                 bitValue >>>= position;
-                buckets.get(bitValue).add(value);
+                buckets.get(bitValue).enqueue(value);
             }
             MASK <<= 1;
 
@@ -527,7 +527,7 @@ public class Sort {
             for (int bucketIndex = 0; bucketIndex < numBuckets; ++bucketIndex){
                 Queue<Integer> bucket = buckets.get(bucketIndex);
                 Integer value;
-                while ((value = bucket.remove()) != null){
+                while ((value = bucket.dequeue()) != null){
                     array[i++] = value;
                 }
             }
@@ -545,7 +545,7 @@ public class Sort {
         final int numBuckets = 256;
         List<Queue<String>> buckets = new ListImpl<Queue<String>>();
         for (int i = 0; i < numBuckets; i++){
-            buckets.appendBack(new QueueImpl<String>(array.length));
+            buckets.appendBack(new QueueArrayImpl<String>(array.length));
         }
 
         Integer max = Integer.MIN_VALUE;
@@ -558,7 +558,7 @@ public class Sort {
             // each pass checks a rt to left position and buckets based on that digit
             for (String value : array){
                 char c = value.charAt(position);
-                buckets.get(Character.getNumericValue(c)).add(value);
+                buckets.get(Character.getNumericValue(c)).enqueue(value);
             }
 
             // reset array to new order after sorting this pass
@@ -568,7 +568,7 @@ public class Sort {
             for (int bucketIndex = 0; bucketIndex < numBuckets; ++bucketIndex){
                 Queue<String> bucket = buckets.get(bucketIndex);
                 String value;
-                while ((value = bucket.remove()) != null){
+                while ((value = bucket.dequeue()) != null){
                     array[i++] = value;
                 }
             }
@@ -622,7 +622,7 @@ public class Sort {
             }
 
             // NOW we iterate over ALPHA buckets one at a time and
-            // add in order to arr starting from startingIndex.
+            // enqueue in order to arr starting from startingIndex.
             // This sorts all the strings of that length
             idx = startingStrIndex;
             for (java.util.List<String> thisAlphaBucket : alphaBuckets) {

@@ -9,7 +9,7 @@ import java.util.Set;
  */
 public interface Graph<T extends Comparable<T>> {
 
-    // add directed edge weighted
+    // enqueue directed edge weighted
     GraphEdge<T>  addDirectedEdge(GraphNode<T> node1, GraphNode<T> node2, int weight);
 
     java.util.List<GraphEdge<T>> addUndirectedEdge(GraphNode<T> node1, GraphNode<T> node2, int weight);

@@ -82,7 +82,7 @@ public class TestKingdomGrowth {
 
     public interface Graph<T extends Comparable<T>> {
 
-        // add directed edge weighted
+        // enqueue directed edge weighted
         GraphEdge<T> addDirectedEdge(GraphNode<T> node1, GraphNode<T> node2, int weight);
 
         java.util.List<GraphEdge<T>> addUndirectedEdge(GraphNode<T> node1, GraphNode<T> node2, int weight);
@@ -141,7 +141,7 @@ public class TestKingdomGrowth {
             return false;
         }
 
-        // add directed edge weighted
+        // enqueue directed edge weighted
         @Override
         public GraphEdge<T> addDirectedEdge( GraphNode<T> node1,  GraphNode<T> node2, int weight) {
             if (!graphNodes.contains(node1))
@@ -262,7 +262,7 @@ public class TestKingdomGrowth {
             // calculate shortest distance to each node from source
             while(!minHeap.isEmpty()) {
                 // of all unvisited nodes which one has the minimal distance
-                GraphNode<T> minDistanceNode = minHeap.remove();
+                GraphNode<T> minDistanceNode = minHeap.pop();
                 minDistanceNode.visited = true;
                 // starting at this node look at all neighbors and update distance cost and predecessor
                 // if improved.

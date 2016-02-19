@@ -38,9 +38,9 @@ public class DFS <T extends Comparable<T>>{
             GraphNode<T> v1 = stack.pop();
             if (!v1.visited) {
                 v1.visited = true; // mark after pop
-                for(GraphNode<T> node : graph.getNeighbors(v1)){
-                    if (!node.visited && graph.isEdge(v1, node))
-                        stack.push(node);
+                for(GraphNode<T> neighbor : graph.getNeighbors(v1)){
+                    if (!neighbor.visited && graph.isEdge(v1, neighbor))
+                        stack.push(neighbor);
                 }
             }
         }

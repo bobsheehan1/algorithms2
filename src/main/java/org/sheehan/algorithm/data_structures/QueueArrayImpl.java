@@ -24,6 +24,7 @@ public class QueueArrayImpl<T extends Comparable<T>> implements Queue<T> {
             throw new RuntimeException("Full Queue");
         array[(firstIndex + count)%size] = value;
         count++;
+        //TODO add resize for loadfactor
     }
 
     // dequeue from front
@@ -36,6 +37,8 @@ public class QueueArrayImpl<T extends Comparable<T>> implements Queue<T> {
         firstIndex++;
         count--;
         firstIndex %=size;
+
+        //TODO resize for smaller queue memory
         return value;
     }
 

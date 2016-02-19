@@ -9,6 +9,9 @@ import java.util.List;
  */
 public class BinaryTree<K extends Comparable<? super K>, V> {
 
+    protected static final boolean RED   = true;
+    protected static final boolean BLACK = false;
+
     public TreeNode<K, V> root;
 
     public static <K extends Comparable<? super K>, V> TreeNode<K,V> createTreeNode(K key, V value){
@@ -17,11 +20,12 @@ public class BinaryTree<K extends Comparable<? super K>, V> {
         node.key = key;
         node.left = null;
         node.right= null;
-
+        //node.N = 0;
+        node.color = RED;
         return node;
     }
 
-    // create node and add children
+    // create node and enqueue children
     public static <K extends Comparable<? super K>, V> TreeNode<K,V> createTreeNode(K key, V value, TreeNode<K,V> left, TreeNode<K,V> right){
         TreeNode<K,V> node = new TreeNode<>();
         node.value = value;
@@ -38,16 +42,20 @@ public class BinaryTree<K extends Comparable<? super K>, V> {
     }
 
     public static class TreeNode <K extends Comparable<? super K>, V> {
-        public K key;
-        public V value;
-        public TreeNode <K,V> left;
-        public TreeNode <K,V> right;
+        K key;
+        V value;
+        TreeNode <K,V> left;
+        TreeNode <K,V> right;
 
         TreeNode <K,V> parent; // for successor BST traversal
 
+        boolean color;     // RB TREE color of parent link
+        //int N;             // RB TREE subtree count
+
+
         @Override
         public String toString(){
-            return "key:" + key.toString() + " value:" + value.toString();
+            return "key:" + key.toString() + " value:" + value.toString() + " color:" + color;
         }
     }
 
@@ -126,12 +134,12 @@ public class BinaryTree<K extends Comparable<? super K>, V> {
             return node.value + Math.max(getMaxSum(node.left), getMaxSum(node.right));
     }
 
-    //recursive
+    //recursive to print all end node path tot root  node sums
     public void printEndNodesAndPathSums(TreeNode<Integer, Integer> node){
         if (node == null)
             return;
 
-        //utilize parent nodes
+        //when we get to the end then back propoagate utilize parent nodes
         if (node.left == null && node.right== null){
             System.out.println("end node: " + node.value);
             int sum = node.value;
@@ -152,7 +160,7 @@ public class BinaryTree<K extends Comparable<? super K>, V> {
     public void getLevelNodes(TreeNode<K,V> node, int cLevel, int rLevel, List<TreeNode<K,V>> nodes ){
         if (node == null)
             return;
-        if (cLevel == rLevel) // add to container if level is met
+        if (cLevel == rLevel) // enqueue to container if level is met
             nodes.add(node);
         else {
             getLevelNodes(node.left, cLevel+1, rLevel, nodes);
