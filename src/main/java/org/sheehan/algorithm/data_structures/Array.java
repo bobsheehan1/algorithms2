@@ -1,6 +1,5 @@
 package org.sheehan.algorithm.data_structures;
 
-import org.sheehan.algorithm.Bits;
 import org.sheehan.algorithm.sort.Sort;
 
 import java.util.*;
@@ -180,7 +179,7 @@ public class Array {
         return duplicates;
     }
 
-    //HashMap
+    //HashMapImpl
     public static Set<Integer> findDuplicates2(Integer array[]) {
 
         int checker = 0; //init

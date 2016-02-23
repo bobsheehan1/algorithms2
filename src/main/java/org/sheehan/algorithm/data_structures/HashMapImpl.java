@@ -24,11 +24,17 @@ public class HashMapImpl<K,V> {
         int hash = hashify(key);
         Node<K,V> node = table[hash];
 
+        if (node == null) {
+            table[hash] = new Node<>(key, value);
+            return;
+        }
+
+        // update or extend chain
         Node<K,V> curr = node;
         Node<K,V> prev = node;
-        while(curr.next != null){
-            if (node.key.equals(key)) {
-                node.value = value; // update
+        while(curr != null){
+            if (curr.key.equals(key)) {
+                curr.value = value; // update
                 return;
             }
             prev = curr;
@@ -46,7 +52,7 @@ public class HashMapImpl<K,V> {
         Node<K,V> node = table[hash];
 
         Node<K,V> curr = node;
-        while(curr.next != null){
+        while(curr != null){
             if (node.key.equals(key))
                 return node.value;
             curr = curr.next;
@@ -54,20 +60,49 @@ public class HashMapImpl<K,V> {
         return null;
     }
 
+    public void remove(K key) {
+        int hash = hashify(key);
+        Node<K,V> node = table[hash];
+
+        Node<K,V> prev = null;
+        Node<K,V> curr = node;
+        while(curr != null){
+            if (curr.key.equals(key))
+                break;
+            prev = curr;
+            curr = curr.next;
+        }
+
+        if (curr == null) {//not found
+            System.out.println("not found");
+            return;
+        }
+        if (prev == null){ //front
+            table[hash]=node.next;
+        } else if (curr.next != null){ //middle
+            prev.next = curr.next;
+        }
+        else //end
+            prev.next = null;
+    }
+
     private int hashify(K key) {
-        return key.hashCode()%size;
+        // keeps hash positive for table array index.
+        return (key.hashCode() & 0x7fffffff)%size;
     }
 
     public void print() {
         for (int i =0; i < size; ++i){
+            System.out.print(i + " - ");
             Node<K,V> curr = table[i];
-            while(curr.next != null){
-                System.out.print(curr.key + " " + curr.value + " ");
-                curr = curr.next;
+            if (curr != null) {
+                while (curr != null) {
+                    System.out.print(" (" +curr.key + " " + curr.value + ") ");
+                    curr = curr.next;
+                }
             }
             System.out.println();
         }
+        System.out.println();
     }
-
-
 }
