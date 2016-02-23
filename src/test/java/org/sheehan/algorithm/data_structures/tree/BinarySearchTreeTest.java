@@ -11,13 +11,13 @@ public class BinarySearchTreeTest {
 
         BinarySearchTree<Integer,Integer> bst = new BinarySearchTree<>();
 
-        BinaryTree.TreeNode node6 = bst.insert2(6,6);
-        BinaryTree.TreeNode node4 = bst.insert2(4,4);
-        BinaryTree.TreeNode node8 = bst.insert2(8,8);
-        BinaryTree.TreeNode node2 = bst.insert2(2,2);
-        BinaryTree.TreeNode node10 = bst.insert2(10,10);
-        BinaryTree.TreeNode node5 = bst.insert2(5,5);
-        BinaryTree.TreeNode node9 = bst.insert2(9,9);
+        BinaryTree.TreeNode node6 = bst.insert(6,6);
+        BinaryTree.TreeNode node4 = bst.insert(4,4);
+        BinaryTree.TreeNode node8 = bst.insert(8,8);
+        BinaryTree.TreeNode node2 = bst.insert(2,2);
+        BinaryTree.TreeNode node10 = bst.insert(10,10);
+        BinaryTree.TreeNode node5 = bst.insert(5,5);
+        BinaryTree.TreeNode node9 = bst.insert(9,9);
 
         int height = bst.getHeight();
         boolean dir = true;
@@ -33,13 +33,13 @@ public class BinarySearchTreeTest {
 
         BinarySearchTree<Integer,Integer> bst = new BinarySearchTree<>();
 
-        BinaryTree.TreeNode node6 = bst.insert2(6,6);
-        BinaryTree.TreeNode node4 = bst.insert2(4,4);
-        BinaryTree.TreeNode node8 = bst.insert2(8,8);
-        BinaryTree.TreeNode node2 = bst.insert2(2,2);
-        BinaryTree.TreeNode node10 = bst.insert2(10,10);
-        BinaryTree.TreeNode node5 = bst.insert2(5,5);
-        BinaryTree.TreeNode node9 = bst.insert2(9,9);
+        BinaryTree.TreeNode node6 = bst.insert(6,6);
+        BinaryTree.TreeNode node4 = bst.insert(4,4);
+        BinaryTree.TreeNode node8 = bst.insert(8,8);
+        BinaryTree.TreeNode node2 = bst.insert(2,2);
+        BinaryTree.TreeNode node10 = bst.insert(10,10);
+        BinaryTree.TreeNode node5 = bst.insert(5,5);
+        BinaryTree.TreeNode node9 = bst.insert(9,9);
 
         bst.print(bst.root);
 
@@ -95,31 +95,33 @@ public class BinarySearchTreeTest {
 
 
     @Test
-    public void testInsert() throws Exception {
+    public void testInsertDelete() throws Exception {
 
-        BinarySearchTree<Integer, Integer> bst = new BinarySearchTree<>();
+        BinarySearchTree<Integer,Integer> bst = new BinarySearchTree<>();
 
+        bst.insert(100,100);
+        bst.insert(90,90);
+        bst.insert(110,110);
+        bst.insert(80,80);
+        bst.insert(95,95);
+        bst.insert(92,92);
+        bst.insert(93,93);
+        bst.insert(91,91);
 
-        BinaryTree.TreeNode node6 = bst.insert2(6,6);
-        BinaryTree.TreeNode node4 = bst.insert2(4,4);
-        BinaryTree.TreeNode node8 = bst.insert2(8,8);
-        BinaryTree.TreeNode node2 = bst.insert2(2,2);
-        BinaryTree.TreeNode node10 = bst.insert2(10,10);
-        BinaryTree.TreeNode node5 = bst.insert2(5,5);
-        BinaryTree.TreeNode node9 = bst.insert2(9,9);
+        int height = bst.getHeight();
+        for (int i = 0; i < height; ++i) {
+            bst.printLevelSimple(bst.root, 0, i, height);
+            System.out.println();
+        }
+        System.out.println();
+        System.out.println();
 
-        bst.print(bst.root);
-
-        BinarySearchTree<Integer,Integer> bst2 = new BinarySearchTree<>();
-
-        bst2.insert2(6,6);
-        bst2.insert2(4,4);
-        bst2.insert2(8,8);
-        bst2.insert2(2,2);
-        bst2.insert2(10,10);
-        bst2.insert2(5,5);
-        bst2.insert2(9,9);
-
-        bst.print(bst2.root);
+        BinaryTree.TreeNode<Integer,Integer> node = bst.get(bst.root,90);
+        bst.delete(node);
+        height = bst.getHeight();
+        for (int i = 0; i < height; ++i) {
+            bst.printLevelSimple(bst.root, 0, i, height);
+            System.out.println();
+        }
     }
 }

@@ -21,15 +21,6 @@ public class RedBlackBinarySearchTree<K extends Comparable<?super K>, V> extends
         super();
     }
 
-    public boolean isBalanced() {
-        return isBalanced(this.root);
-    }
-
-    // count number
-    public boolean isBalanced(TreeNode<K,V> node) {
-
-        return isBalanced(this.root);
-    }
 
     private TreeNode<K,V> grandparent(TreeNode<K,V> node) {
         if (node == null)
@@ -49,6 +40,16 @@ public class RedBlackBinarySearchTree<K extends Comparable<?super K>, V> extends
                 return gp.right;
         }
         return null;
+    }
+
+    @Override
+    protected TreeNode<K,V> insert(K key, V value) {
+        TreeNode<K, V> newNode = super.insert(key, value);
+
+        //rebalance the tree - check 5 cases on wikipedia !!!!
+        postInsertCase1(newNode);
+
+        return newNode;
     }
 
     // Case 1: The current node N is at the root of the tree.
@@ -82,27 +83,127 @@ public class RedBlackBinarySearchTree<K extends Comparable<?super K>, V> extends
     // the grandparent G becomes red (to maintain property 5
     // (all paths from any given node to its leaf nodes contain the same number of black nodes)).
     private void postInsertCase3(TreeNode<K,V> node) {
-        TreeNode<K,V> uncle = uncle(node);
-        if (node.parent.color == BLACK) {
-            return;
+        // parent is RED if we get here ! Check uncle
+        TreeNode<K,V> u = uncle(node);
+        if ((u != null) && (u.color == RED)) {
+            node.parent.color = BLACK;
+            u.color = BLACK;
+            TreeNode<K, V> g = grandparent(node);
+            g.color = RED;
+            postInsertCase1(g); //recursive in case this just messed up the constraints on g
+        } else {
+            postInsertCase4(node);
         }
-       // else
-       //     postInsertCase4(node);
     }
 
+    private void postInsertCase4(TreeNode<K,V> node) {
+        TreeNode<K,V> g = grandparent(node);
+
+        if ((node == node.parent.right) && (node.parent == g.left)) {
+            rotate_left(node.parent);
+            node = node.left;
+
+        } else if ((node == node.parent.left) && (node.parent == g.right)) {
+            rotate_right(node.parent);
+            node = node.right;
+        }
+        postInsertCase5(node);
+    }
+
+    private void postInsertCase5(TreeNode<K,V> node) {
+        TreeNode<K,V> g = grandparent(node);
+
+        node.parent.color = BLACK;
+        g.color = RED;
+        if (node == node.parent.left)
+            rotate_right(g);
+        else
+            rotate_left(g);
+    }
+
+    private void rotate_left(TreeNode<K,V> x){
+        TreeNode<K,V> y = x.right;
+        x.right = y.left;
+        if (y.left != null)
+            y.left.parent = x; // reset parent
+
+        y.parent = x.parent; // reset parent
+
+        // handle root or x parent refs
+        if (x.parent == null) {
+            this.root = y;
+        } else if (x == x.parent.left) {
+            x.parent.left = y;
+        } else {
+            x.parent.right = y;
+        }
+
+        y.left = x;
+        x.parent = y;
+    }
+    private void rotate_right(TreeNode<K,V> y){
+        TreeNode<K,V> x = y.left;
+        y.left = x.right;
+        if (x.right != null)
+            x.right.parent = y; // reset parent
+
+        x.parent = y.parent; // reset parent
+
+        // handle root or y parent refs
+        if (y.parent == null) {
+            this.root = x;
+        } else if (y == y.parent.left) {
+            y.parent.left = x;
+        } else {
+            y.parent.right = x;
+        }
+
+        x.right = y;
+        y.parent = x;
+    }
+
+    // O(height of tree)
+    // three cases
+    // 1. no children - remove
+    // 2. one child - splice it out
+    // 3. two children - splice out successor, replace with successor
     @Override
-    protected TreeNode<K,V> insert2(K key,V value) {
-        TreeNode<K, V> newNode = super.insert2(key, value);
+    protected TreeNode<K,V> delete(TreeNode<K,V> node) {
+        TreeNode<K,V> spliceNode = null; // either replacement or deleted !
 
-        //rebalance the tree !!!!
-        postInsertCase1(newNode);
+        //case 1, 2
+        if (node.left == null || node.right == null){
+            spliceNode = node;
+        } else //case 3
+            spliceNode = successor(node); // at most one node ?
 
+        // now do the splice botch
+        TreeNode<K,V> spliceChild = null;
+        if (spliceNode.left != null){
+            spliceChild = spliceNode.left;
+        } else {
+            spliceChild = spliceNode.right;
+        }
+        // point orphaned child to grandparent (new parent)
+        if (spliceChild != null)
+            spliceChild.parent = spliceNode.parent;
 
+        // point new parent at new child
+        if (spliceNode.parent == null) { //root
+            root = spliceChild;
+        } else if (spliceNode == spliceNode.parent.left) {
+            spliceNode.parent.left = spliceChild;
+        } else {
+            spliceNode.parent.right = spliceChild;
+        }
 
+        // case 3
+        if (node != spliceNode) {
+            node.key = spliceNode.key;
+            node.value = spliceNode.value;
+        }
 
-        return newNode;
+        return spliceNode;
     }
 
-
-
-    }
+}

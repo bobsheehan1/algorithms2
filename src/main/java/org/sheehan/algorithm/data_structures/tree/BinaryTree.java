@@ -72,6 +72,8 @@ public class BinaryTree<K extends Comparable<? super K>, V> {
         System.out.println();
     }
 
+
+
     private void print(TreeNode<K,V> node, int level, String side) {
         if (node == null)
             return;
@@ -96,6 +98,28 @@ public class BinaryTree<K extends Comparable<? super K>, V> {
             printLevel(node.right, level + 1, rLevel, dir);
             printLevel(node.left, level + 1, rLevel, dir);
         }
+    }
+
+    public void printLevelSimple(TreeNode<K,V> node, int level, int rLevel, int height) {
+
+        if (node == null ) {
+            if (level == rLevel) {
+                 System.out.print("- ");
+            } else {
+                //System.out.print(" ");
+             }
+
+            return;
+        }
+        if (level == rLevel) {
+            if (node.parent != null)
+                System.out.print(node.key + " " + node.parent.key  + " " + node.color + " ");
+            else
+                System.out.print(node.key + " null " + node.color + " ");
+        }
+
+        printLevelSimple(node.left, level + 1, rLevel,height);
+        printLevelSimple(node.right, level + 1, rLevel,height);
     }
 
     public int getHeight(){
