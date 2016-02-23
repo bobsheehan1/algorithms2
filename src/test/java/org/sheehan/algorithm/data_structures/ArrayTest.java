@@ -8,8 +8,35 @@ import java.util.List;
 
 public class ArrayTest {
 
-
     @Test
+    public void testRotate90() {
+        final Integer N = 5;
+        Integer [][]array = new Integer[N][N];
+
+        int cnt = 0;
+        for (int i = 0; i<N; ++i){
+            for (int j = 0; j<N; ++j){
+                array[i][j] = cnt++;
+            }
+        }
+        print2DArray(array);
+        Array.rotateCW90(array);
+        print2DArray(array);
+    }
+
+    void print2DArray(Integer array[][]){
+        for (int i = 0; i<array.length; ++i){
+            for (int j = 0; j<array[i].length; ++j){
+                System.out.print(String.format("%2d ", array[i][j]));
+            }
+            System.out.println();
+        }
+
+    }
+
+
+
+        @Test
     public void testMaxDiff() {
         Integer array1[] = Array.createArray(5, 20, true);
         Array.print(array1);

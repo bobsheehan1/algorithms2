@@ -10,6 +10,26 @@ import java.util.List;
  */
 public class Array {
 
+    // Trick here is think of top row up to one before the end.
+    // The right column starts with the end of the top row
+    // i fixes the ring offset, j is the iterator for swapping
+    public static void rotateCW90(Integer[][] a){
+
+        for (int i = 0; i < a.length/2; ++i) {
+            for (int j = i; j < a.length-i-1; ++j) {
+                int topRow = a[i][j]; // iterate across with j
+                int rightCol = a[j][a.length-1-i]; //iterate down on j
+                int bottomRow = a[a.length-1-i][a.length-1-j]; //iterate back across on j
+                int leftCol = a[a.length-1-j][i]; //iterate up on j
+
+                a[j][a.length-1-i] = topRow;
+                a[a.length-1-i][a.length-1-j] = rightCol;
+                a[a.length-1-j][i] = bottomRow;
+                a[i][j] = leftCol;
+            }
+        }
+        System.out.println();
+    }
 
     // brute force is compute every pair look at +- profit and take max (O(n^2))
     /*int profit = Integer.MIN_VALUE;
@@ -38,13 +58,17 @@ public class Array {
         return max_diff;
     }
 
-    //knuth shuffle O(n)
+    // knuth shuffle O(n)
+    // left side of i is shuffled
     public static <T> void shuffle(T array[]){
 
         Random r = new Random();
 
         for (int i=0; i < array.length; ++i ){
+             //select random index (i, length)
              int shuffle_i = r.nextInt(array.length-i)+i;
+
+             // swap with i
              T tmp = array[i];
              array[i] = array[shuffle_i];
              array[shuffle_i]=tmp;
@@ -81,7 +105,6 @@ public class Array {
                 start = -1; //optional locate run
             }
         }
-
         System.out.println("start: " + maxStart + " length: " + maxLength + " data: " + maxVal);
 
         return maxVal;
@@ -129,7 +152,7 @@ public class Array {
     }
 
 
-        // print start index, length, element data of longest run in array
+    // print start index, length, element data of longest run in array
     public static <T extends Comparable<T>> void findLongestIncreasingRun(T array[]) {
         int length = 1;
         int maxLength = 0;

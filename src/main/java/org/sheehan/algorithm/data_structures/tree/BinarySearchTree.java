@@ -31,47 +31,96 @@ public class BinarySearchTree<K extends Comparable<?super K>, V> extends BinaryT
         return true;
     }
 
-    protected TreeNode<K,V> insert2(K key,V value) {
+    protected TreeNode<K,V> insert(K key, V value) {
         if (root == null){
             root = createTreeNode(key, value);
             return root;
         }
-        return insert2(root, key, value);
+        return insert(root, key, value);
     }
 
-    private TreeNode<K,V> insert2(TreeNode<K,V> node, K key,V value) {
+    private TreeNode<K,V> insert(TreeNode<K,V> node, K key, V value) {
 
         if (node == null)
             return createTreeNode(key, value);
 
-        if (node.key.compareTo(key) < 0)
+        if (node.key.compareTo(key) < 0) {
             if (node.right != null)
-                return insert2(node.right, key, value);
+                return insert(node.right, key, value);
             else {
                 node.right = createTreeNode(key, value);
                 node.right.parent = node;
+                return node.right;
             }
-        else if (node.key.compareTo(key) > 0)
+        } else if (node.key.compareTo(key) > 0) {
             if (node.left != null)
-                return insert2(node.left, key, value);
+                return insert(node.left, key, value);
             else {
                 node.left = createTreeNode(key, value);
                 node.left.parent = node;
-            }
+                return node.left;
 
-        return node;
+            }
+        }
+        return null;
+    }
+
+    // O(height of tree)
+    // three cases
+    // 1. no children - remove
+    // 2. one child - splice it out
+    // 3. two children - splice out successor, replace with successor
+
+    protected TreeNode<K,V> delete(TreeNode<K,V> node) {
+        TreeNode<K,V> spliceNode = null; // either replacement or deleted !
+
+        //case 1, 2
+        if (node.left == null || node.right == null){
+            spliceNode = node;
+        } else //case 3
+            spliceNode = successor(node); // at most one node ?
+
+        // now do the splice botch
+        TreeNode<K,V> spliceChild = null;
+        if (spliceNode.left != null){
+            spliceChild = spliceNode.left;
+        } else {
+            spliceChild = spliceNode.right;
+        }
+        // point orphaned child to grandparent (new parent)
+        if (spliceChild != null)
+            spliceChild.parent = spliceNode.parent;
+
+        // point new parent at new child
+        if (spliceNode.parent == null) { //root
+            root = spliceChild;
+        } else if (spliceNode == spliceNode.parent.left) {
+            spliceNode.parent.left = spliceChild;
+        } else {
+            spliceNode.parent.right = spliceChild;
+        }
+
+        // case 3
+        if (node != spliceNode) {
+            node.key = spliceNode.key;
+            node.value = spliceNode.value;
+        }
+
+        return spliceNode;
     }
 
     // find node with next highest value
+    // STEP 1. left most node in right subtree OR
+    // STEP 2 if no right subtree go up until you go right !
     TreeNode<K,V> successor(TreeNode<K,V> node){
 
-        // if right child then get min of that right tree !
+        // STEP 1.  if right child then get min of that right tree !
         if (node.right != null)
             return minimum(node.right);
 
+        // STEP 2.
         TreeNode<K,V> parent = node.parent;
         TreeNode<K,V> curr = node;
-
 
         // if there is a parent AND the node is the right child,
         // we look up getting smaller for parents to left so get them out of the way
@@ -89,12 +138,15 @@ public class BinarySearchTree<K extends Comparable<?super K>, V> extends BinaryT
     }
 
     // find node with next smallest value
+    // STEP 1. right most node in left subtree OR
+    // STEP 2. if no left subtree go up until you go left !
     TreeNode<K,V> predecessor(TreeNode<K,V> node){
 
-        // if left child then get max of that left tree !
+        // STEP 1. if left child then get max of that left tree !
         if (node.left != null)
             return maximum(node.left);
 
+        //STEP 2...
         TreeNode<K,V> parent = node.parent;
         TreeNode<K,V> curr = node;
 
@@ -137,5 +189,17 @@ public class BinarySearchTree<K extends Comparable<?super K>, V> extends BinaryT
         }
 
         return root;
+    }
+
+    TreeNode<K,V> get(TreeNode<K,V> node, K key){
+        if (node == null)
+            return null;
+        if (node.key.compareTo(key) < 0){
+            return get(node.right, key);
+        }
+        else if (node.key.compareTo(key) > 0){
+            return get(node.left, key);
+        }
+        return node;
     }
 }
