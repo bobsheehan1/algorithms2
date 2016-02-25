@@ -14,18 +14,18 @@ public class BinaryTreeTest {
         BinaryTree.TreeNode node2 = BinaryTree.createTreeNode(3, 3, node1, null);
         BinaryTree.TreeNode node3 = BinaryTree.createTreeNode(6, 6, null, null);
         BinaryTree.TreeNode node4 = BinaryTree.createTreeNode(9, 9, node3, node2);
-        BinaryTree<Integer,Integer> tree = new BinaryTree<>(node4);
+        BinaryTree<Integer, Integer> tree = new BinaryTree<>(node4);
 
         BinaryTree.TreeNode node11 = BinaryTree.createTreeNode(1, 1, null, null);
         BinaryTree.TreeNode node22 = BinaryTree.createTreeNode(3, 3, node11, null);
         BinaryTree.TreeNode node33 = BinaryTree.createTreeNode(6, 6, null, null);
         BinaryTree.TreeNode node44 = BinaryTree.createTreeNode(9, 9, node33, node22);
-        BinaryTree<Integer,Integer> tree2 = new BinaryTree<>(node44);
+        BinaryTree<Integer, Integer> tree2 = new BinaryTree<>(node44);
 
-        List<BinaryTree.TreeNode<Integer,Integer>> nodes = new ArrayList<>();
+        List<BinaryTree.TreeNode<Integer, Integer>> nodes = new ArrayList<>();
         tree.getLevelNodes(node4, 0, 0, nodes);
 
-        for (BinaryTree.TreeNode<Integer,Integer> node: nodes){
+        for (BinaryTree.TreeNode<Integer, Integer> node : nodes) {
             System.out.println(node.toString());
         }
         System.out.println("max path: " + tree.getMaxSum(node4));
@@ -34,10 +34,24 @@ public class BinaryTreeTest {
 
         System.out.println(tree.compare(tree2.root));
 
-        node1.right = BinarySearchTree.createTreeNode(5,5);
+        node1.right = BinarySearchTree.createTreeNode(5, 5);
 
         tree.print();
         System.out.println(tree.isBalanced());
 
     }
+
+    @Test
+    public void testTraversBfs() throws Exception {
+
+        BinaryTree.TreeNode node1 = BinaryTree.createTreeNode(1, 1, null, null);
+        BinaryTree.TreeNode node2 = BinaryTree.createTreeNode(3, 3, node1, null);
+        BinaryTree.TreeNode node3 = BinaryTree.createTreeNode(6, 6, null, null);
+        BinaryTree.TreeNode node4 = BinaryTree.createTreeNode(9, 9, node3, node2);
+        BinaryTree<Integer, Integer> tree = new BinaryTree<>(node4);
+
+        tree.traverseBfs(x -> System.out.print(x + " "));
+
+    }
+
 }

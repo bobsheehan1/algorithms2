@@ -1,5 +1,10 @@
 package org.sheehan.algorithm.data_structures.tree;
 
+import org.sheehan.algorithm.data_structures.Queue;
+import org.sheehan.algorithm.data_structures.QueueArrayImpl;
+
+import java.util.function.IntConsumer;
+
 import java.util.List;
 
 /**
@@ -41,7 +46,7 @@ public class BinaryTree<K extends Comparable<? super K>, V> {
         return node;
     }
 
-    public static class TreeNode <K extends Comparable<? super K>, V> {
+    public static class TreeNode <K extends Comparable<? super K>, V> implements Comparable<TreeNode<K, V>> {
         K key;
         V value;
         TreeNode <K,V> left;
@@ -57,6 +62,11 @@ public class BinaryTree<K extends Comparable<? super K>, V> {
         public String toString(){
             return "key:" + key.toString() + " value:" + value.toString() + " color:" + color;
         }
+
+        @Override
+        public int compareTo(TreeNode<K, V> o) {
+            return 0;
+        }
     }
 
     public BinaryTree(TreeNode<K,V> node) {
@@ -71,8 +81,6 @@ public class BinaryTree<K extends Comparable<? super K>, V> {
         print(node, 0, "root");
         System.out.println();
     }
-
-
 
     private void print(TreeNode<K,V> node, int level, String side) {
         if (node == null)
@@ -100,7 +108,7 @@ public class BinaryTree<K extends Comparable<? super K>, V> {
         }
     }
 
-    public void printLevelSimple(TreeNode<K,V> node, int level, int rLevel, int height) {
+    public void printLevelSimple(TreeNode<K,V> node, int level, int rLevel) {
 
         if (node == null ) {
             if (level == rLevel) {
@@ -118,8 +126,8 @@ public class BinaryTree<K extends Comparable<? super K>, V> {
                 System.out.print(node.key + " null " + node.color + " ");
         }
 
-        printLevelSimple(node.left, level + 1, rLevel,height);
-        printLevelSimple(node.right, level + 1, rLevel,height);
+        printLevelSimple(node.left, level + 1, rLevel);
+        printLevelSimple(node.right, level + 1, rLevel);
     }
 
     public int getHeight(){
@@ -218,12 +226,36 @@ public class BinaryTree<K extends Comparable<? super K>, V> {
         System.out.println();
     }
 
+    //one of 3 DFS traversals
     private void printInOrder(TreeNode<K,V> root) {
         if (root == null)
             return;
         printInOrder(root.left);
         System.out.print(root.value + " ");
         printInOrder(root.right);
+    }
+
+    //processs left to right
+    public void traverseBfs(IntConsumer op){
+        traverseBfs(this.root, op);
+        System.out.println();
+    }
+
+    // 'level order traversal' use QUEUE
+    private void traverseBfs(TreeNode<K,V> root, IntConsumer op) {
+        if (root == null)
+            return;
+        Queue<TreeNode<K,V>> q = new QueueArrayImpl<>(100);
+        q.enqueue(root);
+        while (q.peek() != null){
+            TreeNode<K,V> node = q.dequeue();
+            op.accept((Integer)node.key);
+            if (node.left != null)
+                q.enqueue(node.left);
+            if (node.right != null)
+                q.enqueue(node.right);
+        }
+
     }
 
     public boolean compare(TreeNode<K,V> node){

@@ -1,7 +1,14 @@
 package org.sheehan.algorithm;
 
+import org.sheehan.algorithm.data_structures.Queue;
+import org.sheehan.algorithm.data_structures.QueueListImpl;
+
 import java.sql.Timestamp;
-import java.util.*;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.logging.Logger;
 
 /**
@@ -9,97 +16,60 @@ import java.util.logging.Logger;
  *
  * Assumptions
  *
- * 1. that each key read is a unique value and populates the hasmap up to full load (1.0)
- * 2. After that LRU eviction takes place and the cache is therefore fixed size
+ * THREAD SAFE ?
  *
- * Look at LinkedHashMap which allows override of removeEldestEntry method for stale cache updates. This might suffice instead of this homegrown approach.
+ * Look at LinkedHashMap which allows override of removeEldestEntry method for stale cache updates.
+ * This might suffice instead of this homegrown approach.
  */
-public class LruCache {
-    static public final int MAX = 10; //max before eviction
-    private Map<String, String> cache = new HashMap<>(MAX, 1.0f); // use full cache
-    private int size = 0;
+public class LruCache<K,V> {
 
-    class LruNode implements Comparable<LruNode> {
+    private Map<K, V> cache;
 
-        Timestamp ts;
-        String key;
-
-        public int compareTo(LruNode other) {
-            //return other.ts.compareTo(this.ts);
-            return this.ts.compareTo(other.ts);
-
-        }
-
-        public String toString(){
-            return this.ts.toString() + " " + this.key;
-        }
-    }
-
-    private SortedSet<LruNode> lruSet = new TreeSet<>();
+    private java.util.Queue lruQueue = new ConcurrentLinkedQueue();
 
     Logger log = Logger.getLogger(this.getClass().getName());
 
-    public String read(String key) {
+    public final int capacity;
 
-        // we always update the timestamp sortedset
-        java.util.Date date= new java.util.Date();
-        LruNode newNode = new LruNode();
-        newNode.ts = new Timestamp(date.getTime());
-        newNode.key = key;
-
-        // if not in cache then put it on in.
-        String val = cache.get(key);
-        if (val == null)
-        {
-            //1. load cache with something
-            //  a. check size
-            //  b. if >=max get lru key
-                    // else put into cache
-            //  c. replace
-
-            // todo just mocking out a value to cache for now
-            val = UUID.randomUUID().toString();
-
-            if (size < MAX) {
-                cache.put(key, val);
-                log.info("wrote new cache value: " + key + " " + cache.get(key));
-                size++;
-                newNode.key = key; // last updated index
-            } else {
-                // get lru index for replacement then dequeue
-                LruNode lruNode = lruSet.first();
-                log.info("lruSet removed: " + lruNode.key);
-                lruSet.remove(lruNode);
-
-                log.info("removing cache at index: " + lruNode.key);
-                cache.remove(lruNode.key);
-
-                log.info("added cache at index: " + key + " " + val);
-                cache.put(key, val); //update at lru index
-
-            }
-        } else {
-            // simply update the cache hit timestamp in lru set
-        }
-
-
-        //if already in lru set need to update that by removing and adding new timestamp for that key
-        Iterator<LruNode> iterator = lruSet.iterator();
-        while (iterator.hasNext()) {
-            LruNode node = iterator.next();
-            if (node.key.equals(newNode.key)) {
-                iterator.remove();
-                log.info("lruSet removed: " + newNode.key);
-            }
-        }
-
-        log.info("lruSet added: " + newNode.key);
-        lruSet.add(newNode); //update PQ
-
-        log.info("LRU UPDATED: " + lruSet.toString());
-
-        return val;
-
+    public LruCache(int capacity){
+        cache = new ConcurrentHashMap<>(capacity, 1.0f);
+        this.capacity = capacity;
     }
 
+    // either update or add to cache. handle lru update if at capacity
+    public void put(K key, V val) {
+        if (lruQueue.size() >= capacity){
+            K lruKey = (K)lruQueue.poll();
+            cache.remove(lruKey);
+            log.info("evicted "+ lruKey);
+        }
+        cache.put(key, val);
+        lruQueue.add(key);
+        log.info ("PUT " + lruQueue.toString());
+    }
+
+    public V get(K key) {
+        V value = cache.get(key);
+
+        if (lruQueue.contains(key)) {
+            lruQueue.remove(key);
+            lruQueue.add(key);
+        }
+        log.info ("GET " + lruQueue.toString());
+
+        return value;
+    }
+
+    public V remove(K key){
+        V val = null;
+        if (cache.containsKey(key)) {
+            val = cache.remove(key);
+        }
+        if (lruQueue.contains(key))
+            lruQueue.remove(key);
+
+        log.info ("REMOVE " + lruQueue.toString());
+
+        return val;
+    }
 }

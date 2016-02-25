@@ -110,7 +110,7 @@ public class BinarySearchTreeTest {
 
         int height = bst.getHeight();
         for (int i = 0; i < height; ++i) {
-            bst.printLevelSimple(bst.root, 0, i, height);
+            bst.printLevelSimple(bst.root, 0, i);
             System.out.println();
         }
         System.out.println();
@@ -120,7 +120,7 @@ public class BinarySearchTreeTest {
         bst.delete(node);
         height = bst.getHeight();
         for (int i = 0; i < height; ++i) {
-            bst.printLevelSimple(bst.root, 0, i, height);
+            bst.printLevelSimple(bst.root, 0, i);
             System.out.println();
         }
     }

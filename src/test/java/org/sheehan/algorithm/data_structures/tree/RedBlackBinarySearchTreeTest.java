@@ -24,9 +24,11 @@ public class RedBlackBinarySearchTreeTest extends TestCase {
         System.out.println(); System.out.println();
         int height = bst.getHeight();
         for (int i = 0; i < height; ++i) {
-            bst.printLevelSimple(bst.root, 0, i, height);
+            bst.printLevelSimple(bst.root, 0, i);
             System.out.println();
         }
+
+        bst.traverseBfs(x->System.out.println(x+" "));
 
         bst = new RedBlackBinarySearchTree<>();
 
@@ -40,7 +42,7 @@ public class RedBlackBinarySearchTreeTest extends TestCase {
         System.out.println(); System.out.println();
          height = bst.getHeight();
         for (int i = 0; i < height; ++i) {
-            bst.printLevelSimple(bst.root, 0, i, height);
+            bst.printLevelSimple(bst.root, 0, i);
             System.out.println();
         }
 
@@ -55,7 +57,7 @@ public class RedBlackBinarySearchTreeTest extends TestCase {
         System.out.println(); System.out.println();
         height = bst2.getHeight();
         for (int i = 0; i < height; ++i) {
-            bst.printLevelSimple(bst2.root, 0, i,height);
+            bst.printLevelSimple(bst2.root, 0, i);
             System.out.println();
         }
     }

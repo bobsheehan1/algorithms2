@@ -11,30 +11,34 @@ public class LruCacheTest extends TestCase {
 
     Logger log = Logger.getLogger(this.getClass().getName());
 
-    public void testRead() throws Exception {
+    public void testEvict() throws Exception {
 
-        LruCache cache = new LruCache();
+        LruCache<String,String> cache = new LruCache<>(10);
 
         //lOAD CACHE
-        for (int i = 0; i < LruCache.MAX; ++i){
-            String key = "test" + i;
-            String val = cache.read(key);
-            log.info("TEST CACHE ADD " + key + " " + val);
-            Thread.sleep(100);
+        for (int i = 0; i < cache.capacity; ++i){
+            String key = Integer.toString(i);
+            cache.put(key, key);
+            //log.info("TEST CACHE ADD " + key + " " + key);
+            //Thread.sleep(100);
         }
 
-        log.info("TEST 1 --------------- READ key = test0, --> test1 should be oldest");
+        //log.info("TEST 1 --------------- READ key = 0 should be oldest");
 
         // read entry to update ts for this key
-        String key = "test0";
-        String val = cache.read(key);
-        log.info("TEST CACHE READ " + key + " " + val);
+        String key = Integer.toString(0);
+        String val = cache.get(key);
+        log.info("TEST CACHE GET " + key + " " + val);
 
-        log.info("TEST 2 --------------- READ key = test-new --> should evict test1");
+        //log.info("TEST 2 --------------- READ key = 1 --> should be oldest");
         // read uncached entry to see if LRU uses test1 lru index
-        key = "test-new";
-        val = cache.read(key);
-        log.info("TEST 3 --------------- ADD LRU INDEX (test-new is newest in lruset) " + key + " " + val);
+        key = Integer.toString(1000);
+        cache.put(key, key);
+        log.info("TEST CACHE PUT " + key + " " + val);
+        //log.info("TEST 3 --------------- READ key = 1000 --> should be null " + key + " " + val);
+
+        val = cache.remove(key);
+        log.info("TEST CACHE REMOVE " + key + " " + val);
 
     }
 }
