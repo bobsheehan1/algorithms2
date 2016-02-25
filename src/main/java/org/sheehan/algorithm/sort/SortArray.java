@@ -31,7 +31,7 @@ class SwapCallbackValue implements SwapCallback{
     }
 }
 
-public class Sort {
+public class SortArray {
 
     /////////////////////////////////////////////////////////////////////////////////
     // BUBBLE SORT
@@ -130,25 +130,6 @@ public class Sort {
         }
     }
 
-    /////////////////////////////////////////////////////////////////////////////////
-    // INSERTION SORT LIST
-    /////////////////////////////////////////////////////////////////////////////////
-    // worst 0(n2)
-    // avg O(n2)
-    // best O(n) - if already sorted !
-    // compares each new element against already sorted elements
-    public static <T extends Comparable<T>> void insertionSort(List<T> list){
-        int n = list.size();
-
-        // starting index to start from right and move left from
-        for (int i = 1; i < n; ++i){
-            // move left from i swapping as you go
-            for (int j = i; j > 0; j--){
-                if (list.get(j).compareTo(list.get(j - 1)) < 0)
-                    swap(list, j, j - 1);
-            }
-        }
-    }
 
     /////////////////////////////////////////////////////////////////////////////////
     // HEAP SORT
@@ -240,7 +221,7 @@ public class Sort {
         mergeSort(array2);
 
         //overwrite array with merge
-        org.sheehan.algorithm.data_structures.Array.mergeSortedArrays(array1, array2, array);
+        org.sheehan.algorithm.Array.mergeSortedArrays(array1, array2, array);
         return array;
     }
 
@@ -265,7 +246,7 @@ public class Sort {
         System.arraycopy(array, 0, first, 0, first.length);
         System.arraycopy(array, first.length, second, 0, second.length);
 
-        // Sort each half
+        // SortArray each half
         mergeSort2(first);
         mergeSort2(second);
 
@@ -305,11 +286,6 @@ public class Sort {
     }
 
 
-    private static <T extends Comparable<T>> void swap(List<T> list, int i, int j) {
-        T tmp = list.get(j);
-        list.set(j, list.get(i));
-        list.set(i, tmp);
-    }
 
 
     /////////////////////////////////////////////////////////////////////////////////
@@ -534,104 +510,5 @@ public class Sort {
         }
     }
 
-    /////////////////////////////////////////////////////////////////////////////////
-    // RADIX SORT
-    // LSD on fixed length lexical keys
-    // bucket for each ascii char
-    // sort iteratively by single character moving left
-    /////////////////////////////////////////////////////////////////////////////////
-    public static void radixSortLexicalFixedLsd(String array[]) {
-        // 256 ASCII character positions
-        final int numBuckets = 256;
-        List<Queue<String>> buckets = new ListImpl<Queue<String>>();
-        for (int i = 0; i < numBuckets; i++){
-            buckets.appendBack(new QueueArrayImpl<String>(array.length));
-        }
 
-        Integer max = Integer.MIN_VALUE;
-        for (String value: array)
-            max = (max < value.length()) ? value.length():max;
-
-        // while there is a max element larger positional value, iterate another bucket sorting pass
-        // moving the position from left to right by one
-        for (int position=max-1; position>=0; position--) {
-            // each pass checks a rt to left position and buckets based on that digit
-            for (String value : array){
-                char c = value.charAt(position);
-                buckets.get(Character.getNumericValue(c)).enqueue(value);
-            }
-
-            // reset array to new order after sorting this pass
-            // the new order is obtained by removing elements from the bucket queues in FIFO order
-            // starting from least valued bucket
-            int i = 0;
-            for (int bucketIndex = 0; bucketIndex < numBuckets; ++bucketIndex){
-                Queue<String> bucket = buckets.get(bucketIndex);
-                String value;
-                while ((value = bucket.dequeue()) != null){
-                    array[i++] = value;
-                }
-            }
-        }
-    }
-
-    // 1. bucket the strings by length (maxlen buckets)
-    // 2. reset the input array to be sorted by length using the buckets
-    // 3. left to right radix sort into 256 (ASCII) alpha buckets.
-    // 3a. start on left most position on longest strings,
-    // 3b. then as the position is moved to the right include additional bucket of that smaller
-    //     length.
-    // 3c. Each pass reset input array to new order determined by alpha buckets
-    // 3d. By the time you are down the last rightmost char input array will be reset to sorted ordered
-
-    public static void radixSortVarLengthMsd( String [ ] arr, int maxLen ) {
-        final int BUCKETS = 256;
-
-        java.util.List<java.util.List<String>> lengthBuckets = new ArrayList<java.util.List<String>>();
-        java.util.List<java.util.List<String>> alphaBuckets = new ArrayList<java.util.List<String>>();
-
-        for (int i = 0; i < arr.length; i++)
-            lengthBuckets.add(new ArrayList<String>());
-
-        for (int i = 0; i < BUCKETS; i++)
-            alphaBuckets.add(new ArrayList<String>());
-
-        // create buckets for each length and sort the strings by length into each bucket.
-        for (String s : arr)
-            lengthBuckets.get(s.length()).add(s);
-
-        // reinit array so all strings are sorted by length, not alpha yet !
-        int idx = 0;
-        for (java.util.List<String> lengthBucket : lengthBuckets)
-            for (String fixedLengthStr : lengthBucket)
-                arr[idx++] = fixedLengthStr;
-
-        // now starting with longest strings, go bucket by bucket to shortest strings
-        // subsequent passes as we move the position to the right will include the already
-        // sorted longer strings
-        int startingStrIndex = arr.length;
-        for (int charPos = maxLen - 1; charPos >= 0; charPos--) {
-            // index into arr for strings of the same length
-            startingStrIndex -= lengthBuckets.get(charPos + 1).size();
-
-            // index into arr for strings of the same length
-            // NOW WE ADD TO ALPHA BUCKET based on pos value from arr
-            // Do this for each string of this length
-            for (int i = startingStrIndex; i < arr.length; i++) {
-                alphaBuckets.get(arr[i].charAt(charPos)).add(arr[i]);
-            }
-
-            // NOW we iterate over ALPHA buckets one at a time and
-            // enqueue in order to arr starting from startingIndex.
-            // This sorts all the strings of that length
-            idx = startingStrIndex;
-            for (java.util.List<String> thisAlphaBucket : alphaBuckets) {
-                for (String s : thisAlphaBucket) {
-                    arr[idx++] = s; // adds in sorted order !
-                }
-
-                thisAlphaBucket.clear();
-            }
-        }
-    }
 }

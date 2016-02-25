@@ -2,6 +2,8 @@ package org.sheehan.algorithm.data_structures;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.sheehan.algorithm.Array;
+import org.sheehan.algorithm.sort.SortList;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -167,7 +169,62 @@ public class ListImplTest {
 
         assertFalse(list1.orderedElementsFound(list4));
 
+    }
+
+    @Test
+    public void testInsertionSortList() throws Exception {
+        Integer array[] = Array.createArray(10,10, true);
+        ListImpl<Integer> list = new ListImpl<>();
+        list.appendBack(5);
+        list.appendBack(10);
+        list.appendBack(3);
+        list.appendBack(7);
+        list.appendBack(1);
+
+        list.print();
+
+
+        ListImpl.insertionSort(list);
+        list.print();
+
+
+        System.out.println();
 
     }
 
+    @Test
+    public void testSelectionSortList() throws Exception {
+
+        ListImpl<Integer> list = new ListImpl<>();
+        list.appendBack(5);
+        list.appendBack(10);
+        list.appendBack(3);
+        list.appendBack(7);
+        list.appendBack(1);
+
+        list.print();
+
+        ListImpl.selectionSort(list);
+        list.print();
+
+        System.out.println();
+    }
+
+    @Test
+    public void testSwapPairs() throws Exception {
+
+        ListImpl<Integer> list = new ListImpl<>();
+        list.appendBack(5);
+        list.appendBack(10);
+        list.appendBack(3);
+        list.appendBack(7);
+        list.appendBack(1);
+
+        list.print();
+
+        ListImpl.swapPairs(list);
+        list.print();
+
+        System.out.println();
+    }
 }

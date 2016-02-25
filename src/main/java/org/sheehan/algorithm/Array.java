@@ -1,14 +1,43 @@
-package org.sheehan.algorithm.data_structures;
+package org.sheehan.algorithm;
 
-import org.sheehan.algorithm.sort.Sort;
+import org.sheehan.algorithm.sort.SortArray;
 
 import java.util.*;
 import java.util.List;
 
 /**
+ *
  * Created by bob on 6/5/14.
+ *
+ * Notes:
+ *
+ * 1. median of array - sort and get middle element
+ * 2. arrays do not have the link store that linked list nodes have --> less memory
+ * 3. arrays provide better locality for cache hits
+ * 4. random access
  */
 public class Array {
+
+    public static <T> T[] insertAt(T[] array, Integer pos, T val){
+        T[] copyArray = Arrays.copyOf(array, array.length + 1);
+
+        // move items from pos+1 over towards end of new array. iterate from end of array
+        for (int i = copyArray.length-1; i > pos; i--)
+            copyArray[i] = copyArray[i-1];
+
+        copyArray[pos]= val;
+
+       return copyArray;
+    }
+
+    public static <T> T[] removeAt(T[] array, Integer pos){
+
+        for (int i = pos; i < array.length-1; i++)
+            array[i] = array[i+1];
+
+        T[] copyArray = Arrays.copyOf(array, array.length-1);
+        return copyArray;
+    }
 
     // Trick here is think of top row up to one before the end.
     // The right column starts with the end of the top row
@@ -16,7 +45,9 @@ public class Array {
     public static void rotateCW90(Integer[][] a){
 
         for (int i = 0; i < a.length/2; ++i) {
-            for (int j = i; j < a.length-i-1; ++j) {
+            // use j to iterate horizontal for top and bottom rows or vertical for left right cols !!!
+            for (int j = i; j < a.length-i-1; ++j) { // not all the way to end, which is start of next col or row!!!
+
                 int topRow = a[i][j]; // iterate across with j
                 int rightCol = a[j][a.length-1-i]; //iterate down on j
                 int bottomRow = a[a.length-1-i][a.length-1-j]; //iterate back across on j
@@ -40,6 +71,7 @@ public class Array {
             }
         }
     }*/
+
     // nlogn is a mergesort divide and conquer
     // OR better is O(n) - track min element AND max difference
     // get deltas as array then maximal sub array of deltas !
@@ -48,7 +80,7 @@ public class Array {
         int max_diff = arr[1] - arr[0];
         int min_element = arr[0];
         int i;
-        for(i = 1; i < arr.length; i++)
+        for(i=1; i < arr.length; i++)
         {
             if (arr[i] - min_element > max_diff)
                 max_diff = arr[i] - min_element;
@@ -503,7 +535,7 @@ public class Array {
 
 
         if (sorted)
-            Sort.insertionSort(array);
+            SortArray.insertionSort(array);
         return array;
     }
 

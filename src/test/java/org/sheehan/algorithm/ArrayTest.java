@@ -1,12 +1,26 @@
-package org.sheehan.algorithm.data_structures;
+package org.sheehan.algorithm;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.sheehan.algorithm.Array;
 
 import java.util.*;
 import java.util.List;
 
 public class ArrayTest {
+
+    @Test
+    public void testInsertAt() {
+        Integer array1[] = Array.createArray(10, 10, true);
+        Array.print(array1);
+
+        Integer copy[] = Array.insertAt(array1, 6, 100);
+        Array.print(copy);
+
+        Integer copy2[] = Array.removeAt(copy, 6);
+        Array.print(copy2);
+
+    }
 
     @Test
     public void testRotate90() {

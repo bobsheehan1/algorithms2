@@ -2,7 +2,6 @@ package org.sheehan.algorithm;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.sheehan.algorithm.data_structures.Array;
 
 import static org.junit.Assert.assertEquals;
 

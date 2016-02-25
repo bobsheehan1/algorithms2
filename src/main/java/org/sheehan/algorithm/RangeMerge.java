@@ -52,7 +52,7 @@ public class RangeMerge {
     }
 
 //    with stack
-//    1. Sort the intervals based on increasing order of starting time.
+//    1. SortArray the intervals based on increasing order of starting time.
 //    2. Push the first interval on to a stack.
 //    3. For each interval do the following
 //      a. If the current interval does not overlap with the stack top, push it.

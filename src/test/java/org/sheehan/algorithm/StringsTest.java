@@ -2,6 +2,7 @@ package org.sheehan.algorithm;
 
 import junit.framework.Assert;
 import org.junit.Test;
+import org.sheehan.algorithm.sort.SortArray;
 
 import java.util.*;
 
@@ -196,4 +197,45 @@ public class StringsTest {
         Assert.assertEquals(23, i);;
     }
 
+    @Test
+    public void testRadixSortLsdLexical() throws Exception {
+        String array[] = {"zxc", "ldf", "ior", "oiw", "pwo", "aaa"};
+
+        System.out.println("radix lsd lexical");
+        System.out.println(Arrays.toString(array));
+
+        Strings.radixSortLexicalFixedLsd(array);
+        System.out.println(Arrays.toString(array));
+        System.out.println();
+    }
+
+    @Test
+    public void testRadixSortMsdLexical() throws Exception {
+        java.util.List<String> lst = new ArrayList<>( );
+        Random r = new Random( );
+
+        //final int LEN = 7;
+
+        for( int i = 0; i < 20; i++ )
+        {
+            String str = "";
+            int len =  1 + r.nextInt( 5 ); // between 3 and 9 characters
+
+            for( int j = 0; j < len; j++ )
+                str += (char) ( 'a' + r.nextInt( 26 ) );
+
+            lst.add( str );
+        }
+
+        String []arr1 = new String[ lst.size( ) ];
+
+        lst.toArray( arr1 );
+
+        System.out.println("radix lsd lexical");
+        System.out.println(Arrays.toString(arr1));
+
+        Strings.radixSortVarLengthMsd(arr1, 9);
+        System.out.println(Arrays.toString(arr1));
+        System.out.println();
+    }
 }

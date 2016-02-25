@@ -3,16 +3,13 @@ package org.sheehan.algorithm;
 import org.junit.Test;
 
 
-import org.sheehan.algorithm.data_structures.Array;
-import org.sheehan.algorithm.data_structures.List;
-import org.sheehan.algorithm.data_structures.ListImpl;
-import org.sheehan.algorithm.sort.Sort;
+import org.sheehan.algorithm.sort.SortArray;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
 
-public class SortTest {
+public class SortArrayTest {
 
     @Test
     public void testBubbleSort() throws Exception {
@@ -21,7 +18,7 @@ public class SortTest {
         System.out.println("bubble");
         System.out.println(Arrays.toString(array));
 
-        Sort.bubbleSort(array);
+        SortArray.bubbleSort(array);
         System.out.println(Arrays.toString(array));
         System.out.println();
 
@@ -35,7 +32,7 @@ public class SortTest {
             array2[i] = i.intValue();
         }
 
-        Sort.bubbleSortPolarity(array2);
+        SortArray.bubbleSortPolarity(array2);
         System.out.println(Arrays.toString(array2));
         System.out.println();
 
@@ -44,7 +41,7 @@ public class SortTest {
             array2[i] = i.intValue();
         }
 
-        Sort.bubbleSortPolarity(array2);
+        SortArray.bubbleSortPolarity(array2);
         System.out.println(Arrays.toString(array2));
         System.out.println();
 
@@ -57,28 +54,8 @@ public class SortTest {
         System.out.println("insertion");
         System.out.println(Arrays.toString(array));
 
-        Sort.insertionSort(array);
+        SortArray.insertionSort(array);
         System.out.println(Arrays.toString(array));
-        System.out.println();
-
-    }
-
-    @Test
-    public void testInsertionSortList() throws Exception {
-        Integer array[] = Array.createArray(10,10, false);
-        List<Integer> list = new ListImpl<>();
-        for (Integer i : array){
-            list.appendBack(i);
-        }
-
-        System.out.println("insertion");
-        list.print();
-
-
-        Sort.insertionSort(list);
-        list.print();
-
-
         System.out.println();
 
     }
@@ -90,7 +67,7 @@ public class SortTest {
         System.out.println("heap");
         System.out.println(Arrays.toString(array));
 
-        Sort.heapSort(array);
+        SortArray.heapSort(array);
         System.out.println(Arrays.toString(array));
         System.out.println();
     }
@@ -103,7 +80,7 @@ public class SortTest {
         System.out.println("selection");
         System.out.println(Arrays.toString(array));
 
-        Sort.selectionSort(array);
+        SortArray.selectionSort(array);
         System.out.println(Arrays.toString(array));
         System.out.println();
     }
@@ -115,7 +92,7 @@ public class SortTest {
         System.out.println("selection recurse");
         System.out.println(Arrays.toString(array));
 
-        Sort.selectionSortRecursive(array, 1);
+        SortArray.selectionSortRecursive(array, 1);
         System.out.println(Arrays.toString(array));
         System.out.println();
     }
@@ -128,7 +105,7 @@ public class SortTest {
         System.out.println("merge");
         System.out.println(Arrays.toString(array));
 
-        Sort.mergeSort(array);
+        SortArray.mergeSort(array);
         System.out.println(Arrays.toString(array));
         System.out.println();
     }
@@ -144,7 +121,7 @@ public class SortTest {
         System.out.println("merge");
         System.out.println(Arrays.toString(array2));
 
-        Sort.mergeSort2(array2);
+        SortArray.mergeSort2(array2);
         System.out.println(Arrays.toString(array2));
         System.out.println();
     }
@@ -155,7 +132,7 @@ public class SortTest {
 
         System.out.println("quick-select");
 
-        int index = Sort.quicksortSelectKSmallest(array, 0, array.length - 1, 4);
+        int index = SortArray.quicksortSelectKSmallest(array, 0, array.length - 1, 4);
         System.out.println(Arrays.toString(array));
         System.out.println(array[index]);
         System.out.println();
@@ -168,7 +145,7 @@ public class SortTest {
         System.out.println("quick");
         System.out.println(Arrays.toString(array));
 
-        Sort.quicksort(array, 0, array.length - 1);
+        SortArray.quicksort(array, 0, array.length - 1);
         System.out.println(Arrays.toString(array));
         System.out.println();
 
@@ -181,7 +158,7 @@ public class SortTest {
         System.out.println("counting");
         System.out.println(Arrays.toString(array));
 
-        Sort.countingSort(array);
+        SortArray.countingSort(array);
         System.out.println(Arrays.toString(array));
         System.out.println();
     }
@@ -193,7 +170,7 @@ public class SortTest {
         System.out.println("counting");
         System.out.println(Arrays.toString(array));
 
-        Sort.countingSort(array);
+        SortArray.countingSort(array);
         System.out.println(Arrays.toString(array));
         System.out.println();
     }
@@ -205,7 +182,7 @@ public class SortTest {
         System.out.println("radix lsd");
         System.out.println(Arrays.toString(array));
 
-        Sort.radixSort(array);
+        SortArray.radixSort(array);
         System.out.println(Arrays.toString(array));
         System.out.println();
     }
@@ -217,50 +194,8 @@ public class SortTest {
         System.out.println("radix lsd");
         System.out.println(Arrays.toString(array));
 
-        Sort.radixSortBinaryLsd(array);
+        SortArray.radixSortBinaryLsd(array);
         System.out.println(Arrays.toString(array));
-        System.out.println();
-    }
-
-    @Test
-    public void testRadixSortLsdLexical() throws Exception {
-        String array[] = {"zxc", "ldf", "ior", "oiw", "pwo", "aaa"};
-
-        System.out.println("radix lsd lexical");
-        System.out.println(Arrays.toString(array));
-
-        Sort.radixSortLexicalFixedLsd(array);
-        System.out.println(Arrays.toString(array));
-        System.out.println();
-    }
-
-    @Test
-    public void testRadixSortMsdLexical() throws Exception {
-        java.util.List<String> lst = new ArrayList<>( );
-        Random r = new Random( );
-
-        //final int LEN = 7;
-
-        for( int i = 0; i < 20; i++ )
-        {
-            String str = "";
-            int len =  1 + r.nextInt( 5 ); // between 3 and 9 characters
-
-            for( int j = 0; j < len; j++ )
-                str += (char) ( 'a' + r.nextInt( 26 ) );
-
-            lst.add( str );
-        }
-
-        String []arr1 = new String[ lst.size( ) ];
-
-        lst.toArray( arr1 );
-
-        System.out.println("radix lsd lexical");
-        System.out.println(Arrays.toString(arr1));
-
-        Sort.radixSortVarLengthMsd(arr1, 9);
-        System.out.println(Arrays.toString(arr1));
         System.out.println();
     }
 }
