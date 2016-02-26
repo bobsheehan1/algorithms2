@@ -3,6 +3,7 @@ package org.sheehan.algorithm.data_structures.graph;
 import org.sheehan.algorithm.data_structures.List;
 import org.sheehan.algorithm.data_structures.ListImpl;
 
+import java.lang.ref.WeakReference;
 import java.util.*;
 
 /**
@@ -13,7 +14,6 @@ public class GraphList<T extends Comparable<T>> implements Graph<T> {
 
     private Map<GraphNode<T>, List<GraphEdge<T>>> graphAdjacencyList;
     private java.util.Set<GraphNode<T>> graphNodes = new HashSet<>();
-
 
     public GraphList() {
         graphAdjacencyList = new HashMap<GraphNode<T>, List<GraphEdge<T>>>();
@@ -36,13 +36,24 @@ public class GraphList<T extends Comparable<T>> implements Graph<T> {
                 for (GraphNode<T> neighbor : neighbors) {
                     // if unvisited incoming edge found from node to candidate
                     GraphEdge<T> edge = getEdge(node, candidate);
-                    if (neighbor.equals(candidate) && (edge == null || !edge.visited))
+                    if (neighbor.equals(candidate) /*&& (edge == null || !edge.visited)*/)
                         return true;
                 }
             }
         }
         return false;
     }
+
+
+    public boolean removeEdge(GraphEdge<T> edge){
+        List<GraphEdge<T>> graphEdges = this.graphAdjacencyList.get(edge.dstNode);
+        graphEdges.delete(edge);
+        graphEdges = this.graphAdjacencyList.get(edge.srcNode);
+        graphEdges.delete(edge);
+
+        return true; //todo
+    }
+
 
     // enqueue directed edge weighted
     @Override

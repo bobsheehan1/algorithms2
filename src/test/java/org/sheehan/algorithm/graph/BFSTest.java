@@ -27,6 +27,7 @@ public class BFSTest {
         graph.addUndirectedEdge(nodes.get(6), nodes.get(5), 2);
         //graph.printGraph();
 
+
         BFS bfs = new BFS(graph);
         bfs.visitIterative(nodes.get(0));
         bfs.printConnected();

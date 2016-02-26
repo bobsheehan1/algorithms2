@@ -30,6 +30,8 @@ public class DFSTest {
         DFS dfs = new DFS(graph);
         dfs.visitRecursion(nodes.get(0));
         dfs.printConnected();
+
+
     }
 
     @Test
@@ -53,6 +55,7 @@ public class DFSTest {
         DFS dfs = new DFS(graph);
         dfs.visitIterative(nodes.get(0));
         dfs.printConnected();
+
     }
 
 }

@@ -32,6 +32,5 @@ public class TopologicalSortDagTest {
         List<GraphNode<Integer>> sortedList = algorithm.topologicalSort(graph);
         System.out.println();
         sortedList.print();
-
     }
 }

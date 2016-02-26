@@ -35,4 +35,7 @@ public interface Graph<T extends Comparable<T>> {
     GraphNode<T> addNode(GraphNode<T> node);
 
     boolean hasIncomingEdges(GraphNode<T> node);
+
+    boolean removeEdge(GraphEdge<T> edge);
+
 }

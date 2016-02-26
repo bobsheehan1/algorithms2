@@ -1,7 +1,6 @@
 package org.sheehan.algorithm.graph;
 
-import org.sheehan.algorithm.data_structures.Stack;
-import org.sheehan.algorithm.data_structures.StackImpl;
+import org.sheehan.algorithm.data_structures.*;
 import org.sheehan.algorithm.data_structures.graph.Graph;
 import org.sheehan.algorithm.data_structures.graph.GraphNode;
 
@@ -29,18 +28,20 @@ public class DFS <T extends Comparable<T>>{
         }
     }
 
-    // use a stack for DFS
-    public void visitIterative(GraphNode<T> v){
-        Stack<GraphNode<T>> stack = new StackImpl<>(graph.getNumV());
 
-        stack.push(v);
+    // use a stack for DFS - SAME AS BFS with stack instead of queue
+    public void visitIterative(GraphNode<T> sourceNode){;
+        Stack<GraphNode<T>> stack = new StackImpl<>(graph.getNumV());
+        stack.push(sourceNode);
+        sourceNode.visited = true; // mark after adding to queue
         while (stack.peek() != null) {
-            GraphNode<T> v1 = stack.pop();
-            if (!v1.visited) {
-                v1.visited = true; // mark after pop
-                for(GraphNode<T> neighbor : graph.getNeighbors(v1)){
-                    if (!neighbor.visited && graph.isEdge(v1, neighbor))
-                        stack.push(neighbor);
+            GraphNode<T> node = stack.pop();
+            List<GraphNode<T>> neighbors = graph.getNeighbors(node);
+            for (GraphNode<T> neighbor: neighbors){
+                if (!neighbor.visited) {
+                    stack.push(neighbor);
+                    neighbor.visited = true; // mark after adding to queue
+                    neighbor.distance = node.distance+1;
                 }
             }
         }

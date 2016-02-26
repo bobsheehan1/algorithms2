@@ -52,6 +52,7 @@ public class DjikstraShortestPath <T extends Comparable<T>>{
     }
 
     // optimized with PQ
+    // edges have weights. nodes have mutable field for accumulating totla weight or distance.
     public void executePQIterative(GraphNode<T> sourceNode) {
         BinaryHeap<GraphNode<T>> minHeap = new BinaryHeap<>(graph.getNumV(), BinaryHeap.HeapType.MIN_HEAP);
 
@@ -85,6 +86,7 @@ public class DjikstraShortestPath <T extends Comparable<T>>{
         }
     }
 
+    // to print the path push onto LIFO stack then pop and print
     public void printPath(GraphNode<T> srcNode, GraphNode<T> dstNode) {
         Stack<GraphNode<T>> path = new StackImpl<>(predecessorMap.size());
         path.push(dstNode);
