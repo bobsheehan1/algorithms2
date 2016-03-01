@@ -10,6 +10,46 @@ import java.util.List;
 public class ArrayTest {
 
     @Test
+    public void testRemoveElements() {
+        Integer array1[] = {1,2,4,4,4,5};
+        Array.print(array1);
+        int len =  Array.removeElements(array1, 4);
+        for (int i =0; i < len; ++i)
+            System.out.print(array1[i] + " ");
+        System.out.println();
+
+        Integer array2[] = {4,4,4};
+        Array.print(array2);
+        len = Array.removeElements(array2, 4);
+        for (int i =0; i < len; ++i)
+            System.out.print(array2[i] + " ");
+        System.out.println();
+
+
+        Integer array3[] = {1,2,4};
+        Array.print(array3);
+        len = Array.removeElements(array3, 4);
+        for (int i =0; i < len; ++i)
+            System.out.print(array3[i] + " ");
+        System.out.println();
+
+        Integer array4[] = {4,2,1};
+        Array.print(array4);
+        len = Array.removeElements(array4, 4);
+        for (int i =0; i < len; ++i)
+            System.out.print(array4[i] + " ");
+        System.out.println();
+
+        Integer array5[] = {4};
+        Array.print(array5);
+        len = Array.removeElements(array5, 4);
+        for (int i =0; i < len; ++i)
+            System.out.print(array5[i] + " ");
+        System.out.println();
+
+    }
+
+    @Test
     public void testInsertAt() {
         Integer array1[] = Array.createArray(10, 10, true);
         Array.print(array1);
@@ -260,17 +300,23 @@ public class ArrayTest {
     @Test
     public void testMaxSubArrayOfIntegers() {
         Integer array[] = {1, -2, -6, 3, 5, -2, 3, 10, -3};
+        Array.print(array);
 
         System.out.println(Array.getMaxAndMinSubArray(array));
         System.out.println(Array.getMaxSubArraySum2(array));
         System.out.println(Array.getMaxSubArraySum3(array));
+
+
+        System.out.println(Array.findLargestSumSequence(array));
     }
 
     @Test
     public void testMaxSubArrayOfIntegers2() {
-        Integer array[] = {1, -2, -6, 3, 5, -2, 3, 10, -3};
+        Integer array[] = {1, 2, -6, 3, 5, -9, 30, 10, -3};
+        Array.print(array);
 
         System.out.println(Array.getMaxSubArraySum2(array));
+        System.out.println(Array.findLargestSumSequence(array));
     }
 
 

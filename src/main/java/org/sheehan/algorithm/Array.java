@@ -297,12 +297,12 @@ public class Array {
     // bitmask - removes duplicates and fills left over array with -1's
     public static void removeDuplicates3(Integer[] array) {
 
-        int dst = 1;
+        int dstIndex = 1;
         for (int i = 1; i < array.length; ++i) {
 
             // compare new char against already pegged chars Bro
             boolean unique = true;
-            for (int j = 0; j < dst; ++j) {
+            for (int j = 0; j < dstIndex; ++j) {
                 if (array[i] == array[j]) {
                     unique = false;
                     break; // this thing already been done friend.
@@ -310,13 +310,28 @@ public class Array {
             }
 
             if (unique)
-                array[dst++] = array[i];
+                array[dstIndex++] = array[i];
 
         }
 
-        for (int i = dst; i < array.length; ++i) {
+        for (int i = dstIndex; i < array.length; ++i) {
             array[i] = -1;
         }
+    }
+
+    public static int removeElements(Integer[] array, int val) {
+
+        int dstIndex = 0;
+        for (int i = 0; i < array.length; ++i) {
+            if (array[i] != val)
+                array[dstIndex++] = array[i];
+        }
+
+        for (int i = dstIndex; i < array.length; ++i) {
+            array[i] = -1;
+        }
+
+        return dstIndex;
     }
 
 
@@ -522,8 +537,36 @@ public class Array {
         return false;
     }
 
+    public static int findLargestSumSequence(Integer[] array){
+        Integer soln[] = new Integer[array.length];
+        soln[0]=array[0];
+        int maxSum = array[0];
 
-    // UTILS ----------------------------------------------------------------
+        int left = 0, right = 0;
+
+        for (int i = 1; i < array.length; ++i){
+
+            if (array[i] > soln[i-1]+ array[i]){
+                soln[i] = array[i];
+                left = i;
+            } else {
+                soln[i] = soln[i-1]+ array[i];
+            }
+
+            soln[i] = Math.max(array[i], soln[i-1]+ array[i]);
+            if (soln[i] > maxSum){
+                maxSum = soln[i];
+                right = i;
+            }
+        }
+
+        System.out.println("bounds " + left + " " + right);
+        return maxSum;
+    }
+
+
+
+        // UTILS ----------------------------------------------------------------
     public static Integer[] createArray(int size, int limit, boolean sorted) {
 
         Random random = new Random();

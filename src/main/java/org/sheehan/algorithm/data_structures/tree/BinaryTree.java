@@ -2,6 +2,7 @@ package org.sheehan.algorithm.data_structures.tree;
 
 import org.sheehan.algorithm.data_structures.Queue;
 import org.sheehan.algorithm.data_structures.QueueArrayImpl;
+import org.sheehan.algorithm.data_structures.QueueListImpl;
 
 import java.util.function.IntConsumer;
 
@@ -130,33 +131,40 @@ public class BinaryTree<K extends Comparable<? super K>, V> {
         printLevelSimple(node.right, level + 1, rLevel);
     }
 
-    public int getHeight(){
-        return getMaxHeight(this.root);
-     }
-
-    //recursive
-    private int getMaxHeight(TreeNode<K,V> node){
-        if (node == null)
+    public int getMaxDepth(TreeNode<K,V> root) {
+        if(root == null)
             return 0;
-        else
-            return 1 + Math.max(getMaxHeight(node.left), getMaxHeight(node.right ));
+        else {
+            if(root.left != null && root.right != null)
+                return 1 + Math.max(getMaxDepth(root.left), getMaxDepth(root.right));
+            else
+                return 1 + getMaxDepth(root.right) + getMaxDepth(root.left);
+        }
     }
 
-    //recursive
-    private int getMinHeight(TreeNode<K,V> node){
-        if (node == null)
+    public int getMinDepth(TreeNode<K,V> root) {
+        if(root == null)
             return 0;
-        else
-            return 1 + Math.min(getMaxHeight(node.left), getMaxHeight(node.right));
+        else {
+            if(root.left != null && root.right != null)
+                return 1 + Math.min(getMinDepth(root.left), getMinDepth(root.right));
+            else
+                return 1 + getMinDepth(root.right) + getMinDepth(root.left);
+        }
     }
 
-    public boolean isBalanced()
-    {
-        int min = getMinHeight(this.root);
-        int max = getMaxHeight(this.root);
+    public boolean isBalanced(TreeNode root) {
+        if (root == null)
+            return true;
 
-        return max-min<= 1;
+        int diff = (int)(Math.abs(getMaxDepth(root.left) - getMaxDepth(root.right)));
+        boolean balanced = diff <= 1 ? true:false;
+        if (!balanced)
+            return false;
+        return isBalanced(root.left) && isBalanced(root.right);
+
     }
+
 
     //recursive
     public int getMaxSum(TreeNode<Integer, Integer> node){
@@ -211,10 +219,8 @@ public class BinaryTree<K extends Comparable<? super K>, V> {
         }
 
         //recurse
-        if (node.left != null)
-            mirror(node.left);
-        if (node.right != null)
-            mirror(node.right);
+        mirror(node.left);
+        mirror(node.right);
     }
 
     public void mirror(){
@@ -245,7 +251,7 @@ public class BinaryTree<K extends Comparable<? super K>, V> {
     private void traverseBfs(TreeNode<K,V> root, IntConsumer op) {
         if (root == null)
             return;
-        Queue<TreeNode<K,V>> q = new QueueArrayImpl<>(100);
+        Queue<TreeNode<K,V>> q = new QueueListImpl<>();
         q.enqueue(root);
         while (q.peek() != null){
             TreeNode<K,V> node = q.dequeue();
@@ -273,9 +279,8 @@ public class BinaryTree<K extends Comparable<? super K>, V> {
         if (node1 == null && node2 != null)
             return false;
 
-        if (node1 != null & node2 != null)
-            if (!node1.value.equals(node2.value))
-                return false;
+        if (!node1.value.equals(node2.value))
+            return false;
 
         boolean value = true;
         value &= compare(node1.left, node2.left);

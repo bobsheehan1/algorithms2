@@ -104,8 +104,40 @@ public class SortArray {
         for (int i = 0; i < n; ++i){
             // move left from i swapping as you go
             for (int j = i; j > 0; j--){
-                swabCallback.swap(array, j-1, j);
+                if (array[j-1].compareTo(array[j]) > 0) {
+                    T tmp = array[j-1];
+                    array[j-1] = array[j];
+                    array[j] = tmp;
+                }
             }
+        }
+    }
+
+    // this variation gets the insertAt position then moves then sorted array down by one from the insertpoint
+    public static <T extends Comparable<T>> void insertionSort2(T array[]){
+         int n = array.length;
+
+        // starting index to start from right and move left from
+        for (int i = 0; i < n; ++i){
+            // move from right and find insert point
+            int insertAt = i;
+            for (int j = i-1; j >= 0; j--){
+                if (array[j].compareTo(array[i]) > 0) {
+                    insertAt = j;
+                }
+            }
+
+            // save as it will be written over
+            T val = array[i];
+
+            // slide em over to the right
+            for (int j = i; j > insertAt; j--){
+                array[j] = array[j-1];
+            }
+
+            //now set it where it belongs !
+            array[insertAt] = val;
+
         }
     }
 

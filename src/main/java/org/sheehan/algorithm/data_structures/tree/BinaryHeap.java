@@ -12,7 +12,6 @@ package org.sheehan.algorithm.data_structures.tree;
  */
 public class BinaryHeap <T extends Comparable<T>> extends BinaryCompleteTree <T> {
 
-
     public enum HeapType {MIN_HEAP, MAX_HEAP};
 
     final private HeapType heapType;
@@ -128,4 +127,15 @@ public class BinaryHeap <T extends Comparable<T>> extends BinaryCompleteTree <T>
         bubbleDown(0);
         return value;
     }
+
+    public T peek() {
+        if (count == 0)
+            return null;
+        return this.array[0];
+    }
+
+    public int size() {
+        return count;
+    }
+
 }

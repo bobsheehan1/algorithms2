@@ -19,7 +19,7 @@ public class BinarySearchTreeTest {
         BinaryTree.TreeNode node5 = bst.insert(5,5);
         BinaryTree.TreeNode node9 = bst.insert(9,9);
 
-        int height = bst.getHeight();
+        int height = bst.getMaxDepth(bst.root);
         boolean dir = true;
         for (int i = 0; i < height; ++i){
             bst.printLevel(bst.root, 0, i, dir);
@@ -45,7 +45,7 @@ public class BinarySearchTreeTest {
 
         assertTrue(BinarySearchTree.isBst(bst.root));
 
-        System.out.println("tree height: " + bst.getHeight());
+        System.out.println("tree height: " + bst.getMaxDepth(bst.root));
         bst.printInOrder();
 
         printStuff(bst, node6);
@@ -108,7 +108,7 @@ public class BinarySearchTreeTest {
         bst.insert(93,93);
         bst.insert(91,91);
 
-        int height = bst.getHeight();
+        int height = bst.getMaxDepth(bst.root);
         for (int i = 0; i < height; ++i) {
             bst.printLevelSimple(bst.root, 0, i);
             System.out.println();
@@ -118,7 +118,7 @@ public class BinarySearchTreeTest {
 
         BinaryTree.TreeNode<Integer,Integer> node = bst.get(bst.root,90);
         bst.delete(node);
-        height = bst.getHeight();
+        height = bst.getMaxDepth(bst.root);
         for (int i = 0; i < height; ++i) {
             bst.printLevelSimple(bst.root, 0, i);
             System.out.println();

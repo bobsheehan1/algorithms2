@@ -37,7 +37,7 @@ public class BinaryTreeTest {
         node1.right = BinarySearchTree.createTreeNode(5, 5);
 
         tree.print();
-        System.out.println(tree.isBalanced());
+        System.out.println(tree.isBalanced(tree.root));
 
     }
 
@@ -54,4 +54,27 @@ public class BinaryTreeTest {
 
     }
 
+    @Test
+    public void testMirror() throws Exception {
+        BinaryTree.TreeNode node1 = BinaryTree.createTreeNode(1, 1, null, null);
+        BinaryTree.TreeNode node2 = BinaryTree.createTreeNode(3, 3, node1, null);
+        BinaryTree.TreeNode node3 = BinaryTree.createTreeNode(6, 6, null, null);
+        BinaryTree.TreeNode node4 = BinaryTree.createTreeNode(9, 9, node3, node2);
+        BinaryTree<Integer, Integer> tree = new BinaryTree<>(node4);
+        tree.traverseBfs(x -> System.out.print(x + " "));
+
+        int height = tree.getMaxDepth(tree.root);
+        for (int i = 0; i < height; ++i) {
+            tree.printLevelSimple(tree.root, 0, i);
+            System.out.println();
+        }
+
+        tree.mirror();
+
+        for (int i = 0; i < height; ++i) {
+            tree.printLevelSimple(tree.root, 0, i);
+            System.out.println();
+        }
+
+    }
 }

@@ -49,12 +49,12 @@ public class SortArrayTest {
 
     @Test
     public void testInsertionSortArray() throws Exception {
-        Integer array[] = Array.createArray(10,10, false);
+        Integer array[] = {6,5,3,1,8,7};
 
         System.out.println("insertion");
         System.out.println(Arrays.toString(array));
 
-        SortArray.insertionSort(array);
+        SortArray.insertionSort2(array);
         System.out.println(Arrays.toString(array));
         System.out.println();
 

@@ -114,6 +114,35 @@ public class ListImpl <T extends Comparable<T>> implements List<T> {
         return curr;
     }
 
+
+    // here we delete elements that match val
+    // careful to only increment prev to non deleted nodes !!!
+    public Node deleteElements(Node head, int val) {
+        if (head == null)
+            return null;
+
+        Node prev = null;
+        Node curr = head;
+        while (curr != null) {
+
+            if (curr.data .equals(val)){
+                if (prev == null) {
+                    head = curr.next;
+                } else {
+                    prev.next = curr.next;
+                }
+
+            } else
+                prev = curr;  /// IMPORTANT !
+
+            curr = curr.next;
+        }
+
+        return head;
+
+    }
+
+    // TODO another algorithm If only pointer to current node. Copy next and delete next !!!
     @Override
     public boolean delete(T value) {
         if (head == null)
@@ -426,36 +455,41 @@ public class ListImpl <T extends Comparable<T>> implements List<T> {
     // compares each new element against already sorted elements
     // This rejiggers the original list links to point in sorted order
     public static <T extends Comparable<T>> void insertionSort(ListImpl<T> list) {
-        List.Node<T> head2 = null;
+        List.Node<T> sortedHead = null;
         List.Node<T> curr = list.head;
 
         while (curr != null) {
-            List.Node<T> curr2 = head2;
-            List.Node<T> prev2 = null;
-            while (curr2 != null) {
-                if (curr.data.compareTo(curr2.data) < 0) {
+
+            // where to insert in sorted list ?
+            List.Node<T> sortedCurr = sortedHead;
+            List.Node<T> prevSorted = null;
+            while (sortedCurr != null) {
+                if (curr.data.compareTo(sortedCurr.data) < 0) {
                     break;
                 }
-                prev2 = curr2;
-                curr2 = curr2.next;
+                prevSorted = sortedCurr;
+                sortedCurr = sortedCurr.next;
             }
 
             List.Node<T> next = curr.next; // SAVE THIS for iteration cause relinking nodes along the way !!
 
+            // insert curr into sorted list
+
             // build up sorted list from beginning
-            if (prev2 == null) { //insert at head
-                curr.next = curr2;
-                head2 = curr; // SET head of sorted list here !
-            } else if (curr2 == null) {//insert at end
-                prev2.next = curr;
+            if (prevSorted == null) { //insert at head
+                curr.next = sortedCurr;
+                sortedHead = curr; // SET head of sorted list here !
+            } else if (sortedCurr == null) {//insert at end
+                prevSorted.next = curr;
                 curr.next = null;
             } else { // insert in middle
-                prev2.next = curr;
-                curr.next = curr2;
+                prevSorted.next = curr;
+                curr.next = sortedCurr;
             }
+
             curr = next; // iterate down unsorted remaining list
         }
-        list.head = head2; // now set original list head to first sorted node !
+        list.head = sortedHead; // now set original list head to first sorted node !
     }
 
     // iterate over sorted array to insert minimum unsorted node

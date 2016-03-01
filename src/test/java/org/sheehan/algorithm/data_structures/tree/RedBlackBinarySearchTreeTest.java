@@ -22,7 +22,7 @@ public class RedBlackBinarySearchTreeTest extends TestCase {
         bst.insert(7, 7);
         bst.insert(8, 8);
         System.out.println(); System.out.println();
-        int height = bst.getHeight();
+        int height = bst.getMaxDepth(bst.root);
         for (int i = 0; i < height; ++i) {
             bst.printLevelSimple(bst.root, 0, i);
             System.out.println();
@@ -40,7 +40,7 @@ public class RedBlackBinarySearchTreeTest extends TestCase {
         bst.insert(2, 2);
         bst.insert(1, 1);
         System.out.println(); System.out.println();
-         height = bst.getHeight();
+        height = bst.getMaxDepth(bst.root);
         for (int i = 0; i < height; ++i) {
             bst.printLevelSimple(bst.root, 0, i);
             System.out.println();
@@ -55,7 +55,7 @@ public class RedBlackBinarySearchTreeTest extends TestCase {
         bst2.insert(5, 5);
         bst2.insert(7, 7);
         System.out.println(); System.out.println();
-        height = bst2.getHeight();
+        height = bst2.getMaxDepth(bst2.root);
         for (int i = 0; i < height; ++i) {
             bst.printLevelSimple(bst2.root, 0, i);
             System.out.println();
