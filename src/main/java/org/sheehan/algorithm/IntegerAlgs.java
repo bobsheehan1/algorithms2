@@ -41,10 +41,10 @@ public class IntegerAlgs {
 
         int n_reverse=0;
         for (int i = 0; i < length; ++i){
-            int digit = n/(int)Math.pow(10,length-1-i);
+            int digit = n/(int) Math.pow(10,length-1-i);
             digit %=10;
 
-            int mult2 = (int)Math.pow(10,i);
+            int mult2 = (int) Math.pow(10,i);
             n_reverse += digit*mult2;
         }
 

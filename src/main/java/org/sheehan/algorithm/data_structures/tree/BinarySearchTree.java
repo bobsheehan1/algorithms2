@@ -39,10 +39,24 @@ public class BinarySearchTree<K extends Comparable<?super K>, V> extends BinaryT
         return insert(root, key, value);
     }
 
-    private TreeNode<K,V> insert(TreeNode<K,V> node, K key, V value) {
+//    private TreeNode<K,V> insert(TreeNode<K,V> node, K key, V value) {
+//
+//        if (node == null)
+//            return createTreeNode(key, value);
+//
+//        if (node.key.compareTo(key) < 0) {
+//            node.right = insert(node.right, key, value);
+//            node.right.parent = node;
+//        } else if (node.key.compareTo(key) > 0) {
+//            node.left = insert(node.left, key, value);
+//            node.left.parent = node;
+//        } else {
+//            node.value = value;
+//        }
+//        return node;
+//    }
 
-        if (node == null)
-            return createTreeNode(key, value);
+    private TreeNode<K,V> insert(TreeNode<K,V> node, K key, V value) {
 
         if (node.key.compareTo(key) < 0) {
             if (node.right != null)
@@ -59,11 +73,11 @@ public class BinarySearchTree<K extends Comparable<?super K>, V> extends BinaryT
                 node.left = createTreeNode(key, value);
                 node.left.parent = node;
                 return node.left;
-
             }
         }
         return null;
     }
+
 
     // O(height of tree)
     // three cases

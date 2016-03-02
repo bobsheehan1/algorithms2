@@ -3,8 +3,6 @@ package org.sheehan.algorithm;
 import org.sheehan.algorithm.data_structures.*;
 
 import java.util.*;
-import java.util.List;
-import java.util.Queue;
 
 /**
  * Created with IntelliJ IDEA.
