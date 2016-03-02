@@ -36,6 +36,12 @@ public class LruCacheTest extends TestCase {
         cache.put(key, key);
         log.info("TEST CACHE PUT " + key + " " + val);
         //log.info("TEST 3 --------------- READ key = 1000 --> should be null " + key + " " + val);
+        key = Integer.toString(1001);
+        cache.put(key, key);
+        log.info("TEST CACHE PUT " + key + " " + val);
+        key = Integer.toString(1000);
+        cache.put(key, key);
+        log.info("TEST CACHE PUT " + key + " " + val);
 
         val = cache.remove(key);
         log.info("TEST CACHE REMOVE " + key + " " + val);

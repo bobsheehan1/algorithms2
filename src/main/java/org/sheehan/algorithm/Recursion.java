@@ -47,32 +47,33 @@ public class Recursion {
     }
 
     // basic
-    static void hanoi(int n, char source, char dest, char between)
+    static void hanoi(int n, char src, char dst, char tmp)
     {
         if (n == 0)
             return;
-        hanoi(n-1, source, between, dest);
-        System.out.println("Move " + n + " from " + source + " to " + dest) ;
-        hanoi(n-1, between, dest, source);
+        hanoi(n-1, src, tmp, dst);
+        System.out.println("Move " + n + " from " + src + " to " + dst) ;
+        hanoi(n-1, tmp, dst, src);
     }
 
     // using stacks for towers
-    static <T extends Comparable<T>> void hanoi2(int n, Stack<T> source, Stack<T> dest, Stack<T> spare)
+    static <T extends Comparable<T>> void hanoiStack(int n, Stack<T> src, Stack<T> dst, Stack<T> tmp)
     {
         if (n == 0)
             return;
         //recursive call 1
-        hanoi2(n-1, source, spare, dest);
+        hanoiStack(n-1, src, tmp, dst);
 
         // move remaining source to dest
-        T disk = source.pop();
-        dest.push(disk);
-        source.print();
-        spare.print();
-        dest.print();
+        T disk = src.pop();
+        dst.push(disk);
+
+        src.print();
+        tmp.print();
+        dst.print();
         System.out.println();
 
         //recursive call 2
-        hanoi2(n-1, spare, dest, source);
+        hanoiStack(n-1, tmp, dst, src);
     }
 }

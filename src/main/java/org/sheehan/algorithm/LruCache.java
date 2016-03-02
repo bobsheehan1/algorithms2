@@ -1,11 +1,5 @@
 package org.sheehan.algorithm;
 
-import org.sheehan.algorithm.data_structures.Queue;
-import org.sheehan.algorithm.data_structures.QueueListImpl;
-
-import java.sql.Timestamp;
-
-import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedQueue;
@@ -25,7 +19,7 @@ public class LruCache<K,V> {
 
     private Map<K, V> cache;
 
-    private java.util.Queue lruQueue = new ConcurrentLinkedQueue();
+    private java.util.Queue lruFifo = new ConcurrentLinkedQueue();
 
     Logger log = Logger.getLogger(this.getClass().getName());
 
@@ -38,24 +32,33 @@ public class LruCache<K,V> {
 
     // either update or add to cache. handle lru update if at capacity
     public void put(K key, V val) {
-        if (lruQueue.size() >= capacity){
-            K lruKey = (K)lruQueue.poll();
+
+        //check and evict
+        if (cache.size() >= capacity){
+            K lruKey = (K) lruFifo.poll(); // removes from fifo
             cache.remove(lruKey);
             log.info("evicted "+ lruKey);
         }
+
         cache.put(key, val);
-        lruQueue.add(key);
-        log.info ("PUT " + lruQueue.toString());
+
+        //update
+        if (lruFifo.contains(key))
+            lruFifo.remove(key);
+        lruFifo.add(key);
+
+        log.info ("PUT " + lruFifo.toString());
     }
 
     public V get(K key) {
         V value = cache.get(key);
 
-        if (lruQueue.contains(key)) {
-            lruQueue.remove(key);
-            lruQueue.add(key);
+        // update fifo with remove/add
+        if (lruFifo.contains(key)) {
+            lruFifo.remove(key);
+            lruFifo.add(key);
         }
-        log.info ("GET " + lruQueue.toString());
+        log.info ("GET " + lruFifo.toString());
 
         return value;
     }
@@ -65,10 +68,10 @@ public class LruCache<K,V> {
         if (cache.containsKey(key)) {
             val = cache.remove(key);
         }
-        if (lruQueue.contains(key))
-            lruQueue.remove(key);
+        if (lruFifo.contains(key))
+            lruFifo.remove(key);
 
-        log.info ("REMOVE " + lruQueue.toString());
+        log.info ("REMOVE " + lruFifo.toString());
 
         return val;
     }

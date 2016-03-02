@@ -1,9 +1,7 @@
 package org.sheehan.algorithm.thread;
 import java.util.Random;
-import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Created by bob on 9/16/14.
@@ -11,7 +9,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class ThreadLocalExample {
 
-    private static final ThreadLocal<Integer> id = new ThreadLocal<Integer>()
+    private static final ThreadLocal<Integer> threadLocalId = new ThreadLocal<Integer>()
     {
         @Override
         protected Integer initialValue()
@@ -24,7 +22,7 @@ public class ThreadLocalExample {
     class ExampleThread implements Runnable{
          @Override
         public void run() {
-            System.out.println(id.get());
+            System.out.println(threadLocalId.get());
         }
     }
 
