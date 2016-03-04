@@ -3,7 +3,7 @@ package org.sheehan.algorithm;
 import junit.framework.Assert;
 import org.junit.Test;
 import org.sheehan.algorithm.data_structures.Stack;
-import org.sheehan.algorithm.data_structures.StackImpl;
+import org.sheehan.algorithm.data_structures.StackArrayImpl;
 
 /**
  * Created with IntelliJ IDEA.
@@ -36,9 +36,9 @@ public class RecursionTest {
     @Test
     public void testHanoi2() {
         int size = 3;
-        Stack<Integer> source = new StackImpl<>(size, "A");
-        Stack<Integer> dest = new StackImpl<>(size, "C");
-        Stack<Integer> spare = new StackImpl<>(size, "B");
+        Stack<Integer> source = new StackArrayImpl<>(size, "A");
+        Stack<Integer> dest = new StackArrayImpl<>(size, "C");
+        Stack<Integer> spare = new StackArrayImpl<>(size, "B");
 
         for (int i = 0; i < size; ++i)
             source.push(size-i-1);

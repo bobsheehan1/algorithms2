@@ -88,7 +88,7 @@ public class DjikstraShortestPath <T extends Comparable<T>>{
 
     // to print the path push onto LIFO stack then pop and print
     public void printPath(GraphNode<T> srcNode, GraphNode<T> dstNode) {
-        Stack<GraphNode<T>> path = new StackImpl<>(predecessorMap.size());
+        Stack<GraphNode<T>> path = new StackArrayImpl<>(predecessorMap.size());
         path.push(dstNode);
 
         while (dstNode != null){
@@ -105,7 +105,7 @@ public class DjikstraShortestPath <T extends Comparable<T>>{
     }
 
     public Stack<GraphNode<T>> getPath(GraphNode<T> srcNode, GraphNode<T> dstNode) {
-        Stack<GraphNode<T>> path = new StackImpl<>(predecessorMap.size());
+        Stack<GraphNode<T>> path = new StackArrayImpl<>(predecessorMap.size());
         path.push(dstNode);
 
         while (dstNode != null){

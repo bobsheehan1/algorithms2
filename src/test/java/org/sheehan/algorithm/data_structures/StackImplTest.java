@@ -1,14 +1,12 @@
 package org.sheehan.algorithm.data_structures;
 
 import junit.framework.TestCase;
-import org.sheehan.algorithm.data_structures.Stack;
-import org.sheehan.algorithm.data_structures.StackImpl;
 
 public class StackImplTest extends TestCase {
 
     public void testPushPop() throws Exception {
         int size = 10;
-        Stack<Integer> stack = new StackImpl<>(size);
+        Stack<Integer> stack = new StackArrayImpl<>(size);
         for (int i = 0; i < size; ++i){
             stack.push(i);
             stack.print();
@@ -22,7 +20,7 @@ public class StackImplTest extends TestCase {
 
     public void testPushPopList() throws Exception {
 
-        Stack<Integer> stack = new StackImpl2<>();
+        Stack<Integer> stack = new StackListImpl<>();
         for (int i = 0; i <10; ++i){
             stack.push(i);
             System.out.println("pushed: " + i);

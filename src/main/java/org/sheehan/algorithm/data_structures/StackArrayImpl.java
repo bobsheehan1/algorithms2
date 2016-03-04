@@ -7,19 +7,19 @@ import java.util.NoSuchElementException;
 /**
  * Created by bob on 5/25/14.
  */
-public class StackImpl<T extends Comparable<T>>  implements Stack<T> {
+public class StackArrayImpl<T extends Comparable<T>>  implements Stack<T> {
     private int top;
     private int size;
     private T array[];
     private String name;
 
-    public StackImpl(int size) {
+    public StackArrayImpl(int size) {
         this.top = -1;
         this.size = size;
         array = (T[])Array.newInstance(Comparable.class, size);
     }
 
-    public StackImpl(int size, String name) {
+    public StackArrayImpl(int size, String name) {
         this(size);
         this.name = name;
     }

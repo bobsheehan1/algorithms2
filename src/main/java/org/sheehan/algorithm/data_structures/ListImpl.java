@@ -1,6 +1,7 @@
 package org.sheehan.algorithm.data_structures;
 
 import java.util.*;
+import java.util.Stack;
 
 /**
  * Created by bob on 5/31/14.
@@ -96,14 +97,13 @@ public class ListImpl <T extends Comparable<T>> implements List<T> {
 
     @Override
     public Node<T> deleteBack() {
+        if (head == null)
+            return null;
 
         Node<T> curr = head;
-        Node<T> prev = head;
+        Node<T> prev = null;
 
-        if (curr.next == null) {
-            head = null;
-            return curr;
-        }
+        // lets point at one before last element
         while (curr.next != null) {
             prev = curr;
             curr = curr.next;
@@ -173,38 +173,36 @@ public class ListImpl <T extends Comparable<T>> implements List<T> {
     //brute force
     @Override
     public void reverseBrute() {
+
+        // need the tail for later bro
+        Node originalTail = this.tail;
+
         Node curr = this.head;
-        // move to end to get tail
-        while (curr != null) {
-            curr = curr.next;
-        }
 
-        // need the tail for late bro
-        Node tail = curr;
-
-        curr = this.head;
-        Node prevNode = null;
         while (curr != null) {
             curr = curr.next;
 
             // go to one before end
-            Node endNode = this.head;
-            while (endNode.next != null) {
-                prevNode = endNode;
-                endNode = endNode.next;
+            Node prev2 = null;
+            Node curr2 = this.head;
+            while (curr2.next != null) {
+                prev2 = curr2;
+                curr2 = curr2.next;
             }
 
             //reverse end most link
-            endNode.next = prevNode;
+            curr2.next = prev2;
             // shorten original list
-            prevNode.next = null;
+            if (prev2 != null)
+                prev2.next = null;
         }
 
+
         this.tail = head;
-        head = tail;
+        head = originalTail;
     }
 
-    //B-BABC-A
+    //BB - ABC - A
     // scaffold approach O(n)view
     // 1. B -> A reverse
     // 2. move everything along A-> B,  B-> C, C-> C(next)
@@ -228,21 +226,41 @@ public class ListImpl <T extends Comparable<T>> implements List<T> {
         this.head = A; // don't forget to set the head !!!
     }
 
-    public void reverseRecurse() {
-        reverseRecurse(this.head);
+    public void reverseStack() {
+        Stack<Node<T>> stack = new Stack<>();
+
+        Node<T> curr = this.head;
+
+        while(curr != null){
+            stack.push(curr);
+            curr = curr.next;
+        }
+
+        this.head = stack.pop();
+
+        curr = this.head;
+        while(!stack.empty()) {
+            curr.next = stack.pop();
+            curr = curr.next;
+        }
+        curr.next = null;
     }
 
-    //TODO NEEDS MORE INVESTIGATION !!!!!!!!!!!!!!!!!!!!!
-    public Node reverseRecurse(Node node) {
-        if (node == null) return null;
-        if (node.next == null) return node;
-
-        Node secondElem = node.next;
-        node.next = null;
-        Node reverseRest = reverseRecurse(secondElem);
-        secondElem.next = node;
-        return reverseRest;
-    }
+//    public void reverseRecurse() {
+//        reverseRecurse(this.head);
+//    }
+//
+//    //TODO NEEDS MORE INVESTIGATION !!!!!!!!!!!!!!!!!!!!!
+//    public Node reverseRecurse(Node node) {
+//        if (node == null) return null;
+//        if (node.next == null) return node;
+//
+//        Node secondElem = node.next;
+//        node.next = null;
+//        Node reverseRest = reverseRecurse(secondElem);
+//        secondElem.next = node;
+//        return reverseRest;
+//    }
 
     @Override
     public void print() {

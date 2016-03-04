@@ -43,10 +43,23 @@ public class ListImplTest {
 
         list.reverse();
         list.print();
+        list.reverse();
+        list.print();
+
+        list.reverseBrute();
+        list.print();
+        list.reverseBrute();
+        list.print();
+
+        list.reverseStack();
+        list.print();
+        list.reverseStack();
+        list.print();
+
     }
 
     @Test
-    public void testinsertInOrder() throws Exception {
+    public void testInsertInOrder() throws Exception {
 
         Integer array1[] = Array.createArray(20, 100, false);
 

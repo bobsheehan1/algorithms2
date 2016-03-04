@@ -31,7 +31,7 @@ public class DFS <T extends Comparable<T>>{
 
     // use a stack for DFS - SAME AS BFS with stack instead of queue
     public void visitIterative(GraphNode<T> sourceNode){;
-        Stack<GraphNode<T>> stack = new StackImpl<>(graph.getNumV());
+        Stack<GraphNode<T>> stack = new StackArrayImpl<>(graph.getNumV());
         stack.push(sourceNode);
         sourceNode.visited = true; // mark after adding to queue
         while (stack.peek() != null) {

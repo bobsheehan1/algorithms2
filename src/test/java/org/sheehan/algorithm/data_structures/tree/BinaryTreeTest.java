@@ -1,6 +1,7 @@
 package org.sheehan.algorithm.data_structures.tree;
 
 import org.junit.Test;
+import org.sheehan.algorithm.Array;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,11 +38,59 @@ public class BinaryTreeTest {
         node1.right = BinarySearchTree.createTreeNode(5, 5);
 
         tree.print();
-        System.out.println(tree.isBalanced(tree.root));
+        System.out.println(tree.isAllBalanced(tree.root));
 
     }
 
     @Test
+    public void testBalanced() throws Exception {
+
+        BinaryTree.TreeNode node1 = BinaryTree.createTreeNode(1, 1, null, null);
+        BinaryTree.TreeNode node3 = BinaryTree.createTreeNode(3, 3, node1, null);
+        BinaryTree.TreeNode node5 = BinaryTree.createTreeNode(5, 5, node3, null);
+        BinaryTree.TreeNode node7 = BinaryTree.createTreeNode(7, 7, node5, null);
+
+        BinaryTree.TreeNode node2 = BinaryTree.createTreeNode(2, 2, null, null);
+        BinaryTree.TreeNode node4 = BinaryTree.createTreeNode(4, 4, null, node2);
+        BinaryTree.TreeNode node6 = BinaryTree.createTreeNode(6, 6, null, node4);
+        BinaryTree.TreeNode node8 = BinaryTree.createTreeNode(8, 8, node7, node6);
+        BinaryTree<Integer, Integer> tree = new BinaryTree<>(node8);
+
+        List<BinaryTree.TreeNode<Integer, Integer>> nodes = new ArrayList<>();
+        tree.getLevelNodes(node4, 0, 0, nodes);
+
+        for (BinaryTree.TreeNode<Integer, Integer> node : nodes) {
+            System.out.println(node.toString());
+        }
+        System.out.println("max path: " + tree.getMaxSum(node4));
+        tree.printEndNodesAndPathSums(node4);
+
+        int height = tree.getMaxDepth(tree.root);
+        for (int i = 0; i < height; ++i) {
+            tree.printLevelSimple(tree.root, 0, i);
+            System.out.println();
+        }
+;
+        System.out.println(tree.getMinDepth(tree.root));
+        System.out.println(tree.getMaxDepth(tree.root));
+        System.out.println(tree.isBalanced(tree.root));
+    }
+
+    @Test
+    public void testFromSortedArray() throws Exception {
+        Array.createArray(10,10,true);
+        BinaryTree<Integer, Integer> tree = new BinaryTree<Integer, Integer>(null);
+        tree.addToTree(Array.createArray(10,10,true));
+
+        int height = tree.getMaxDepth(tree.root);
+        for (int i = 0; i < height; ++i) {
+            tree.printLevelSimple(tree.root, 0, i);
+            System.out.println();
+        }
+    }
+
+
+        @Test
     public void testTraversBfs() throws Exception {
 
         BinaryTree.TreeNode node1 = BinaryTree.createTreeNode(1, 1, null, null);

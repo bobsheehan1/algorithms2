@@ -1,7 +1,6 @@
 package org.sheehan.algorithm.data_structures.tree;
 
 import org.sheehan.algorithm.data_structures.Queue;
-import org.sheehan.algorithm.data_structures.QueueArrayImpl;
 import org.sheehan.algorithm.data_structures.QueueListImpl;
 
 import java.util.function.IntConsumer;
@@ -74,6 +73,27 @@ public class BinaryTree<K extends Comparable<? super K>, V> {
         this.root = node;
     }
 
+    public void addToTree(K []sortedArray){
+       this.root = addToTree(sortedArray, 0, sortedArray.length-1);
+    }
+
+    private TreeNode<K,V> addToTree(K[] sortedArray, int l, int r) {
+        if (l >= r)
+            return null;
+
+        int mid = l + (r-l)/2;
+
+        TreeNode<K,V> node = new TreeNode<>();
+        node.key = sortedArray[mid];
+        node.left = addToTree(sortedArray, l, mid);
+        if (node.left != null)
+            node.left.parent = node;
+        node.right = addToTree(sortedArray, mid+1, r);
+        if (node.right != null)
+            node.right.parent = node;
+        return node;
+    }
+
     public void print() {
         print(this.root);
     }
@@ -134,26 +154,27 @@ public class BinaryTree<K extends Comparable<? super K>, V> {
     public int getMaxDepth(TreeNode<K,V> root) {
         if(root == null)
             return 0;
-        else {
-            if(root.left != null && root.right != null)
-                return 1 + Math.max(getMaxDepth(root.left), getMaxDepth(root.right));
-            else
-                return 1 + getMaxDepth(root.right) + getMaxDepth(root.left);
-        }
+
+        return 1 + Math.max(getMaxDepth(root.left), getMaxDepth(root.right));
     }
 
-    public int getMinDepth(TreeNode<K,V> root) {
-        if(root == null)
+    public int getMinDepth(TreeNode<K,V> node) {
+        if(node == null)
             return 0;
-        else {
-            if(root.left != null && root.right != null)
-                return 1 + Math.min(getMinDepth(root.left), getMinDepth(root.right));
-            else
-                return 1 + getMinDepth(root.right) + getMinDepth(root.left);
-        }
+
+        return 1 + Math.min(getMinDepth(node.left), getMinDepth(node.right));
     }
 
+    //  no leaf nodes are > 1 apart.
     public boolean isBalanced(TreeNode root) {
+        if (root == null)
+            return true;
+
+        return getMaxDepth(root) - getMinDepth(root) <= 1 ? true:false;
+    }
+
+
+    public boolean isAllBalanced(TreeNode root) {
         if (root == null)
             return true;
 
@@ -161,7 +182,7 @@ public class BinaryTree<K extends Comparable<? super K>, V> {
         boolean balanced = diff <= 1 ? true:false;
         if (!balanced)
             return false;
-        return isBalanced(root.left) && isBalanced(root.right);
+        return isAllBalanced(root.left) && isAllBalanced(root.right);
 
     }
 
@@ -254,8 +275,14 @@ public class BinaryTree<K extends Comparable<? super K>, V> {
         Queue<TreeNode<K,V>> q = new QueueListImpl<>();
         q.enqueue(root);
         while (q.peek() != null){
+
+            // get node
             TreeNode<K,V> node = q.dequeue();
+
+            // do something with it
             op.accept((Integer)node.key);
+
+            // add children
             if (node.left != null)
                 q.enqueue(node.left);
             if (node.right != null)

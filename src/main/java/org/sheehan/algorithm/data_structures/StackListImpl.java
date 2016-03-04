@@ -4,7 +4,7 @@ package org.sheehan.algorithm.data_structures;
 /**
  * Created by bob on 5/25/14.
  */
-public class StackImpl2<T extends Comparable<T>>  implements Stack<T> {
+public class StackListImpl<T extends Comparable<T>>  implements Stack<T> {
 
     List<T> list = new ListImpl<>();
 
@@ -18,7 +18,7 @@ public class StackImpl2<T extends Comparable<T>>  implements Stack<T> {
 
     @Override
     public T peek() {
-        return null;
+        return list.get(list.size()-1);
     }
 
     @Override

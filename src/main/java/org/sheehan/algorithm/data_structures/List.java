@@ -11,7 +11,7 @@ public interface List<T extends Comparable<T>> extends Iterable<T> {
 
     class Node<T> {
         T data;
-        Node next;
+        Node<T> next;
 
         public Node(T value) {
             this.data = value;
@@ -26,7 +26,7 @@ public interface List<T extends Comparable<T>> extends Iterable<T> {
 
     void reverse();
 
-    void reverseRecurse();
+    void reverseStack();
 
     T get(int index);
 

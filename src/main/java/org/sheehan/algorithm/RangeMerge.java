@@ -1,7 +1,7 @@
 package org.sheehan.algorithm;
 
 import org.sheehan.algorithm.data_structures.Stack;
-import org.sheehan.algorithm.data_structures.StackImpl;
+import org.sheehan.algorithm.data_structures.StackArrayImpl;
 
 import java.util.*;
 
@@ -64,7 +64,7 @@ public class RangeMerge {
 
         Arrays.sort(ranges);
 
-        Stack<Range> stack = new StackImpl<>(ranges.length);
+        Stack<Range> stack = new StackArrayImpl<>(ranges.length);
         for (Range range : ranges){
             if (stack.peek() == null)
                 stack.push(range); //initial range
