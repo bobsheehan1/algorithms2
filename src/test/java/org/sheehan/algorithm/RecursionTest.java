@@ -47,6 +47,6 @@ public class RecursionTest {
         spare.print();
         dest.print();
 
-        Recursion.hanoi2(size, source, dest, spare);
+        Recursion.hanoiStack(size, source, dest, spare);
     }
 }
