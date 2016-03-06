@@ -68,6 +68,11 @@ public class StringsTest {
 
         for (String s: cache)
             System.out.println(s);
+
+        Set<String> perms = Strings.getPermutations3("ABCD");
+        for (String perm:perms)
+            System.out.println(perm);
+
     }
 
     @Test
@@ -81,26 +86,7 @@ public class StringsTest {
             System.out.println(s);
     }
 
-    @Test
-    public void testBinStrToInt() throws Exception {
-        System.out.println(Strings.binStr2Int("1111"));
-        System.out.println(Strings.binStr2Int("0101"));
 
-        System.out.println(Strings.binStr2Int2("1111"));
-        System.out.println(Strings.binStr2Int2("0101"));
-    }
-
-    @Test
-    public void testDecStrToInt() throws Exception {
-        System.out.println(Strings.decStr2Int("1234"));
-        System.out.println(Strings.decStr2Int("-1234"));
-    }
-
-    @Test
-    public void testDecInt2Str() throws Exception {
-        System.out.println(Strings.decInt2Str(1234));
-        System.out.println(Strings.decInt2Str(-1234));
-    }
 
     @Test
     public void testRotations() throws Exception {

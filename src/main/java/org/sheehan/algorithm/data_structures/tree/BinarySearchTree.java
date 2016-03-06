@@ -138,7 +138,7 @@ public class BinarySearchTree<K extends Comparable<?super K>, V> extends BinaryT
 
         // if there is a parent AND the node is the right child,
         // we look up getting smaller for parents to left so get them out of the way
-        // then return the first parent to the RIGHT --> will be successor
+        // then return the first parent to the RIGHT (child is left of parent)--> will be successor
         while(parent != null && curr.equals(parent.right)){
             curr = parent; // may not be right
             parent = parent.parent;
@@ -166,7 +166,7 @@ public class BinarySearchTree<K extends Comparable<?super K>, V> extends BinaryT
 
         // if there is a parent AND the node is the right ancestor,
         // we look up getting smaller for parents to left so get them out of the way
-        // then return the first parent to the LEFT --> will be successor
+        // then return the first parent to the LEFT (child is right of parent)--> will be successor
         while(parent != null && curr.equals(parent.left)){
             curr = parent;
             parent = parent.parent;

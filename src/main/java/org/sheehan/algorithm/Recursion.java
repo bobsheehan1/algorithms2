@@ -76,4 +76,76 @@ public class Recursion {
         //recursive call 2
         hanoiStack(n-1, tmp, dst, src);
     }
+
+    //
+    static public void balancedParenthesis(int l, int r, char[] str, int count) {
+        if (l < 0 || r < l)
+            return; //invalid
+
+        if (l==0 && r== 0){
+            System.out.println(str); //valid
+        }else {
+            if (l > 0){
+                str[count] = '(';
+                balancedParenthesis(l-1, r, str, count+1);
+            }
+            if (r > l){
+                str[count] = ')';
+                balancedParenthesis(l, r-1, str, count+1);
+            }
+        }
+    }
+
+
+    public class EightQueens {
+        // each row has a single queen at which column
+        int queenColForRow[] = new int[8];
+
+        public void printBoard(){
+            for (int i = 0; i < 8; ++i) {
+                for (int j = 0; j < 8; ++j) {
+                    if (j == queenColForRow[i])
+                        System.out.print("Q ");
+                    else
+                        System.out.print("- ");
+                }
+                System.out.println();
+            }
+            System.out.println();
+        }
+
+        public boolean checkRow(int candidateRow){
+            for (int row = 0; row < candidateRow; ++row)  {
+                int diff = (int)Math.abs(queenColForRow[row]-queenColForRow[candidateRow]);
+                if (diff == 0)
+                    return false; //cannot have queen on same column as a previous row
+                if (diff == candidateRow-row)
+                    return false; // queen is on diagonal with a previous queen
+
+            }
+            return true;
+        }
+
+        //recursive start with row 0
+        public void placeQueen(int row){
+            if (row == 8){
+                printBoard();
+                return;
+            }
+
+            // check each column in current row.. recurses on every permutation !
+            for (int col = 0; col < 8; ++col){
+                queenColForRow[row] = col; //candidate.. there may be several that succeed here !
+                if (checkRow(row))
+                    placeQueen(row+1); //next row recurse
+            }
+        }
+    }
+
+    static public void main(String[]args){
+       // Recursion.EightQueens queens = new Recursion().new EightQueens();
+       // queens.placeQueen(0);
+
+
+    }
 }

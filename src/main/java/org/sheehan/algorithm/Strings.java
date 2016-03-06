@@ -48,7 +48,6 @@ public class Strings {
         return new String(buffer);
     }
 
-
     public static String reverseRecursively(String str) {
 
         //base case to handle one char string and empty string
@@ -58,7 +57,6 @@ public class Strings {
 
         return reverseRecursively(str.substring(1)) + str.charAt(0);
     }
-
 
     public static void getPermutations(String prefix, String str, Set<String> cache) {
         //System.out.println("\tpermutation pre:" + prefix + " str:" + str + " level:" + level);
@@ -79,7 +77,6 @@ public class Strings {
             }
         }
     }
-
 
     // start with k = 0
     //  swap i and k
@@ -104,6 +101,33 @@ public class Strings {
             cache.add(new String(str));
             //System.out.println(java.util.Arrays.toString(arr.toArray()));
         }
+    }
+
+    // O(n!) permutations !
+    public static Set<String> getPermutations3(String s){
+        if (s == null)
+            return null;
+
+        Set<String> perms = new HashSet<String>();
+        if (s.length() == 0){
+            perms.add("");
+            return perms;
+        }
+
+        //shave off first char then get sub perms on remaining chars.
+        //...then insert the first into each position of each sub perm.
+        char first = s.charAt(0);
+        String remainder = s.substring(1);
+        Set<String> subPerms = getPermutations3(remainder);
+        for (String subPerm: subPerms){
+            for (int i=0; i <= subPerm.length(); ++i){ // '<='   IMPORTANT !!!
+                String start = subPerm.substring(0,i);
+                String end = subPerm.substring(i);
+                perms.add(start + first + end);
+            }
+        }
+
+        return perms;
     }
 
     // number of unique substrings is n(n+1)/2
@@ -137,101 +161,6 @@ public class Strings {
                 return i;
         }
         return -1;
-    }
-
-    public static int binStr2Int(String s) {
-
-        int length = s.length();
-
-        int value = 0;
-        for (int i=length-1, cnt = 0; i>=0; --i, ++cnt){
-
-            // get char
-            char c = s.charAt(i);
-
-            //convert to int (0 or 1)
-            int bit = (int)(c-'0');
-
-            // multiply by power of 2
-            int mult = 1 << cnt;
-            value += bit * mult;
-        }
-
-        return value;
-    }
-
-    public static int binStr2Int2(String str) {
-        final int BASE = 2;
-
-        int sum = 0;
-        int mult = 1;
-
-        for (int pos = str.length() - 1; pos >= 0; pos--) {
-            sum += (str.charAt(pos) - '0') * mult;
-            mult *= BASE;
-        }
-
-
-        return sum;
-    }
-
-    public static int decStr2Int(String str) {
-        final int BASE = 10;
-
-        int limit = 0;
-        boolean negative = false;
-        if (str.charAt(0) == '-') {
-            negative = true;
-            limit = 1;
-        }
-
-        int sum = 0;
-        int mult = 1;
-
-        for (int pos = str.length() - 1; pos >= limit; pos--) {
-            sum += (str.charAt(pos) - '0') * mult;
-            mult *= BASE;
-        }
-
-        if (negative)
-            sum *= -1;
-
-        return sum;
-    }
-
-    public static String decInt2Str(int n) {
-
-        StringBuffer buffer = new StringBuffer();
-
-        int number = n;
-        if (number < 0) {
-            buffer.append("-");
-            number *= -1;
-        }
-
-        // figure out the length of the number
-        int length = 1;
-        int mult = 1;
-        while (number/mult != 0) {
-            mult *= 10;
-            length++;
-        }
-
-        // starting at LEFT MSB end (using calculated length)
-        // break off each digit and enqueue to string buffer
-        mult = 1;
-        for (int i = 0; i < length; ++i) {
-
-            int val = number / (int) Math.pow(10, length -1 - i);
-
-            // shave off the 10's position off leftish sub int
-            val = val % 10;
-
-            //convert digit to char
-            buffer.append((char) (val + '0')); //digit to char
-        }
-
-       return buffer.toString();
     }
 
     public static Character getFirstNonRepeatingChar(String str) {
@@ -314,7 +243,7 @@ public class Strings {
     public static String removeDuplicates(String str) {
         char[] chars = str.toCharArray();
 
-        int checker = 0; //init
+        int checker = 0; //init for 256 ascii chars.
 
         int dst = 0;
         for (int i = 0; i < chars.length; ++i) {
@@ -359,7 +288,7 @@ public class Strings {
     /////////////////////////////////////////////////////////////////////////////////
     // RADIX SORT
     // LSD on fixed length lexical keys
-    // bucket for each ascii char
+    // bucket is queue for each ascii char
     // sort iteratively by single character moving left
     /////////////////////////////////////////////////////////////////////////////////
     public static void radixSortLexicalFixedLsd(String array[]) {

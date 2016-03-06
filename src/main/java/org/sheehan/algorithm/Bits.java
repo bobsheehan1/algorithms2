@@ -7,94 +7,54 @@ public class Bits {
 
     static int MASK_32_BIT = 0x80000000;
 
-    static void printBinary(int number){
-        long number2 = number  & 0x00000000FFFFFFFFL;
-        printBinary(number2);
 
-    }
-    public static void printBinary(long number){
+    public static int str2Int(String s) {
+        s = s.trim();
 
-        // The unsigned right shift operator ">>>" shifts a zero into the leftmost position, while the leftmost position after ">>" depends on sign extension.
-        long cnt = 0;
-        for (int MASK = MASK_32_BIT; MASK != 0; MASK >>>= 1)
-        {
-            int bit = (int)(number & MASK);
-            bit >>>= (31-cnt);
-            if (cnt > 0 && cnt%8 == 0)
-                System.out.print(" ");
-            System.out.print(bit & 0x00000000FFFFFFFFL);
-            cnt++;
+        int value = 0;
+        for (int i=0; i < s.length(); ++i){
+
+            //convert to int (0 or 1)
+            int bit = (int)( s.charAt(s.length()-i-1)-'0');
+
+            // multiply by power of 2
+            value += bit * (1 << i);
         }
-        System.out.println();
 
+        return value;
     }
 
-    static void printBinary2(long number){
+    static void print(int n){
 
-        // The unsigned right shift operator ">>>" shifts a zero into the leftmost position, while the leftmost position after ">>" depends on sign extension.
-
-        for (int i = 0; i < 32; i++)
-        {
-            if (i > 0 && i%8 == 0)
-                System.out.print(" ");
-
-            int mask = 1 << (31-i);
-            if (((int)(number&mask)& 0x00000000FFFFFFFFL) > 0)
-                System.out.print(1);
+         for (int i = 0; i < 32; i++){
+            if ( (n >> (31-i) & 1) == 0 )
+                System.out.print("0");
             else
-                System.out.print(0);
-
-
-
-
+                System.out.print("1");
         }
+
         System.out.println();
-
     }
 
-    static int countOnes(int number){
+    static int countOnes(int n){
 
-        //System.out.println(IntegerAlgs.toBinaryString(number));
-
-        // IntegerAlgs.SIZE = 32 bit -------- -------- -------- -------- 80 00 00 00
-
-
-        // == -1 no unsigned int type !!
-        // so need != 0 and NOT < 0 !!
         int cnt = 0;
-        for (int MASK = 0x80000000; MASK != 0; MASK >>>= 1)
-        {
-            int bit = (int)(number & MASK);
-            if (bit != 0)
-                cnt++;
+        for (int i = 0; i < 32; i++){
+            if ( (n >> (31-i) & 1) == 1 )
+               cnt++;
         }
+
         return cnt;
-
     }
 
-    public static long flipBits(long number) {
-        // The unsigned right shift operator ">>>" shifts a zero into the leftmost position, while the leftmost position after ">>" depends on sign extension.
+    static int flipBits(int n){
 
-
-        for (int MASK = MASK_32_BIT; MASK != 0; MASK >>>= 1)
-        {
-            number ^= MASK; //XOR with 1 ==> 0^1=1   1^1=0   where the rt. lhs 1 is the mask
-         }
-
-        return number & 0x00000000FFFFFFFFL;
-    }
-
-    public static long flipBits2(long number) {
-        // The unsigned right shift operator ">>>" shifts a zero into the leftmost position, while the leftmost position after ">>" depends on sign extension.
-
-
-        for (int i = 0; i < 32; i++)
-        {
-            int mask = 1 << (31-i);
-            number ^= mask; //XOR with 1 ==> 0^1=1   1^1=0   where the rt. lhs 1 is the mask
+        int cnt = 0;
+        for (int i = 0; i < 32; i++){
+            n ^= 1<<i;
         }
 
-        return number & 0x00000000FFFFFFFFL;
+        return n;
     }
 
     public static void replaceSubstr(int num1, int num2, int i, int j){
@@ -110,9 +70,7 @@ public class Bits {
         num2 <<=i;
 
         // simply or them together now !
-        printBinary(num1|num2);
-
-
+        print(num1|num2);
 
     }
 }

@@ -24,8 +24,6 @@ public class RecursionTest {
         Assert.assertEquals(5, Recursion.fibonocciIter(5));
         Assert.assertEquals(8, Recursion.fibonocci(6));
         Assert.assertEquals(8, Recursion.fibonocciIter(6));
-
-
     }
 
     @Test
@@ -49,4 +47,11 @@ public class RecursionTest {
 
         Recursion.hanoiStack(size, source, dest, spare);
     }
+
+    @Test
+    public void testBalParenthesis() {
+        char str[] = new char[10];
+        Recursion.balancedParenthesis(5, 5, str, 0);
+    }
 }
+

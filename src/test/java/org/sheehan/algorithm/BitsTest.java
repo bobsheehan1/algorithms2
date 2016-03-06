@@ -1,6 +1,5 @@
 package org.sheehan.algorithm;
 
-import junit.framework.Assert;
 import org.junit.Test;
 
 public class BitsTest {
@@ -13,69 +12,41 @@ public class BitsTest {
         Bits.replaceSubstr(num1, num2, 2, 4 );
     }
 
-        @Test
-    public void testPrintInt() throws Exception {
-        long number = 0x84208420;
-        System.out.println(number);
-        Bits.printBinary(number);
-        Bits.printBinary2(number);
-        long flipped = Bits.flipBits2(number);
-        Bits.printBinary(flipped);
-        Bits.printBinary2(flipped);
-        System.out.println(flipped);
-        System.out.println();
 
+    @Test
+    public void testBinStrToInt() throws Exception {
+        System.out.println(Bits.str2Int("1111"));
+        System.out.println(Bits.str2Int("0101"));
 
-        number = 0x80000000;
-        System.out.println(number);
-        Bits.printBinary(number);
-        flipped = Bits.flipBits(number);
-        Bits.printBinary(flipped);
-        System.out.println(flipped);
-        System.out.println();
+    }
 
-        number = 0x00000001;
-        System.out.println(number);
-        Bits.printBinary(number);
-        flipped = Bits.flipBits(number);
-        Bits.printBinary(flipped);
-        System.out.println(flipped);
-        System.out.println();
+    @Test
+    public void testPrint() throws Exception {
+        Bits.print(0);
+        Bits.print(1);
+        Bits.print(2);
+        Bits.print(256);
+        Bits.print(Integer.MAX_VALUE);
+        Bits.print(Integer.MIN_VALUE);
+    }
 
-        number = 2147483647;
-        System.out.println(number);
-        Bits.printBinary(number);
-        flipped = Bits.flipBits(number);
-        Bits.printBinary(flipped);
-        System.out.println(flipped);
-        System.out.println();
+    @Test
+    public void testCountOnses() throws Exception {
+        Bits.print(Bits.flipBits(0));
+        Bits.print(Bits.flipBits(1));
+        Bits.print(Bits.flipBits(2));
+        Bits.print(Bits.flipBits(256));
+        Bits.print(Bits.flipBits(Integer.MAX_VALUE));
+        Bits.print(Bits.flipBits(Integer.MIN_VALUE));
+    }
 
-        long expected = 2147483648L;
-        Assert.assertEquals(expected, flipped);
-
-        number = 0x00000000;
-        System.out.println(number);
-        Bits.printBinary(number);
-        flipped = Bits.flipBits(number);
-        Bits.printBinary(flipped);
-        System.out.println(flipped);
-        System.out.println();
-
-        number = 0xFFFFFFFF;
-        System.out.println(number);
-        Bits.printBinary(number);
-        flipped = Bits.flipBits(number);
-        Bits.printBinary(flipped);
-        System.out.println(flipped);
-        System.out.println();
-
-        //4294967295
-        number = 4294967295L;
-        System.out.println(number);
-        Bits.printBinary(number);
-        flipped = Bits.flipBits(number);
-        Bits.printBinary(flipped);
-        System.out.println(flipped);
-        System.out.println();
+    @Test
+    public void testFlipBits() throws Exception {
+        System.out.println(Bits.countOnes(0));
+        System.out.println(Bits.countOnes(1));
+        System.out.println(Bits.countOnes(2));
+        System.out.println(Bits.countOnes(256));
+        System.out.println(Bits.countOnes(Integer.MAX_VALUE));
+        System.out.println(Bits.countOnes(Integer.MIN_VALUE));
     }
 }
