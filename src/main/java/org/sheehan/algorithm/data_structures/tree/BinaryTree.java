@@ -19,56 +19,6 @@ public class BinaryTree<K extends Comparable<? super K>, V> {
 
     public TreeNode<K, V> root;
 
-    public static <K extends Comparable<? super K>, V> TreeNode<K,V> createTreeNode(K key, V value){
-        TreeNode<K,V> node = new TreeNode<>();
-        node.value = value;
-        node.key = key;
-        node.left = null;
-        node.right= null;
-        //node.N = 0;
-        node.color = RED;
-        return node;
-    }
-
-    // create node and enqueue children
-    public static <K extends Comparable<? super K>, V> TreeNode<K,V> createTreeNode(K key, V value, TreeNode<K,V> left, TreeNode<K,V> right){
-        TreeNode<K,V> node = new TreeNode<>();
-        node.value = value;
-        node.key = key;
-        node.left = left;
-        node.right= right;
-
-        if (left != null)
-            left.parent = node;
-        if (right != null)
-            right.parent = node;
-
-        return node;
-    }
-
-    public static class TreeNode <K extends Comparable<? super K>, V> implements Comparable<TreeNode<K, V>> {
-        K key;
-        V value;
-        TreeNode <K,V> left;
-        TreeNode <K,V> right;
-
-        TreeNode <K,V> parent; // for successor BST traversal
-
-        boolean color;     // RB TREE color of parent link
-        //int N;             // RB TREE subtree count
-
-
-        @Override
-        public String toString(){
-            return "key:" + key.toString() + " value:" + value.toString() + " color:" + color;
-        }
-
-        @Override
-        public int compareTo(TreeNode<K, V> o) {
-            return 0;
-        }
-    }
-
     public BinaryTree(TreeNode<K,V> node) {
         this.root = node;
     }
@@ -92,63 +42,6 @@ public class BinaryTree<K extends Comparable<? super K>, V> {
         if (node.right != null)
             node.right.parent = node;
         return node;
-    }
-
-    public void print() {
-        print(this.root);
-    }
-
-    public void print(TreeNode<K,V> node) {
-        print(node, 0, "root");
-        System.out.println();
-    }
-
-    private void print(TreeNode<K,V> node, int level, String side) {
-        if (node == null)
-            return;
-        System.out.print("(");
-        print(node.left, level + 1, "left");
-        System.out.print(node.toString());
-        print(node.right, level + 1, "right");
-        System.out.print(")");
-    }
-
-    // print level with either right to left or left to right direction
-    public void printLevel(TreeNode<K,V> node, int level, int rLevel, Boolean dir) {
-        if (node == null)
-            return;
-        if (level == rLevel)
-            System.out.print(node.toString() + " ");
-
-        if (dir) {
-            printLevel(node.left, level + 1, rLevel, dir);
-            printLevel(node.right, level + 1, rLevel, dir);
-        } else if (!dir) {
-            printLevel(node.right, level + 1, rLevel, dir);
-            printLevel(node.left, level + 1, rLevel, dir);
-        }
-    }
-
-    public void printLevelSimple(TreeNode<K,V> node, int level, int rLevel) {
-
-        if (node == null ) {
-            if (level == rLevel) {
-                 System.out.print("- ");
-            } else {
-                //System.out.print(" ");
-             }
-
-            return;
-        }
-        if (level == rLevel) {
-            if (node.parent != null)
-                System.out.print(node.key + " " + node.parent.key  + " " + node.color + " ");
-            else
-                System.out.print(node.key + " null " + node.color + " ");
-        }
-
-        printLevelSimple(node.left, level + 1, rLevel);
-        printLevelSimple(node.right, level + 1, rLevel);
     }
 
     public int getMaxDepth(TreeNode<K,V> root) {
@@ -186,7 +79,6 @@ public class BinaryTree<K extends Comparable<? super K>, V> {
 
     }
 
-
     //recursive
     public int getMaxSum(TreeNode<Integer, Integer> node){
         if (node == null)
@@ -200,7 +92,7 @@ public class BinaryTree<K extends Comparable<? super K>, V> {
         if (node == null)
             return;
 
-        //when we get to the end then back propoagate utilize parent nodes
+        //when we get to the end then back propagate utilize parent nodes
         if (node.left == null && node.right== null){
             System.out.println("end node: " + node.value);
             int sum = node.value;
@@ -314,5 +206,114 @@ public class BinaryTree<K extends Comparable<? super K>, V> {
         value &= compare(node1.right, node2.right);
 
         return value;
+    }
+
+    //===========================================================================
+
+    public static <K extends Comparable<? super K>, V> TreeNode<K,V> createTreeNode(K key, V value){
+        TreeNode<K,V> node = new TreeNode<>();
+        node.value = value;
+        node.key = key;
+        node.left = null;
+        node.right= null;
+        //node.N = 0;
+        node.color = RED;
+        return node;
+    }
+
+    // create node and enqueue children
+    public static <K extends Comparable<? super K>, V> TreeNode<K,V> createTreeNode(K key, V value, TreeNode<K,V> left, TreeNode<K,V> right){
+        TreeNode<K,V> node = new TreeNode<>();
+        node.value = value;
+        node.key = key;
+        node.left = left;
+        node.right= right;
+
+        if (left != null)
+            left.parent = node;
+        if (right != null)
+            right.parent = node;
+
+        return node;
+    }
+
+    public static class TreeNode <K extends Comparable<? super K>, V> implements Comparable<TreeNode<K, V>> {
+        K key;
+        V value;
+        TreeNode <K,V> left;
+        TreeNode <K,V> right;
+
+        TreeNode <K,V> parent; // for successor BST traversal
+
+        boolean color;     // RB TREE color of parent link
+        //int N;             // RB TREE subtree count
+
+
+        @Override
+        public String toString(){
+            return "key:" + key.toString() + " value:" + value.toString() + " color:" + color;
+        }
+
+        @Override
+        public int compareTo(TreeNode<K, V> o) {
+            return 0;
+        }
+    }
+
+    public void print() {
+        print(this.root);
+    }
+
+    public void print(TreeNode<K,V> node) {
+        print(node, 0, "root");
+        System.out.println();
+    }
+
+    private void print(TreeNode<K,V> node, int level, String side) {
+        if (node == null)
+            return;
+        System.out.print("(");
+        print(node.left, level + 1, "left");
+        System.out.print(node.toString());
+        print(node.right, level + 1, "right");
+        System.out.print(")");
+    }
+
+    // print level with either right to left or left to right direction
+    public void printLevel(TreeNode<K,V> node, int level, int rLevel, Boolean dir) {
+        if (node == null)
+            return;
+        if (level == rLevel)
+            System.out.print(node.toString() + " ");
+
+        if (dir) {
+            printLevel(node.left, level + 1, rLevel, dir);
+            printLevel(node.right, level + 1, rLevel, dir);
+        } else if (!dir) {
+            printLevel(node.right, level + 1, rLevel, dir);
+            printLevel(node.left, level + 1, rLevel, dir);
+        }
+    }
+
+    public void printLevelSimple(TreeNode<K,V> node, int level, int rLevel) {
+
+        if (node == null ) {
+            if (level == rLevel) {
+                System.out.print("- ");
+            } else {
+                //System.out.print(" ");
+            }
+
+            return;
+        }
+        if (level == rLevel) {
+            if (node.parent != null)
+                System.out.print(node.key + " " + node.parent.key  + " " + node.color + " ");
+            else
+                System.out.print(node.key + " null " + node.color + " ");
+        }
+
+        printLevelSimple(node.left, level + 1, rLevel);
+        printLevelSimple(node.right, level + 1, rLevel);
     }
 }

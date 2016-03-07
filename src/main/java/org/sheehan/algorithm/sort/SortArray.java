@@ -113,7 +113,7 @@ public class SortArray {
         }
     }
 
-    // this variation gets the insertAt position then moves then sorted array down by one from the insertpoint
+    // this variation gets the insertBefore position then moves then sorted array down by one from the insertpoint
     public static <T extends Comparable<T>> void insertionSort2(T array[]){
          int n = array.length;
 

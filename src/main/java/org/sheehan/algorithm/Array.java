@@ -18,6 +18,9 @@ import java.util.List;
  */
 public class Array {
 
+    // 1. copy array to length +1
+    // 2. move items from pos towards right
+    // 3. set pos to new val
     public static <T> T[] insertAt(T[] array, Integer pos, T val){
         T[] copyArray = Arrays.copyOf(array, array.length + 1);
 
@@ -30,6 +33,7 @@ public class Array {
        return copyArray;
     }
 
+    // 1. move items from right to left towards pos
     public static <T> T[] removeAt(T[] array, Integer pos){
 
         for (int i = pos; i < array.length-1; i++)
@@ -44,15 +48,18 @@ public class Array {
     // i fixes the ring offset, j is the iterator for swapping
     public static void rotateCW90(Integer[][] a){
 
+        // i is an annular inset from all sides
         for (int i = 0; i < a.length/2; ++i) {
-            // use j to iterate horizontal for top and bottom rows or vertical for left right cols !!!
+            // iterate CW around annular region
             for (int j = i; j < a.length-i-1; ++j) { // not all the way to end, which is start of next col or row!!!
 
+                // iterate CW around annular region
                 int topRow = a[i][j]; // iterate across with j
                 int rightCol = a[j][a.length-1-i]; //iterate down on j
                 int bottomRow = a[a.length-1-i][a.length-1-j]; //iterate back across on j
                 int leftCol = a[a.length-1-j][i]; //iterate up on j
 
+                //shift each 90 degrees
                 a[j][a.length-1-i] = topRow;
                 a[a.length-1-i][a.length-1-j] = rightCol;
                 a[a.length-1-j][i] = bottomRow;
@@ -77,17 +84,17 @@ public class Array {
     // get deltas as array then maximal sub array of deltas !
     public static int maxDiff(Integer arr[])
     {
-        int max_diff = arr[1] - arr[0];
-        int min_element = arr[0];
-        int i;
-        for(i=1; i < arr.length; i++)
+        int maxDiff = arr[1] - arr[0];
+        int min = arr[0];
+
+        for(int i=1; i < arr.length; i++)
         {
-            if (arr[i] - min_element > max_diff)
-                max_diff = arr[i] - min_element;
-            if (arr[i] < min_element)
-                min_element = arr[i];
+            if (arr[i] - min > maxDiff)
+                maxDiff = arr[i] - min;
+            if (arr[i] < min)
+                min = arr[i];
         }
-        return max_diff;
+        return maxDiff;
     }
 
     // knuth shuffle O(n)
@@ -98,91 +105,41 @@ public class Array {
 
         for (int i=0; i < array.length; ++i ){
              //select random index (i, length)
-             int shuffle_i = r.nextInt(array.length-i)+i;
+             int randomIndexAboveI = r.nextInt(array.length-i)+i;
 
              // swap with i
              T tmp = array[i];
-             array[i] = array[shuffle_i];
-             array[shuffle_i]=tmp;
+             array[i] = array[randomIndexAboveI];
+             array[randomIndexAboveI]=tmp;
         }
 
         print(array);
     }
 
-    // FULL - print start index, length, element data of longest run in array
-    public static <T> T findLongestRun(T array[]) {
-        int length = 1;
-        int maxLength = 0;
-        T maxVal = null;
-
-        int start = -1; //optional locate run
-        int maxStart = -1;//optional locate run
-
-        // limit is 1 less than length for next compare
-        for (int i = 0; i < array.length - 1; ++i) {
-            if (array[i].equals(array[i + 1])) {
-                length++;
-                if (start == -1) //optional locate run
-                    start = i;  //optional locate run
-            }
-
-            // change or end of array
-            if (!array[i].equals(array[i + 1]) || i == array.length - 2) {
-                if (length > maxLength) {
-                    maxLength = length;
-                    maxVal = array[i];
-                    maxStart = start; //optional locate run
-                }
-                length = 1;
-                start = -1; //optional locate run
-            }
-        }
-        System.out.println("start: " + maxStart + " length: " + maxLength + " data: " + maxVal);
-
-        return maxVal;
-    }
-
-    //SIMPLE integer
-    public static  void findLongestRun2(Integer array[]) {
+    public static int findLongestRun(Integer array[]) {
 
         int currLength = 1; // minimal length for a run !
         int maxLength = 0;
+        int max= array[0];
 
         for (int i = 0; i < array.length-1; ++i){
             if (array[i] == array[i+1]){
                 currLength++;
+
             }
 
             if ((array[i] != array[i+1]) || i == array.length-2){ //not 'else if'  because of end condition !
-                if (currLength > maxLength)
+                if (currLength > maxLength) {
                     maxLength = currLength;
+                    max = array[i];
+                }
                 currLength = 1; // minimal length for a run !
             }
         }
 
         System.out.println("max run " + maxLength);
+        return max;
     }
-
-    public static Integer findFirstNonrepeater(Integer array[]) {
-
-        Map<Integer, Integer> map = new HashMap<Integer,Integer>();
-
-        for (Integer i=0; i < array.length; ++i){
-            if (map.containsKey(array[i]))
-                map.put(array[i], map.get(array[i])+1);
-            else
-                map.put(array[i], 1);
-        }
-
-        for (Integer i=0; i < array.length; ++i){
-            if (map.get(array[i])==1)
-                return array[i];
-
-        }
-
-        return null;
-    }
-
 
     // print start index, length, element data of longest run in array
     public static <T extends Comparable<T>> void findLongestIncreasingRun(T array[]) {
@@ -201,7 +158,7 @@ public class Array {
             }
 
             // change or end of array
-            if (array[i].compareTo(array[i + 1])>=0 || i == array.length - 2) {
+            if (array[i].compareTo(array[i + 1])>=0 || i == array.length-2) {
                 if (length > maxLength) {
                     maxLength = length;
 
@@ -214,6 +171,28 @@ public class Array {
 
         System.out.println("start: " + maxStart + " length: " + maxLength);
 
+    }
+
+    // 1. build hash table
+    // 2. iterate array and find first hash entry > 1
+    public static Integer findFirstNonrepeater(Integer array[]) {
+
+        Map<Integer, Integer> map = new HashMap<Integer,Integer>();
+
+        for (Integer i=0; i < array.length; ++i){
+            if (map.containsKey(array[i]))
+                map.put(array[i], map.get(array[i])+1);
+            else
+                map.put(array[i], 1);
+        }
+
+        for (Integer i=0; i < array.length; ++i){
+            if (map.get(array[i])==1)
+                return array[i];
+
+        }
+
+        return null;
     }
 
     // bitmask - for numbers up to 256 limit - int mask
@@ -235,9 +214,7 @@ public class Array {
     }
 
     //HashMapImpl
-    public static Set<Integer> findDuplicates2(Integer array[]) {
-
-        int checker = 0; //init
+    public static Set<Integer> findDuplicatesMap(Integer array[]) {
 
         Set<Integer> duplicates = new HashSet<Integer>();
         Map<Integer,Integer> map = new HashMap<Integer,Integer>();
@@ -251,31 +228,12 @@ public class Array {
             map.put(i, map.get(i)+1);
         }
 
-        //duplicates.forEach((IntegerAlgs i) -> System.out.println(i));
+        //duplicates.forEach((Integer i) -> System.out.println(i)); Java 8
         return duplicates;
     }
 
-    // bitmask - removes duplicates and fills left over array with -1's
-    public static void removeDuplicates(Integer[] array) {
-        int checker = 0; //init OR use boolean array 256 for ascii
-
-        int dst = 0;
-        for (int arr_i : array) {
-            int mask = 1 << arr_i; // if this was char ' - 'a' '
-            // not a duplicate
-            if ((checker & mask) == 0) {
-                array[dst++] = arr_i;
-            }
-            checker |= mask;
-        }
-
-        for (int i = dst; i < array.length; ++i) {
-            array[i] = -1;
-        }
-    }
-
     //HASHMAP - removes duplicates and fills left over array with -1's
-    public static void removeDuplicates2(Integer[] array) {
+    public static void removeDuplicates(Integer[] array) {
 
         Map<Integer,Integer> map = new HashMap<>();
 
@@ -294,31 +252,30 @@ public class Array {
         }
     }
 
-    // bitmask - removes duplicates and fills left over array with -1's
-    public static void removeDuplicates3(Integer[] array) {
+
+    public static void removeDuplicates2(Integer[] array) {
 
         int dstIndex = 1;
         for (int i = 1; i < array.length; ++i) {
 
-            // compare new char against already pegged chars Bro
-            boolean unique = true;
-            for (int j = 0; j < dstIndex; ++j) {
+            int j;
+            for (j = 0; j < dstIndex; ++j) {
                 if (array[i] == array[j]) {
-                    unique = false;
                     break; // this thing already been done friend.
                 }
             }
 
-            if (unique)
+            if (j == dstIndex)
                 array[dstIndex++] = array[i];
-
         }
 
+        // fill leftovers
         for (int i = dstIndex; i < array.length; ++i) {
             array[i] = -1;
         }
     }
 
+    // increment overwriting elements of val
     public static int removeElements(Integer[] array, int val) {
 
         int dstIndex = 0;
@@ -327,6 +284,7 @@ public class Array {
                 array[dstIndex++] = array[i];
         }
 
+        // fill leftovers
         for (int i = dstIndex; i < array.length; ++i) {
             array[i] = -1;
         }
@@ -334,20 +292,22 @@ public class Array {
         return dstIndex;
     }
 
-
-    private static <T> void reverse(T[] buffer, int start, int end) {
+    // 2 counters
+    public static <T> void reverse(T[] buffer, int start, int end) {
 
         final int length = end - start;
-        final int pivot = start + length / 2;
-
-        for (int i = start, j=end; i <= pivot; ++i, --j) {
+        int i=start;
+        int j=end;
+        while (j > i){
             T c = buffer[i];
-            buffer[i] = buffer[j];
-            buffer[j] = c;
+            buffer[i++] = buffer[j];
+            buffer[j--] = c;
         }
     }
 
 
+    // 1. reverse entire array
+    // 2. reverse each sub array at shift pos
     public static <T> void rotateArray(T[] array, int shift) {
         shift %= array.length;
 
@@ -359,32 +319,50 @@ public class Array {
         reverse(array, shift, array.length - 1);
     }
 
+    //sorted arrays input
     public static boolean isAnagram(Integer []arr1, Integer []arr2){
 
         if (arr1.length != arr2.length)
             return false;
 
-
         return false;
     }
 
 
+    // merge sorted arrays into new third array.
+    // different than merge into larger of two arrays below..
     public static <T extends Comparable> void mergeSortedArrays(T[] array1, T[] array2, T[] merged) {
-        int i1 = 0;
-        int i2 = 0;
         int i = 0;
-        while (i1 < array1.length && i2 < array2.length) {
-            if (array1[i1].compareTo(array2[i2]) < 0)
-                merged[i++] = array1[i1++];
+        int j = 0;
+        int k = 0;
+        while (i < array1.length && j < array2.length) {
+            if (array1[i].compareTo(array2[j]) < 0)
+                merged[k++] = array1[i++];
             else
-                merged[i++] = array2[i2++];
+                merged[k++] = array2[j++];
         }
 
         //one array will have left overs
-        while (i1 < array1.length)
-            merged[i++] = array1[i1++];
-        while (i2 < array2.length)
-            merged[i++] = array2[i2++];
+        while (i < array1.length)
+            merged[k++] = array1[i++];
+        while (j < array2.length)
+            merged[k++] = array2[j++];
+    }
+
+    // with only two arrays... nums1 is big enough for merge !
+    public void mergeSortedArrays(int[] nums1, int m, int[] nums2, int n) {
+
+        int i = m-1;
+        int j = n-1;
+        int k = n+m-1;
+
+        while(i >= 0 && j >= 0){
+            nums1[k--] = nums2[j] > nums1[i] ? nums2[j--] : nums1[i--];
+        }
+
+        while(j >= 0)
+            nums1[k--] = nums2[j--];
+
     }
 
     // start with k = 0
@@ -517,7 +495,6 @@ public class Array {
         return max;
     }
 
-
     // find sum of two elements adds to sum in unsorted array.
     public static boolean isTwoSum(Integer[] array, int sum){
         Map<Integer, Integer> map = new HashMap<Integer, Integer>();
@@ -564,9 +541,7 @@ public class Array {
         return maxSum;
     }
 
-
-
-        // UTILS ----------------------------------------------------------------
+    // UTILS ----------------------------------------------------------------
     public static Integer[] createArray(int size, int limit, boolean sorted) {
 
         Random random = new Random();

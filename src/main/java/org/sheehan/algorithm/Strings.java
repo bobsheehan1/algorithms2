@@ -13,22 +13,59 @@ import java.util.*;
  */
 public class Strings {
 
-    public static String reverse(String str) {
-        char[] buffer = str.toCharArray();
-        return reverse(buffer, 0, buffer.length - 1);
+    public static boolean validParenthesis(String s) {
+        Deque<Character> stack = new ArrayDeque<Character>();
+
+        for (int i=0; i< s.length(); i++){
+            if (s.charAt(i) == '(')
+                stack.push('(');
+            if (s.charAt(i) == '[')
+                stack.push('[');
+            if (s.charAt(i) == '{')
+                stack.push('{');
+
+            if (s.charAt(i) == ')'){
+                if (stack.size()!=0 && stack.peek()=='(')
+                    stack.pop();
+                else
+                    return false;
+            }
+            if (s.charAt(i) == '}'){
+                if (stack.size()!=0 && stack.peek()=='{')
+                    stack.pop();
+                else
+                    return false;
+            }
+            if (s.charAt(i) == ']'){
+                if (stack.size()!=0 && stack.peek()=='[')
+                    stack.pop();
+                else
+                    return false;
+            }
+        }
+
+        if (stack.size()!=0)
+            return false;
+        return true;
+
     }
 
-    public static String reverse(char[] buffer, int start, int end) {
-
-        final int length = end - start + 1;
-        final int pivot = start + length / 2;
-
-        for (int i = start, cnt = 0; i < pivot; ++i, ++cnt) {
-            char c = buffer[i];
-            buffer[i] = buffer[end - cnt];
-            buffer[end - cnt] = c;
-        }
+    public static String reverse(String str) {
+        char[] buffer = str.toCharArray();
+        reverse(buffer, 0, buffer.length - 1);
         return new String(buffer);
+    }
+
+    // 2 counters
+    public static <T> void reverse(char[] buffer, int start, int end) {
+
+        int i=start;
+        int j=end;
+        while (j > i){
+            char c = buffer[i];
+            buffer[i++] = buffer[j];
+            buffer[j--] = c;
+        }
     }
 
     static String reverseWords(String str) {
@@ -36,7 +73,7 @@ public class Strings {
         int end = 0;
         char[] buffer = str.toCharArray();
         for (int i = 0; i < str.length(); i++) {
-            if (str.toCharArray()[i] == ' ') {
+            if (str.charAt(i) == ' ') {
                 end = i - 1;
                 reverse(buffer, start, end);
                 start = end + 2;
@@ -58,57 +95,59 @@ public class Strings {
         return reverseRecursively(str.substring(1)) + str.charAt(0);
     }
 
-    public static void getPermutations(String prefix, String str, Set<String> cache) {
-        //System.out.println("\tpermutation pre:" + prefix + " str:" + str + " level:" + level);
-        int n = str.length();
-        if (n == 0) {
-            //System.out.println("\tEND permutation pre:" + prefix + " str:" + str + " level:" + level);
-            //System.out.println();
-            //System.out.println(prefix);
-            cache.add(prefix);
-        } else {
-            for (int i = 0; i < n; i++) {
-                //System.out.println("\t\tloop in  i:" + i + " pre:" + prefix + " str:" + str + " level:" + level);
-                //String prefix2 = prefix + str.charAt(i);
-                //String str2 = str.substring(0, i) + str.substring(i + 1, n);
-                //System.out.println("\t\tloop out i:" + i + " pre:" + prefix2 + " str:" + str2 + " level:" + level);
-
-                getPermutations(prefix + str.charAt(i), str.substring(0, i) + str.substring(i + 1, n), cache);
-            }
-        }
-    }
-
-    // start with k = 0
-    //  swap i and k
-    // inorder recursion k+1
-    // swap k with i
-    public static void getPermutations2(java.util.List<Character> arr, int k, Set<String> cache) {
-
-        //loop of recursions !
-        for (int i = k; i < arr.size(); i++) {
-            java.util.Collections.swap(arr, i, k);
-            getPermutations2(arr, k + 1, cache);
-            java.util.Collections.swap(arr, k, i);
-        }
-
-        // when we iterate to the end for a given recursion we have a permutation !
-        if (k == arr.size() - 1) {
-            Character[] cArr = (Character[]) arr.toArray(new Character[0]);
-            char str[] = new char[cArr.length];
-            int i = 0;
-            for (Character c : cArr)
-                str[i++] = c;
-            cache.add(new String(str));
-            //System.out.println(java.util.Arrays.toString(arr.toArray()));
-        }
-    }
+//    public static void getPermutations(String prefix, String str, Set<String> cache) {
+//        //System.out.println("\tpermutation pre:" + prefix + " str:" + str + " level:" + level);
+//        int n = str.length();
+//        if (n == 0) {
+//            //System.out.println("\tEND permutation pre:" + prefix + " str:" + str + " level:" + level);
+//            //System.out.println();
+//            //System.out.println(prefix);
+//            cache.add(prefix);
+//        } else {
+//            for (int i = 0; i < n; i++) {
+//                //System.out.println("\t\tloop in  i:" + i + " pre:" + prefix + " str:" + str + " level:" + level);
+//                //String prefix2 = prefix + str.charAt(i);
+//                //String str2 = str.substring(0, i) + str.substring(i + 1, n);
+//                //System.out.println("\t\tloop out i:" + i + " pre:" + prefix2 + " str:" + str2 + " level:" + level);
+//
+//                getPermutations(prefix + str.charAt(i), str.substring(0, i) + str.substring(i + 1, n), cache);
+//            }
+//        }
+//    }
+//
+//    // start with k = 0
+//    //  swap i and k
+//    // inorder recursion k+1
+//    // swap k with i
+//    public static void getPermutations2(java.util.List<Character> arr, int k, Set<String> cache) {
+//
+//        //loop of recursions !
+//        for (int i = k; i < arr.size(); i++) {
+//            java.util.Collections.swap(arr, i, k);
+//            getPermutations2(arr, k + 1, cache);
+//            java.util.Collections.swap(arr, k, i);
+//        }
+//
+//        // when we iterate to the end for a given recursion we have a permutation !
+//        if (k == arr.size() - 1) {
+//            Character[] cArr = (Character[]) arr.toArray(new Character[0]);
+//            char str[] = new char[cArr.length];
+//            int i = 0;
+//            for (Character c : cArr)
+//                str[i++] = c;
+//            cache.add(new String(str));
+//            //System.out.println(java.util.Arrays.toString(arr.toArray()));
+//        }
+//    }
 
     // O(n!) permutations !
-    public static Set<String> getPermutations3(String s){
+    public static Set<String> getPermutationsRecursive(String s){
         if (s == null)
             return null;
 
         Set<String> perms = new HashSet<String>();
+
+        //base case
         if (s.length() == 0){
             perms.add("");
             return perms;
@@ -118,9 +157,10 @@ public class Strings {
         //...then insert the first into each position of each sub perm.
         char first = s.charAt(0);
         String remainder = s.substring(1);
-        Set<String> subPerms = getPermutations3(remainder);
+        Set<String> subPerms = getPermutationsRecursive(remainder);
         for (String subPerm: subPerms){
             for (int i=0; i <= subPerm.length(); ++i){ // '<='   IMPORTANT !!!
+                // combine at each location in substring
                 String start = subPerm.substring(0,i);
                 String end = subPerm.substring(i);
                 perms.add(start + first + end);
@@ -335,7 +375,7 @@ public class Strings {
     // 3c. Each pass reset input array to new order determined by alpha buckets
     // 3d. By the time you are down the last rightmost char input array will be reset to sorted ordered
 
-    public static void radixSortVarLengthMsd( String [ ] arr, int maxLen ) {
+    public static void radixSortVarLengthMsd( String []arr, int maxLen ) {
         final int BUCKETS = 256;
 
         java.util.List<java.util.List<String>> lengthBuckets = new ArrayList<java.util.List<String>>();

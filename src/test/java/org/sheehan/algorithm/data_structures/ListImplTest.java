@@ -3,7 +3,6 @@ package org.sheehan.algorithm.data_structures;
 import org.junit.Assert;
 import org.junit.Test;
 import org.sheehan.algorithm.Array;
-import org.sheehan.algorithm.sort.SortList;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -11,26 +10,60 @@ import static org.junit.Assert.assertTrue;
 public class ListImplTest {
 
     @Test
-    public void testAppendBack() throws Exception {
+    public void testAppendDelete() {
         List<Integer> list = new ListImpl<Integer>();
 
-        for (int i = 0; i < 10; i++)
-            list.appendBack(i);
-        Integer array1[] = new Integer[list.size()];
-        list.toArray(array1);
-
+        list.appendFront(1);
+        list.print();
+        list.deleteFront();
         list.print();
 
-        list.reverse();
+        list.appendBack(1);
         list.print();
-        list.reverse();
+        list.deleteBack();
         list.print();
 
-        Integer array2[] = new Integer[list.size()];
-        list.toArray(array2);
+        list.appendFront(1);
+        list.appendFront(2);
+        list.print();
+        list.deleteFront();
+        list.print();
+        list.deleteFront();
+        list.print();
 
-        Assert.assertArrayEquals(array1, array2);
+        list.appendBack(1);
+        list.appendBack(2);
+        list.print();
+        list.deleteBack();
+        list.print();
+        list.deleteBack();
+        list.print();
     }
+
+    @Test
+    public void testInsert() {
+        List<Integer> list = new ListImpl<Integer>();
+
+        list.insertBefore(1,0);
+        list.insertBefore(2,0);
+        list.insertBefore(3,0);
+        list.insertBefore(4,1);
+        list.insertBefore(5,3);
+        list.print();
+
+        list.clear();
+        list.print();
+
+        list.deleteAt(3);
+        list.print();
+        list.deleteAt(1);
+        list.print();
+        list.deleteAt(0);
+        list.print();
+        list.deleteAt(1);
+        list.print();
+    }
+
 
     @Test
     public void testReverse() throws Exception {
@@ -100,21 +133,15 @@ public class ListImplTest {
     public void testDelete() throws Exception {
         List<Integer> list = new ListImpl<Integer>();
 
-        for (int i = 0; i < 10; i++)
+        for (int i = 0; i < 10; i++) {
             list.appendBack(i);
-
-        for (int i = 0; i < 10; i++)
-            list.delete(i);
-
-        Assert.assertTrue(list.size() == 0);
-        for (int i = 0; i < 10; i++)
             list.appendBack(i);
+        }
+
         list.print();
 
-        for (int i = 9; i >= 0; i--)
-            list.delete(i);
+        list.deleteElements(5);
         list.print();
-        Assert.assertTrue(list.size() == 0);
     }
 
     @Test
@@ -139,22 +166,22 @@ public class ListImplTest {
     public void testCycle() {
         List<Integer> list = new ListImpl<Integer>();
 
-        for (int i = 0; i < 10; i++)
+        for (int i = 0; i < 21; i++)
             list.appendBack(i);
 
-        assertFalse(list.hasCycle());
-        ListImpl.Node cycleStart = list.hasCycle2();
-        assertFalse(cycleStart != null);
+        Assert.assertNull(list.hasCycleSet());
+        List.Node beforeCycle = list.findBeforeCycle();
+        Assert.assertNull(beforeCycle);
 
         list.print();
 
         list.introduceCycleForTest();
 
-        assertTrue(list.hasCycle());
-        cycleStart = list.hasCycle2();
-        assertTrue(cycleStart != null);
-        int cycleSize = list.countCycle(cycleStart);
-        System.out.println("Cycle Size: " + cycleSize);
+        Assert.assertNotNull(list.hasCycleSet());
+        beforeCycle = list.findBeforeCycle();
+        Assert.assertNotNull(beforeCycle);
+        //int cycleSize = list.countCycle(cycleStart);
+       // System.out.println("Cycle Size: " + cycleSize);
     }
 
     @Test

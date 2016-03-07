@@ -1,8 +1,7 @@
-package org.sheehan.algorithm;
+package org.sheehan.algorithm.dynamic_programming;
 
 import org.junit.Test;
-
-import static org.junit.Assert.*;
+import org.sheehan.algorithm.dynamic_programming.RopeCutting;
 
 public class RopeCuttingTest {
 

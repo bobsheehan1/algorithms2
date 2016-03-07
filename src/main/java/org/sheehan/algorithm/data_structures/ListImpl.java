@@ -8,39 +8,6 @@ import java.util.Stack;
  */
 public class ListImpl <T extends Comparable<T>> implements List<T> {
 
-
-    @Override
-    public Iterator<T> iterator() {
-        return new MyListIterator<T>(this);
-    }
-
-
-    public class MyListIterator<T extends Comparable<T>> implements Iterator<T> {
-        Node<T> current;
-
-        public MyListIterator(ListImpl<T> nodes) {
-            current = nodes.head;
-
-        }
-
-        @Override
-        public boolean hasNext() {
-            return this.current != null;
-        }
-
-        @Override
-        public T next() {
-            T value = this.current.data;
-            this.current = this.current.next;
-            return value;
-        }
-
-        @Override
-        public void remove() {
-            //TODO
-        }
-    }
-
     public Node<T> head, tail;
 
     public ListImpl() {
@@ -61,30 +28,7 @@ public class ListImpl <T extends Comparable<T>> implements List<T> {
     }
 
     @Override
-    public Node<T> deleteFront() {
-        Node<T> front = head;
-        this.head = this.head.next;
-        return front;
-    }
-
-    @Override
     public void appendBack(T value) {
-//       Node<T> newNode = new Node<>(data);
-//       if (this.head == null)
-//           this.head = newNode;
-//       else {
-//           Node curr = this.head;
-//           Node prev = this.head;
-//
-//           // move to last node (before null)
-//           while (curr != null) {
-//               prev = curr;
-//               curr = curr.next;
-//           }
-//           prev.next = newNode;
-//           this.tail = newNode;
-//       }
-
         Node<T> node = new Node<>(value);
         if (this.tail == null) {
             this.head = node;
@@ -96,8 +40,21 @@ public class ListImpl <T extends Comparable<T>> implements List<T> {
     }
 
     @Override
-    public Node<T> deleteBack() {
+    public Node<T> deleteFront() {
         if (head == null)
+            return null;
+
+        Node<T> front = head;
+        head = head.next;
+
+        if (head == null)
+            tail = null;
+        return front;
+    }
+
+    @Override
+    public Node<T> deleteBack() {
+        if (tail == null)
             return null;
 
         Node<T> curr = head;
@@ -109,15 +66,127 @@ public class ListImpl <T extends Comparable<T>> implements List<T> {
             curr = curr.next;
         }
 
-        prev.next = null;
-        this.tail = prev;
-        return curr;
+        // first element
+        if (prev == null){
+            head = null;
+            tail = null;
+            return curr;
+        } else {
+            prev.next = curr.next;
+            return curr;
+        }
     }
 
+    public void clear() {
+        if (head == null)
+            return;
+
+        Node<T> curr = head;
+        Node<T> prev = null;
+
+        // lets point at one before last element
+        while (curr != null) {
+            prev = curr;
+            curr = curr.next;
+            prev.next = null;
+        }
+
+    }
+
+    @Override
+    public void insertBefore(T value, int pos) {
+        if (head == null) {
+            appendFront(value);
+            return;
+        }
+
+        Node curr = head;
+        Node prev = null;
+        int cnt = 0;
+        while(curr != null) {
+            if (cnt++ == pos)
+                break;
+
+            prev = curr;
+            curr=curr.next;
+        }
+
+        if (curr == null)
+            return; //error
+
+        if (prev == null) {
+            appendFront(value);
+            return;
+        }
+
+        Node<T> newNode = new Node<>(value);
+        newNode.next=curr;
+        prev.next=newNode;
+    }
+
+    @Override
+    public void insertAfter(T value, int pos) {
+        if (head == null) {
+            appendFront(value);
+            return;
+        }
+
+        Node curr = head;
+        Node prev = null;
+        int cnt = 0;
+        while(curr != null) {
+            if (cnt++ == pos)
+                break;
+
+            prev = curr;
+            curr=curr.next;
+        }
+
+        if (curr == null)
+            return; //error..pos may be out of range
+
+        if (prev == null) {
+            appendFront(value);
+            return;
+        }
+
+        Node<T> newNode = new Node<>(value);
+        newNode.next=curr.next;
+        curr.next = newNode;
+    }
+
+    @Override
+    public void deleteAt(int pos) {
+        if (head == null) {
+            return;
+        }
+
+        Node curr = head;
+        Node prev = null;
+        int cnt = 0;
+        while(curr != null) {
+            if (cnt++ == pos)
+                break;
+
+            prev = curr;
+            curr=curr.next;
+        }
+
+        if (curr == null)
+            return; //error
+
+        if (prev == null) {
+            deleteFront();
+            return;
+        }
+
+
+        prev.next=curr.next;
+    }
 
     // here we delete elements that match val
     // careful to only increment prev to non deleted nodes !!!
-    public Node deleteElements(Node head, int val) {
+    public Node deleteElements(int val) {
         if (head == null)
             return null;
 
@@ -125,49 +194,44 @@ public class ListImpl <T extends Comparable<T>> implements List<T> {
         Node curr = head;
         while (curr != null) {
 
-            if (curr.data .equals(val)){
+            if (curr.data.equals(val)){
                 if (prev == null) {
-                    head = curr.next;
+                    head = curr.next; //delete at front
                 } else {
-                    prev.next = curr.next;
+                    prev.next = curr.next; //delete after front
                 }
-
             } else
-                prev = curr;  /// IMPORTANT !
+                prev = curr;  /// IMPORTANT ! Only update prev if not deleted or else prev points to deleted node !!!
 
             curr = curr.next;
         }
 
         return head;
-
     }
 
-    // TODO another algorithm If only pointer to current node. Copy next and delete next !!!
-    @Override
-    public boolean delete(T value) {
-        if (head == null)
-            return false;
+    //If only pointer to current node. Copy next and delete next !!!
+    public void deleteCurrentNode(Node<T> node){
+        // Copy next to target and delete next !!!
+    }
 
-        if (this.head.data.equals(value)) { // move head up one
-            this.head = this.head.next;
-            return true;
+    public void insertInOrder(T data) {
+        Node<T> newNode = new Node<>(data);
+        if (head == null) {
+            head = newNode;
+            return;
         }
 
-        Node curr = head, prev = head;
-        while (curr != null) {
-            if (curr.data.equals(value)) {
-                prev.next = curr.next; // deletes current
-                return true;
+        Node<T> curr = head;
 
+        int cnt = 0;
+        while (curr != null) {
+            if (newNode.data.compareTo(curr.data) < 0) {
+                insertBefore(data, cnt);
+                return;
             }
-            prev = curr;
+            cnt++;
             curr = curr.next;
         }
-
-        if (curr == null)
-            this.tail = prev;
-
-        return false;
     }
 
     //brute force
@@ -276,9 +340,9 @@ public class ListImpl <T extends Comparable<T>> implements List<T> {
     public int size() {
         int count = 0;
 
-        Node n = this.head;
-        while (n != null) {
-            n = n.next;
+        Node curr = this.head;
+        while (curr != null) {
+            curr = curr.next;
             count++;
         }
         return count;
@@ -309,29 +373,34 @@ public class ListImpl <T extends Comparable<T>> implements List<T> {
     }
 
     @Override
-    public boolean hasCycle() {
+    public Node hasCycleSet() {
         Set<Node> cycleSet = new HashSet<>();
 
-        Node node = this.head;
-        cycleSet.add(node);
-        while (node != null) {
-            node = node.next;
+        Node curr = this.head;
+        Node prev = null;
+        cycleSet.add(curr);
+        while (curr != null) {
+            prev = curr;
+            curr = curr.next;
 
-            if (!cycleSet.add(node))
-                return true;
+            if (!cycleSet.add(curr))
+                return prev;
         }
-        return false;
+        return null;
     }
 
     // This solution is "Floyd's Cycle-Finding Algorithm"
     // as published in "Non-deterministic Algorithms" by Robert W. Floyd in 1967.
     // It is also called "The Tortoise and the Hare Algorithm".
     @Override
-    public Node hasCycle2() {
+    public Node findBeforeCycle() {
+
+        boolean cycleFound = false;
         Node slowNode, fastNode;
         slowNode = this.head;
         fastNode = this.head;
         while (slowNode != null) {
+
             if (fastNode == null)
                 return null;
             fastNode = fastNode.next;
@@ -339,10 +408,28 @@ public class ListImpl <T extends Comparable<T>> implements List<T> {
                 return null;
             fastNode = fastNode.next; // double it up
 
-            if (slowNode == fastNode) //test !
-                return slowNode;
+            if (slowNode == fastNode) {
+                System.out.println("cycle found in loop at: " + slowNode.data);
+                cycleFound = true;
+                break;
+            }
 
             slowNode = slowNode.next;
+        }
+
+        // now lets find the node before the loop start so it can subsequently be broken
+        if (cycleFound) {
+            Node prevNode = null;
+            fastNode = this.head; //repurpose fast node to normal iteration step by step until it meets tortoise
+            while (fastNode != null) {
+                if (slowNode == fastNode) {
+                    return prevNode;
+                }
+                fastNode = fastNode.next;
+                prevNode = slowNode;
+                slowNode = slowNode.next;
+            }
+
         }
         return null;
     }
@@ -412,10 +499,10 @@ public class ListImpl <T extends Comparable<T>> implements List<T> {
         Node<T> curr = this.head; //trick persist outer list iterator and not reset on inner loop
         //iterate over inner list
 
-        Iterator<T> iterator = subList.iterator();
+        Iterator<T> subListIter = subList.iterator();
 
-        while (iterator.hasNext()) {
-            T subListElem = iterator.next();
+        while (subListIter.hasNext()) {
+            T subListElem = subListIter.next();
             boolean elemFound = false;
 
             //move along outer list (do not rest to beginning for O(n)
@@ -423,46 +510,16 @@ public class ListImpl <T extends Comparable<T>> implements List<T> {
                 if (subListElem.equals(curr.data)) {
                     elemFound = true;
                     curr = curr.next;
-                    break;
+                    break; // now restart on next sublist elem
                 }
             }
-            if (!elemFound)
+            if (!elemFound) // all elemes insublist found
                 return false;
         }
         return true;
     }
 
-    public void insertInOrder(T data) {
 
-        Node<T> node = new Node<>(data);
-        if (head == null) {
-            head = node;
-            return;
-        }
-
-        Node<T> curr = head;
-        Node<T> prev = null;
-
-        while (curr != null) {
-            if (node.data.compareTo(curr.data) < 0) {
-                break;
-            }
-            prev = curr;
-            curr = curr.next;
-        }
-
-        if (prev == null) {
-            node.next = head;
-            head = node;
-            return;
-        }
-
-        prev.next = node;
-        node.next = curr;
-
-        System.out.println("Adding to list: " + data);
-
-    }
 
     /////////////////////////////////////////////////////////////////////////////////
     // INSERTION SORT LIST
@@ -592,4 +649,145 @@ public class ListImpl <T extends Comparable<T>> implements List<T> {
 
         }
     }
+
+    public Node<Integer> mergeTwoLists(Node<Integer> l1, Node<Integer> l2) {
+
+        if (l1 == null)
+            return l2;
+        if (l2 == null)
+            return l1;
+
+        Node<Integer> dummyMergedHead = new Node<Integer>(-1); // dummy node
+        Node<Integer> currMerged = dummyMergedHead;
+
+        Node<Integer> curr1 = l1;
+        Node<Integer> curr2 = l2;
+
+        while (curr1 != null && curr2 != null) {
+
+            if (curr1.data > curr2.data){
+                currMerged.next = curr2;
+                currMerged = curr2;
+                curr2 = curr2.next;
+            } else {
+                currMerged.next = curr1;
+                currMerged = curr1;
+                curr1 = curr1.next;
+            }
+        }
+
+        while (curr1 != null) {
+            currMerged.next = curr1;
+            currMerged = curr1;
+            curr1 = curr1.next;
+        }
+
+        while (curr2 != null) {
+            currMerged.next = curr2;
+            currMerged = curr2;
+            curr2 = curr2.next;
+        }
+
+        return dummyMergedHead.next;
+    }
+
+    // move even nodes to end of list in same order
+    public Node<T> oddEvenList(Node<T> head) {
+        if (head == null)
+            return null;
+
+        Node<T> oddCurr = head;
+        Node<T> oddTail = head;
+
+        Node<T> evenCurr = head.next;
+        Node<T> evenHead = evenCurr;    // this is fixed.
+
+        while(oddCurr != null){
+            if (oddCurr.next != null)
+                oddCurr.next = oddCurr.next.next;
+            if (evenCurr != null && evenCurr.next != null)
+                evenCurr.next = evenCurr.next.next;
+
+            // track end of odd elements
+            oddTail = oddCurr;
+
+            if (oddCurr != null)
+                oddCurr = oddCurr.next;
+            if (evenCurr != null)
+                evenCurr = evenCurr.next;
+        }
+
+        // point last odd elem to even head
+        oddTail.next = evenHead;
+
+        return head;
+    }
+
+    public Node<T> removeNthFromEnd(Node<T> head, int n) {
+        if (head == null)
+            return null;
+
+        // 1. iterate until nth node in position
+        Node<T> nth = head;
+        int cnt = 0;
+        while(nth != null && cnt != n){
+            nth = nth.next;
+            cnt++;
+        }
+
+        // 2. iterate until nth == null, but start from beginning with curr.
+        Node<T> curr = head;
+        Node<T> prev = null;
+        while(nth != null){
+            nth = nth.next;
+            prev = curr;
+            curr = curr.next;
+        }
+
+        // 3a. delete at head if needed
+        if (prev == null){
+            head = head.next;
+            return head;
+        }
+
+        // 3b. delete in list if needed
+        if (curr != null)
+            prev.next=curr.next;
+
+        return head;
+    }
+
+    // =====================================================================================
+    @Override
+    public Iterator<T> iterator() {
+        return new MyListIterator<T>(this);
+    }
+
+
+    public class MyListIterator<T extends Comparable<T>> implements Iterator<T> {
+        Node<T> current;
+
+        public MyListIterator(ListImpl<T> nodes) {
+            current = nodes.head;
+
+        }
+
+        @Override
+        public boolean hasNext() {
+            return this.current != null;
+        }
+
+        @Override
+        public T next() {
+            T value = this.current.data;
+            this.current = this.current.next;
+            return value;
+        }
+
+        @Override
+        public void remove() {
+            //TODO
+        }
+    }
+
 }

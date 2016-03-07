@@ -1,13 +1,12 @@
-package org.sheehan.algorithm;
+package org.sheehan.algorithm.dynamic_programming;
 
 import org.junit.Test;
+import org.sheehan.algorithm.dynamic_programming.Knapsack;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
-
-import static org.junit.Assert.*;
 
 public class KnapsackTest {
 

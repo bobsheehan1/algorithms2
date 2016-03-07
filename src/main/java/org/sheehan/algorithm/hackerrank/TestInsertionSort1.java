@@ -8,26 +8,26 @@ public class TestInsertionSort1 {
 
 
 
-    public static void insertIntoSorted(int[] ar) {
+    public static void insertIntoSorted(int[] array) {
 
-        int v = ar[ar.length-1];
-        ar[ar.length-1]= Integer.MAX_VALUE;
+        int curr = array[array.length-1];
+        array[array.length-1]= Integer.MAX_VALUE;
 
-        int i=ar.length-1;
-        for (i=ar.length-1; i > 0; --i){
-            if (v < ar[i-1]) {
-                ar[i] = ar[i - 1];
-                printArray(ar);
+        int i=array.length-1;
+        for (i=array.length-1; i > 0; --i){
+            if (curr < array[i-1]) {
+                array[i] = array[i - 1];
+                printArray(array);
             } else {
-                ar[i] = v;
-                printArray(ar);
+                array[i] = curr;
+                printArray(array);
                 break;
             }
         }
 
         if (i == 0){
-            ar[i] = v;
-            printArray(ar);
+            array[i] = curr;
+            printArray(array);
         }
     }
 

@@ -2,7 +2,6 @@ package org.sheehan.algorithm;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.sheehan.algorithm.Array;
 
 import java.util.*;
 import java.util.List;
@@ -112,21 +111,18 @@ public class ArrayTest {
 
         Integer array[] = {1, 2, 2, 3, 3, 3, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 6, 7, 8, 9, 10, 10};
 
-        Assert.assertEquals(4, Array.findLongestRun(array).intValue());
+        Assert.assertEquals(4, Array.findLongestRun(array));
 
         Integer array2[] = {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 3, 3, 3, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 6, 7, 8, 9, 10, 10};
-        Array.findLongestRun2(array2);
+        Array.findLongestRun(array2);
 
-        Assert.assertEquals(1, Array.findLongestRun(array2).intValue());
+        Assert.assertEquals(1, Array.findLongestRun(array2));
 
         Integer array3[] = {1, 2, 2, 3, 3, 3, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 6, 7, 8, 9, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10};
-        Array.findLongestRun2(array3);
+        Array.findLongestRun(array3);
 
-        Assert.assertEquals(10, Array.findLongestRun(array3).intValue());
+        Assert.assertEquals(10, Array.findLongestRun(array3));
 
-        Double array4[] = {3.3, 1.1, 3.3, 4.4, 5.5, 7.7, 7.7, 7.7, 8.8};
-
-        Assert.assertEquals(7.7f, Array.findLongestRun(array4).floatValue(), 0.0);
     }
 
     @Test
@@ -168,7 +164,7 @@ public class ArrayTest {
 
         duplicates.forEach((Integer i) -> System.out.print(i + " "));
 
-        Set<Integer> duplicates2 = Array.findDuplicates2(integers.toArray(new Integer[0]));
+        Set<Integer> duplicates2 = Array.findDuplicatesMap(integers.toArray(new Integer[0]));
 
         duplicates2.forEach((Integer i) -> System.out.print(i + " "));
 
@@ -190,7 +186,7 @@ public class ArrayTest {
 
         integers1 = integers.toArray(new Integer[0]);
 
-        Array.removeDuplicates2(integers1);
+        Array.removeDuplicates(integers1);
 
         System.out.println();
         for (int i: integers1)
@@ -198,7 +194,7 @@ public class ArrayTest {
 
         integers1 = integers.toArray(new Integer[0]);
 
-        Array.removeDuplicates3(integers1);
+        Array.removeDuplicates2(integers1);
 
         System.out.println();
         for (int i: integers1)

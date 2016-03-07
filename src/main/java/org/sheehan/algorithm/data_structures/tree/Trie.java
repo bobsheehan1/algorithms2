@@ -1,4 +1,4 @@
-package org.sheehan.algorithm.data_structures;
+package org.sheehan.algorithm.data_structures.tree;
 
 /*Oracle Community Directory
     Oracle Community FAQ

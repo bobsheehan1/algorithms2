@@ -2,7 +2,6 @@ package org.sheehan.algorithm;
 
 import junit.framework.Assert;
 import org.junit.Test;
-import org.sheehan.algorithm.sort.SortArray;
 
 import java.util.*;
 
@@ -34,9 +33,9 @@ public class StringsTest {
     public void testReverse2() throws Exception {
         String testStr = "hello there";
 
-        String reverseStr = Strings.reverse(testStr.toCharArray(), 6, testStr.length() - 1);
+        String reverseStr = Strings.reverseWords(testStr);
         System.out.println(reverseStr);
-        Assert.assertEquals("hello ereht", reverseStr);
+        Assert.assertEquals("olleh ereht", reverseStr);
     }
 
     @Test
@@ -50,26 +49,26 @@ public class StringsTest {
 
     @Test
     public void testPermutations() throws Exception {
-        String testStr = "ABC";
+//        String testStr = "ABC";
+//
+//        Set<String> cache = new HashSet<String>();
+//
+//        Strings.getPermutations("", "ABC", cache);
+//
+//        for (String s: cache)
+//            System.out.println(s);
+//
+//        cache.clear();
+//        char[] chars = "ABC".toCharArray();
+//        List<Character> list = new ArrayList<>();
+//        for (char c: chars)
+//            list.add(c);
+//        Strings.getPermutations2(list, 0, cache);
+//
+//        for (String s: cache)
+//            System.out.println(s);
 
-        Set<String> cache = new HashSet<String>();
-
-        Strings.getPermutations("", "ABC", cache);
-
-        for (String s: cache)
-            System.out.println(s);
-
-        cache.clear();
-        char[] chars = "ABC".toCharArray();
-        List<Character> list = new ArrayList<>();
-        for (char c: chars)
-            list.add(c);
-        Strings.getPermutations2(list, 0, cache);
-
-        for (String s: cache)
-            System.out.println(s);
-
-        Set<String> perms = Strings.getPermutations3("ABCD");
+        Set<String> perms = Strings.getPermutationsRecursive("ABCD");
         for (String perm:perms)
             System.out.println(perm);
 

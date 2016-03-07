@@ -6,10 +6,15 @@ public class BitsTest {
 
     @Test
     public void testReplaceStr() throws Exception {
-        int num1 = 0x222222;
-        int num2 = 0x7;
+        int num1 = ~0;
+        for (int i=0; i<32;i+=2){
+            int mask = 1 << i;
+            num1 ^= mask;
+        }
+        //int num1 = 0x222222;
+        int num2 = ~0;
 
-        Bits.replaceSubstr(num1, num2, 2, 4 );
+        Bits.replaceSubstr(num2, num1, 2, 8 );
     }
 
 

@@ -1,4 +1,4 @@
-package org.sheehan.algorithm;
+package org.sheehan.algorithm.dynamic_programming;
 
 /**
  * Created by bob on 9/10/14.

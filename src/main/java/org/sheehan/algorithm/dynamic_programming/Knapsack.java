@@ -1,4 +1,4 @@
-package org.sheehan.algorithm;
+package org.sheehan.algorithm.dynamic_programming;
 
 import java.util.HashSet;
 import java.util.Set;

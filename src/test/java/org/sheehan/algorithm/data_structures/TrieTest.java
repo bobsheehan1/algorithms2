@@ -1,10 +1,7 @@
 package org.sheehan.algorithm.data_structures;
 
 import org.junit.Test;
-
-import java.util.*;
-
-import static org.junit.Assert.*;
+import org.sheehan.algorithm.data_structures.tree.Trie;
 
 /**
  * Created by bob on 2/25/16.

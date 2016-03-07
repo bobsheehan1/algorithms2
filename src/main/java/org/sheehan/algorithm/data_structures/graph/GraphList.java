@@ -46,10 +46,10 @@ public class GraphList<T extends Comparable<T>> implements Graph<T> {
 
 
     public boolean removeEdge(GraphEdge<T> edge){
-        List<GraphEdge<T>> graphEdges = this.graphAdjacencyList.get(edge.dstNode);
-        graphEdges.delete(edge);
-        graphEdges = this.graphAdjacencyList.get(edge.srcNode);
-        graphEdges.delete(edge);
+//        List<GraphEdge<T>> graphEdges = this.graphAdjacencyList.get(edge.dstNode);
+//        graphEdges.delete(edge);
+//        graphEdges = this.graphAdjacencyList.get(edge.srcNode);
+//        graphEdges.delete(edge);
 
         return true; //todo
     }
