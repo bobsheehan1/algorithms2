@@ -102,11 +102,13 @@ public class SortArrayTest {
     public void testMergeSort() throws Exception {
         Integer array[] = Array.createArray(10,10, false);
 
-        System.out.println("merge");
-        System.out.println(Arrays.toString(array));
+        Integer array2[] = {8,2,3,4,5,6,7,1};
 
-        SortArray.mergeSort(array);
-        System.out.println(Arrays.toString(array));
+        System.out.println("merge");
+        System.out.println(Arrays.toString(array2));
+
+        System.out.println("inversions: " + SortArray.mergeSort(array2));
+        System.out.println(Arrays.toString(array2));
         System.out.println();
     }
 

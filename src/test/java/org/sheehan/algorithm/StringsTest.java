@@ -14,6 +14,7 @@ import java.util.*;
  */
 public class StringsTest {
 
+
     @Test
     public void testReverse() throws Exception {
         String testStr = "hello";
@@ -26,6 +27,8 @@ public class StringsTest {
         reverseStr = Strings.reverseRecursively(testStr);
         System.out.println(reverseStr);
         Assert.assertEquals("olleh", reverseStr);
+
+        Strings.isStrobogrammatic("69");
 
     }
 

@@ -17,11 +17,28 @@ public class BitsTest {
         Bits.replaceSubstr(num2, num1, 2, 8 );
     }
 
+    @Test
+    public void testLongestRun() throws Exception {
+        int num = Bits.str2Int("1111");
+        System.out.println(Bits.longsetRun(num));
+        num = Bits.str2Int("1101110111111000011");
+        System.out.println(Bits.longsetRun(num));
+    }
 
     @Test
     public void testBinStrToInt() throws Exception {
         System.out.println(Bits.str2Int("1111"));
         System.out.println(Bits.str2Int("0101"));
+
+    }
+
+    @Test
+    public void tesetReverse() throws Exception {
+        Bits.print(Bits.str2Int("110111110000"));
+        int reverse = Bits.reverse2(Bits.str2Int("110111110000"));
+        Bits.print(reverse);
+        reverse = Bits.reverse(Bits.str2Int("110111110000"));
+        Bits.print(reverse);
 
     }
 

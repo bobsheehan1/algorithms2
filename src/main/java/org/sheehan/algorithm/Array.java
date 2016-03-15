@@ -331,15 +331,20 @@ public class Array {
 
     // merge sorted arrays into new third array.
     // different than merge into larger of two arrays below..
-    public static <T extends Comparable> void mergeSortedArrays(T[] array1, T[] array2, T[] merged) {
+    public static <T extends Comparable> long mergeSortedArrays(T[] array1, T[] array2, T[] merged) {
+        long inversions = 0;
+
         int i = 0;
         int j = 0;
         int k = 0;
         while (i < array1.length && j < array2.length) {
             if (array1[i].compareTo(array2[j]) < 0)
                 merged[k++] = array1[i++];
-            else
+            else {
                 merged[k++] = array2[j++];
+                inversions += array1.length-i;
+
+            }
         }
 
         //one array will have left overs
@@ -347,6 +352,8 @@ public class Array {
             merged[k++] = array1[i++];
         while (j < array2.length)
             merged[k++] = array2[j++];
+
+        return inversions;
     }
 
     // with only two arrays... nums1 is big enough for merge !

@@ -236,10 +236,11 @@ public class SortArray {
     /////////////////////////////////////////////////////////////////////////////////
     // MERGE SORT
     /////////////////////////////////////////////////////////////////////////////////
-    public static <T extends Comparable<T>> T[] mergeSort(T array[])
+    public static <T extends Comparable<T>> int mergeSort(T array[])
     {
+        int inversions = 0;
         if (array.length <= 1)
-            return array;
+            return 0;
 
         int size1 = array.length/2;
         int size2 = array.length - size1;
@@ -249,12 +250,14 @@ public class SortArray {
         System.arraycopy(array, 0, array1, 0, size1);
         System.arraycopy(array, size1, array2, 0, size2);
 
-        mergeSort(array1);
-        mergeSort(array2);
+        inversions +=mergeSort(array1);
+        inversions +=mergeSort(array2);
 
         //overwrite array with merge
-        org.sheehan.algorithm.Array.mergeSortedArrays(array1, array2, array);
-        return array;
+        inversions += org.sheehan.algorithm.Array.mergeSortedArrays(array1, array2, array);
+        System.out.println("inversions: " + inversions);
+
+        return inversions;
     }
 
 

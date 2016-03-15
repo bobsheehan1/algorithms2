@@ -181,7 +181,7 @@ public class ListImplTest {
         beforeCycle = list.findBeforeCycle();
         Assert.assertNotNull(beforeCycle);
         //int cycleSize = list.countCycle(cycleStart);
-       // System.out.println("Cycle Size: " + cycleSize);
+        System.out.println("Cycle Start: " + beforeCycle.next.data);
     }
 
     @Test

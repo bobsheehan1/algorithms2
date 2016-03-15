@@ -13,6 +13,28 @@ import java.util.*;
  */
 public class Strings {
 
+    public static boolean isStrobogrammatic(String num) {
+        char[] str = num.toCharArray();
+        for (int i=0; i< str.length; ++i){
+            if (!(str[i]=='1' || str[i]=='8' || str[i]=='0' || str[i]=='6' || str[i]=='9'))
+                return false;
+        }
+
+        for (int i=0; i< str.length; ++i){
+            if (str[i]=='6' || str[i]=='9'){
+                if (str[i]=='6' && str[str.length-i-1]!='9')
+                    return false;
+                else if (str[i]=='9' && str[str.length-i-1]!='6')
+                    return false;
+            }
+            else if (str[i] != str[str.length-1-i])
+                return false;
+        }
+
+        return true;
+
+    }
+
     public static boolean validParenthesis(String s) {
         Deque<Character> stack = new ArrayDeque<Character>();
 

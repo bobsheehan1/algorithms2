@@ -23,6 +23,45 @@ public class BinaryTree<K extends Comparable<? super K>, V> {
         this.root = node;
     }
 
+    public static class  Deepest{
+        int depth;
+        TreeNode node;
+    };
+
+    public void getDeepestNode(Deepest result, TreeNode<K,V> node, int depth) {
+        if (node == null) {
+            // nothing to do
+            return;
+        }
+        if (node.left == null && node.right == null) {
+            // we are the left leaf node
+            if (depth > result.depth) {
+                result.depth = depth;
+                result.node = node;
+            }
+        }
+        getDeepestNode(result, node.left, depth + 1);
+        getDeepestNode(result, node.right, depth + 1);
+    }
+
+    public boolean isSymmetric(TreeNode root) {
+        if (root == null)
+            return true;
+        return isSymmetric(root.left, root.right);
+    }
+
+    public boolean isSymmetric(TreeNode left, TreeNode right) {
+        if (left == null && right == null)
+            return true;
+        else if (left == null || right == null)
+            return false;
+        else if (left.key != right.key)
+            return false;
+
+        return isSymmetric(left.left, right.right) && isSymmetric(left.right, right.left);
+
+    }
+
     public void addToTree(K []sortedArray){
        this.root = addToTree(sortedArray, 0, sortedArray.length-1);
     }
@@ -87,6 +126,21 @@ public class BinaryTree<K extends Comparable<? super K>, V> {
             return node.value + Math.max(getMaxSum(node.left), getMaxSum(node.right));
     }
 
+    public void getPaths(TreeNode<Integer, Integer> node, List<String> paths, String path) {
+        if (node == null){
+            return;
+        }
+
+        if (node.left==null && node.right==null){
+            path += node.key.toString() + " ";
+            paths.add(path);
+        }
+
+        path += node.key.toString() + " ";
+        getPaths(node.left, paths, path);
+        getPaths(node.right,paths, path);
+    }
+
     //recursive to print all end node path tot root  node sums
     public void printEndNodesAndPathSums(TreeNode<Integer, Integer> node){
         if (node == null)
@@ -108,6 +162,8 @@ public class BinaryTree<K extends Comparable<? super K>, V> {
 
         printEndNodesAndPathSums(node.left);
         printEndNodesAndPathSums(node.right);
+
+
     }
 
     public void getLevelNodes(TreeNode<K,V> node, int cLevel, int rLevel, List<TreeNode<K,V>> nodes ){

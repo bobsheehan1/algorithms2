@@ -9,9 +9,63 @@ package org.sheehan.algorithm.data_structures.tree;
  */
 public class BinarySearchTree<K extends Comparable<?super K>, V> extends BinaryTree<K,V>{
 
-
     public BinarySearchTree() {
         super(null);
+    }
+
+    //iterative
+    public int closestValue(TreeNode<Integer,Integer> node, double target) {
+        int minVal = node.key; //initial value
+
+        // loopy loop NO recursion
+        while(node != null){
+            if(Math.abs(target - node.key) < Math.abs(target - minVal))
+                minVal = node.key;
+            node = node.key > target?node.left:node.right;
+        }
+        return minVal;
+    }
+
+    //recursive
+    public int closestValue2(TreeNode<Integer,Integer> root, double target) {
+        return closest(root, target, root.key);
+    }
+
+    private int closest(TreeNode<Integer,Integer> node, double target, int closestVal) {
+
+        // base
+        if (node == null)
+            return closestVal;
+
+        // compare and set
+        if (Math.abs(node.key - target) < Math.abs(closestVal - target))
+            closestVal = node.key;
+
+        if (node.key < target)
+            closestVal = closest(node.right, target, closestVal);
+        else if (node.key > target)
+            closestVal = closest(node.left, target, closestVal);
+
+        return closestVal;
+
+    }
+
+    public boolean isValidBST(TreeNode<Integer,V> root) {
+        return isValidBST(root, Long.MIN_VALUE, Long.MAX_VALUE);
+    }
+
+    public boolean isValidBST(TreeNode<Integer,V> node, Long min, Long max) {
+        if (node == null)
+            return true;
+
+        if (node.key <= min || node.key >= max)
+            return false;
+
+        boolean lhs = isValidBST(node.left, min, node.key.longValue());
+        boolean rhs = isValidBST(node.right, node.key.longValue(), max);
+
+        return lhs && rhs;
+
     }
 
     //recursive pass in root node

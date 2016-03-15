@@ -13,6 +13,16 @@ import static org.junit.Assert.*;
 public class NumericalTest {
 
     @Test
+    public void testCntAndSay(){
+        String s = "1";
+        for (int i=0; i<5;++i){
+            s = Numerical.countAndSay(s);
+            System.out.println(s);
+        }
+        //System.out.println(Numerical.countAndSay("1"));
+    }
+
+    @Test
     public void testGcd(){
         System.out.println(Numerical.gcd(5,15));
         System.out.println(Numerical.gcd(32,12));

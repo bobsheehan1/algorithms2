@@ -40,6 +40,15 @@ public class BinaryTreeTest {
         tree.print();
         System.out.println(tree.isAllBalanced(tree.root));
 
+        int height = tree.getMaxDepth(tree2.root);
+        for (int i = 0; i < height; ++i) {
+            tree.printLevelSimple(tree2.root, 0, i);
+            System.out.println();
+        }
+
+        BinaryTree.Deepest deepestNode = new BinaryTree.Deepest();
+        tree.getDeepestNode(deepestNode,tree2.root,0);
+        System.out.println(deepestNode.node.toString());
     }
 
     @Test
@@ -70,10 +79,18 @@ public class BinaryTreeTest {
             tree.printLevelSimple(tree.root, 0, i);
             System.out.println();
         }
-;
+        ;
         System.out.println(tree.getMinDepth(tree.root));
         System.out.println(tree.getMaxDepth(tree.root));
         System.out.println(tree.isBalanced(tree.root));
+
+        List<String> paths = new ArrayList<String>();
+        tree.getPaths(tree.root, paths, "");
+
+        for (String s : paths) {
+
+            System.out.println(s);
+        }
     }
 
     @Test

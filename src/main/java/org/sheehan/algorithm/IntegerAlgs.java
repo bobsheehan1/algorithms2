@@ -1,13 +1,78 @@
 package org.sheehan.algorithm;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by bsheehan on 2/12/16.
  */
 public class IntegerAlgs {
+
+    public static void getPascalRow(int rowIndex) {
+
+        int a[] = new int[rowIndex+1];
+        a[0] = 1;
+        int b[] = new int[rowIndex+1];
+        for (int i=0; i<=rowIndex;++i){
+            for (int j=0; j<=i; ++j){
+                b[j] = a[j];
+                if (j-1 >=0)
+                    b[j] += a[j-1];
+            }
+            for (int k=0; k<=rowIndex;++k)
+                a[k]=b[k];
+            }
+
+        for (int i=0; i<=rowIndex;++i){
+            System.out.println(b[i]);
+        }
+
+    }
+
+    // O(n!) permutations !
+    public static Set<Integer[]> getPermutationsRecursive(Integer[] num){
+        if (num == null)
+            return null;
+
+        Set<Integer[]> perms = new HashSet<>();
+
+        //base case
+        if (num.length == 0){
+            perms.add(new Integer[0]);
+
+            return perms;
+        }
+
+        //shave off first char then get sub perms on remaining chars.
+        //...then insert the first into each position of each sub perm.
+        int first = num[0];
+        Integer[] remainder = Arrays.copyOfRange(num,1,num.length);
+        Set<Integer[]> subPerms = getPermutationsRecursive(remainder);
+        for (Integer[] subPerm: subPerms){
+            for (int i=0; i <= subPerm.length; ++i){ // '<='   IMPORTANT !!!
+                Integer[] newPerm = Arrays.copyOf(subPerm, subPerm.length+1);
+                for (int j=newPerm.length-1; j>i; --j)
+                    newPerm[j] = newPerm[j-1];
+                newPerm[i]=first;
+                if (!duplicate(perms,newPerm))
+                    perms.add(newPerm);
+            }
+        }
+
+        return perms;
+    }
+
+    private static boolean duplicate(Set<Integer[]> perms, Integer[] newPerm) {
+        if (perms.size() == 0)
+            return false;
+        for (Integer[] perm : perms) {
+            for (int i = 0; i < perm.length; ++i)
+                if (perm[i] != newPerm[i])
+                    return false;
+        }
+        return true;
+
+    }
+
 
     public static int reverseInt(int n) {
 
@@ -40,7 +105,6 @@ public class IntegerAlgs {
 
         while(n != 0){
             long digit = n%10;
-
             builder.insert(startPos, (char)(digit +'0'));
             n /= 10;
         }

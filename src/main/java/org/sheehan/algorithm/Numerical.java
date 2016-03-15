@@ -8,12 +8,38 @@ import java.util.List;
  */
 public class Numerical {
 
-    //Euclids algorithm
+    static public String countAndSay(String s){
+
+        char arr[] = s.toCharArray();
+
+        StringBuilder sb = new StringBuilder();
+        int cnt = 1;
+        int i = 0;
+        for ( i=0; i < s.length()-1; ++i){
+            if (arr[i] != arr[i+1]){
+                if (cnt != 0){
+                    sb.append(String.valueOf(cnt));
+                    sb.append(arr[i]);
+                }
+                cnt = 1;
+            } else {
+                cnt++;
+            }
+        }
+        if (i < s.length()){
+            sb.append(String.valueOf(cnt));
+            sb.append(arr[i]);
+
+        }
+        return sb.toString();
+    }
+
+    //Euclids algorithm b-r-a-b-a
     static public int gcd(int a, int b){
         while (b!= 0) {
-            int remainder = a % b;
+            int r = a % b;
             a = b;
-            b = remainder;
+            b = r;
         }
         return a;
     }

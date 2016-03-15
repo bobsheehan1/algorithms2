@@ -421,14 +421,15 @@ public class ListImpl <T extends Comparable<T>> implements List<T> {
         if (cycleFound) {
             Node prevNode = null;
             fastNode = this.head; //repurpose fast node to normal iteration step by step until it meets tortoise
-            while (fastNode != null) {
+            while (fastNode != slowNode) {
                 if (slowNode == fastNode) {
                     return prevNode;
                 }
                 fastNode = fastNode.next;
-                prevNode = slowNode;
+                //prevNode = slowNode;
                 slowNode = slowNode.next;
             }
+            return slowNode;
 
         }
         return null;
