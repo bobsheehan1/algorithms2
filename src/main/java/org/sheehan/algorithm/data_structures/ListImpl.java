@@ -300,7 +300,7 @@ public class ListImpl <T extends Comparable<T>> implements List<T> {
             curr = curr.next;
         }
 
-        this.head = stack.pop();
+        this.head = stack.pop(); //***
 
         curr = this.head;
         while(!stack.empty()) {
@@ -409,7 +409,7 @@ public class ListImpl <T extends Comparable<T>> implements List<T> {
             fastNode = fastNode.next; // double it up
 
             if (slowNode == fastNode) {
-                System.out.println("cycle found in loop at: " + slowNode.data);
+                System.out.println("cycle found in loop at position (not necessarily the start): " + slowNode.data);
                 cycleFound = true;
                 break;
             }
@@ -419,14 +419,9 @@ public class ListImpl <T extends Comparable<T>> implements List<T> {
 
         // now lets find the node before the loop start so it can subsequently be broken
         if (cycleFound) {
-            Node prevNode = null;
             fastNode = this.head; //repurpose fast node to normal iteration step by step until it meets tortoise
             while (fastNode != slowNode) {
-                if (slowNode == fastNode) {
-                    return prevNode;
-                }
                 fastNode = fastNode.next;
-                //prevNode = slowNode;
                 slowNode = slowNode.next;
             }
             return slowNode;

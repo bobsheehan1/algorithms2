@@ -49,21 +49,21 @@ public class Array {
     public static void rotateCW90(Integer[][] a){
 
         // i is an annular inset from all sides
-        for (int i = 0; i < a.length/2; ++i) {
+        for (int inset = 0; inset < a.length/2; ++inset) {
             // iterate CW around annular region
-            for (int j = i; j < a.length-i-1; ++j) { // not all the way to end, which is start of next col or row!!!
+            for (int j = inset; j < a.length-inset-1; ++j) { // not all the way to end, which is start of next col or row!!!
 
                 // iterate CW around annular region
-                int topRow = a[i][j]; // iterate across with j
-                int rightCol = a[j][a.length-1-i]; //iterate down on j
-                int bottomRow = a[a.length-1-i][a.length-1-j]; //iterate back across on j
-                int leftCol = a[a.length-1-j][i]; //iterate up on j
+                int topRow = a[inset][j]; // iterate across with j
+                int rightCol = a[j][a.length-1-inset]; //iterate down on j
+                int bottomRow = a[a.length-1-inset][a.length-1-j]; //iterate back across on j
+                int leftCol = a[a.length-1-j][inset]; //iterate up on j
 
                 //shift each 90 degrees
-                a[j][a.length-1-i] = topRow;
-                a[a.length-1-i][a.length-1-j] = rightCol;
-                a[a.length-1-j][i] = bottomRow;
-                a[i][j] = leftCol;
+                a[j][a.length-1-inset] = topRow;
+                a[a.length-1-inset][a.length-1-j] = rightCol;
+                a[a.length-1-j][inset] = bottomRow;
+                a[inset][j] = leftCol;
             }
         }
         System.out.println();
@@ -117,60 +117,64 @@ public class Array {
     }
 
     public static int findLongestRun(Integer array[]) {
+        int s=0;
+        int e=0;
 
-        int currLength = 1; // minimal length for a run !
-        int maxLength = 0;
-        int max= array[0];
+        int maxVal=Integer.MIN_VALUE;
+        int maxLength = Integer.MIN_VALUE;
+        int maxS=s;
+        int maxE=e;
+
 
         for (int i = 0; i < array.length-1; ++i){
-            if (array[i] == array[i+1]){
-                currLength++;
+            while (i<array.length-1 && array[i] == array[i+1])
+                i++;
 
+            e=i;
+
+            if ((e-s+1) > maxLength) {
+                maxLength = e-s+1;
+                maxVal=array[s];
+                maxS=s;
+                maxE=e;
             }
 
-            if ((array[i] != array[i+1]) || i == array.length-2){ //not 'else if'  because of end condition !
-                if (currLength > maxLength) {
-                    maxLength = currLength;
-                    max = array[i];
-                }
-                currLength = 1; // minimal length for a run !
-            }
+            s=i+1;
         }
 
-        System.out.println("max run " + maxLength);
-        return max;
+        System.out.println("s to e: " + maxS+ " " + maxE);
+        System.out.println("max length " + maxLength);
+        System.out.println("max val " + maxVal);
+        return maxVal;
     }
 
     // print start index, length, element data of longest run in array
-    public static <T extends Comparable<T>> void findLongestIncreasingRun(T array[]) {
-        int length = 1;
-        int maxLength = 0;
+    public static void findLongestIncreasingRun(Integer array[]) {
+        int s=0;
+        int e=0;
 
-        int start = -1; //optional locate run
-        int maxStart = -1;//optional locate run
+        int maxLength = Integer.MIN_VALUE;
+        int maxS=s;
+        int maxE=e;
 
-        // limit is 1 less than length for next compare
-        for (int i = 0; i < array.length - 1; ++i) {
-            if (array[i].compareTo(array[i + 1])< 0) {
-                length++;
-                if (start == -1) //optional locate run
-                    start = i;  //optional locate run
+
+        for (int i = 0; i < array.length-1; ++i){
+            while (i<array.length-1 && array[i]<array[i+1])
+                i++;
+
+            e=i;
+
+            if ((e-s+1) > maxLength) {
+                maxLength = e-s+1;
+                maxS=s;
+                maxE=e;
             }
 
-            // change or end of array
-            if (array[i].compareTo(array[i + 1])>=0 || i == array.length-2) {
-                if (length > maxLength) {
-                    maxLength = length;
-
-                    maxStart = start; //optional locate run
-                }
-                length = 1;
-                start = -1; //optional locate run
-            }
+            s=i+1;
         }
 
-        System.out.println("start: " + maxStart + " length: " + maxLength);
-
+        System.out.println("s to e: " + maxS+ " " + maxE);
+        System.out.println("max length " + maxLength);
     }
 
     // 1. build hash table

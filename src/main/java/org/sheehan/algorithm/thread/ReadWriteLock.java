@@ -15,6 +15,7 @@ public class ReadWriteLock {
         }
         System.out.println(Thread.currentThread().getName() + " has lock");
         numReaders++;
+
     }
 
     synchronized void acquireWriteLock() throws InterruptedException {
@@ -26,9 +27,11 @@ public class ReadWriteLock {
         System.out.println(Thread.currentThread().getName() + " has lock");
         numWriterRequesters--;
         numWriters++;
+
     }
 
     synchronized void releaseReadLock() {
+
         System.out.println(Thread.currentThread().getName() + " read lock release");
         --numReaders;
         notifyAll();

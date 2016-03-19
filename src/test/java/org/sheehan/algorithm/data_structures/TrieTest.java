@@ -24,6 +24,22 @@ public class TrieTest {
     }
 
     @Test
+    public void testSubstringSearch() throws Exception {
+        Trie t = new Trie();
+
+        String str = "mississippi";
+
+        for (int i=0; i< str.length();++i){
+            t.addWord(str.substring(i));
+        }
+
+        String [] list = {"is","sip","bob"};
+        for (String word: list){
+            System.out.println(t.getWords(word));
+        }
+    }
+
+    @Test
     public void testGetWords() throws Exception {
 
 

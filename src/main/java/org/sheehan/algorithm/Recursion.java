@@ -34,9 +34,9 @@ public class Recursion {
         int prev = 0;
         int curr = 1;
         if (index == 0)
-            return 0;
+            return prev;
         if (index == 1)
-            return 1;
+            return curr;
         for (int i = 2; i <= index; ++i) {
             int tmp = curr;
             curr = prev + curr;
@@ -65,8 +65,7 @@ public class Recursion {
         hanoiStack(n-1, src, tmp, dst);
 
         // move remaining source to dest
-        T disk = src.pop();
-        dst.push(disk);
+        dst.push(src.pop());
 
         src.print();
         tmp.print();
@@ -77,8 +76,8 @@ public class Recursion {
         hanoiStack(n-1, tmp, dst, src);
     }
 
-    //
-    static public void balancedParenthesis(int l, int r, char[] str, int count) {
+    //call with 3,3,char[6],0
+    static public void generateBalancedParenthesis(int l, int r, char[] str, int count) {
         if (l < 0 || r < l)
             return; //invalid
 
@@ -87,11 +86,11 @@ public class Recursion {
         }else {
             if (l > 0){
                 str[count] = '(';
-                balancedParenthesis(l-1, r, str, count+1);
+                generateBalancedParenthesis(l-1, r, str, count+1);
             }
             if (r > l){
                 str[count] = ')';
-                balancedParenthesis(l, r-1, str, count+1);
+                generateBalancedParenthesis(l, r-1, str, count+1);
             }
         }
     }

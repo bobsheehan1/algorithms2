@@ -5,6 +5,7 @@ import org.junit.Test;
 
 import java.util.*;
 import java.util.List;
+import java.util.stream.IntStream;
 
 public class ArrayTest {
 
@@ -109,18 +110,18 @@ public class ArrayTest {
     @Test
     public void testFindLongestRun() throws Exception {
 
-        Integer array[] = {1, 2, 2, 3, 3, 3, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 6, 7, 8, 9, 10, 10};
-
-        Assert.assertEquals(4, Array.findLongestRun(array));
+        Integer array[] = {1, 2, 2, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 5, 6, 7, 8, 9, 10, 10};
+        //Arrays.stream(array).forEach(System.out::print);
+       // System.out.println();
+        //IntStream.rangeClosed(1, array.length).forEach(System.out::print);
+        Assert.assertEquals(5, Array.findLongestRun(array));
 
         Integer array2[] = {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 3, 3, 3, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 6, 7, 8, 9, 10, 10};
         Array.findLongestRun(array2);
-
         Assert.assertEquals(1, Array.findLongestRun(array2));
 
         Integer array3[] = {1, 2, 2, 3, 3, 3, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 6, 7, 8, 9, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10};
         Array.findLongestRun(array3);
-
         Assert.assertEquals(10, Array.findLongestRun(array3));
 
     }

@@ -5,12 +5,28 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.*;
-
 /**
  * Created by bob on 2/27/16.
  */
 public class NumericalTest {
+
+    @Test
+    public void testRobot(){
+        List<String> strings = Numerical.robotPaths(1);
+//        for (String s:strings){
+//            System.out.println(s);
+//        }
+        System.out.println("number of paths: "+ strings.size());
+
+        strings = Numerical.robotPaths(2);
+        System.out.println("number of paths: "+ strings.size());
+        strings = Numerical.robotPaths(3);
+        System.out.println("number of paths: "+ strings.size());
+        strings = Numerical.robotPaths(4);
+        System.out.println("number of paths: "+ strings.size());
+        strings = Numerical.robotPaths(5);
+        System.out.println("number of paths: "+ strings.size());
+    }
 
     @Test
     public void testCntAndSay(){
@@ -19,7 +35,7 @@ public class NumericalTest {
             s = Numerical.countAndSay(s);
             System.out.println(s);
         }
-        //System.out.println(Numerical.countAndSay("1"));
+
     }
 
     @Test

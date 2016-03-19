@@ -1,5 +1,6 @@
 package org.sheehan.algorithm;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -7,6 +8,24 @@ import java.util.List;
  * Created by bob on 2/27/16.
  */
 public class Numerical {
+
+    public static List<String> robotPaths(int n){
+        List<String> pathList = new ArrayList<String>();
+        getPaths(n, 1,1, "", pathList);
+        return pathList;
+    }
+
+    public static void getPaths(int n, int i, int j, String path, List<String> pathList){
+        path += String.format(" (%d,%d)", i , j);
+        if( i ==n && j == n){ //reach the (n,n) point
+            pathList.add(path);
+        }else if( i > n || j > n){//wrong way
+            return;
+        }else {
+            getPaths(n, i +1, j , path, pathList);
+            getPaths(n, i , j +1, path, pathList);
+        }
+    }
 
     static public String countAndSay(String s){
 
@@ -16,20 +35,19 @@ public class Numerical {
         int cnt = 1;
         int i = 0;
         for ( i=0; i < s.length()-1; ++i){
-            if (arr[i] != arr[i+1]){
-                if (cnt != 0){
-                    sb.append(String.valueOf(cnt));
-                    sb.append(arr[i]);
-                }
-                cnt = 1;
-            } else {
+            while(i<s.length()-1 && arr[i]==arr[i+1]){
                 cnt++;
+                i++;
             }
-        }
-        if (i < s.length()){
             sb.append(String.valueOf(cnt));
             sb.append(arr[i]);
 
+            cnt = 1;
+        }
+
+        if (i == s.length()-1){
+            sb.append(String.valueOf(cnt));
+            sb.append(arr[i]);
         }
         return sb.toString();
     }

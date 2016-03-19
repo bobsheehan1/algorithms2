@@ -26,24 +26,38 @@ public class SortArrayTest {
 
     @Test
     public void testBubbleSortPolarity() throws Exception {
-        Integer array[] = Array.createArray(30, 30, false);
-        int array2[] = new int[array.length];
-        for (Integer i : array){
-            array2[i] = i.intValue();
-        }
+        Integer array[] = Array.createArray(10, 10, false);
 
-        SortArray.bubbleSortPolarity(array2);
-        System.out.println(Arrays.toString(array2));
+        SortArray.bubbleSortPolarity(array);
+        System.out.println(Arrays.toString(array));
         System.out.println();
 
-        array = Array.createArray(30, 30, false);
-        for (Integer i : array){
-            array2[i] = i.intValue();
-        }
+        array = Array.createArray(10, 10, false);
 
-        SortArray.bubbleSortPolarity(array2);
-        System.out.println(Arrays.toString(array2));
+        SortArray.bubbleSortPolarity(array);
+        System.out.println(Arrays.toString(array));
         System.out.println();
+
+    }
+
+    @Test
+    public void testOddEvenSort() throws Exception {
+        Integer array[]={1,2,3,4,5};
+        System.out.println(Arrays.toString(array));
+        System.out.println();
+
+        SortArray.oddEvenSort(array);
+        System.out.println(Arrays.toString(array));
+        System.out.println();
+
+        array = Array.createArray(10, 10, false);
+        System.out.println(Arrays.toString(array));
+        System.out.println();
+
+        SortArray.oddEvenSort(array);
+        System.out.println(Arrays.toString(array));
+        System.out.println();
+
 
     }
 
@@ -102,12 +116,13 @@ public class SortArrayTest {
     public void testMergeSort() throws Exception {
         Integer array[] = Array.createArray(10,10, false);
 
-        Integer array2[] = {8,2,3,4,5,6,7,1};
+        int array2[] = {8,2,3,4,5,6,7,1};
 
         System.out.println("merge");
         System.out.println(Arrays.toString(array2));
 
-        System.out.println("inversions: " + SortArray.mergeSort(array2));
+        //System.out.println("inversions: " + SortArray.mergeSort(array2));
+        SortArray.mergeSort(array2);
         System.out.println(Arrays.toString(array2));
         System.out.println();
     }

@@ -58,13 +58,35 @@ public class SortArray {
         }
     }
 
-    /////////////////////////////////////////////////////////////////////////////////
+
+    public static void oddEvenSort(Integer []array) {
+
+        int i=0;
+        int j=array.length-1;
+        while(i<j){
+
+            while(array[i]%2==0)
+                ++i;
+            while(array[j]%2==1)
+                --j;
+
+            if (i<j && array[i]%2!=0 && array[j]%2!=1) {
+                int tmp = array[i];
+                array[i] = array[j];
+                array[j] = tmp;
+            }
+            i++;
+            j--;
+        }
+    }
+
+        /////////////////////////////////////////////////////////////////////////////////
     // BUBBLE SORT Even and Odd
     /////////////////////////////////////////////////////////////////////////////////
     // worst 0(n2)
     // avg O(n2)
     // best O(n)
-    public static void bubbleSortPolarity(int []array) {
+    public static void bubbleSortPolarity(Integer []array) {
 
         int n = array.length - 1;
         SwapCallbackValue swabCallback = new SwapCallbackValue();
@@ -236,28 +258,64 @@ public class SortArray {
     /////////////////////////////////////////////////////////////////////////////////
     // MERGE SORT
     /////////////////////////////////////////////////////////////////////////////////
-    public static <T extends Comparable<T>> int mergeSort(T array[])
+    public static void mergeSort(int array[]) {
+        int []tempMergArr = new int[array.length];
+        mergeSort(array, tempMergArr, 0, array.length - 1);
+    }
+
+    private static <T extends Comparable<T>> int mergeSort(int array[], int tmpArray[], int lo, int hi)
     {
         int inversions = 0;
         if (array.length <= 1)
             return 0;
 
-        int size1 = array.length/2;
-        int size2 = array.length - size1;
-        T array1[] = (T[]) java.lang.reflect.Array.newInstance(Comparable.class, size1);
-        T array2[] = (T[]) java.lang.reflect.Array.newInstance(Comparable.class, size2);
+        if (lo >= hi)
+            return 0;
 
-        System.arraycopy(array, 0, array1, 0, size1);
-        System.arraycopy(array, size1, array2, 0, size2);
+        int m = lo + (hi-lo)/2;
+        //int size2 = array.length - size1;
+      //  T array1[] = (T[]) java.lang.reflect.Array.newInstance(Comparable.class, size1);
+      //  T array2[] = (T[]) java.lang.reflect.Array.newInstance(Comparable.class, size2);
 
-        inversions +=mergeSort(array1);
-        inversions +=mergeSort(array2);
+      //  System.arraycopy(array, tmpArray0, array1, 0, size1);
+      //  System.arraycopy(array, tmpArray,size1, array2, 0, size2);
+
+        inversions += mergeSort(array, tmpArray, lo, m);
+        inversions += mergeSort(array, tmpArray, m+1, hi);
 
         //overwrite array with merge
-        inversions += org.sheehan.algorithm.Array.mergeSortedArrays(array1, array2, array);
+        //todo inversions
+        mergeParts(array, tmpArray, lo, m, hi);
         System.out.println("inversions: " + inversions);
 
         return inversions;
+    }
+
+    private static void mergeParts(int array[], int tmpArray[], int lowerIndex, int middle, int higherIndex) {
+
+        for (int i = lowerIndex; i <= higherIndex; i++) {//***** important
+            tmpArray[i] = array[i];
+        }
+
+        int i = lowerIndex;
+        int j = middle + 1;
+        int k = lowerIndex;
+        while (i <= middle && j <= higherIndex) {
+            if (tmpArray[i] <= tmpArray[j]) {
+                array[k] = tmpArray[i];
+                i++;
+            } else {
+                array[k] = tmpArray[j];
+                j++;
+            }
+            k++;
+        }
+        while (i <= middle) {
+            array[k] = tmpArray[i];
+            k++;
+            i++;
+        }
+
     }
 
 

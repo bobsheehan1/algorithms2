@@ -51,7 +51,7 @@ public class RecursionTest {
     @Test
     public void testBalParenthesis() {
         char str[] = new char[10];
-        Recursion.balancedParenthesis(5, 5, str, 0);
+        Recursion.generateBalancedParenthesis(5, 5, str, 0);
     }
 }
 
