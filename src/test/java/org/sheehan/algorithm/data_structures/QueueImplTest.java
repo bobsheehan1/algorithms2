@@ -13,7 +13,7 @@ public class QueueImplTest {
     public void testAddOverflow() {
         try {
             int size = 10;
-            Queue q = new QueueArrayImpl<Integer>(size);
+            QueueInterface q = new QueueArrayImpl<Integer>(size);
 
             for (int i = 0; i < 10; ++i) {
                 q.enqueue(i);
@@ -41,7 +41,7 @@ public class QueueImplTest {
     public void testAddOverflowList() {
         try {
             int size = 10;
-            Queue q = new QueueListImpl<Integer>();
+            QueueInterface q = new QueueListImpl<Integer>();
 
             for (int i = 0; i < 10; ++i) {
                 q.enqueue(i);
@@ -68,7 +68,7 @@ public class QueueImplTest {
     @Test
     public void testAddRemove() throws Exception {
         int size = 10;
-        Queue<Integer> q = new QueueArrayImpl<>(size);
+        QueueInterface<Integer> q = new QueueArrayImpl<>(size);
 
         for (int i = 0; i < size; ++i){
             q.enqueue(i);
@@ -93,7 +93,7 @@ public class QueueImplTest {
     @Test
     public void testAddRemove2() throws Exception {
         int size = 10;
-        Queue q = new QueueArrayImpl<Integer>(size);
+        QueueInterface q = new QueueArrayImpl<Integer>(size);
 
         // fill queue
         for (int i = 0; i < size; ++i){
@@ -123,7 +123,7 @@ public class QueueImplTest {
     @Test
     public void testAddRemove3() {
         int size = 10;
-        Queue q = new QueueArrayImpl<Integer>(size);
+        QueueInterface q = new QueueArrayImpl<Integer>(size);
         q.enqueue(5);
         Integer val = (Integer)q.dequeue();
         assertEquals(new Integer(5), val);

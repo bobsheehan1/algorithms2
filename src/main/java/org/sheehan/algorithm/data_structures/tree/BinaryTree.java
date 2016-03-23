@@ -1,6 +1,6 @@
 package org.sheehan.algorithm.data_structures.tree;
 
-import org.sheehan.algorithm.data_structures.Queue;
+import org.sheehan.algorithm.data_structures.QueueInterface;
 import org.sheehan.algorithm.data_structures.QueueListImpl;
 
 import java.util.function.IntConsumer;
@@ -62,11 +62,11 @@ public class BinaryTree<K extends Comparable<? super K>, V> {
 
     }
 
-    public void addToTree(K []sortedArray){
-       this.root = addToTree(sortedArray, 0, sortedArray.length-1);
+    public void insertSortedArray(K []sortedArray){
+       this.root = insertSortedArray(sortedArray, 0, sortedArray.length-1);
     }
 
-    private TreeNode<K,V> addToTree(K[] sortedArray, int l, int r) {
+    private TreeNode<K,V> insertSortedArray(K[] sortedArray, int l, int r) {
         if (l >= r)
             return null;
 
@@ -74,10 +74,10 @@ public class BinaryTree<K extends Comparable<? super K>, V> {
 
         TreeNode<K,V> node = new TreeNode<>();
         node.key = sortedArray[mid];
-        node.left = addToTree(sortedArray, l, mid);
+        node.left = insertSortedArray(sortedArray, l, mid);
         if (node.left != null)
             node.left.parent = node;
-        node.right = addToTree(sortedArray, mid+1, r);
+        node.right = insertSortedArray(sortedArray, mid+1, r);
         if (node.right != null)
             node.right.parent = node;
         return node;
@@ -126,17 +126,18 @@ public class BinaryTree<K extends Comparable<? super K>, V> {
             return node.value + Math.max(getMaxSum(node.left), getMaxSum(node.right));
     }
 
+
+    // pass is accumlated path and list to add it too
     public void getPaths(TreeNode<Integer, Integer> node, List<String> paths, String path) {
-        if (node == null){
+        if (node == null)
             return;
-        }
 
-        if (node.left==null && node.right==null){
-            path += node.key.toString() + " ";
-            paths.add(path);
-        }
-
+        // accumulate path for this stack frame
         path += node.key.toString() + " ";
+        // we have reached and end path node so add the accumlated path here
+        if (node.left==null && node.right==null)
+            paths.add(path);
+
         getPaths(node.left, paths, path);
         getPaths(node.right,paths, path);
     }
@@ -220,7 +221,7 @@ public class BinaryTree<K extends Comparable<? super K>, V> {
     private void traverseBfs(TreeNode<K,V> root, IntConsumer op) {
         if (root == null)
             return;
-        Queue<TreeNode<K,V>> q = new QueueListImpl<>();
+        QueueInterface<TreeNode<K,V>> q = new QueueListImpl<>();
         q.enqueue(root);
         while (q.peek() != null){
 

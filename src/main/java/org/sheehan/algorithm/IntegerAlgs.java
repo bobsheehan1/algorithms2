@@ -29,14 +29,14 @@ public class IntegerAlgs {
     }
 
     // O(n!) permutations !
-    public static Set<Integer[]> getPermutationsRecursive(Integer[] num){
-        if (num == null)
+    public static Set<Integer[]> getPermutationsRecursive(Integer[] nums){
+        if (nums == null)
             return null;
 
         Set<Integer[]> perms = new HashSet<>();
 
         //base case
-        if (num.length == 0){
+        if (nums.length == 0){
             perms.add(new Integer[0]);
 
             return perms;
@@ -44,8 +44,8 @@ public class IntegerAlgs {
 
         //shave off first char then get sub perms on remaining chars.
         //...then insert the first into each position of each sub perm.
-        int first = num[0];
-        Integer[] remainder = Arrays.copyOfRange(num,1,num.length);
+        int first = nums[0];
+        Integer[] remainder = Arrays.copyOfRange(nums,1,nums.length);
         Set<Integer[]> subPerms = getPermutationsRecursive(remainder);
         for (Integer[] subPerm: subPerms){
             for (int i=0; i <= subPerm.length; ++i){ // '<='   IMPORTANT !!!
@@ -93,53 +93,53 @@ public class IntegerAlgs {
     }
 
     public static String int2Str(int n) {
-        StringBuilder builder = new StringBuilder();
+        StringBuilder sb = new StringBuilder();
 
         // Handle negative
         int startPos = 0;
         if (n < 0) {
              n*=-1;
-            builder.insert(0, "-");
+            sb.insert(0, "-");
             startPos = 1;
         }
 
         while(n != 0){
             long digit = n%10;
-            builder.insert(startPos, (char)(digit +'0'));
+            sb.insert(startPos, (char)(digit +'0'));
             n /= 10;
         }
 
-        return builder.toString();
+        return sb.toString();
     }
 
     public static int str2int(String str) {
 
         str = str.trim();
 
-        int limit = 0;
+        int start = 0;
         boolean negative = false;
         if (str.charAt(0) == '-') {
             negative = true;
-            limit = 1;
+            start = 1;
         }
 
-        long sum = 0;
+        long n = 0;
         long mult = 1;
 
-        for (int pos = str.length() - 1; pos >= limit; pos--) {
-            sum += (str.charAt(pos) - '0') * mult;
+        for (int pos = str.length() - 1; pos >= start; pos--) {
+            n += (str.charAt(pos) - '0') * mult;
             mult *= 10;
         }
 
         if (negative)
-            sum *= -1;
+            n *= -1;
 
-        if (sum < Integer.MIN_VALUE)
+        if (n < Integer.MIN_VALUE)
             return Integer.MIN_VALUE;
-        if (sum > Integer.MAX_VALUE)
+        if (n > Integer.MAX_VALUE)
             return Integer.MAX_VALUE;
 
-        return (int)sum;
+        return (int)n;
     }
 
     // cool !
@@ -153,18 +153,18 @@ public class IntegerAlgs {
         for (int integerCurr = 0; integerCurr < integerUpperLimit; ++integerCurr) {
             List<Integer> subset = new ArrayList<Integer>();
 
-            int i = 0; // reset to index from beginning or array
-            int curr = integerCurr; //temp shift variable
+            int arrayIndex = 0; // reset to index from beginning or array
+            int intMask = integerCurr; //temp shift variable
 
             // build the subset
             // got each integer shift through 1's and only add array index if a 1 is found
-            while (curr > 0) { // keep shifting the current integer
-                if ((curr & 1) > 0) // is current lsb a 1 or 0 ?
-                    subset.add(array[i]); // cool if a 1 then that index is added to subset
+            while (intMask > 0) { // keep shifting the current integer until no more 1s
+                if ((intMask & 1) > 0) // is current lsb a 1 or 0 ?
+                    subset.add(array[arrayIndex]); // cool if a 1 then that index is added to subset
 
                 // shift int to next 0 or 1 and increment index into array
-                curr >>= 1;
-                i++;
+                intMask >>= 1;
+                arrayIndex++;
             }
             result.add(subset); //one subset added
         }

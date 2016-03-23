@@ -4,7 +4,6 @@ import org.sheehan.algorithm.data_structures.*;
 import org.sheehan.algorithm.data_structures.tree.BinaryHeap;
 
 import java.lang.reflect.Array;
-import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
@@ -527,7 +526,7 @@ public class SortArray {
         final int BASE = 10;
         int numBuckets = BASE;
 
-        List<Queue<Integer>> buckets = new ListImpl<Queue<Integer>>();
+        List<QueueInterface<Integer>> buckets = new ListImpl<QueueInterface<Integer>>();
         for (int i = 0; i < numBuckets; i++){
             buckets.appendBack(new QueueArrayImpl<Integer>(array.length));
         }
@@ -552,7 +551,7 @@ public class SortArray {
             // starting from least valued bucket
 
             for (int bucketIndex = 0, i = 0; bucketIndex < numBuckets; ++bucketIndex){
-                Queue<Integer> bucket = buckets.get(bucketIndex);
+                QueueInterface<Integer> bucket = buckets.get(bucketIndex);
                 Integer value;
                 while ((value = bucket.dequeue()) != null){
                     array[i++] = value;
@@ -570,7 +569,7 @@ public class SortArray {
         final int BASE = 2;
         final int numBuckets = 2;
 
-        List<Queue<Integer>> buckets = new ListImpl<Queue<Integer>>();
+        List<QueueInterface<Integer>> buckets = new ListImpl<QueueInterface<Integer>>();
         for (int i = 0; i < numBuckets; i++){
             buckets.appendBack(new QueueArrayImpl<Integer>(array.length));
         }
@@ -594,7 +593,7 @@ public class SortArray {
             // starting from least valued bucket
             int i = 0;
             for (int bucketIndex = 0; bucketIndex < numBuckets; ++bucketIndex){
-                Queue<Integer> bucket = buckets.get(bucketIndex);
+                QueueInterface<Integer> bucket = buckets.get(bucketIndex);
                 Integer value;
                 while ((value = bucket.dequeue()) != null){
                     array[i++] = value;

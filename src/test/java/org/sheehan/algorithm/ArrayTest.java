@@ -5,7 +5,6 @@ import org.junit.Test;
 
 import java.util.*;
 import java.util.List;
-import java.util.stream.IntStream;
 
 public class ArrayTest {
 
@@ -161,16 +160,9 @@ public class ArrayTest {
 
         List<Integer> integers = Arrays.asList(1, 2, 3, 4, 4, 5, 5, 5, 6, 6, 7, 8, 9);
 
-        Set<Integer> duplicates = Array.findDuplicates(integers.toArray(new Integer[0]));
-
-        duplicates.forEach((Integer i) -> System.out.print(i + " "));
-
         Set<Integer> duplicates2 = Array.findDuplicatesMap(integers.toArray(new Integer[0]));
 
         duplicates2.forEach((Integer i) -> System.out.print(i + " "));
-
-
-
     }
 
     @Test

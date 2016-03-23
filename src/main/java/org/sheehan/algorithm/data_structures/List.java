@@ -10,8 +10,8 @@ public interface List<T extends Comparable<T>> extends Iterable<T> {
 
 
     class Node<T> {
-        T data;
-        Node<T> next;
+        public T data;
+        public Node<T> next;
 
         public Node(T value) {
             this.data = value;

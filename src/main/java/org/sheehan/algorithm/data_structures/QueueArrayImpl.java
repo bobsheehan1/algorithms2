@@ -5,7 +5,7 @@ import java.lang.reflect.Array;
 /**
  * Created by bob on 5/26/14.
  */
-public class QueueArrayImpl<T extends Comparable<T>> implements Queue<T> {
+public class QueueArrayImpl<T extends Comparable<T>> implements QueueInterface<T> {
 
     private int firstIndex = 0;
     private int count = 0;
@@ -21,7 +21,7 @@ public class QueueArrayImpl<T extends Comparable<T>> implements Queue<T> {
     @Override
     public void enqueue(T value) {
         if (count == size)
-            throw new RuntimeException("Full Queue");
+            throw new RuntimeException("Full QueueInterface");
         array[(firstIndex + count)%size] = value;
         count++;
         //TODO add resize for loadfactor
@@ -67,7 +67,7 @@ public class QueueArrayImpl<T extends Comparable<T>> implements Queue<T> {
     }
 
     @Override
-    public int compareTo(Queue<T> o) {
+    public int compareTo(QueueInterface<T> o) {
         //TODO if needed
         return 0;
     }

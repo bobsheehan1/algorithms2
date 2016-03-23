@@ -5,7 +5,7 @@ package org.sheehan.algorithm.data_structures;
  *
  * Uses List
  */
-public class QueueListImpl<T extends Comparable<T>> implements Queue<T> {
+public class QueueListImpl<T extends Comparable<T>> implements QueueInterface<T> {
 
     List<T> list = new ListImpl<>();
 
@@ -37,7 +37,7 @@ public class QueueListImpl<T extends Comparable<T>> implements Queue<T> {
     }
 
     @Override
-    public int compareTo(Queue<T> o) {
+    public int compareTo(QueueInterface<T> o) {
         return 0;
     }
 }

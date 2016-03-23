@@ -75,14 +75,10 @@ public class Strings {
     public static String reverse(String str) {
         char[] buffer = str.toCharArray();
         reverse(buffer, 0, buffer.length - 1);
-        return new String(buffer);
+        return String.valueOf(buffer);
     }
 
-    // 2 counters
-    public static <T> void reverse(char[] buffer, int start, int end) {
-
-        int i=start;
-        int j=end;
+    public static <T> void reverse(char[] buffer, int i, int j) {
         while (j > i){
             char c = buffer[i];
             buffer[i++] = buffer[j];
@@ -91,19 +87,24 @@ public class Strings {
     }
 
     static String reverseWords(String str) {
+        String reverseStr = reverse(str);
+
         int start = 0;
         int end = 0;
-        char[] buffer = str.toCharArray();
-        for (int i = 0; i < str.length(); i++) {
+        char[] buffer = reverseStr.toCharArray();
+
+        int i;
+        for (i = 0; i < str.length(); i++) {
             if (str.charAt(i) == ' ') {
                 end = i - 1;
                 reverse(buffer, start, end);
                 start = end + 2;
-            } else if (i == str.length() - 1) {
-                end = i;
-                reverse(buffer, start, end);
             }
         }
+
+        end = i-1;
+        reverse(buffer, start, end);
+
         return new String(buffer);
     }
 
@@ -179,9 +180,11 @@ public class Strings {
         //...then insert the first into each position of each sub perm.
         char first = s.charAt(0);
         String remainder = s.substring(1);
-        Set<String> subPerms = getPermutationsRecursive(remainder);
+        Set<String> subPerms = getPermutationsRecursive(remainder); //RECURSE !!!
+
+        // for each substring perm insert first in each position and add as new perm to set
         for (String subPerm: subPerms){
-            for (int i=0; i <= subPerm.length(); ++i){ // '<='   IMPORTANT !!!
+            for (int i=0; i <= subPerm.length(); ++i){ // '<='   IMPORTANT insert at each position!!!
                 // combine at each location in substring
                 String start = subPerm.substring(0,i);
                 String end = subPerm.substring(i);
@@ -237,6 +240,7 @@ public class Strings {
             }
         }
 
+        //now iterate over the string and locate first.
         for (char c : chars) {
             if (map.get(c) == 1)
                 return c;
@@ -264,7 +268,7 @@ public class Strings {
     }
 
     //ASCII
-    public static Set<Character> findDuplicates(String str) {
+    public static Set<Character> findDuplicatesMask(String str) {
 
         char[] chars = str.toCharArray();
 
@@ -291,9 +295,9 @@ public class Strings {
         //Set inputSet = new HashSet(inputList);
 
         Set<Character> duplicates = new HashSet<Character>();
-        Set<Character> set1 = new HashSet<>();
+        Set<Character> foundChars = new HashSet<>();
         for (char c : chars) {
-            if (!set1.add(c))
+            if (!foundChars.add(c)) //if already in set then is a dupe
                 duplicates.add(c);
         }
 
@@ -302,23 +306,62 @@ public class Strings {
 
     // removes duplicates
     // reset array skipping dupes
-    public static String removeDuplicates(String str) {
+    public static String removeDuplicatesMask(String str) {
         char[] chars = str.toCharArray();
 
         int checker = 0; //init for 256 ascii chars.
 
         int dst = 0;
         for (int i = 0; i < chars.length; ++i) {
-            int mask = 1 << (chars[i] - 'a');
-            // not a duplicate so dequeue from array and increment
-            if ((checker & mask) == 0) {
+            int mask = 1 << (chars[i] - 'a'); //create mask
+            // if NOT a duplicate so dequeue from array and increment
+            if ((checker & mask) == 0) { //check mask
                 chars[dst++] = chars[i];
             }
-            checker |= mask;
+            checker |= mask; //set mask
         }
         chars[dst] = 0;
 
         return new String(chars, 0, dst);
+    }
+
+    public static String removeDuplicatesSet(String str) {
+        char[] sChars = str.toCharArray();
+
+        //could have used mask or boolean flag array
+        // only size of alphabet at most so not a O(n) issue here
+        Set<Character> foundSet = new HashSet<>();
+
+        int dst = 0;
+
+        for (int i=0; i<sChars.length;i++){
+            if (!foundSet.contains(sChars[i]))
+                sChars[dst++]=sChars[i];
+            foundSet.add(sChars[i]);
+        }
+
+        return new String(sChars, 0,dst);
+    }
+
+    public static String removeCharsSet(String str, String remove) {
+        char[] sChars = str.toCharArray();
+        char[] rChars = remove.toCharArray();
+
+        //could have used mask or boolean flag array
+        // only size of alphabet at most so not a O(n) issue here
+        Set<Character> removeSet = new HashSet<>();
+        for (char c:rChars){
+            removeSet.add(c);
+        }
+
+        int dst = 0;
+
+        for (int i=0; i<sChars.length;i++){
+            if (!removeSet.contains(sChars[i]))
+                sChars[dst++]=sChars[i];
+        }
+
+        return new String(sChars, 0,dst);
     }
 
     public static boolean isPalindrome(String str) {
@@ -356,7 +399,7 @@ public class Strings {
     public static void radixSortLexicalFixedLsd(String array[]) {
         // 256 ASCII character positions
         final int numBuckets = 256;
-        org.sheehan.algorithm.data_structures.List<org.sheehan.algorithm.data_structures.Queue<String>> buckets = new ListImpl<org.sheehan.algorithm.data_structures.Queue<String>>();
+        org.sheehan.algorithm.data_structures.List<QueueInterface<String>> buckets = new ListImpl<QueueInterface<String>>();
         for (int i = 0; i < numBuckets; i++){
             buckets.appendBack(new QueueArrayImpl<String>(array.length));
         }
@@ -379,7 +422,7 @@ public class Strings {
             // starting from least valued bucket
             int i = 0;
             for (int bucketIndex = 0; bucketIndex < numBuckets; ++bucketIndex){
-                org.sheehan.algorithm.data_structures.Queue<String> bucket = buckets.get(bucketIndex);
+                QueueInterface<String> bucket = buckets.get(bucketIndex);
                 String value;
                 while ((value = bucket.dequeue()) != null){
                     array[i++] = value;

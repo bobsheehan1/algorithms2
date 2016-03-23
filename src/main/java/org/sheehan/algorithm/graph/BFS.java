@@ -1,7 +1,7 @@
 package org.sheehan.algorithm.graph;
 
 import org.sheehan.algorithm.data_structures.List;
-import org.sheehan.algorithm.data_structures.Queue;
+import org.sheehan.algorithm.data_structures.QueueInterface;
 import org.sheehan.algorithm.data_structures.QueueArrayImpl;
 import org.sheehan.algorithm.data_structures.graph.Graph;
 import org.sheehan.algorithm.data_structures.graph.GraphNode;
@@ -23,7 +23,7 @@ public class BFS <T extends Comparable<T>>{
     // use a queue for BFS - NO RECURSIVE FOR BSF
     public void visitIterative(GraphNode<T> sourceNode){;
         clearVisited();
-        Queue<GraphNode<T>> queue = new QueueArrayImpl<>(100);
+        QueueInterface<GraphNode<T>> queue = new QueueArrayImpl<>(100);
         queue.enqueue(sourceNode);
         sourceNode.visited = true; // mark after adding to queue
         while (queue.peek() != null) {

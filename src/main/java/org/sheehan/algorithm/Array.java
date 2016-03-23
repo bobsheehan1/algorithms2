@@ -18,6 +18,34 @@ import java.util.List;
  */
 public class Array {
 
+    public static int maxSubArrayEqualsTargetLen(int[] nums, int targetSum) {
+        int sum = 0, maxRange = 0; // max will stay at zero if targetSum not found
+        HashMap<Integer, Integer> map = new HashMap<Integer, Integer>();
+
+        for (int i = 0; i < nums.length; i++) {
+            sum = sum + nums[i];
+
+            // Handles simple case of sum from index 0 adding to necessary value.
+            if (sum == targetSum)
+                maxRange = i + 1;
+
+            // If this next check is true then a previous sum at an earlier index contains a range sum that when
+            // subtracted from the current total sum equals the targetSum.
+            // This implies that the subrange since that index equals the target sum !!!
+
+            else if (map.containsKey(sum - targetSum))
+                maxRange = Math.max(maxRange, i - map.get(sum - targetSum));
+
+
+            // store sums in a hashmap
+            if (!map.containsKey(sum))
+                map.put(sum, i);
+        }
+
+        return maxRange;
+    }
+
+
     // 1. copy array to length +1
     // 2. move items from pos towards right
     // 3. set pos to new val
@@ -116,15 +144,14 @@ public class Array {
         print(array);
     }
 
+
     public static int findLongestRun(Integer array[]) {
         int s=0;
         int e=0;
 
         int maxVal=Integer.MIN_VALUE;
         int maxLength = Integer.MIN_VALUE;
-        int maxS=s;
-        int maxE=e;
-
+        int maxRange[] = new int[2];
 
         for (int i = 0; i < array.length-1; ++i){
             while (i<array.length-1 && array[i] == array[i+1])
@@ -135,14 +162,14 @@ public class Array {
             if ((e-s+1) > maxLength) {
                 maxLength = e-s+1;
                 maxVal=array[s];
-                maxS=s;
-                maxE=e;
+                maxRange[0]=s;
+                maxRange[1]=e;
             }
 
-            s=i+1;
+            s=e+1;
         }
 
-        System.out.println("s to e: " + maxS+ " " + maxE);
+        System.out.println("s to e: " + maxRange[0]+ " " + maxRange[1]);
         System.out.println("max length " + maxLength);
         System.out.println("max val " + maxVal);
         return maxVal;
@@ -154,9 +181,7 @@ public class Array {
         int e=0;
 
         int maxLength = Integer.MIN_VALUE;
-        int maxS=s;
-        int maxE=e;
-
+        int maxRange[] = new int[2];
 
         for (int i = 0; i < array.length-1; ++i){
             while (i<array.length-1 && array[i]<array[i+1])
@@ -166,14 +191,14 @@ public class Array {
 
             if ((e-s+1) > maxLength) {
                 maxLength = e-s+1;
-                maxS=s;
-                maxE=e;
+                maxRange[0]=s;
+                maxRange[1]=e;
             }
 
-            s=i+1;
+            s=e+1;
         }
 
-        System.out.println("s to e: " + maxS+ " " + maxE);
+        System.out.println("s to e: " + maxRange[0]+ " " + maxRange[1]);
         System.out.println("max length " + maxLength);
     }
 
@@ -199,24 +224,6 @@ public class Array {
         return null;
     }
 
-    // bitmask - for numbers up to 256 limit - int mask
-    public static Set<Integer> findDuplicates(Integer array[]) {
-
-        int checker = 0; //init
-
-        Set<Integer> duplicates = new HashSet<Integer>();
-
-        for (Integer i: array){
-            int mask = 1 << i;
-            if ((checker & mask) > 0) {
-                duplicates.add(i);
-             }else{
-                checker |= mask;
-            }
-        }
-        return duplicates;
-    }
-
     //HashMapImpl
     public static Set<Integer> findDuplicatesMap(Integer array[]) {
 
@@ -237,7 +244,7 @@ public class Array {
     }
 
     //HASHMAP - removes duplicates and fills left over array with -1's
-    public static void removeDuplicates(Integer[] array) {
+    public static void removeDuplicatesMap(Integer[] array) {
 
         Map<Integer,Integer> map = new HashMap<>();
 
@@ -257,7 +264,7 @@ public class Array {
     }
 
 
-    public static void removeDuplicates2(Integer[] array) {
+    public static void removeDuplicates(Integer[] array) {
 
         int dstIndex = 1;
         for (int i = 1; i < array.length; ++i) {

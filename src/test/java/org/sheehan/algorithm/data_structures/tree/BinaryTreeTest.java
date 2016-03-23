@@ -87,8 +87,8 @@ public class BinaryTreeTest {
         List<String> paths = new ArrayList<String>();
         tree.getPaths(tree.root, paths, "");
 
+        System.out.println("PATHS");
         for (String s : paths) {
-
             System.out.println(s);
         }
     }
@@ -97,7 +97,7 @@ public class BinaryTreeTest {
     public void testFromSortedArray() throws Exception {
         Array.createArray(10,10,true);
         BinaryTree<Integer, Integer> tree = new BinaryTree<Integer, Integer>(null);
-        tree.addToTree(Array.createArray(10,10,true));
+        tree.insertSortedArray(Array.createArray(10,10,true));
 
         int height = tree.getMaxDepth(tree.root);
         for (int i = 0; i < height; ++i) {

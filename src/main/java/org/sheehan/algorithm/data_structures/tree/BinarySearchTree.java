@@ -1,5 +1,7 @@
 package org.sheehan.algorithm.data_structures.tree;
 
+import org.sheehan.algorithm.data_structures.List;
+
 /**
  * Created by bob on 7/9/14.
  *
@@ -13,8 +15,34 @@ public class BinarySearchTree<K extends Comparable<?super K>, V> extends BinaryT
         super(null);
     }
 
+    public TreeNode insertSortedList(List.Node<Integer> head) {
+        if(head==null)
+            return null;
+
+        this.root=insertSortedList(head,null);
+        return this.root;
+    }
+
+    public TreeNode insertSortedList(List.Node<Integer> head, List.Node<Integer> tail){
+        if (head==tail)
+            return null;
+
+        List.Node<Integer> slow = head;
+        List.Node<Integer> fast = head;
+        while(fast!=tail && fast.next!=tail){
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+
+        TreeNode<Integer,Integer> node = new TreeNode<Integer,Integer>();
+        node.key=slow.data;
+        node.left = insertSortedList(head,slow);
+        node.right = insertSortedList(slow.next,tail);
+        return node;
+    }
+
     //iterative
-    public int closestValue(TreeNode<Integer,Integer> node, double target) {
+    public int closestValueIterative(TreeNode<Integer,Integer> node, double target) {
         int minVal = node.key; //initial value
 
         // loopy loop NO recursion
@@ -27,12 +55,11 @@ public class BinarySearchTree<K extends Comparable<?super K>, V> extends BinaryT
     }
 
     //recursive
-    public int closestValue2(TreeNode<Integer,Integer> root, double target) {
-        return closest(root, target, root.key);
+    public int closestValueRecursive(TreeNode<Integer,Integer> root, double target) {
+        return closestValueRecursive(root, target, root.key);
     }
 
-    private int closest(TreeNode<Integer,Integer> node, double target, int closestVal) {
-
+    private int closestValueRecursive(TreeNode<Integer,Integer> node, double target, int closestVal) {
         // base
         if (node == null)
             return closestVal;
@@ -42,12 +69,11 @@ public class BinarySearchTree<K extends Comparable<?super K>, V> extends BinaryT
             closestVal = node.key;
 
         if (node.key < target)
-            closestVal = closest(node.right, target, closestVal);
+            closestVal = closestValueRecursive(node.right, target, closestVal);
         else if (node.key > target)
-            closestVal = closest(node.left, target, closestVal);
+            closestVal = closestValueRecursive(node.left, target, closestVal);
 
         return closestVal;
-
     }
 
     public boolean isValidBST(TreeNode<Integer,V> root) {
@@ -245,18 +271,25 @@ public class BinarySearchTree<K extends Comparable<?super K>, V> extends BinaryT
         return maximum(node.right);
     }
 
-    // start at top root node and drill down comparing tree parent nodes to node1 and node2
-    TreeNode<K,V> leastCommonAncestor(TreeNode<K,V> root, TreeNode<K,V> node1, TreeNode<K,V> node2){
+    // POST ORDER TRAVERSAL
+    TreeNode<K,V> leastCommonAncestor(TreeNode<K,V> root, TreeNode<K,V> p, TreeNode<K,V> q){
         if (root == null)
-            return null;
-        if (node1.key.compareTo(root.key) < 0 && node2.key.compareTo(root.key) < 0){
-            return leastCommonAncestor(root.left, node1, node2);
-        }
-        else if (node1.key.compareTo(root.key) > 0 && node2.key.compareTo(root.key) > 0){
-            return leastCommonAncestor(root.right, node1, node2);
-        }
+            return null ;
 
-        return root;
+        TreeNode left = leastCommonAncestor(root.left, p, q);
+        TreeNode right = leastCommonAncestor(root.right, p, q);
+
+        if (root == p || root == q)
+            return root;
+
+        if (left != null && right == null)
+            return left;
+        else if (left == null && right != null)
+            return right;
+        else if (left == null && right == null)
+            return null;
+        else
+            return root;
     }
 
     TreeNode<K,V> get(TreeNode<K,V> node, K key){

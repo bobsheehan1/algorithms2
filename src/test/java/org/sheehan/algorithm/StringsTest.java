@@ -38,7 +38,7 @@ public class StringsTest {
 
         String reverseStr = Strings.reverseWords(testStr);
         System.out.println(reverseStr);
-        Assert.assertEquals("olleh ereht", reverseStr);
+        Assert.assertEquals("there hello", reverseStr);
     }
 
     @Test
@@ -47,7 +47,7 @@ public class StringsTest {
 
         String reverseStr = Strings.reverseWords(testStr);
         System.out.println(reverseStr);
-        Assert.assertEquals("olleh ereht", reverseStr);
+        Assert.assertEquals("there hello", reverseStr);
     }
 
     @Test
@@ -153,7 +153,7 @@ public class StringsTest {
     @Test
     public void testFindDuplicates(){
         String test = "ABABCDEFGHGH";
-        Set<Character> duplicates = Strings.findDuplicates(test);
+        Set<Character> duplicates = Strings.findDuplicatesMask(test);
         duplicates.forEach(s -> System.out.print(s + " "));
         System.out.println();
 
@@ -169,9 +169,24 @@ public class StringsTest {
     @Test
     public void testRemoveDuplicates(){
         String test = "ABABCDEFGHGH";
-        String s = Strings.removeDuplicates(test);
+        String s = Strings.removeDuplicatesMask(test);
+        System.out.println(s);
+
+        test = "ABABCDEFGHGH";
+        s = Strings.removeDuplicatesSet(test);
+        System.out.println(s);
+
+    }
+
+    @Test
+    public void testRemoveValue(){
+        String str = "ABCDEFG";
+        System.out.println(str);
+        String remove = "CD";
+        String s = Strings.removeCharsSet(str,remove);
         System.out.println(s);
     }
+
 
     @Test
     public void testFindSubstring(){

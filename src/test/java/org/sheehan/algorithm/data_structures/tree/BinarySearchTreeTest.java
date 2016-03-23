@@ -1,10 +1,33 @@
 package org.sheehan.algorithm.data_structures.tree;
 
 import org.junit.Test;
+import org.sheehan.algorithm.data_structures.ListImpl;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.Assert.*;
 
 public class BinarySearchTreeTest {
+
+
+    @Test
+    public void testInsertSortedList() throws Exception {
+        Integer array[] = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15};
+        org.sheehan.algorithm.data_structures.ListImpl<Integer> list = new ListImpl<Integer>();
+        for (int arr_i:array)
+            list.appendBack(arr_i);
+
+        BinarySearchTree<Integer,Integer> bst = new BinarySearchTree<>();
+        bst.insertSortedList(list.head);
+        System.out.println("PATHS");
+        List<String> paths = new ArrayList<String>();
+        bst.getPaths(bst.root, paths, "");
+
+        for (String s : paths) {
+            System.out.println(s);
+        }
+    }
 
     @Test
     public void testPrintLevel() throws Exception {
@@ -25,6 +48,14 @@ public class BinarySearchTreeTest {
             bst.printLevel(bst.root, 0, i, dir);
             System.out.println();
             dir = !dir;
+        }
+
+        List<String> paths = new ArrayList<String>();
+        bst.getPaths(bst.root, paths, "");
+
+        System.out.println("PATHS");
+        for (String s : paths) {
+            System.out.println(s);
         }
     }
 
@@ -56,8 +87,15 @@ public class BinarySearchTreeTest {
         printStuff(bst, node5);
         printStuff(bst, node9);
 
-        BinaryTree.TreeNode<Integer,Integer>  lca = bst.leastCommonAncestor(bst.root, node9, node10);
-        System.out.println("lca: " + lca);
+        List<String> paths = new ArrayList<String>();
+        bst.getPaths(bst.root, paths, "");
+
+        System.out.println("PATHS");
+        for (String s : paths) {
+            System.out.println(s);
+        }
+        BinaryTree.TreeNode<Integer,Integer>  lca = bst.leastCommonAncestor(bst.root, node2, node5);
+        System.out.println("least common ancestor: " + lca);
 
         bst.mirror(bst.root);
         bst.printInOrder();
