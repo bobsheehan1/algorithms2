@@ -1,7 +1,9 @@
 package org.sheehan.algorithm.thread;
+
 import java.util.Random;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by bob on 9/16/14.
@@ -9,51 +11,39 @@ import java.util.concurrent.Executors;
 
 public class ThreadLocalExample {
 
-    private static final ThreadLocal<Integer> threadLocalId = new ThreadLocal<Integer>()
-    {
+    private final ThreadLocal<Integer> threadLocalId = new ThreadLocal<Integer>() {
         @Override
         protected Integer initialValue()
         {
             Random rand = new Random();
-            return rand.nextInt(100);
+            return rand.nextInt(1000);
         }
     };
 
-    class ExampleThread implements Runnable{
-         @Override
-        public void run() {
-            System.out.println(threadLocalId.get());
-        }
+    // Returns the current thread's unique ID, assigning it if necessary
+    public int get() {
+        return threadLocalId.get();
     }
 
-    public static void main(String args[]){
-        final int numThreads = 5;
-        ThreadLocalExample.ExampleThread threads[] = new ThreadLocalExample.ExampleThread[numThreads];
-        for (int i = 0; i < numThreads; ++i){
-            threads[i] = new ThreadLocalExample().new ExampleThread() ;
-        }
 
+
+    public static void main(String args[]){
+
+        int numThreads = 5;
         ExecutorService es = Executors.newFixedThreadPool(numThreads);
         System.out.println("Start threads");
+
+        ThreadLocalExample example = new ThreadLocalExample();
         for (int i = 0; i < numThreads; ++i)
         {
-            es.submit(threads[i]);
+            es.submit(() -> System.out.println("thread id: " + Thread.currentThread().getId() + " thread laocal id:" + example.get()));
         }
         es.shutdown();
-        while (!es.isTerminated()) {
+        try {
+            es.awaitTermination(1, TimeUnit.DAYS);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
-
-        es = Executors.newFixedThreadPool(numThreads);
-        System.out.println("Start threads");
-        for (int i = 0; i < numThreads; ++i)
-        {
-            es.submit(threads[i]);
-        }
-        es.shutdown();
-        while (!es.isTerminated()) {
-        }
-
-
 
         System.out.println("Finished all threads");
     }

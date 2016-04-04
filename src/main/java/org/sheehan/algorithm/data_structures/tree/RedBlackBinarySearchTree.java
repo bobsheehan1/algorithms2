@@ -83,7 +83,7 @@ public class RedBlackBinarySearchTree<K extends Comparable<?super K>, V> extends
     // the grandparent G becomes red (to maintain property 5
     // (all paths from any given node to its leaf nodes contain the same number of black nodes)).
     private void postInsertCase3(TreeNode<K,V> node) {
-        // parent is RED if we get here ! Check uncle
+        // parent is RED if we getBstNode here ! Check uncle
         TreeNode<K,V> u = uncle(node);
         if ((u != null) && (u.color == RED)) {
             node.parent.color = BLACK;
@@ -166,16 +166,16 @@ public class RedBlackBinarySearchTree<K extends Comparable<?super K>, V> extends
     // three cases
     // 1. no children - remove
     // 2. one child - splice it out
-    // 3. two children - splice out successor, replace with successor
+    // 3. two children - splice out successorWithParent, replace with successorWithParent
     @Override
-    protected TreeNode<K,V> delete(TreeNode<K,V> node) {
+    protected TreeNode<K,V> delete(TreeNode<K,V> deleteNode) {
         TreeNode<K,V> spliceNode = null; // either replacement or deleted !
 
         //case 1, 2
-        if (node.left == null || node.right == null){
-            spliceNode = node;
+        if (deleteNode.left == null || deleteNode.right == null){
+            spliceNode = deleteNode;
         } else //case 3
-            spliceNode = successor(node); // at most one node ?
+            spliceNode = successorWithParent(deleteNode); // at most one node ?
 
         // now do the splice botch
         TreeNode<K,V> spliceChild = null;
@@ -198,9 +198,9 @@ public class RedBlackBinarySearchTree<K extends Comparable<?super K>, V> extends
         }
 
         // case 3
-        if (node != spliceNode) {
-            node.key = spliceNode.key;
-            node.value = spliceNode.value;
+        if (deleteNode != spliceNode) {
+            deleteNode.key = spliceNode.key;
+            deleteNode.value = spliceNode.value;
         }
 
         return spliceNode;

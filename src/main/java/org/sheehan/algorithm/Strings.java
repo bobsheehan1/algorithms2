@@ -1,6 +1,8 @@
 package org.sheehan.algorithm;
 
-import org.sheehan.algorithm.data_structures.*;
+import org.sheehan.algorithm.data_structures.ListImpl;
+import org.sheehan.algorithm.data_structures.queue.QueueArrayImpl;
+import org.sheehan.algorithm.data_structures.queue.QueueInterface;
 
 import java.util.*;
 
@@ -12,6 +14,32 @@ import java.util.*;
  * To change this template use File | Settings | File Templates.
  */
 public class Strings {
+
+    static public String countAndSay(String s){
+
+        char arr[] = s.toCharArray();
+
+        StringBuilder sb = new StringBuilder();
+        int cnt = 1;
+        int i = 0;
+        for ( i=0; i < s.length()-1; ++i){
+            while(i<s.length()-1 && arr[i]==arr[i+1]){
+                cnt++;
+                i++;
+            }
+            sb.append(String.valueOf(cnt));
+            sb.append(arr[i]);
+
+            cnt = 1;
+        }
+
+        // end case
+        if (i == s.length()-1){
+            sb.append(String.valueOf(cnt));
+            sb.append(arr[i]);
+        }
+        return sb.toString();
+    }
 
     public static boolean isStrobogrammatic(String num) {
         char[] str = num.toCharArray();
@@ -33,6 +61,28 @@ public class Strings {
 
         return true;
 
+    }
+
+    //call with 3,3,char[6],0
+    static public void generateBalancedParenthesis(int l, int r, char[] str, int count) {
+        // if remaining left is negative
+        // or if remaining right are less than lefts
+        // then invalid
+        if (l < 0 || r < l)
+            return; //invalid
+
+        if (l==0 && r== 0){
+            System.out.println(str); //valid
+        }else {
+            if (l > 0){
+                str[count] = '(';
+                generateBalancedParenthesis(l-1, r, str, count+1);
+            }
+            if (r > l){
+                str[count] = ')';
+                generateBalancedParenthesis(l, r-1, str, count+1);
+            }
+        }
     }
 
     public static boolean validParenthesis(String s) {
@@ -95,13 +145,14 @@ public class Strings {
 
         int i;
         for (i = 0; i < str.length(); i++) {
-            if (str.charAt(i) == ' ') {
+            if (str.charAt(i) == ' ' ) {
                 end = i - 1;
                 reverse(buffer, start, end);
-                start = end + 2;
+                start = i + 1;
             }
         }
 
+        //last word ****
         end = i-1;
         reverse(buffer, start, end);
 
@@ -249,6 +300,21 @@ public class Strings {
         return null;
     }
 
+    public static Character getFirstRepeatingChar(String str) {
+        char[] chars = str.toCharArray();
+
+        Set<Character> set = new HashSet<>();
+        for (char c : chars) {
+            if (set.contains(c))
+                return c;
+            else {
+                set.add(c);
+            }
+        }
+
+        return null;
+    }
+
     // brute force
     public static Set<Character> findDuplicatesBrute(String str) {
 
@@ -304,7 +370,15 @@ public class Strings {
         return duplicates;
     }
 
-    // removes duplicates
+    // need inner loop to check already scanned elements then if not found then
+    // add to existing array moving forward.
+    public static String removeDuplicatesNoMem(String str) {
+        //TODO
+        return null;
+    }
+
+
+        // removes duplicates
     // reset array skipping dupes
     public static String removeDuplicatesMask(String str) {
         char[] chars = str.toCharArray();
@@ -390,33 +464,46 @@ public class Strings {
         return false;
     }
 
+    public static boolean isAnagram(String str1, String str2){
+        //TODO - could just sort and compare !
+        // remove all white spaces
+        //check length (odd or even)
+        // build map of char 1 letter count
+        // scan str2 and decrement
+        // for each map key check is 0.. if not then false
+
+        return false;
+    }
+
     /////////////////////////////////////////////////////////////////////////////////
     // RADIX SORT
     // LSD on fixed length lexical keys
     // bucket is queue for each ascii char
     // sort iteratively by single character moving left
     /////////////////////////////////////////////////////////////////////////////////
-    public static void radixSortLexicalFixedLsd(String array[]) {
+    public static void radixSortLexicalFixedLsd(String words[]) {
         // 256 ASCII character positions
         final int numBuckets = 256;
         org.sheehan.algorithm.data_structures.List<QueueInterface<String>> buckets = new ListImpl<QueueInterface<String>>();
         for (int i = 0; i < numBuckets; i++){
-            buckets.appendBack(new QueueArrayImpl<String>(array.length));
+            buckets.appendBack(new QueueArrayImpl<String>(words.length));
         }
 
         Integer max = Integer.MIN_VALUE;
-        for (String value: array)
+        for (String value: words)
             max = (max < value.length()) ? value.length():max;
 
         // while there is a max element larger positional value, iterate another bucket sorting pass
         // moving the position from left to right by one
         for (int position=max-1; position>=0; position--) {
+            //FILL BUCKETS
             // each pass checks a rt to left position and buckets based on that digit
-            for (String value : array){
+            for (String value : words){
                 char c = value.charAt(position);
                 buckets.get(Character.getNumericValue(c)).enqueue(value);
             }
 
+            //EMPTY BUCKETS into orignal array !
             // reset array to new order after sorting this pass
             // the new order is obtained by removing elements from the bucket queues in FIFO order
             // starting from least valued bucket
@@ -425,7 +512,7 @@ public class Strings {
                 QueueInterface<String> bucket = buckets.get(bucketIndex);
                 String value;
                 while ((value = bucket.dequeue()) != null){
-                    array[i++] = value;
+                    words[i++] = value;
                 }
             }
         }
@@ -440,53 +527,57 @@ public class Strings {
     // 3c. Each pass reset input array to new order determined by alpha buckets
     // 3d. By the time you are down the last rightmost char input array will be reset to sorted ordered
 
-    public static void radixSortVarLengthMsd( String []arr, int maxLen ) {
-        final int BUCKETS = 256;
+    public static void radixSortVarLengthMsd( String []words, int maxLen ) {
 
         java.util.List<java.util.List<String>> lengthBuckets = new ArrayList<java.util.List<String>>();
-        java.util.List<java.util.List<String>> alphaBuckets = new ArrayList<java.util.List<String>>();
 
-        for (int i = 0; i < arr.length; i++)
+        for (int i = 0; i < words.length; i++)
             lengthBuckets.add(new ArrayList<String>());
 
-        for (int i = 0; i < BUCKETS; i++)
-            alphaBuckets.add(new ArrayList<String>());
 
         // create buckets for each length and sort the strings by length into each bucket.
-        for (String s : arr)
+        for (String s : words)
             lengthBuckets.get(s.length()).add(s);
 
+        //FILL LENGTH BUCKETS
         // reinit array so all strings are sorted by length, not alpha yet !
         int idx = 0;
         for (java.util.List<String> lengthBucket : lengthBuckets)
             for (String fixedLengthStr : lengthBucket)
-                arr[idx++] = fixedLengthStr;
+                words[idx++] = fixedLengthStr;
 
         // now starting with longest strings, go bucket by bucket to shortest strings
         // subsequent passes as we move the position to the right will include the already
         // sorted longer strings
-        int startingStrIndex = arr.length;
+        int startingStrIndex = words.length;
+
+        java.util.List<java.util.List<String>> alphaBuckets = new ArrayList<java.util.List<String>>();
+        for (int i = 0; i < 256; i++)
+            alphaBuckets.add(new ArrayList<String>());
+
         for (int charPos = maxLen - 1; charPos >= 0; charPos--) {
             // index into arr for strings of the same length
             startingStrIndex -= lengthBuckets.get(charPos + 1).size();
 
+            // FILL ALPHA BUCKET
             // index into arr for strings of the same length
             // NOW WE ADD TO ALPHA BUCKET based on pos value from arr
             // Do this for each string of this length
-            for (int i = startingStrIndex; i < arr.length; i++) {
-                alphaBuckets.get(arr[i].charAt(charPos)).add(arr[i]);
+            for (int i = startingStrIndex; i < words.length; i++) {
+                alphaBuckets.get(words[i].charAt(charPos)).add(words[i]);
             }
 
+            //EMPTY ALPHA BUCKET
             // NOW we iterate over ALPHA buckets one at a time and
             // enqueue in order to arr starting from startingIndex.
             // This sorts all the strings of that length
             idx = startingStrIndex;
-            for (java.util.List<String> thisAlphaBucket : alphaBuckets) {
-                for (String s : thisAlphaBucket) {
-                    arr[idx++] = s; // adds in sorted order !
+            for (java.util.List<String> alphaBucket : alphaBuckets) {
+                for (String s : alphaBucket) {
+                    words[idx++] = s; // adds in sorted order !
                 }
 
-                thisAlphaBucket.clear();
+                alphaBucket.clear();
             }
         }
     }

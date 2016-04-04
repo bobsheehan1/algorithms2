@@ -1,9 +1,6 @@
 package org.sheehan.algorithm.hackerrank;
-import java.io.*;
-import java.util.*;
-import java.text.*;
-import java.math.*;
-import java.util.regex.*;
+
+import java.util.Scanner;
 
 public class TestGrow {
 

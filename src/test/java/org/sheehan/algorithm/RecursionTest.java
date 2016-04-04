@@ -2,8 +2,8 @@ package org.sheehan.algorithm;
 
 import junit.framework.Assert;
 import org.junit.Test;
-import org.sheehan.algorithm.data_structures.Stack;
-import org.sheehan.algorithm.data_structures.StackArrayImpl;
+import org.sheehan.algorithm.data_structures.stack.Stack;
+import org.sheehan.algorithm.data_structures.stack.StackArrayImpl;
 
 /**
  * Created with IntelliJ IDEA.
@@ -48,10 +48,10 @@ public class RecursionTest {
         Recursion.hanoiStack(size, source, dest, spare);
     }
 
-    @Test
-    public void testBalParenthesis() {
-        char str[] = new char[10];
-        Recursion.generateBalancedParenthesis(5, 5, str, 0);
-    }
+//    @Test
+//    public void testBalParenthesis() {
+//        char str[] = new char[10];
+//        Recursion.generateBalancedParenthesis(5, 5, str, 0);
+//    }
 }
 

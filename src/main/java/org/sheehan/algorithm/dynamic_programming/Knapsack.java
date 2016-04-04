@@ -34,17 +34,18 @@ public class Knapsack {
     }
 
     private Item items[];
-    private Integer weightCapacity;
+    private Integer maxCapacity;
 
-    // i is number of items
-    // j is residual knapsack capacity
+    // i is residual knapsack capacity (capacity) (rows)
+    // j is number of items (columns)
     private Integer soln[][];
 
-    public Knapsack(Item [] items, Integer weightCapacity) {
+    public Knapsack(Item [] items, Integer maxCapacity) {
 
         this.items = items;
-        this.weightCapacity = weightCapacity;
-        this.soln = new Integer[weightCapacity+1][items.length+1];
+        this.maxCapacity = maxCapacity;
+        this.soln = new Integer[maxCapacity+1][items.length+1];
+
 
         for (int i = 0; i < items.length; ++i){
             System.out.println("Item " + (i + 1) + " - " + items[i].toString());
@@ -53,24 +54,27 @@ public class Knapsack {
     }
 
     public void printSolutions() {
-        for (int residualCapacity = 0; residualCapacity <= weightCapacity; ++residualCapacity) {
-            String value = String.format("%6d: ", residualCapacity);
+
+        System.out.print("item:      ");
+        for (int itemConsidered = 0; itemConsidered <= items.length; ++itemConsidered) {
+            String value = String.format("%5d", itemConsidered);
             System.out.print(value);
+
+        }
+
+        System.out.println();
+
+        for (int residualCapacity = 0; residualCapacity <= maxCapacity; ++residualCapacity) {
+            System.out.print("capacity: " + residualCapacity);
             for (int itemConsidered = 0; itemConsidered <= items.length; ++itemConsidered) {
                 // rows are for a given residual capacity
-                value = String.format("%6d", this.soln[residualCapacity][itemConsidered]);
+                String value = String.format("%5d", this.soln[residualCapacity][itemConsidered]);
                 System.out.print(value);
             }
 
             System.out.println();
         }
-        String value = String.format("%9s", "");
-        System.out.print(value);
-        for (int itemConsidered = 0; itemConsidered <= items.length; ++itemConsidered) {
-             value = String.format("%5d ", itemConsidered);
-            System.out.print(value);
 
-        }
         System.out.println();
     }
 
@@ -78,42 +82,40 @@ public class Knapsack {
     public Integer solve() {
 
         // init for no items
-        for (int capacityIndex=0; capacityIndex <= weightCapacity; ++capacityIndex)
+        for (int capacityIndex = 0; capacityIndex <= maxCapacity; ++capacityIndex)
             this.soln[capacityIndex][0] = 0;
 
-        // table rows are item numbers
-        for (int itemIndex=1; itemIndex<= items.length; ++itemIndex){
-            // cols are for a given residual capacity
-            for (int capacityIndex=0; capacityIndex<= weightCapacity; ++capacityIndex) {
+        for (int itemIndexCol=1; itemIndexCol<= items.length; ++itemIndexCol){
+            for (int capacityIndexRow = 0; capacityIndexRow<= maxCapacity; ++capacityIndexRow) {
 
-                int currentWeight = this.items[itemIndex-1].getWeight();
+                int currentItemWeight = this.items[itemIndexCol-1].getWeight();
+                int currentItemValue = this.items[itemIndexCol-1].getValue();
 
-                int previousMaxValueSolution = this.soln[capacityIndex][itemIndex-1];
+                int previousMaxValueSolution = this.soln[capacityIndexRow][itemIndexCol-1];
 
 
                 // if this item weight is bigger than residual capacity then use previous
-                if (currentWeight > capacityIndex)
+                if (currentItemWeight > capacityIndexRow)
                 {
-                    this.soln[capacityIndex][itemIndex] = this.soln[capacityIndex][itemIndex-1];
+                    this.soln[capacityIndexRow][itemIndexCol] = this.soln[capacityIndexRow][itemIndexCol-1];
                     continue;
                 }
 
-                int currentValue = this.items[itemIndex-1].getValue();
 
                 // last solution that with weight offset by current weight ...added to current value
-                int currentSolution = this.soln[capacityIndex-currentWeight][itemIndex-1] + currentValue;
-                this.soln[capacityIndex][itemIndex] = Math.max(previousMaxValueSolution, currentSolution);
+                int currentSolution = this.soln[capacityIndexRow-currentItemWeight][itemIndexCol-1] + currentItemValue;
+                this.soln[capacityIndexRow][itemIndexCol] = Math.max(previousMaxValueSolution, currentSolution);
             }
         }
 
-        return this.soln[weightCapacity][items.length];
+        return this.soln[maxCapacity][items.length];
     }
 
     public Set<Item> getSolutionItems()
     {
         Set<Item> items = new HashSet<>();
 
-        int capacityIndex = this.weightCapacity;
+        int capacityIndex = this.maxCapacity;
 
         Item addItem = null;
         for (int itemIndex = this.items.length; itemIndex > 0; itemIndex--) {

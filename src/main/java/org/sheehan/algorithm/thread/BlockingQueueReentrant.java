@@ -30,8 +30,8 @@ public class BlockingQueueReentrant<T extends Comparable<T>> {
     int capacity=0;
 
     final Lock lock = new ReentrantLock();
-    final Condition notFull  = lock.newCondition();
-    final Condition notEmpty = lock.newCondition();
+    final Condition addCondition = lock.newCondition();
+    final Condition removeCondition = lock.newCondition();
 
     public BlockingQueueReentrant(int capacity){
         this.capacity=capacity;
@@ -42,12 +42,12 @@ public class BlockingQueueReentrant<T extends Comparable<T>> {
             this.lock.lock();
             while (queue.size()==capacity){
                 System.out.println("waiting at capacity");
-                notFull.wait();
+                addCondition.wait();
             }
 
             System.out.println("added " + val);
             queue.add(val);
-            notEmpty.signal();
+            removeCondition.signal();
         }finally{
             lock.unlock();
         }
@@ -59,12 +59,12 @@ public class BlockingQueueReentrant<T extends Comparable<T>> {
             this.lock.lock();
             while (queue.size() == 0) {
                 System.out.println("waiting at 0");
-                notEmpty.wait();
+                removeCondition.wait();
             }
 
             T val = queue.remove();
             System.out.println("removed " + val);
-            notFull.notifyAll();
+            addCondition.notifyAll();
             return val;
         }finally{
             lock.unlock();

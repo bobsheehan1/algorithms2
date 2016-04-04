@@ -166,22 +166,25 @@ public class ListImplTest {
     public void testCycle() {
         List<Integer> list = new ListImpl<Integer>();
 
-        for (int i = 0; i < 21; i++)
-            list.appendBack(i);
+        Integer[] array = Array.createArray(10, 100, false);
 
-        Assert.assertNull(list.hasCycleSet());
-        List.Node beforeCycle = list.findBeforeCycle();
-        Assert.assertNull(beforeCycle);
+        for(int arr_i:array){
+            list.insertInOrder(arr_i);
+        }
+
 
         list.print();
 
         list.introduceCycleForTest();
 
-        Assert.assertNotNull(list.hasCycleSet());
-        beforeCycle = list.findBeforeCycle();
-        Assert.assertNotNull(beforeCycle);
-        //int cycleSize = list.countCycle(cycleStart);
-        System.out.println("Cycle Start: " + beforeCycle.next.data);
+//        Assert.assertNotNull(list.hasCycleSet());
+//        beforeCycle = list.findBeforeCycle();
+//        Assert.assertNotNull(beforeCycle);
+//        //int cycleSize = list.countCycle(cycleStart);
+//        System.out.println("Cycle Start: " + beforeCycle.next.data);
+
+        List.Node cycleNode = list.findCycle();
+        System.out.println("Cycle Start: " + cycleNode.toString());
     }
 
     @Test

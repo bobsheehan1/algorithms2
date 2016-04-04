@@ -7,12 +7,22 @@ public class Bits {
 
     static int MASK_32_BIT = 0x80000000;
 
-    public int flipBit(int n, int index, boolean on){
+    public int setBit(int n, int i, boolean on){
         if (on) {
-            n |= (1 << index);
+            n |= (1<<i);
         }
         else
-            n &= ~(1 << index);
+            n &= ~(1<<i);
+
+        return n;
+    }
+
+    static int flipBits(int n){
+
+        // xor each bit
+        for (int i = 0; i < 32; i++){
+            n ^= 1<<i;
+        }
 
         return n;
     }
@@ -27,12 +37,16 @@ public class Bits {
         int carry = 0;
 
         while(i>=0 || j>=0 || carry==1){
+
+            // get char and decrement
             int aVal=0;
             if (i>=0)
                 aVal=(int)(aChars[i--]-'0');
             int bVal=0;
             if (j>=0)
                 bVal=(int)(bChars[j--]-'0');
+
+            // sum and handle cases
             int sum = aVal+bVal+carry;
             if (sum==0){
                 sb.insert(0,'0');
@@ -59,8 +73,9 @@ public class Bits {
         int max = 0;
 
         for (int i = 0; i < 32; i++){
-            int digit = (n >> i) & 1;
-            if (digit == 0){
+
+            // if we hit a zero reset else increment
+            if (((n >> i) & 1) == 0){
                 max = max>cnt?max:cnt;
                 cnt=0;
             } else
@@ -70,18 +85,18 @@ public class Bits {
         return max;
     }
 
-    public static int reverse(int n) {
-        int reverse = 0;
-        for (int i = 0; i < 32; i++) {
-            int digit = (n >> i) & 1;
-            reverse |= digit;
-            if (i!=31)
-                reverse <<= 1;
-        }
-        return reverse;
-    }
+//    public static int reverse(int n) {
+//        int reverse = 0;
+//        for (int i = 0; i < 32; i++) {
+//            int digit = (n >> i) & 1;
+//            reverse |= digit;
+//            if (i!=31)
+//                reverse <<= 1;
+//        }
+//        return reverse;
+//    }
 
-    public static int reverse2(int n) {
+    public static int reverse(int n) {
         for (int i = 0; i < 16; i++) {
             n = swapBits(n, i, 32 - i - 1);
         }
@@ -94,8 +109,8 @@ public class Bits {
         int b = (n >> j) & 1;
 
         if ((a ^ b) != 0) {
-            print((1 << i) | (1 << j));
-            System.out.println();
+            //print((1 << i) | (1 << j));
+            //System.out.println();
             return n ^= (1 << i) | (1 << j);
         }
 
@@ -119,6 +134,7 @@ public class Bits {
         return value;
     }
 
+    //shift the number right
     static void print(int n){
 
          for (int i = 0; i < 32; i++){
@@ -131,6 +147,7 @@ public class Bits {
         System.out.println();
     }
 
+    //shift the number right and mask with 1
     static int countOnes(int n){
 
         int cnt = 0;
@@ -142,30 +159,22 @@ public class Bits {
         return cnt;
     }
 
-    static int flipBits(int n){
-
-        int cnt = 0;
-        for (int i = 0; i < 32; i++){
-            n ^= 1<<i;
-        }
-
-        return n;
-    }
-
-    public static void replaceSubstr(int num1, int num2, int i, int j){
+    public static void replaceSubstr(int num, int replaceNum, int i, int j){
 
         // create a custom mask for i to j and 0 out that range in num1
-        int mask = ~0;
-        for (int index = i; index <=j; ++index){
+        int mask = ~0; // all 1's
+        for (int index = i; index <=j; ++index){ // 0's in range
             mask ^= (1<<index);
         }
-        num1 &= mask;
+
+        // blank out the target number in range to 0's
+        num &= mask;
 
         // shift the substr to correct position
-        num2 <<=i;
+        replaceNum <<=i;
 
         // simply or them together now !
-        print(num1|num2);
+        print(num|replaceNum);
 
     }
 }

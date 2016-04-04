@@ -28,15 +28,15 @@ public class NumericalTest {
         System.out.println("number of paths: "+ strings.size());
     }
 
-    @Test
-    public void testCntAndSay(){
-        String s = "1";
-        for (int i=0; i<5;++i){
-            s = Numerical.countAndSay(s);
-            System.out.println(s);
-        }
-
-    }
+//    @Test
+//    public void testCntAndSay(){
+//        String s = "1";
+//        for (int i=0; i<5;++i){
+//            s = Numerical.countAndSay(s);
+//            System.out.println(s);
+//        }
+//
+//    }
 
     @Test
     public void testGcd(){

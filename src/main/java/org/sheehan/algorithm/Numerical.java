@@ -11,46 +11,23 @@ public class Numerical {
 
     public static List<String> robotPaths(int n){
         List<String> pathList = new ArrayList<String>();
-        getPaths(n, 1,1, "", pathList);
+        robotPaths(n, 1,1, "", pathList);
         return pathList;
     }
 
-    public static void getPaths(int n, int i, int j, String path, List<String> pathList){
+    public static void robotPaths(int n, int i, int j, String path, List<String> pathList){
         path += String.format(" (%d,%d)", i , j);
         if( i ==n && j == n){ //reach the (n,n) point
             pathList.add(path);
         }else if( i > n || j > n){//wrong way
             return;
         }else {
-            getPaths(n, i +1, j , path, pathList);
-            getPaths(n, i , j +1, path, pathList);
+            robotPaths(n, i+1, j, path, pathList);
+            robotPaths(n, i, j+1, path, pathList);
         }
     }
 
-    static public String countAndSay(String s){
 
-        char arr[] = s.toCharArray();
-
-        StringBuilder sb = new StringBuilder();
-        int cnt = 1;
-        int i = 0;
-        for ( i=0; i < s.length()-1; ++i){
-            while(i<s.length()-1 && arr[i]==arr[i+1]){
-                cnt++;
-                i++;
-            }
-            sb.append(String.valueOf(cnt));
-            sb.append(arr[i]);
-
-            cnt = 1;
-        }
-
-        if (i == s.length()-1){
-            sb.append(String.valueOf(cnt));
-            sb.append(arr[i]);
-        }
-        return sb.toString();
-    }
 
     //Euclids algorithm b-r-a-b-a
     static public int gcd(int a, int b){
@@ -63,8 +40,8 @@ public class Numerical {
     }
 
     static void getFactors(int n, List<Integer> factors){
-        int upperlimit = (int)(Math.sqrt(n));
-        for(int i=1;i <= upperlimit; i++){
+        //int upperlimit = (int)(Math.sqrt(n));
+        for(int i=1;i <= n*n; i++){
             if(n%i == 0){
                 factors.add(i);
                 if(i != n/i){
@@ -84,8 +61,8 @@ public class Numerical {
         }
 
         // mark non-primes <= N using Sieve of Eratosthenes
-        int upperlimit = (int)(Math.sqrt(n));
-        for (int i = 2; i <= upperlimit; i++) {
+        //int upperlimit = (int)(Math.sqrt(n));
+        for (int i = 2; i <= n*n; i++) {
 
             // if i is prime, then mark multiples of i as nonprime
             // suffices to consider multiples i, i+1, ..., N/i

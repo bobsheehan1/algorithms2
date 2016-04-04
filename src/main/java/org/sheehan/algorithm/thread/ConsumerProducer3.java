@@ -12,15 +12,15 @@ public class ConsumerProducer3 {
 
     public class Mailbox {
 
-        BlockingQueue<String> messages = new LinkedBlockingQueue<>();
+        BlockingQueue<String> msgQueue = new LinkedBlockingQueue<>();
 
         public String get() throws InterruptedException {
-            String message = messages.take();
+            String message = msgQueue.take();
             return message;
         }
 
         public void set(String message) throws InterruptedException {
-            messages.put(message);
+            msgQueue.put(message);
         }
     }
 

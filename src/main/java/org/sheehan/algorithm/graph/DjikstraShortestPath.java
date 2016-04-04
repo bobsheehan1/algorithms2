@@ -1,8 +1,10 @@
 package org.sheehan.algorithm.graph;
 
-import org.sheehan.algorithm.data_structures.*;
+import org.sheehan.algorithm.data_structures.List;
 import org.sheehan.algorithm.data_structures.graph.Graph;
 import org.sheehan.algorithm.data_structures.graph.GraphNode;
+import org.sheehan.algorithm.data_structures.stack.Stack;
+import org.sheehan.algorithm.data_structures.stack.StackArrayImpl;
 import org.sheehan.algorithm.data_structures.tree.BinaryHeap;
 
 import java.util.LinkedHashMap;

@@ -1,6 +1,7 @@
 package org.sheehan.algorithm.data_structures;
 
-import java.util.*;
+import java.util.Iterator;
+import java.util.Random;
 import java.util.Stack;
 
 /**
@@ -215,8 +216,8 @@ public class ListImpl <T extends Comparable<T>> implements List<T> {
     }
 
     public void insertInOrder(T data) {
-        Node<T> newNode = new Node<>(data);
         if (head == null) {
+            Node<T> newNode = new Node<>(data);
             head = newNode;
             return;
         }
@@ -225,13 +226,14 @@ public class ListImpl <T extends Comparable<T>> implements List<T> {
 
         int cnt = 0;
         while (curr != null) {
-            if (newNode.data.compareTo(curr.data) < 0) {
+            if (data.compareTo(curr.data) < 0) {
                 insertBefore(data, cnt);
                 return;
             }
             cnt++;
             curr = curr.next;
         }
+        appendBack(data);
     }
 
     //brute force
@@ -358,98 +360,73 @@ public class ListImpl <T extends Comparable<T>> implements List<T> {
         }
 
         Random random = new Random();
-        int index = random.nextInt(size() - 1);
+        int start = random.nextInt(size() - 1);
 
-        Node n = this.head;
-        for (int i = 0; i < index; ++i) {
-            n = n.next;
+        Node startNode = this.head;
+        for (int i = 0; i < start; ++i) {
+            startNode = startNode.next;
+        }
+
+        int stop = random.nextInt(size() - 1);
+
+        Node stopNode = this.head;
+        for (int i = 0; i < stop; ++i) {
+            stopNode = stopNode.next;
         }
 
         // make loop !
-        tail.next = n;
+        startNode.next =stopNode;
 
-        System.out.println("cycle start: " + n.data);
-        System.out.println("cycle end: " + tail.data);
+        System.out.println("created cycle start: " + stopNode.data);
+        System.out.println("created cycle end: " + startNode.data);
     }
 
     @Override
-    public Node hasCycleSet() {
-        Set<Node> cycleSet = new HashSet<>();
+    public Node findCycle(){
 
-        Node curr = this.head;
-        Node prev = null;
-        cycleSet.add(curr);
-        while (curr != null) {
-            prev = curr;
-            curr = curr.next;
+        Node slow = this.head;
+        Node fast = slow.next;
 
-            if (!cycleSet.add(curr))
-                return prev;
-        }
-        return null;
-    }
-
-    // This solution is "Floyd's Cycle-Finding Algorithm"
-    // as published in "Non-deterministic Algorithms" by Robert W. Floyd in 1967.
-    // It is also called "The Tortoise and the Hare Algorithm".
-    @Override
-    public Node findBeforeCycle() {
-
-        boolean cycleFound = false;
-        Node slowNode, fastNode;
-        slowNode = this.head;
-        fastNode = this.head;
-        while (slowNode != null) {
-
-            if (fastNode == null)
-                return null;
-            fastNode = fastNode.next;
-            if (fastNode == null)
-                return null;
-            fastNode = fastNode.next; // double it up
-
-            if (slowNode == fastNode) {
-                System.out.println("cycle found in loop at position (not necessarily the start): " + slowNode.data);
-                cycleFound = true;
+        while(fast != null){
+            if (fast==slow){
                 break;
             }
-
-            slowNode = slowNode.next;
+            slow=slow.next;
+            fast=fast.next;
+            if (fast !=null)
+                fast=fast.next;
         }
 
-        // now lets find the node before the loop start so it can subsequently be broken
-        if (cycleFound) {
-            fastNode = this.head; //repurpose fast node to normal iteration step by step until it meets tortoise
-            while (fastNode != slowNode) {
-                fastNode = fastNode.next;
-                slowNode = slowNode.next;
-            }
-            return slowNode;
-
+        if (fast==null){
+            return null; // no cycle
         }
-        return null;
+
+        // get length of cycle
+        int cycleLength = 1;
+        slow=slow.next;
+        while(slow!=fast){
+            cycleLength++;
+            slow=slow.next;
+        }
+
+        // set slow node to cycle length from head
+        Node cycleNode = null;
+        slow=this.head;
+        while(cycleLength!=0){
+            cycleLength--;
+            slow=slow.next;
+        }
+
+        // set fast at head and cycle till meets slow ==> cycle start node
+        fast=this.head;
+        while(slow!=fast){
+            slow=slow.next;
+            fast=fast.next;
+        }
+
+        return slow;
     }
 
-    @Override
-    public int countCycle(Node cycleStart) {
-        Node slowNode = cycleStart;
-        Node fastNode = cycleStart;
-        int cnt = 0;
-        while (slowNode != null) {
-            if (fastNode == null)
-                return 0;
-            fastNode = fastNode.next;
-            if (fastNode == null)
-                return 0;
-            cnt++;
-            System.out.println("\tcycle node: " + slowNode.data);
-            fastNode = fastNode.next;
-            if (slowNode == fastNode)
-                return cnt;
-            slowNode = slowNode.next;
-        }
-        return 0;
-    }
 
     @Override
     public T set(int index, T value) {
@@ -492,7 +469,7 @@ public class ListImpl <T extends Comparable<T>> implements List<T> {
     // locate if elements of sublist are in larger list
     // assumptions - sublist smaller than large list
     public boolean orderedElementsFound(List<T> subList) {
-        Node<T> curr = this.head; //trick persist outer list iterator and not reset on inner loop
+        Node<T> outerCurr = this.head; //trick persist outer list iterator and not reset on inner loop
         //iterate over inner list
 
         Iterator<T> subListIter = subList.iterator();
@@ -502,10 +479,10 @@ public class ListImpl <T extends Comparable<T>> implements List<T> {
             boolean elemFound = false;
 
             //move along outer list (do not rest to beginning for O(n)
-            for (; curr != null; curr = curr.next) {
-                if (subListElem.equals(curr.data)) {
+            for (; outerCurr != null; outerCurr = outerCurr.next) {
+                if (subListElem.equals(outerCurr.data)) {
                     elemFound = true;
-                    curr = curr.next;
+                    outerCurr = outerCurr.next;
                     break; // now restart on next sublist elem
                 }
             }

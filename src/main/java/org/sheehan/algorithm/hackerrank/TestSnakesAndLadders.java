@@ -1,8 +1,6 @@
 package org.sheehan.algorithm.hackerrank;
 
 import java.util.*;
-import java.util.List;
-import java.util.Stack;
 
 public class TestSnakesAndLadders {
     public class BinaryCompleteTree<T extends Comparable<T>> {

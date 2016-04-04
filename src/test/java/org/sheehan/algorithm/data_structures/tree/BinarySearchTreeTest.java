@@ -6,7 +6,7 @@ import org.sheehan.algorithm.data_structures.ListImpl;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
 
 public class BinarySearchTreeTest {
 
@@ -23,10 +23,16 @@ public class BinarySearchTreeTest {
         System.out.println("PATHS");
         List<String> paths = new ArrayList<String>();
         bst.getPaths(bst.root, paths, "");
-
         for (String s : paths) {
             System.out.println(s);
         }
+
+        List<Integer> pathSums = new ArrayList<Integer>();
+        bst.getPathSums(bst.root, pathSums, 0);
+        for (Integer sum : pathSums) {
+            System.out.println(sum);
+        }
+
     }
 
     @Test
@@ -94,25 +100,31 @@ public class BinarySearchTreeTest {
         for (String s : paths) {
             System.out.println(s);
         }
-        BinaryTree.TreeNode<Integer,Integer>  lca = bst.leastCommonAncestor(bst.root, node2, node5);
-        System.out.println("least common ancestor: " + lca);
 
         bst.mirror(bst.root);
         bst.printInOrder();
     }
 
     private void printStuff(BinarySearchTree<Integer,Integer> bst, BinaryTree.TreeNode node) {
-        if (bst.successor(node) != null) {
-            System.out.println("successor " + node.toString() + " is " + bst.successor(node).toString());
-        } else {
-            System.out.println("successor " + node.toString() + " is null");
+        int height = bst.getMaxDepth(bst.root);
+        for (int i = 0; i < height; ++i) {
+            bst.printLevelSimple(bst.root, 0, i);
+            System.out.println();
         }
 
-        if (bst.predecessor(node) != null) {
-            System.out.println("predecessor " + node.toString() + " is " + bst.predecessor(node).toString());
+        if (bst.successorWithParent(node) != null) {
+            System.out.println("successorWithParent " + node.toString() + " is " + bst.successorWithParent(node).toString());
+            System.out.println("successorWithoutParent " + node.toString() + " is " + bst.successorWithoutParent(bst.root,node).toString());
+        } else {
+            System.out.println("successorWithParent " + node.toString() + " is null");
+        }
+
+        if (bst.predecessorWithParent(node) != null) {
+            System.out.println("predecessorWithParent " + node.toString() + " is " + bst.predecessorWithParent(node).toString());
+            System.out.println("predecessorWithoutParent " + node.toString() + " is " + bst.predecessorWithoutParent(bst.root,node).toString());
 
         } else {
-            System.out.println("predecessor " + node.toString() + " is null");
+            System.out.println("predecessorWithParent " + node.toString() + " is null");
         }
 
         if (bst.minimum(node) != null) {
@@ -154,7 +166,7 @@ public class BinarySearchTreeTest {
         System.out.println();
         System.out.println();
 
-        BinaryTree.TreeNode<Integer,Integer> node = bst.get(bst.root,90);
+        BinaryTree.TreeNode<Integer,Integer> node = bst.getBstNode(bst.root,90);
         bst.delete(node);
         height = bst.getMaxDepth(bst.root);
         for (int i = 0; i < height; ++i) {

@@ -1,10 +1,10 @@
 package org.sheehan.algorithm.graph;
 
 import org.sheehan.algorithm.data_structures.List;
-import org.sheehan.algorithm.data_structures.QueueInterface;
-import org.sheehan.algorithm.data_structures.QueueArrayImpl;
 import org.sheehan.algorithm.data_structures.graph.Graph;
 import org.sheehan.algorithm.data_structures.graph.GraphNode;
+import org.sheehan.algorithm.data_structures.queue.QueueArrayImpl;
+import org.sheehan.algorithm.data_structures.queue.QueueInterface;
 
 import java.util.HashSet;
 import java.util.Set;

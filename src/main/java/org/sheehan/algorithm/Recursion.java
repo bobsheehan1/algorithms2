@@ -1,6 +1,6 @@
 package org.sheehan.algorithm;
 
-import org.sheehan.algorithm.data_structures.Stack;
+import org.sheehan.algorithm.data_structures.stack.Stack;
 
 /**
  * Created with IntelliJ IDEA.
@@ -20,10 +20,9 @@ public class Recursion {
     static int fibonocci(int index) {
         if (index < 0)
             throw new RuntimeException("no negative indexes allowed");
-        if (index == 0)
-            return 0;
-        if (index == 1)
-            return 1;
+        if (index <=1)
+            return index;
+
         return fibonocci(index-1) + fibonocci(index - 2);
     }
 
@@ -33,14 +32,13 @@ public class Recursion {
 
         int prev = 0;
         int curr = 1;
-        if (index == 0)
-            return prev;
-        if (index == 1)
-            return curr;
+        if (index <=1)
+            return index;
+
         for (int i = 2; i <= index; ++i) {
-            int tmp = curr;
+            int lastCurr = curr;
             curr = prev + curr;
-            prev = tmp;
+            prev = lastCurr;
         }
 
         return curr;
@@ -76,24 +74,7 @@ public class Recursion {
         hanoiStack(n-1, tmp, dst, src);
     }
 
-    //call with 3,3,char[6],0
-    static public void generateBalancedParenthesis(int l, int r, char[] str, int count) {
-        if (l < 0 || r < l)
-            return; //invalid
 
-        if (l==0 && r== 0){
-            System.out.println(str); //valid
-        }else {
-            if (l > 0){
-                str[count] = '(';
-                generateBalancedParenthesis(l-1, r, str, count+1);
-            }
-            if (r > l){
-                str[count] = ')';
-                generateBalancedParenthesis(l, r-1, str, count+1);
-            }
-        }
-    }
 
 
     public class EightQueens {

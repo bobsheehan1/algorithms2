@@ -1,16 +1,16 @@
 package org.sheehan.algorithm;
 
-import org.sheehan.algorithm.data_structures.Stack;
-import org.sheehan.algorithm.data_structures.StackArrayImpl;
+
+import org.sheehan.algorithm.data_structures.stack.Stack;
+import org.sheehan.algorithm.data_structures.stack.StackArrayImpl;
 
 import java.util.*;
+
 
 /**
  * Created by bsheehan on 9/10/2014.
  */
 public class RangeMerge {
-
-
 
     static public class Range implements Comparable<RangeMerge.Range> {
 

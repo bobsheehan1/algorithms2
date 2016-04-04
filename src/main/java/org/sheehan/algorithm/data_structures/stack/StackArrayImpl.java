@@ -1,4 +1,4 @@
-package org.sheehan.algorithm.data_structures;
+package org.sheehan.algorithm.data_structures.stack;
 
 import java.lang.reflect.Array;
 import java.util.NoSuchElementException;
@@ -14,19 +14,19 @@ public class StackArrayImpl<T extends Comparable<T>>  implements Stack<T> {
     private String name;
 
     public StackArrayImpl(int size) {
-        this.top = -1;
-        this.size = size;
+        top = -1;
+        size = size;
         array = (T[])Array.newInstance(Comparable.class, size);
     }
 
     public StackArrayImpl(int size, String name) {
         this(size);
-        this.name = name;
+        name = name;
     }
 
     @Override
     public void push (T value) {
-        if (top == this.size)
+        if (top == size)
             throw new NoSuchElementException();
         array[++top] = value;
     }
@@ -52,7 +52,7 @@ public class StackArrayImpl<T extends Comparable<T>>  implements Stack<T> {
         if (name != null)
             System.out.print(name + ":");
 
-        for (int i = 0; i <= this.top; ++i){
+        for (int i = 0; i <= top; ++i){
             System.out.print(array[i] + " ");
         }
         System.out.println();

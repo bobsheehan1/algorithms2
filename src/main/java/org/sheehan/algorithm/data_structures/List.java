@@ -17,6 +17,11 @@ public interface List<T extends Comparable<T>> extends Iterable<T> {
             this.data = value;
             this.next = null;
         }
+
+        @Override
+        public String toString(){
+            return String.valueOf(data);
+        }
     }
 
     void deleteAt(int pos);
@@ -46,14 +51,7 @@ public interface List<T extends Comparable<T>> extends Iterable<T> {
 
     void introduceCycleForTest();
 
-    Node hasCycleSet();
-
-    // This solution is "Floyd's Cycle-Finding Algorithm"
-    // as published in "Non-deterministic Algorithms" by Robert W. Floyd in 1967.
-    // It is also called "The Tortoise and the Hare Algorithm".
-    Node findBeforeCycle();
-
-    int countCycle(ListImpl.Node cycleStart);
+    Node findCycle();
 
     T set(int j, T t);
 

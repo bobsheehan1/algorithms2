@@ -38,7 +38,7 @@ public class ConsumerProducer2 {
 
         synchronized public void add(String message) throws InterruptedException {
             System.out.println("enqueue acquire lock");
-            //thread wait until messages have been read
+            //thread wait until msgQueue have been read
             while(messages.size() >= MAX_MESSAGES) {
                 System.out.println("enqueue release lock - wait");
                 try {

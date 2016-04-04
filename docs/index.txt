@@ -1,0 +1,20 @@
+When the JVM is started, three class loaders are used:
+
+    Bootstrap class loader
+    Extensions class loader
+    System class loader
+
+    The bootstrap class loader loads the core Java libraries located in the <JAVA_HOME>/jre/lib directory.
+    This class loader, which is part of the core JVM, is written in native code.
+
+    The extensions class loader loads the code in the extensions directories (<JAVA_HOME>/jre/lib/ext, or any other directory specified by the java.ext.dirs system property).
+    It is implemented by the sun.misc.Launcher$ExtClassLoader class.
+
+    The system class loader loads code found on java.class.path, which maps to the CLASSPATH environment variable.
+    This is implemented by the sun.misc.Launcher$AppClassLoader class.
+
+    User defined class loaders:
+
+    So-called "servlet containers" are typically implemented in terms of multiple classloaders
+
+    Two classes loaded by different classloaders are different.

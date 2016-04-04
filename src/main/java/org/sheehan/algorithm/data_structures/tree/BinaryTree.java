@@ -1,11 +1,12 @@
 package org.sheehan.algorithm.data_structures.tree;
 
-import org.sheehan.algorithm.data_structures.QueueInterface;
-import org.sheehan.algorithm.data_structures.QueueListImpl;
+import org.sheehan.algorithm.data_structures.queue.QueueInterface;
+import org.sheehan.algorithm.data_structures.queue.QueueListImpl;
 
-import java.util.function.IntConsumer;
-
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.function.IntConsumer;
 
 /**
  * Created by bob on 7/9/14.
@@ -19,29 +20,48 @@ public class BinaryTree<K extends Comparable<? super K>, V> {
 
     public TreeNode<K, V> root;
 
+    public BinaryTree() {
+        this.root = null;
+    }
+
     public BinaryTree(TreeNode<K,V> node) {
         this.root = node;
     }
 
-    public static class  Deepest{
-        int depth;
-        TreeNode node;
+    public TreeNode<K, V> getNode(TreeNode<K,V> root, K key) {
+        if (root == null)
+            return null;
+        if (root.key.equals(key)){
+            return root;
+        }
+        TreeNode<K,V> leftNode =  getNode(root.left, key);
+        TreeNode<K,V> rightNode =  getNode(root.right, key);
+
+        return leftNode==null?rightNode:leftNode;
+    }
+
+    public static class DeepestNode<K extends Comparable<K>,V> {
+        int level;
+        TreeNode<K,V> node;
     };
 
-    public void getDeepestNode(Deepest result, TreeNode<K,V> node, int depth) {
+    // check level and update result if end node is deeper than previous value
+    public void getDeepestNode(TreeNode<K,V> node, DeepestNode result, int level) {
         if (node == null) {
             // nothing to do
             return;
         }
+
+        //at end node
         if (node.left == null && node.right == null) {
             // we are the left leaf node
-            if (depth > result.depth) {
-                result.depth = depth;
+            if (level > result.level) {
+                result.level = level;
                 result.node = node;
             }
         }
-        getDeepestNode(result, node.left, depth + 1);
-        getDeepestNode(result, node.right, depth + 1);
+        getDeepestNode(node.left, result, level + 1);
+        getDeepestNode(node.right, result, level + 1);
     }
 
     public boolean isSymmetric(TreeNode root) {
@@ -81,6 +101,15 @@ public class BinaryTree<K extends Comparable<? super K>, V> {
         if (node.right != null)
             node.right.parent = node;
         return node;
+    }
+
+    public int getDepth(TreeNode<K,V> root, K key, int level) {
+        if(root == null)
+            return 0;
+        if (root.key.equals(key))
+            return level;
+
+        return Math.max(getDepth(root.left, key, level+1), getDepth(root.right, key, level+1));
     }
 
     public int getMaxDepth(TreeNode<K,V> root) {
@@ -142,30 +171,88 @@ public class BinaryTree<K extends Comparable<? super K>, V> {
         getPaths(node.right,paths, path);
     }
 
-    //recursive to print all end node path tot root  node sums
-    public void printEndNodesAndPathSums(TreeNode<Integer, Integer> node){
+    // pass is accumlated path and list to add it too
+    public void getPathSums(TreeNode<Integer, Integer> node, List<Integer> paths, int sum) {
         if (node == null)
             return;
 
-        //when we get to the end then back propagate utilize parent nodes
-        if (node.left == null && node.right== null){
-            System.out.println("end node: " + node.value);
-            int sum = node.value;
-            TreeNode<Integer, Integer> tmp = node.parent;
-            while (tmp != null){
-                sum += tmp.value;
-                tmp = tmp.parent;
-            }
-            System.out.println("sum path: " + sum);
+        // accumulate path for this stack frame
+        sum += node.key;
+        // we have reached and end path node so add the accumlated path here
+        if (node.left==null && node.right==null)
+            paths.add(sum);
 
-            return;
+        getPathSums(node.left, paths, sum);
+        getPathSums(node.right,paths, sum);
+    }
+
+    // perculate up from s=common level to first common parent
+    public TreeNode<K,V> getLcaUsingParent(TreeNode<K,V> root, TreeNode<K,V> node1, TreeNode<K,V> node2){
+        int depth1 = getDepth(root, node1.key, 0);
+        int depth2 = getDepth(root, node2.key, 0);
+        TreeNode<K,V> deeper = depth1>depth2?node1:node2;
+        TreeNode<K,V> shallower = depth1<=depth2?node1:node2;
+        int offset = Math.abs(depth1-depth2);
+
+        //traverse deeper up to same level.
+        while(offset !=0)
+            deeper=deeper.parent;
+
+        while(deeper != null){
+            if (deeper.key.equals(shallower.key))
+                return deeper;
+            deeper=deeper.parent;
+            shallower=shallower.parent;
         }
 
-        printEndNodesAndPathSums(node.left);
-        printEndNodesAndPathSums(node.right);
-
-
+        return null;
     }
+
+    // POST ORDER TRAVERSAL
+    TreeNode<K,V> getLcaWithoutParent(TreeNode<K,V> root, TreeNode<K,V> p, TreeNode<K,V> q){
+        if (root == null)
+            return null ;
+
+        TreeNode left = getLcaWithoutParent(root.left, p, q);
+        TreeNode right = getLcaWithoutParent(root.right, p, q);
+
+        // 5 cases !
+        if (root == p || root == q) //its the root !
+            return root;
+        if (left != null && right == null)
+            return left;
+        else if (left == null && right != null)
+            return right;
+        else if (left == null && right == null) //neither found
+            return null;
+        else
+            return root; // expected case if in different trees
+    }
+
+//    //recursive to print all end node path tot root  node sums
+//    public void printEndNodesAndPathSums(TreeNode<Integer, Integer> node){
+//        if (node == null)
+//            return;
+//
+//        //when we getBstNode to the end then back propagate utilize parent nodes
+//        if (node.left == null && node.right== null){
+//            System.out.println("end node: " + node.value);
+//            int sum = node.value;
+//            TreeNode<Integer, Integer> tmp = node.parent;
+//            while (tmp != null){
+//                sum += tmp.value;
+//                tmp = tmp.parent;
+//            }
+//            System.out.println("sum path: " + sum);
+//
+//            return;
+//        }
+//
+//        printEndNodesAndPathSums(node.left);
+//        printEndNodesAndPathSums(node.right);
+//
+//
+//    }
 
     public void getLevelNodes(TreeNode<K,V> node, int cLevel, int rLevel, List<TreeNode<K,V>> nodes ){
         if (node == null)
@@ -225,7 +312,7 @@ public class BinaryTree<K extends Comparable<? super K>, V> {
         q.enqueue(root);
         while (q.peek() != null){
 
-            // get node
+            // getBstNode node
             TreeNode<K,V> node = q.dequeue();
 
             // do something with it
@@ -237,7 +324,44 @@ public class BinaryTree<K extends Comparable<? super K>, V> {
             if (node.right != null)
                 q.enqueue(node.right);
         }
+    }
 
+    //processs left to right
+    public List<List<TreeNode<K,V>>> getLevelNodes(IntConsumer op){
+        return getLevelNodes(this.root, op);
+    }
+
+    // 'level order traversal' use QUEUE
+    private List<List<TreeNode<K,V>>> getLevelNodes(TreeNode<K,V> root, IntConsumer op) {
+        List<List<TreeNode<K,V>>> result = new ArrayList<List<TreeNode<K,V>>>();
+
+        if (root == null)
+            return Collections.emptyList();
+
+        QueueInterface<TreeNode<K,V>> q = new QueueListImpl<>();
+        q.enqueue(root);
+        while (q.peek() != null){
+            List<TreeNode<K,V>> levelNodes = new ArrayList<TreeNode<K,V>>();
+
+            int size = q.size();
+            for (int i=0; i<size;++i) {
+                // getBstNode node
+                TreeNode<K, V> node = q.dequeue();
+                levelNodes.add(node);
+
+                // do something with it
+                //op.accept((Integer) node.key);
+
+                // add children
+                if (node.left != null)
+                    q.enqueue(node.left);
+                if (node.right != null)
+                    q.enqueue(node.right);
+            }
+            result.add(levelNodes);
+        }
+
+        return result;
     }
 
     public boolean compare(TreeNode<K,V> node){
@@ -300,7 +424,7 @@ public class BinaryTree<K extends Comparable<? super K>, V> {
         TreeNode <K,V> left;
         TreeNode <K,V> right;
 
-        TreeNode <K,V> parent; // for successor BST traversal
+        TreeNode <K,V> parent; // for successorWithParent BST traversal
 
         boolean color;     // RB TREE color of parent link
         //int N;             // RB TREE subtree count
@@ -308,7 +432,15 @@ public class BinaryTree<K extends Comparable<? super K>, V> {
 
         @Override
         public String toString(){
-            return "key:" + key.toString() + " value:" + value.toString() + " color:" + color;
+            StringBuilder sb = new StringBuilder();
+            if (key!=null)
+                sb.append("key:" + key.toString());
+            if (value!=null)
+                sb.append(" value:" + value.toString());
+
+            sb.append(" color:" + color);
+
+            return sb.toString();
         }
 
         @Override
@@ -365,9 +497,9 @@ public class BinaryTree<K extends Comparable<? super K>, V> {
         }
         if (level == rLevel) {
             if (node.parent != null)
-                System.out.print(node.key + " " + node.parent.key  + " " + node.color + " ");
+                System.out.print(node.key + " (" + node.parent.key  + ") " /*+ node.color + " "*/);
             else
-                System.out.print(node.key + " null " + node.color + " ");
+                System.out.print(node.key /*+ " null " + node.color + " "*/);
         }
 
         printLevelSimple(node.left, level + 1, rLevel);

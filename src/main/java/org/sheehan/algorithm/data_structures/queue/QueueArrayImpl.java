@@ -1,4 +1,4 @@
-package org.sheehan.algorithm.data_structures;
+package org.sheehan.algorithm.data_structures.queue;
 
 import java.lang.reflect.Array;
 
@@ -64,6 +64,11 @@ public class QueueArrayImpl<T extends Comparable<T>> implements QueueInterface<T
             System.out.print(array[i] + " ");
         }
         System.out.println();
+    }
+
+    @Override
+    public int size() {
+        return count;
     }
 
     @Override

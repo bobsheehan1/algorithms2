@@ -104,9 +104,7 @@ public class DiningPhilosophers {
             es.submit(p);
         //es.awaitTermination(10, TimeUnit.SECONDS);
         es.shutdown();
-        while (!es.isTerminated()) {
-            //System.out.println("terminated");
-        }
+        es.awaitTermination(1,TimeUnit.DAYS);
     }
 
     private void print() {

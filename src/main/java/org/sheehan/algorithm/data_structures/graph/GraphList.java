@@ -3,7 +3,6 @@ package org.sheehan.algorithm.data_structures.graph;
 import org.sheehan.algorithm.data_structures.List;
 import org.sheehan.algorithm.data_structures.ListImpl;
 
-import java.lang.ref.WeakReference;
 import java.util.*;
 
 /**

@@ -1,5 +1,8 @@
-package org.sheehan.algorithm.data_structures;
+package org.sheehan.algorithm.data_structures.stack;
 
+
+import org.sheehan.algorithm.data_structures.List;
+import org.sheehan.algorithm.data_structures.ListImpl;
 
 /**
  * Created by bob on 5/25/14.

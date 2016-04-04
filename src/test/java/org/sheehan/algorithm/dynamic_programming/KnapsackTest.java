@@ -1,7 +1,6 @@
 package org.sheehan.algorithm.dynamic_programming;
 
 import org.junit.Test;
-import org.sheehan.algorithm.dynamic_programming.Knapsack;
 
 import java.util.ArrayList;
 import java.util.Iterator;

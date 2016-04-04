@@ -17,7 +17,7 @@ import java.util.logging.Logger;
  */
 public class LruCache<K,V> {
 
-    private Map<K, V> cache;
+    private Map<K, V> cache; //ConcurrentHashMap
 
     private java.util.Queue lruFifo = new ConcurrentLinkedQueue();
 
@@ -42,7 +42,7 @@ public class LruCache<K,V> {
 
         cache.put(key, val);
 
-        //update
+        //update with new key
         if (lruFifo.contains(key))
             lruFifo.remove(key);
         lruFifo.add(key);

@@ -7,22 +7,23 @@ import java.util.*;
  */
 public class IntegerAlgs {
 
-    public static void getPascalRow(int rowIndex) {
+    public static void getPascalRow(int row) {
 
-        int a[] = new int[rowIndex+1];
+        int a[] = new int[row+1];
         a[0] = 1;
-        int b[] = new int[rowIndex+1];
-        for (int i=0; i<=rowIndex;++i){
+        int b[] = new int[row+1];
+        for (int i=0; i<=row;++i){
             for (int j=0; j<=i; ++j){
                 b[j] = a[j];
                 if (j-1 >=0)
                     b[j] += a[j-1];
             }
-            for (int k=0; k<=rowIndex;++k)
+            // swap b to a for next iter
+            for (int k=0; k<=row;++k)
                 a[k]=b[k];
             }
 
-        for (int i=0; i<=rowIndex;++i){
+        for (int i=0; i<=row;++i){
             System.out.println(b[i]);
         }
 

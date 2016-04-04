@@ -1,6 +1,9 @@
 package org.sheehan.algorithm.sort;
 
-import org.sheehan.algorithm.data_structures.*;
+import org.sheehan.algorithm.data_structures.List;
+import org.sheehan.algorithm.data_structures.ListImpl;
+import org.sheehan.algorithm.data_structures.queue.QueueArrayImpl;
+import org.sheehan.algorithm.data_structures.queue.QueueInterface;
 import org.sheehan.algorithm.data_structures.tree.BinaryHeap;
 
 import java.lang.reflect.Array;
@@ -64,22 +67,27 @@ public class SortArray {
         int j=array.length-1;
         while(i<j){
 
+            // find next odd on left
             while(array[i]%2==0)
                 ++i;
+            //find next even on right
             while(array[j]%2==1)
                 --j;
 
+            // if found swappable elements then swap
             if (i<j && array[i]%2!=0 && array[j]%2!=1) {
                 int tmp = array[i];
                 array[i] = array[j];
                 array[j] = tmp;
             }
+
+            // whether we swap or not need to increment and continue scan from left and right
             i++;
             j--;
         }
     }
 
-        /////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////
     // BUBBLE SORT Even and Odd
     /////////////////////////////////////////////////////////////////////////////////
     // worst 0(n2)
@@ -420,15 +428,12 @@ public class SortArray {
         //TODO may not need this swap !
         swap(array, pivotIndex, right); // Move pivot off to rightmost place for safe keeping
 
-        // in-place swap ! could use 2 separate arrays then merge but not as efficient.
+        // for each element less than pivot value swap to left side of array
         int storeIndex = left;
         for( int i = left; i < right; i++){
             if (array[i].compareTo(pivotValue) < 0) {
                 swap(array, i, storeIndex);
-                // This gets enqueue to next element but will remain here if compare fails while it keeps moving.
-                // Implies that storeIndex value is larger than pivot value. Only swap with value larger than pivot.
-                // If an element is lower than the pivot, you should swap it with a larger element on the left-side of i.
-                storeIndex = storeIndex + 1;
+                storeIndex++; // we swapped to skip to next store index for next possible swap
             }
         }
         swap(array, storeIndex, right);// Move pivot to its final place
@@ -485,8 +490,8 @@ public class SortArray {
             return;
 
         }
-        Integer counts[] = (Integer[]) Array.newInstance(Integer.class, range);
-        Integer output[] = (Integer[]) Array.newInstance(Integer.class, array.length);
+        Integer counts[] = new Integer[range];
+        Integer output[] = new Integer[array.length];
 
         Arrays.fill(counts, 0);
 

@@ -3,7 +3,6 @@ package org.sheehan.algorithm;
 import org.sheehan.algorithm.sort.SortArray;
 
 import java.util.*;
-import java.util.List;
 
 /**
  *
@@ -18,7 +17,7 @@ import java.util.List;
  */
 public class Array {
 
-    public static int maxSubArrayEqualsTargetLen(int[] nums, int targetSum) {
+    public static int maxSubArrayRangeEqualsK(int[] nums, int targetSum) {
         int sum = 0, maxRange = 0; // max will stay at zero if targetSum not found
         HashMap<Integer, Integer> map = new HashMap<Integer, Integer>();
 
@@ -35,7 +34,6 @@ public class Array {
 
             else if (map.containsKey(sum - targetSum))
                 maxRange = Math.max(maxRange, i - map.get(sum - targetSum));
-
 
             // store sums in a hashmap
             if (!map.containsKey(sum))
@@ -144,7 +142,6 @@ public class Array {
         print(array);
     }
 
-
     public static int findLongestRun(Integer array[]) {
         int s=0;
         int e=0;
@@ -215,6 +212,7 @@ public class Array {
                 map.put(array[i], 1);
         }
 
+        // iterate over array in order and find first cnt == 1
         for (Integer i=0; i < array.length; ++i){
             if (map.get(array[i])==1)
                 return array[i];
@@ -264,24 +262,24 @@ public class Array {
     }
 
 
-    public static void removeDuplicates(Integer[] array) {
+    public static void removeDuplicatesNoMem(Integer[] array) {
 
-        int dstIndex = 1;
+        int dst = 1;
         for (int i = 1; i < array.length; ++i) {
 
             int j;
-            for (j = 0; j < dstIndex; ++j) {
+            for (j = 0; j < dst; ++j) {
                 if (array[i] == array[j]) {
-                    break; // this thing already been done friend.
+                    break; // this thing already been done friend. dst will not increment and ith is skipped
                 }
             }
 
-            if (j == dstIndex)
-                array[dstIndex++] = array[i];
+            if (j == dst) // no dupes for ith, add it.
+                array[dst++] = array[i];
         }
 
         // fill leftovers
-        for (int i = dstIndex; i < array.length; ++i) {
+        for (int i = dst; i < array.length; ++i) {
             array[i] = -1;
         }
     }
@@ -330,16 +328,6 @@ public class Array {
         reverse(array, shift, array.length - 1);
     }
 
-    //sorted arrays input
-    public static boolean isAnagram(Integer []arr1, Integer []arr2){
-
-        if (arr1.length != arr2.length)
-            return false;
-
-        return false;
-    }
-
-
     // merge sorted arrays into new third array.
     // different than merge into larger of two arrays below..
     public static <T extends Comparable> long mergeSortedArrays(T[] array1, T[] array2, T[] merged) {
@@ -383,67 +371,67 @@ public class Array {
 
     }
 
-    // start with k = 0
-    static void getPermutations2(java.util.List<Integer> arr, int k) {
-
-        // increasing starting point swapping
-        for (int i = k; i < arr.size(); i++) {
-            java.util.Collections.swap(arr, i, k);
-            getPermutations2(arr, k + 1);
-            java.util.Collections.swap(arr, k, i);
-        }
-
-        // when we iterate to the end for a given recursion we have a permutation !
-        if (k == arr.size() - 1) {
-            System.out.println(java.util.Arrays.toString(arr.toArray()));
-        }
-    }
-
-    // start with k = 0
-    static void getPermutationsArr(Integer [] arr, int swapIndex) {
-
-        // for each i we fire off a recursive call
-        for (int i = swapIndex; i < arr.length; i++) {
-
-            //swap then recurse
-            int tmp = arr[i];
-            arr[i] = arr[swapIndex];
-            arr[swapIndex] = tmp;
-
-            // each call increments the swap index
-            getPermutationsArr(arr, swapIndex + 1);
-
-            //then swap back
-            tmp = arr[i];
-            arr[i] = arr[swapIndex];
-            arr[swapIndex] = tmp;
-        }
-
-        // when we iterate to the end for a given recursion we have a permutation !
-        if (swapIndex == arr.length - 1) {
-            for (int i: arr)
-                System.out.print(i + " ");
-            System.out.println();
-        }
-    }
-
-    public static void getPermutations(java.util.List<Integer> prefix, java.util.List<Integer> array, Set<java.util.List<Integer>> cache) {
-        int n = array.size();
-        if (n == 0) {
-            cache.add(prefix); //got one !
-        } else {
-            for (int i = 0; i < n; i++) {
-                java.util.List<Integer> array2 = new ArrayList<Integer>();
-                array2.addAll(array.subList(0, i));//exclude i
-                array2.addAll(array.subList(i + 1, n));//exclude n
-
-                List<Integer> prefix2 = new ArrayList<Integer>();
-                prefix2.addAll(prefix);
-                prefix2.add(array.get(i)); //include i
-                getPermutations(prefix2, array2, cache); //recursion inside loop for fixed i
-            }
-        }
-    }
+//    // start with k = 0
+//    static void getPermutations2(java.util.List<Integer> arr, int k) {
+//
+//        // increasing starting point swapping
+//        for (int i = k; i < arr.size(); i++) {
+//            java.util.Collections.swap(arr, i, k);
+//            getPermutations2(arr, k + 1);
+//            java.util.Collections.swap(arr, k, i);
+//        }
+//
+//        // when we iterate to the end for a given recursion we have a permutation !
+//        if (k == arr.size() - 1) {
+//            System.out.println(java.util.Arrays.toString(arr.toArray()));
+//        }
+//    }
+//
+//    // start with k = 0
+//    static void getPermutationsArr(Integer [] arr, int swapIndex) {
+//
+//        // for each i we fire off a recursive call
+//        for (int i = swapIndex; i < arr.length; i++) {
+//
+//            //swap then recurse
+//            int tmp = arr[i];
+//            arr[i] = arr[swapIndex];
+//            arr[swapIndex] = tmp;
+//
+//            // each call increments the swap index
+//            getPermutationsArr(arr, swapIndex + 1);
+//
+//            //then swap back
+//            tmp = arr[i];
+//            arr[i] = arr[swapIndex];
+//            arr[swapIndex] = tmp;
+//        }
+//
+//        // when we iterate to the end for a given recursion we have a permutation !
+//        if (swapIndex == arr.length - 1) {
+//            for (int i: arr)
+//                System.out.print(i + " ");
+//            System.out.println();
+//        }
+//    }
+//
+//    public static void getPermutations(java.util.List<Integer> prefix, java.util.List<Integer> array, Set<java.util.List<Integer>> cache) {
+//        int n = array.size();
+//        if (n == 0) {
+//            cache.add(prefix); //got one !
+//        } else {
+//            for (int i = 0; i < n; i++) {
+//                java.util.List<Integer> array2 = new ArrayList<Integer>();
+//                array2.addAll(array.subList(0, i));//exclude i
+//                array2.addAll(array.subList(i + 1, n));//exclude n
+//
+//                List<Integer> prefix2 = new ArrayList<Integer>();
+//                prefix2.addAll(prefix);
+//                prefix2.add(array.get(i)); //include i
+//                getPermutations(prefix2, array2, cache); //recursion inside loop for fixed i
+//            }
+//        }
+//    }
 
     // all contiguous sub arrays
     public static void getSubArrays(Integer[] array, Set<java.util.List<Integer>> cache) {
@@ -455,7 +443,7 @@ public class Array {
     }
 
     // dynamic programming
-    public static int getMaxAndMinSubArray(Integer[] array) {
+    public static int getMaxAndMinSumSubArray(Integer[] array) {
         int max = array[0]; //init
         int min = array[0];
 
@@ -481,23 +469,23 @@ public class Array {
         return max;
     }
 
-    // iterative - get all subarrays and sum them up
-    // can track the actual sub array here
-    public static int getMaxSubArraySum2(Integer[] array) {
-        Set<java.util.List<Integer>> cache = new HashSet<java.util.List<Integer>>();
-
-        getSubArrays(array, cache);
-
-        int sum = 0, max = Integer.MIN_VALUE;
-        for (List<Integer> a : cache) {
-            sum = 0;
-            for (int i : a) {
-                sum += i;
-            }
-            max = Math.max(max, sum);
-        }
-        return max;
-    }
+//    // iterative - get all subarrays and sum them up
+//    // can track the actual sub array here
+//    public static int getMaxSubArraySum2(Integer[] array) {
+//        Set<java.util.List<Integer>> cache = new HashSet<java.util.List<Integer>>();
+//
+//        getSubArrays(array, cache);
+//
+//        int sum = 0, max = Integer.MIN_VALUE;
+//        for (List<Integer> a : cache) {
+//            sum = 0;
+//            for (int i : a) {
+//                sum += i;
+//            }
+//            max = Math.max(max, sum);
+//        }
+//        return max;
+//    }
 
     // iterative - just a running sum
     public static int getMaxSubArraySum3(Integer[] array) {
@@ -564,6 +552,21 @@ public class Array {
 
         Random random = new Random();
         java.util.List<Integer> list = new ArrayList<Integer>();
+        do {
+            list.add(random.nextInt() % (limit) / 2 + limit / 2);
+        } while (list.size() != size);
+        Integer[] array = list.toArray(new Integer[0]);
+
+
+        if (sorted)
+            SortArray.insertionSort(array);
+        return array;
+    }
+
+    public static Integer[] createUniqueArray(int size, int limit, boolean sorted) {
+
+        Random random = new Random();
+        java.util.Set<Integer> list = new HashSet<Integer>();
         do {
             list.add(random.nextInt() % (limit) / 2 + limit / 2);
         } while (list.size() != size);

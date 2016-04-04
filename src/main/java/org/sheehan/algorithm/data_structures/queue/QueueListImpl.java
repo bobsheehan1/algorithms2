@@ -1,4 +1,7 @@
-package org.sheehan.algorithm.data_structures;
+package org.sheehan.algorithm.data_structures.queue;
+
+import org.sheehan.algorithm.data_structures.List;
+import org.sheehan.algorithm.data_structures.ListImpl;
 
 /**
  * Created by bob on 5/26/14.
@@ -39,5 +42,10 @@ public class QueueListImpl<T extends Comparable<T>> implements QueueInterface<T>
     @Override
     public int compareTo(QueueInterface<T> o) {
         return 0;
+    }
+
+    @Override
+    public int size() {
+        return list.size();
     }
 }

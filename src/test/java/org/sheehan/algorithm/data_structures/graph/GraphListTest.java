@@ -1,9 +1,6 @@
 package org.sheehan.algorithm.data_structures.graph;
 
 import org.junit.Test;
-import org.sheehan.algorithm.data_structures.graph.Graph;
-import org.sheehan.algorithm.data_structures.graph.GraphList;
-import org.sheehan.algorithm.data_structures.graph.GraphNode;
 
 import java.util.ArrayList;
 

@@ -35,9 +35,9 @@ public class BitsTest {
     @Test
     public void tesetReverse() throws Exception {
         Bits.print(Bits.str2Int("110111110000"));
-        int reverse = Bits.reverse2(Bits.str2Int("110111110000"));
-        Bits.print(reverse);
-        reverse = Bits.reverse(Bits.str2Int("110111110000"));
+        //int reverse = Bits.reverse2(Bits.str2Int("110111110000"));
+        //Bits.print(reverse);
+        int reverse = Bits.reverse(Bits.str2Int("110111110000"));
         Bits.print(reverse);
 
     }
@@ -65,10 +65,16 @@ public class BitsTest {
     @Test
     public void testFlipBits() throws Exception {
         System.out.println(Bits.countOnes(0));
+        //System.out.println(Bits.countOnes2(0));
         System.out.println(Bits.countOnes(1));
+       /// System.out.println(Bits.countOnes2(1));
         System.out.println(Bits.countOnes(2));
+       // System.out.println(Bits.countOnes2(2));
         System.out.println(Bits.countOnes(256));
+        //System.out.println(Bits.countOnes2(256));
         System.out.println(Bits.countOnes(Integer.MAX_VALUE));
+        //System.out.println(Bits.countOnes2(Integer.MAX_VALUE));
         System.out.println(Bits.countOnes(Integer.MIN_VALUE));
+        //System.out.println(Bits.countOnes2(Integer.MIN_VALUE));
     }
 }

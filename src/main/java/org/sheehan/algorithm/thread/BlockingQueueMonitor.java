@@ -6,13 +6,13 @@ import java.util.Queue;
 /**
  * Created by bsheehan on 3/19/16.
  */
-public class BlockingQueue<T extends Comparable<T>> {
+public class BlockingQueueMonitor<T extends Comparable<T>> {
 
     Queue<T> queue = new LinkedList<T>();
 
     int capacity=0;
 
-    public BlockingQueue(int capacity){
+    public BlockingQueueMonitor(int capacity){
         this.capacity=capacity;
     }
 

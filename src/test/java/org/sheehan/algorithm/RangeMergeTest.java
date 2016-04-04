@@ -2,8 +2,7 @@ package org.sheehan.algorithm;
 
 import junit.framework.TestCase;
 import org.junit.Test;
-import org.sheehan.algorithm.data_structures.List;
-import org.sheehan.algorithm.data_structures.Stack;
+import org.sheehan.algorithm.data_structures.stack.Stack;
 
 import java.util.HashSet;
 import java.util.Set;

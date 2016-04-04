@@ -1,6 +1,9 @@
 package org.sheehan.algorithm.thread;
-import java.util.*;
-import java.util.concurrent.*;
+
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 /**
  * Created by bsheehan on 3/20/16.
  */
@@ -12,7 +15,7 @@ public class ConcurrentHashMapExample {
     private ConcurrentMap<Double, Double> sqrtCache = new ConcurrentHashMap<Double, Double>();
 
     // 4 steps as outlined above
-    public double getSqrt(Double d) {
+    public double getOrPut(Double d) {
         Double sqrt = sqrtCache.get(d);
         if(sqrt == null) {
             sqrt = Math.sqrt(d);
@@ -48,8 +51,8 @@ public class ConcurrentHashMapExample {
                     final Double d = Double.valueOf(s);
                     executor.submit(new Runnable() {
                         @Override public void run() {
-                            test.getSqrt(d);
-                            //System.out.printf("sqrt of %s = %s in thread %s%n", d, test.getSqrt(d), Thread.currentThread().getName());
+                            test.getOrPut(d);
+                            //System.out.printf("sqrt of %s = %s in thread %s%n", d, test.getOrPut(d), Thread.currentThread().getName());
                         }
                     });
                 }

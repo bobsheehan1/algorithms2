@@ -1,6 +1,6 @@
 package org.sheehan.algorithm.hackerrank;
 
-import java.util.*;
+import java.util.Scanner;
 
 public class TestCipher {
 

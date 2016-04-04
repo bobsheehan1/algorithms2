@@ -2,9 +2,12 @@ package org.sheehan.algorithm.data_structures;
 
 /**
  * Created by bsheehan on 2/22/16.
+ *
+ * uses chaining as opposed to open addressing with probing linear, quadratic,...)
  */
 public class HashMapImpl<K,V> {
 
+    // node that can also do chaining
     class Node<K,V> {
         K key;
         V value;
@@ -18,18 +21,23 @@ public class HashMapImpl<K,V> {
     }
 
     int size = 16;
+
+    // index into table using hash function
     Node<K,V> []table = (Node<K,V>[]) new Node[size];
 
     public void put(K key, V value) {
         int hash = hashify(key);
         Node<K,V> node = table[hash];
 
+        // brand new entry in table
         if (node == null) {
             table[hash] = new Node<>(key, value);
             return;
         }
 
-        // update or extend chain
+        // --- COLLISION beyond this point ---
+
+        // update or extend chain for existing node
         Node<K,V> curr = node;
         Node<K,V> prev = node;
         while(curr != null){
@@ -41,7 +49,7 @@ public class HashMapImpl<K,V> {
             curr = curr.next;
         }
 
-        // new entry
+        // got to end of chain new entry
         Node<K,V> newNode = new Node<>(key,value);
         prev.next = newNode;
 
@@ -51,6 +59,7 @@ public class HashMapImpl<K,V> {
         int hash = hashify(key);
         Node<K,V> node = table[hash];
 
+        // explore possible chain
         Node<K,V> curr = node;
         while(curr != null){
             if (node.key.equals(key))
@@ -77,6 +86,9 @@ public class HashMapImpl<K,V> {
             System.out.println("not found");
             return;
         }
+
+        //todo verify if single entry that table[hash] is set to null;
+        // handle cases to delete from table
         if (prev == null){ //front
             table[hash]=node.next;
         } else if (curr.next != null){ //middle

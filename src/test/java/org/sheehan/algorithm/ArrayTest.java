@@ -3,8 +3,10 @@ package org.sheehan.algorithm;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class ArrayTest {
 
@@ -172,14 +174,14 @@ public class ArrayTest {
 
         Integer[] integers1 = integers.toArray(new Integer[0]);
 
-        Array.removeDuplicates(integers1);
+        Array.removeDuplicatesNoMem(integers1);
 
         for (int i: integers1)
             System.out.print(i + " ");
 
         integers1 = integers.toArray(new Integer[0]);
 
-        Array.removeDuplicates(integers1);
+        Array.removeDuplicatesNoMem(integers1);
 
         System.out.println();
         for (int i: integers1)
@@ -187,7 +189,7 @@ public class ArrayTest {
 
         integers1 = integers.toArray(new Integer[0]);
 
-        Array.removeDuplicates2(integers1);
+        Array.removeDuplicatesMap(integers1);
 
         System.out.println();
         for (int i: integers1)
@@ -236,40 +238,40 @@ public class ArrayTest {
 
     }
 
-    @Test
-    public void testPermutationOfIntegers2() {
-        java.util.List<Integer> prefix = new ArrayList<Integer>();
+//    @Test
+//    public void testPermutationOfIntegers2() {
+//        java.util.List<Integer> prefix = new ArrayList<Integer>();
+//
+//        java.util.List<Integer> array = new ArrayList<Integer>();
+//        array.add(3);
+//        array.add(5);
+//        array.add(7);
+//        array.add(9);
+//        Set<java.util.List<Integer>> cache = new HashSet<java.util.List<Integer>>();
+//        Array.getPermutations2(array, 0);
+//
+//        Array.getPermutationsArr(array.toArray(new Integer[0]), 0);
+//    }
 
-        java.util.List<Integer> array = new ArrayList<Integer>();
-        array.add(3);
-        array.add(5);
-        array.add(7);
-        array.add(9);
-        Set<java.util.List<Integer>> cache = new HashSet<java.util.List<Integer>>();
-        Array.getPermutations2(array, 0);
-
-        Array.getPermutationsArr(array.toArray(new Integer[0]), 0);
-    }
-
-    @Test
-    public void testPermutationOfIntegers() {
-        java.util.List<Integer> prefix = new ArrayList<Integer>();
-
-        java.util.List<Integer> array = new ArrayList<Integer>();
-        array.add(1);
-        array.add(2);
-        array.add(3);
-
-        Set<java.util.List<Integer>> cache = new HashSet<java.util.List<Integer>>();
-        Array.getPermutations(prefix, array, cache);
-
-        for (List<Integer> a : cache) {
-            for (int i : a) {
-                System.out.print(i + " ");
-            }
-            System.out.println();
-        }
-    }
+//    @Test
+//    public void testPermutationOfIntegers() {
+//        java.util.List<Integer> prefix = new ArrayList<Integer>();
+//
+//        java.util.List<Integer> array = new ArrayList<Integer>();
+//        array.add(1);
+//        array.add(2);
+//        array.add(3);
+//
+//        Set<java.util.List<Integer>> cache = new HashSet<java.util.List<Integer>>();
+//        Array.getPermutations(prefix, array, cache);
+//
+//        for (List<Integer> a : cache) {
+//            for (int i : a) {
+//                System.out.print(i + " ");
+//            }
+//            System.out.println();
+//        }
+//    }
 
     @Test
     public void testSubArraysOfIntegers() {
@@ -291,8 +293,8 @@ public class ArrayTest {
         Integer array[] = {1, -2, -6, 3, 5, -2, 3, 10, -3};
         Array.print(array);
 
-        System.out.println(Array.getMaxAndMinSubArray(array));
-        System.out.println(Array.getMaxSubArraySum2(array));
+        System.out.println(Array.getMaxAndMinSumSubArray(array));
+       // System.out.println(Array.getMaxSubArraySum2(array));
         System.out.println(Array.getMaxSubArraySum3(array));
 
 
@@ -304,7 +306,7 @@ public class ArrayTest {
         Integer array[] = {1, 2, -6, 3, 5, -9, 30, 10, -3};
         Array.print(array);
 
-        System.out.println(Array.getMaxSubArraySum2(array));
+        //System.out.println(Array.getMaxSubArraySum2(array));
         System.out.println(Array.findLargestSumSequence(array));
     }
 

@@ -43,7 +43,6 @@ public class CyclicBarrierExample {
             executor.submit(new MyService(String.valueOf(i), barrier));
         }
 
-        System.out.println("OK ALL UP AND RUNNING");
 
         executor.shutdown();
         try {
@@ -51,5 +50,8 @@ public class CyclicBarrierExample {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+
+        System.out.println("OK ALL DONE");
+
     }
 }

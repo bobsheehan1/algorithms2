@@ -1,13 +1,9 @@
 package org.sheehan.algorithm;
 
 import org.junit.Test;
-
-
 import org.sheehan.algorithm.sort.SortArray;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Random;
 
 public class SortArrayTest {
 

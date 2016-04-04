@@ -1,7 +1,8 @@
 package org.sheehan.algorithm.hackerrank;
 
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.Scanner;
 
 public class TestMarkAndToys {
 

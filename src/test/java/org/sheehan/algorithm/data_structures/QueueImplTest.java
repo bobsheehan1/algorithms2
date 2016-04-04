@@ -1,6 +1,9 @@
 package org.sheehan.algorithm.data_structures;
 
 import org.junit.Test;
+import org.sheehan.algorithm.data_structures.queue.QueueArrayImpl;
+import org.sheehan.algorithm.data_structures.queue.QueueInterface;
+import org.sheehan.algorithm.data_structures.queue.QueueListImpl;
 
 import java.util.NoSuchElementException;
 

@@ -4,7 +4,6 @@ package org.sheehan.algorithm.hackerrank;
 import org.sheehan.algorithm.data_structures.tree.BinaryHeap;
 
 import java.util.*;
-import java.util.List;
 
 public class TestKingdomGrowth {
     static private int idCnt = 0;

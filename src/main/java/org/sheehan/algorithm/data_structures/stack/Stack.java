@@ -1,6 +1,4 @@
-package org.sheehan.algorithm.data_structures;
-
-import org.sheehan.algorithm.RangeMerge;
+package org.sheehan.algorithm.data_structures.stack;
 
 /**
  * Created by bob on 5/26/14.

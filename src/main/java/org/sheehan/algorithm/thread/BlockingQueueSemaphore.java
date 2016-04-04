@@ -1,6 +1,5 @@
 package org.sheehan.algorithm.thread;
 
-import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.concurrent.Semaphore;
@@ -22,6 +21,7 @@ public class BlockingQueueSemaphore<T extends Comparable<T>> {
     }
 
     public void add(T val) throws InterruptedException {
+        System.out.println("trying to add, available permits " + semaphore.availablePermits());
         semaphore.acquire();
         System.out.println("added available permits " + semaphore.availablePermits());
         queue.add(val);
@@ -30,10 +30,18 @@ public class BlockingQueueSemaphore<T extends Comparable<T>> {
     public T remove() throws InterruptedException {
         try {
             T val = queue.remove();
-            System.out.println("removed available permits " + semaphore.availablePermits());
             return val;
         }finally{
             semaphore.release();
+            System.out.println("removed available permits " + semaphore.availablePermits());
         }
+    }
+
+    synchronized public void printQueue(){
+        queue.forEach(x-> {
+              System.out.print(" ");
+              System.out.print(x);
+        });
+        System.out.println();
     }
 }
